@@ -9,21 +9,25 @@ import loginImg from "../assets/loginImg.png";
 const login = () => {
   return (
     <div className="h-screen w-screen">
-        <img src={loginImg} alt="" className="absolute w-5/12 left-56 top-36"/>
-      <div className="flex p-12 h-full">
-        <div className="bg-[#620084] rounded-l-2xl w-4/12 shadow-sm">
+      <img
+        src={loginImg}
+        alt=""
+        className="absolute xl:w-5/12 lg:w-4/12 xl:left-56 xl:top-36 lg:left-48 lg:top-64 hidden lg:block"
+      />
+      <div className="flex md:p-12 h-full justify-center">
+        <div className="bg-[#620084] rounded-l-2xl w-4/12 shadow-sm hidden lg:block ">
           <p className="w-48 text-center m-8 text-white">
             “Two lives, one journey. Together, we protect the bond between
             mother and child for a healthier future.”
           </p>
         </div>
 
-        <div className="flex flex-col items-center w-8/12 justify-center shadow-md rounded-r-2xl">
+        <div className="flex flex-col items-center w-full md:w-8/12 justify-center shadow-md rounded-2xl">
           <p className="text-[#202244] font-bold text-2xl mt-8">
             Log in with Maathru
           </p>
 
-          <div className="mt-8 w-96 ">
+          <div className="mt-8 w-80 md:w-96 ">
             <FloatingLabel
               variant="outlined"
               label="Username"
@@ -31,7 +35,7 @@ const login = () => {
             />
           </div>
           <div className="">
-            <div className="mt-5 w-96">
+            <div className="mt-5 w-80 md:w-96">
               <FloatingLabel
                 variant="outlined"
                 label="Password"
@@ -40,9 +44,9 @@ const login = () => {
               />
             </div>
             <Link>
-            <p className="text-xs float-right text-[#545454]">
-              Forgot Passowrd?
-            </p>
+              <p className="text-xs float-right text-[#545454]">
+                Forgot Passowrd?
+              </p>
             </Link>
           </div>
 
@@ -64,9 +68,9 @@ const login = () => {
           </div>
 
           <p className="mt-2 font-semibold">
-            New member? 
-            <Link to="/" >
-            <span className="text-[#9C33C1]"> SIGN UP</span>
+            New member?
+            <Link to="/">
+              <span className="text-[#9C33C1]"> SIGN UP</span>
             </Link>
           </p>
         </div>
