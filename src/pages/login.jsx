@@ -62,9 +62,9 @@ const login = () => {
 
           <div className="mt-6 bg-[#9C33C1] text-white w-72 text-center p-1 text-lg rounded-3xl">
             <span className="align-middle font-semibold">Log In</span>
-            <Button pill className="h-10 w-10 bg-white float-right">
+            <button pill className="h-10 w-10 grid flexbox justify-center align-middle rounded-full bg-white float-right hover:bg-purple-100">
               <HiOutlineArrowRight className="h-5 w-5 text-[#9C33C1]" />
-            </Button>
+            </button>
           </div>
 
           <p className="mt-2 font-semibold">
