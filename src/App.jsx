@@ -5,13 +5,15 @@ import viteLogo from "/vite.svg";
 import "./App.css";
 import Login from "./pages/login";
 import Signup from "./pages/signup";
+import Blog from "./pages/blog";
+import Navbar from "./components/navbar";
 
 function App() {
   const [count, setCount] = useState(0);
 
   return (
     <>
-      <Login />
+      <Blog />
     </>
   );
 }
