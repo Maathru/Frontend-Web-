@@ -9,7 +9,9 @@ export default {
       colors: {
         "bg-nav": "rgb(48,0,65,0.02)",
       },
-      poppins: ["Poppins"],
+      fontFamily: {
+        poppins: ["Poppins"],
+      },
     },
   },
   plugins: [flowbite.plugin()],
