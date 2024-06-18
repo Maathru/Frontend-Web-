@@ -7,13 +7,14 @@ import Login from "./pages/login";
 import Signup from "./pages/signup";
 import Landing from "./pages/landing";
 import Drug from "./pages/drug";
+import DrugAdd from "./pages/drugAdd";
 
 function App() {
   const [count, setCount] = useState(0);
 
   return (
     <>
-      <Drug />
+      <DrugAdd />
     </>
   );
 }

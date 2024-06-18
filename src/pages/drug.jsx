@@ -17,12 +17,17 @@ const StripedDataGrid = styled(DataGrid)(({ theme }) => ({
   [`& .${gridClasses.row}.even`]: {
     backgroundColor: "#FAEDFF",
   },
-
-  "& .MuiDataGrid-columnHeader": {
-    fontWeight: "bold",
-    // backgroundColor: "green",
+  [`& .${gridClasses.row}.odd`]: {
+    backgroundColor: "#ffffff",
   },
   border: "none",
+
+  "& .MuiDataGrid-cell:focus": {
+    outline: "none",
+  },
+  "& .MuiDataGrid-cell:focus-within": {
+    outline: "none",
+  },
 
 }));
 
@@ -225,6 +230,7 @@ const drug = () => {
           getRowClassName={(params) =>
             params.indexRelativeToCurrentPage % 2 === 0 ? "even" : "odd"
           }
+          disableRowSelectionOnClick
         
         slots={{ toolbar: QuickSearchToolbar}}
 
