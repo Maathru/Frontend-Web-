@@ -2,9 +2,15 @@ const flowbite = require("flowbite-react/tailwind");
 
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: ["index.html", "./src/**/*.{jsx,js}", flowbite.content(),],
+  content: ["index.html", "./src/**/*.{jsx,js}", flowbite.content()],
+  darkMode: "class",
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        "bg-nav": "rgb(48,0,65,0.02)",
+      },
+      poppins: ["Poppins"],
+    },
   },
-  plugins: [flowbite.plugin(),],
+  plugins: [flowbite.plugin()],
 };
