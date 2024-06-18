@@ -8,30 +8,50 @@ import { Button } from "flowbite-react";
 import { Route, Routes } from "react-router-dom";
 
 function App() {
-  const [theme, setTheme] = useState(null);
+  const [theme, setTheme] = useState(
+    localStorage.getItem("theme")
+      ? localStorage.getItem("theme")
+      : darkQuery.matches
+  );
+  const darkQuery = window.matchMedia("(prefers-color-scheme: dark)");
 
-  useEffect(() => {
-    if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
-      setTheme("dark");
-    } else {
-      setTheme("light");
-    }
-  }, []);
-
-  useEffect(() => {
-    if (theme === "dark") {
+  function onWindowMatch() {
+    if (
+      localStorage.theme === "dark" ||
+      (!("theme" in localStorage) && darkQuery.matches)
+    ) {
       document.documentElement.classList.add("dark");
     } else {
       document.documentElement.classList.remove("dark");
     }
+  }
+
+  onWindowMatch();
+
+  useEffect(() => {
+    if (theme === "dark") {
+      document.documentElement.classList.add("dark");
+      localStorage.setItem("theme", "dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+      localStorage.setItem("theme", "light");
+    }
   }, [theme]);
+
+  darkQuery.addEventListener("change", (e) => {
+    if (e.matches) {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+  });
 
   const handleThemeSwitch = () => {
     setTheme(theme === "dark" ? "light" : "dark");
   };
 
   return (
-    <main className="bg-white dark:bg-neutral-800">
+    <main className="bg-text-neutral-100 text-neutral-800 dark:bg-neutral-800 dark:text-neutral-100 duration-100">
       <Button onClick={handleThemeSwitch}>Mode Switch</Button>
 
       <Routes>
