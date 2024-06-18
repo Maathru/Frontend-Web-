@@ -5,6 +5,7 @@ import Signup from "./pages/signup";
 import Landing from "./pages/landing";
 import Drug from "./pages/drug";
 import { Button } from "flowbite-react";
+import { Route, Routes } from "react-router-dom";
 
 function App() {
   const [theme, setTheme] = useState(null);
@@ -30,10 +31,16 @@ function App() {
   };
 
   return (
-    <div className="bg-white dark:bg-neutral-800">
+    <main className="bg-white dark:bg-neutral-800">
       <Button onClick={handleThemeSwitch}>Mode Switch</Button>
-      <Login />
-    </div>
+
+      <Routes>
+        <Route path="/" element={<Landing />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/drug" element={<Drug />} />
+      </Routes>
+    </main>
   );
 }
 
