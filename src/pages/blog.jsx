@@ -1,5 +1,4 @@
 import React from "react";
-import Navbar from "../components/navbar";
 import Pagination from "../components/pagination";
 import Footer from "../components/footer";  
 import { MdOutlineArrowBackIosNew } from "react-icons/md";
@@ -20,7 +19,6 @@ const blog = () => {
   return (
     <div className="bg-white">
       <div>
-        <Navbar />
         <div className="md:mt-10 mt-5 md:ml-10 ml-3 text-3xl font-semibold flex items-center text-black">
           <MdOutlineArrowBackIosNew />
           <p className="ml-3 text-4xl"> Blogs</p>
