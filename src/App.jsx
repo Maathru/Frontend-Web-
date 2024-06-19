@@ -59,10 +59,7 @@ function App() {
 
   return (
     <main className="bg-text-neutral-100 text-neutral-800 dark:bg-neutral-800 dark:text-neutral-100 duration-100">
-      <Navbar />
-
-      <Button onClick={handleThemeSwitch}>Change Mode</Button>
-      <LanguageSelector />
+      <Navbar themeFunction={handleThemeSwitch} />
 
       <Routes>
         <Route path="/" element={<Landing />} />
