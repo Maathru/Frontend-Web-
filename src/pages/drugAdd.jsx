@@ -1,6 +1,20 @@
-import { FormControl, FormHelperText, Input, InputLabel } from "@mui/material";
+import React, { useState } from "react";
+import { TextField } from "@mui/material";
+import { HiChevronLeft } from "react-icons/hi";
 
 const drugAdd = () => {
+  const [name, setName] = useState("");
+  const [nameError, setNameError] = useState(false);
+
+  const handleNameChange = (e) => {
+    setName(e.target.value);
+    if (e.target.validity.valid) {
+      setNameError(false);
+    } else {
+      setNameError(true);
+    }
+  };
+
   return (
     <div>
       <div>
@@ -8,18 +22,21 @@ const drugAdd = () => {
           <HiChevronLeft className="text-5xl inline" />
           Drug Management
         </div>
-      </div>
 
-      {/* <FormControl variant="standard">
-        <InputLabel htmlFor="component-error">Name</InputLabel>
-        <Input
-          id="component-error"
-          defaultValue=""
-          aria-describedby="component-error-text"
-          sx
-        />
-        <FormHelperText id="component-error-text"></FormHelperText>
-      </FormControl> */}
+        <div className="grid">
+          <div className="bg-[#FAEDFF] w-11/12 h-">
+            <TextField
+              required
+              value={name}
+              onChange={handleNameChange}
+              error={nameError}
+              label="Name"
+              helperText={nameError ? "Cannot be empty" : ""}
+            />
+            
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
