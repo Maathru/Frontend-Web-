@@ -7,6 +7,8 @@ import Drug from "./pages/drug";
 import DrugAdd from "./pages/drugAdd";
 import { Button } from "flowbite-react";
 import { Route, Routes } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+import LanguageSelector from "./components/language-selector";
 
 function App() {
   const [theme, setTheme] = useState(
@@ -14,6 +16,8 @@ function App() {
       ? localStorage.getItem("theme")
       : darkQuery.matches
   );
+  const { t } = useTranslation("common");
+
   const darkQuery = window.matchMedia("(prefers-color-scheme: dark)");
 
   function onWindowMatch() {
@@ -53,7 +57,8 @@ function App() {
 
   return (
     <main className="bg-text-neutral-100 text-neutral-800 dark:bg-neutral-800 dark:text-neutral-100 duration-100">
-      <Button onClick={handleThemeSwitch}>Mode Switch</Button>
+      <Button onClick={handleThemeSwitch}>Change Mode</Button>
+      <LanguageSelector />
 
       <Routes>
         <Route path="/" element={<Landing />} />
