@@ -59,6 +59,8 @@ function App() {
 
   return (
     <main className="bg-text-neutral-100 text-neutral-800 dark:bg-neutral-800 dark:text-neutral-100 duration-100">
+      <Navbar />
+
       <Button onClick={handleThemeSwitch}>Change Mode</Button>
       <LanguageSelector />
 
@@ -67,7 +69,8 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/drug" element={<Drug />} />
-        <Route path="/drugAdd" element={<DrugAdd />} />
+        <Route path="/drug/add" element={<DrugAdd />} />
+        <Route path="/blog" element={<Blog />} />
       </Routes>
     </main>
   );
