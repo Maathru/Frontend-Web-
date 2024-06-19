@@ -11,14 +11,22 @@ import { useTranslation } from "react-i18next";
 import LanguageSelector from "./components/language-selector";
 
 function App() {
+  const darkQuery = window.matchMedia("(prefers-color-scheme: dark)");
+
+  darkQuery.addEventListener("change", (e) => {
+    if (e.matches) {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+  });
+
   const [theme, setTheme] = useState(
     localStorage.getItem("theme")
       ? localStorage.getItem("theme")
       : darkQuery.matches
   );
   const { t } = useTranslation("common");
-
-  const darkQuery = window.matchMedia("(prefers-color-scheme: dark)");
 
   function onWindowMatch() {
     if (
@@ -42,14 +50,6 @@ function App() {
       localStorage.setItem("theme", "light");
     }
   }, [theme]);
-
-  darkQuery.addEventListener("change", (e) => {
-    if (e.matches) {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-    }
-  });
 
   const handleThemeSwitch = () => {
     setTheme(theme === "dark" ? "light" : "dark");

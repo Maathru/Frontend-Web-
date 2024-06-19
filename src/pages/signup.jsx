@@ -12,12 +12,12 @@ const signup = () => {
   const { t } = useTranslation("signup");
   return (
     <div className="w-screen">
+      <div className="flex md:p-12 justify-center">
       <img
         src={signupImg}
         alt=""
-        className="absolute xl:w-5/12 lg:w-4/12 xl:left-56 xl:top-24 lg:left-48 lg:top-64 hidden lg:block"
+        className="absolute xl:w-5/12 lg:w-4/12 xl:left-56 xl:top-56 lg:left-48 lg:top-64 hidden lg:block"
       />
-      <div className="flex md:p-12 justify-center">
         <div className="bg-[#620084] rounded-l-2xl w-4/12 shadow-sm hidden lg:block ">
           <p className="w-48 text-center m-8 text-white">{t("image-text")}</p>
         </div>
