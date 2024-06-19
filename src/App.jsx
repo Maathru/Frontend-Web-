@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import "./App.css";
 import Login from "./pages/login";
 import Signup from "./pages/signup";
+import Blog from "./pages/blog";
+import Navbar from "./components/navbar";
 import Landing from "./pages/landing";
 import Drug from "./pages/drug";
 import DrugAdd from "./pages/drugAdd";
