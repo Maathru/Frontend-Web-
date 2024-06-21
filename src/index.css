@@ -77,3 +77,37 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* width */
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f3f3f3;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #adadad;
+  border-radius: 5px;
+}
+
+.dark {
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #181818;
+  }
+
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #6e6e6e;
+    border-radius: 5px;
+  }
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
