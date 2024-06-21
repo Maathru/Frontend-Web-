@@ -7,6 +7,7 @@ import Navbar from "./components/navbar";
 import Landing from "./pages/landing";
 import Drug from "./pages/drug";
 import DrugAdd from "./pages/drugAdd";
+import Clinic from "./pages/clinic";
 import { Button } from "flowbite-react";
 import { Route, Routes } from "react-router-dom";
 import { useTranslation } from "react-i18next";
@@ -58,16 +59,17 @@ function App() {
   };
 
   return (
-    <main className="bg-text-neutral-100 text-neutral-800 dark:bg-neutral-800 dark:text-neutral-100 duration-100">
-      <Navbar themeFunction={handleThemeSwitch} />
+    <main className="bg-text-neutral-100 text-neutral-800 dark:bg-neutral-800 dark:text-neutral-100 duration-100 scroll-smooth focus:scroll-auto">
+      <Navbar themeFunction={handleThemeSwitch} mode={theme} />
 
       <Routes>
         <Route path="/" element={<Landing />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
-        <Route path="/drug" element={<Drug />} />
-        <Route path="/drug/add" element={<DrugAdd />} />
-        <Route path="/blog" element={<Blog />} />
+        <Route path="/drugs" element={<Drug />} />
+        <Route path="/drugs/add" element={<DrugAdd />} />
+        <Route path="/blogs" element={<Blog />} />
+        <Route path="/clinics" element={<Clinic />} />
       </Routes>
     </main>
   );
