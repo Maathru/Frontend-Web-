@@ -8,7 +8,7 @@ import Landing from "./pages/landing";
 import Drug from "./pages/drug";
 import DrugAdd from "./pages/drugAdd";
 import Clinic from "./pages/clinic";
-import { Button } from "flowbite-react";
+import Dashboard from "./pages/user/dashboard";
 import { Route, Routes } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import LanguageSelector from "./components/language-selector";
@@ -70,6 +70,7 @@ function App() {
         <Route path="/drugs/add" element={<DrugAdd />} />
         <Route path="/blogs" element={<Blog />} />
         <Route path="/clinics" element={<Clinic />} />
+        <Route path="/user" element={<Dashboard />} />
       </Routes>
     </main>
   );
