@@ -59,7 +59,7 @@ function App() {
   };
 
   return (
-    <main className="bg-text-neutral-100 text-neutral-800 dark:bg-neutral-800 dark:text-neutral-100 duration-100 scroll-smooth focus:scroll-auto">
+    <main className="bg-neutral-100 text-neutral-800 dark:bg-neutral-800 dark:text-neutral-100 duration-100 scroll-smooth focus:scroll-auto">
       <Navbar themeFunction={handleThemeSwitch} mode={theme} />
 
       <Routes>
