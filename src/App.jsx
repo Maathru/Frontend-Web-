@@ -12,6 +12,7 @@ import Dashboard from "./pages/user/dashboard";
 import { Route, Routes } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import LanguageSelector from "./components/language-selector";
+import Footer from "./components/footer";
 
 function App() {
   const darkQuery = window.matchMedia("(prefers-color-scheme: dark)");
@@ -72,6 +73,8 @@ function App() {
         <Route path="/clinics" element={<Clinic />} />
         <Route path="/user" element={<Dashboard />} />
       </Routes>
+
+      <Footer />
     </main>
   );
 }
