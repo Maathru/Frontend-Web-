@@ -3,7 +3,7 @@ import dashboardImage from "../../assets/user/dashboardImage.png";
 import blog from "../../assets/user/blog.png";
 import forum from "../../assets/user/forum.png";
 import vaccine from "../../assets/user/vaccine.png";
-import WrapperCard from "@/components/wrapperCard";
+import WrapperCard from "@/components/userComponents/wrapperCard";
 import { IoIosWarning } from "react-icons/io";
 import { IoMdCloseCircle } from "react-icons/io";
 import Box from "@mui/material/Box";

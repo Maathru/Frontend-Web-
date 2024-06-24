@@ -27,7 +27,6 @@ const Navbar = ({ themeFunction, mode }) => {
   };
 
   const setLanguage = () => {
-    console.log(i18n.language);
     if (i18n.language === "sin") {
       if (mode === "dark") {
         setThemeImage(enDark);
