@@ -13,6 +13,7 @@ import { Route, Routes } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import LanguageSelector from "./components/language-selector";
 import Footer from "./components/footer";
+import Eligible from "./pages/user/eligible";
 
 function App() {
   const darkQuery = window.matchMedia("(prefers-color-scheme: dark)");
@@ -72,6 +73,7 @@ function App() {
         <Route path="/blogs" element={<Blog />} />
         <Route path="/clinics" element={<Clinic />} />
         <Route path="/user" element={<Dashboard />} />
+        <Route path="/eligible" element={<Eligible />} />
       </Routes>
 
       <Footer />

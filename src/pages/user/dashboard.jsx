@@ -15,6 +15,7 @@ import { useState } from "react";
 import { HiChatBubbleLeftRight } from "react-icons/hi2";
 import { LuPhoneCall } from "react-icons/lu";
 import { useTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
 
 const provinces = [
   "Western",
@@ -30,6 +31,7 @@ const provinces = [
 
 const Dashboard = () => {
   const [province, setProvince] = useState("");
+  const [showBanner, setShowBanner] = useState(true);
 
   const handleChange = (event) => {
     setProvince(event.target.value);
@@ -87,23 +89,32 @@ const Dashboard = () => {
 
       {/* Eligible */}
       <div className="bg-box-purple rounded-xl sm:m-8 lg:mx-40 relative shadow-md">
-        <div
-          className="bg-red-700 h-14 ps-4 w-60 rounded-lg flex items-center absolute -top-5"
-          role="alert"
-        >
-          <IoIosWarning size={35} color="white" />
-          <p className="text-white ps-3 pe-3">{t("alert")}</p>
-          <IoMdCloseCircle className="absolute -top-2 -right-2" size={16} />
-        </div>
+        {/* Banner */}
+        {showBanner && (
+          <div
+            className="bg-red-700 h-14 ps-4 w-60 rounded-lg flex items-center absolute -top-5"
+            role="alert"
+          >
+            <IoIosWarning size={35} color="white" />
+            <p className="text-white ps-3 pe-3">{t("alert")}</p>
+            <IoMdCloseCircle
+              className="absolute -top-2 -right-2 cursor-pointer"
+              size={16}
+              onClick={() => setShowBanner(false)}
+            />
+          </div>
+        )}
 
         <div className="flex flex-col items-center">
           <h1 className="text-xl sm:text-3xl font-medium mt-16 px-8">
             {t("title3")}
           </h1>
           <p className="text-sm sm:text-xl m-4">{t("description3")}</p>
-          <Button className="bg-primary-purple mt-4 mb-10">
-            {t("button2")}
-          </Button>
+          <Link to="/eligible">
+            <Button className="bg-primary-purple mt-4 mb-10">
+              {t("button2")}
+            </Button>
+          </Link>
         </div>
       </div>
 
