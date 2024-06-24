@@ -4,6 +4,7 @@ import Footer from "../components/footer";
 import { MdOutlineArrowBackIosNew } from "react-icons/md";
 import { MdCreate } from "react-icons/md";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import BlogImage from "../assets/blog/blog-image.png";
 import RecentBlogImage1 from "../assets/blog/recent-blog-image-1.png";
 import RecentBlogImage2 from "../assets/blog/recent-blog-image-2.png";
@@ -17,9 +18,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 
-import { Badge } from "@/components/ui/badge";
-
-const cardColor = "bg-pink-100 dark:bg-fuchsia-900";
+const cardColor = "bg-pink-100 dark:bg-[#251F28] hover:dark:bg-[#1D1A1F]";
 const badgeColor = "bg-fuchsia-200 dark:bg-fuchsia-300 hover:dark:bg-fuchsia-100 dark:text-neutral-800";
 const readMoreColor = "text-[#9c3cc1] dark:text-neutral-300";
 
