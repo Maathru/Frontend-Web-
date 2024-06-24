@@ -40,13 +40,13 @@ const Dashboard = () => {
   return (
     <div className="container my-10 font-poppins">
       {/* Hero section */}
-      <div className="flex">
-        <div className="w-3/5 flex flex-col">
+      <div className="flex lg:justify-center">
+        <div className="lg:w-3/5 flex flex-col items-center lg:items-start">
           <h1 className="text-3xl">{t("greeting")} Buddhika</h1>
-          <p className="text-xl mt-8 ms-8 tracking-wider">{t("heading")}</p>
+          <p className="text-xl mt-8 sm:ms-8 tracking-wider">{t("heading")}</p>
           <div className="w-10/12">
-            <p className="text-xl my-8 mx-14 text-center">{t("title1")}</p>
-            <p className="text-justify mx-14 tracking-wider">
+            <p className="text-xl my-8 sm:mx-14 text-center">{t("title1")}</p>
+            <p className="text-justify sm:mx-14 tracking-wider">
               {t("description1")}
             </p>
             <div className="flex items-center mt-12">
@@ -56,7 +56,7 @@ const Dashboard = () => {
             </div>
           </div>
         </div>
-        <div className="w-2/5 flex items-stretch">
+        <div className="w-2/5 lg:flex items-stretch hidden">
           <img
             className="object-cover h-full"
             src={dashboardImage}
@@ -67,13 +67,13 @@ const Dashboard = () => {
 
       {/* Service section */}
       <div className="mt-14">
-        <div className="flex flex-col items-center px-24">
+        <div className="flex flex-col items-center sm:px-24">
           <h1 className="text-3xl font-medium">{t("title2")}</h1>
           <p className="mt-12 tracking-wider text-center">
             {t("description2")}
           </p>
           {/* Cards */}
-          <div className="flex gap-10 mt-10 mb-10">
+          <div className="flex flex-wrap gap-10 mt-10 mb-10">
             <WrapperCard title={t("card1Title")} url={"/blogs"} image={blog} />
             <WrapperCard title={t("card2Title")} url={"/forum"} image={forum} />
             <WrapperCard
@@ -86,7 +86,7 @@ const Dashboard = () => {
       </div>
 
       {/* Eligible */}
-      <div className="bg-box-purple rounded-xl m-8 mx-40 relative shadow-md">
+      <div className="bg-box-purple rounded-xl sm:m-8 lg:mx-40 relative shadow-md">
         <div
           className="bg-red-700 h-14 ps-4 w-60 rounded-lg flex items-center absolute -top-5"
           role="alert"
@@ -97,8 +97,10 @@ const Dashboard = () => {
         </div>
 
         <div className="flex flex-col items-center">
-          <h1 className="text-3xl font-medium mt-16 px-8">{t("title3")}</h1>
-          <p className="text-xl m-4">{t("description3")}</p>
+          <h1 className="text-xl sm:text-3xl font-medium mt-16 px-8">
+            {t("title3")}
+          </h1>
+          <p className="text-sm sm:text-xl m-4">{t("description3")}</p>
           <Button className="bg-primary-purple mt-4 mb-10">
             {t("button2")}
           </Button>
@@ -106,7 +108,7 @@ const Dashboard = () => {
       </div>
 
       {/* Contact */}
-      <div className="mt-14 mx-40">
+      <div className="mt-14 lg:mx-40">
         <div className="flex flex-col items-center">
           <h1 className="text-3xl font-medium">{t("title4")}</h1>
         </div>
@@ -114,7 +116,7 @@ const Dashboard = () => {
 
         {/* Dropdown container */}
         <div className="flex flex-col items-center">
-          <div className="flex items-center mt-8 gap-14">
+          <div className="flex flex-wrap items-center mt-8 gap-5 sm:gap-14">
             {/* province */}
             <Box sx={{ minWidth: 240, maxWidth: 300 }}>
               <FormControl fullWidth>
@@ -179,11 +181,11 @@ const Dashboard = () => {
           </div>
         </div>
 
-        <div className="c rounded-xl m-8 shadow-md">
-          <div className="flex">
-            <div className="w-1/2 m-8">
-              <h2 className="text-xl font-medium">{t("midwife")}</h2>
-              <div className="mx-8 mt-5">
+        <div className="bg-box-purple c rounded-xl m-8 shadow-md mx-0">
+          <div className="flex flex-wrap sm:flex-nowrap">
+            <div className="sm:w-1/2 m-8">
+              <h2 className="text-xl font-medium px-2">{t("midwife")}</h2>
+              <div className="mx-8 mt-5 text-sm md:text-base">
                 <div className="flex my-3 gap-2">
                   <p>{t("name")}</p>
                   <p>Buddhika Senanayake</p>
@@ -198,16 +200,16 @@ const Dashboard = () => {
                 </div>
               </div>
             </div>
-            <div className="w-1/2 m-8">
+            <div className="sm:w-1/2 m-8">
               <h2 className="text-xl font-medium">{t("contact")}</h2>
 
-              <Button className="bg-primary-purple mx-8 mt-5">
+              <Button className="bg-primary-purple sm:mx-8 mt-5">
                 <HiChatBubbleLeftRight size={25} color="white" />
                 <p className="text-white ps-2 pe-3">{t("message")}</p>
               </Button>
               <br />
 
-              <Button className="bg-primary-purple mx-8 mt-4">
+              <Button className="bg-primary-purple sm:mx-8 mt-4">
                 <LuPhoneCall size={25} color="white" />
                 <p className="text-white ps-2 pe-3">{t("call")}</p>
               </Button>

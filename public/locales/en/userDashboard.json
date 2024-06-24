@@ -19,9 +19,9 @@
   "dropdown2": "Select the District",
   "dropdown3": "Select the Area",
   "midwife": "Midwife details of your area:",
-  "name": "Name :",
-  "email": "Email :",
-  "phone": "Telephone Number :",
+  "name": "Name:",
+  "email": "Email:",
+  "phone": "Telephone Number:",
   "contact": "Contact now:",
   "message": "Message",
   "call": "Call Now"
