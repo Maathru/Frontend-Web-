@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 
 const footer = () => {
   return (
-    <div className="mx-auto w-[95%] text-sm my-3 mt-5">
-        <div className="flex justify-around md:justify-between">
+    <div className="mx-auto w-[95%] text-sm my-3 mt-5 mb-0">
+        <div className="flex justify-around md:justify-between pb-8">
           <div>
             <p>© 2024 Maathru Inc.</p>
           </div>

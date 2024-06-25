@@ -12,6 +12,7 @@ import { Button } from "flowbite-react";
 import { Route, Routes } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import LanguageSelector from "./components/language-selector";
+import Article from "./pages/article";
 
 function App() {
   const darkQuery = window.matchMedia("(prefers-color-scheme: dark)");
@@ -59,7 +60,7 @@ function App() {
   };
 
   return (
-    <main className="bg-text-neutral-100 text-neutral-800 dark:bg-neutral-800 dark:text-neutral-100 duration-100 scroll-smooth focus:scroll-auto">
+    <main className="bg-neutral-100 text-neutral-800 dark:bg-neutral-800 dark:text-neutral-100 duration-100 scroll-smooth focus:scroll-auto">
       <Navbar themeFunction={handleThemeSwitch} mode={theme} />
 
       <Routes>
@@ -69,6 +70,7 @@ function App() {
         <Route path="/drugs" element={<Drug />} />
         <Route path="/drugs/add" element={<DrugAdd />} />
         <Route path="/blogs" element={<Blog />} />
+        <Route path="/blogs/article" element={<Article />} />
         <Route path="/clinics" element={<Clinic />} />
       </Routes>
     </main>
