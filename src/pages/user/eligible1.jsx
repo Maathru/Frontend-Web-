@@ -5,22 +5,36 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import EligibleCardBoolInput from "@/components/userComponents/eligibleCardBoolInput";
 import MainDetailsInput from "@/components/userComponents/mainDetailsInput";
-import { Pagination } from "@mui/material";
+import { useState } from "react";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination";
 
 const conditions = [
-  "Low Red Blood cells (Anemia)",
-  "Heart disease or rheumatism from birth",
-  "Diabetics",
-  "High Blood Pressure",
-  "High Blood Cholesterol level",
-  "Chest Tightness Wheezing",
-  "Thyroid related Diseases",
-  "Dental problems",
-  "Mental illness",
-  "Diseases with Long-term complication",
-  "Food poisoning",
-  "Use of long term medication",
-  "Any other Major surgeries",
+  { title: "Low Red Blood cells (Anemia)", placeholder: "Other Details" },
+  {
+    title: "Heart disease or rheumatism from birth",
+    placeholder: "Other Details",
+  },
+  { title: "Diabetics", placeholder: "Other Details" },
+  { title: "High Blood Pressure", placeholder: "Other Details" },
+  { title: "High Blood Cholesterol level", placeholder: "Other Details" },
+  { title: "Chest Tightness Wheezing", placeholder: "Other Details" },
+  { title: "Thyroid related Diseases", placeholder: "Other Details" },
+  { title: "Dental problems", placeholder: "Other Details" },
+  { title: "Mental illness", placeholder: "Other Details" },
+  {
+    title: "Diseases with Long-term complication",
+    placeholder: "Other Details",
+  },
+  { title: "Food poisoning", placeholder: "Other Details" },
+  { title: "Use of long term medication", placeholder: "Other Details" },
+  { title: "Any other Major surgeries", placeholder: "Other Details" },
 ];
 
 const details = [
@@ -43,6 +57,12 @@ const details = [
 
 const Eligible = () => {
   const navigate = useNavigate();
+
+  const [page, setPage] = useState(1);
+  const handleChange = (event, value) => {
+    setPage(value);
+    console.log(event.target);
+  };
 
   return (
     <div className="container my-10 font-poppins">
@@ -161,7 +181,8 @@ const Eligible = () => {
 
           {conditions.map((condition, index) => (
             <EligibleCardBoolInput
-              title={condition}
+              title={condition.title}
+              placeholder={condition.placeholder}
               index={index}
               key={index}
             />
@@ -170,12 +191,30 @@ const Eligible = () => {
       </div>
 
       <div className="flex w-full mt-24">
-        <Pagination
-          size="large"
-          className="mx-auto"
-          count={4}
-          shape="rounded"
-        />
+        <Pagination>
+          <PaginationContent>
+            <PaginationItem>
+              <PaginationPrevious to="#" />
+            </PaginationItem>
+            <PaginationItem>
+              <PaginationLink to="#" isActive>
+                1
+              </PaginationLink>
+            </PaginationItem>
+            <PaginationItem>
+              <PaginationLink to="/eligible/2">2</PaginationLink>
+            </PaginationItem>
+            <PaginationItem>
+              <PaginationLink to="/eligible/3">3</PaginationLink>
+            </PaginationItem>
+            <PaginationItem>
+              <PaginationLink to="/eligible/4">4</PaginationLink>
+            </PaginationItem>
+            <PaginationItem>
+              <PaginationNext to="/eligible/2" />
+            </PaginationItem>
+          </PaginationContent>
+        </Pagination>
       </div>
     </div>
   );

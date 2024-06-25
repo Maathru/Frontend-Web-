@@ -11,9 +11,9 @@ import Clinic from "./pages/clinic";
 import Dashboard from "./pages/user/dashboard";
 import { Route, Routes } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import LanguageSelector from "./components/language-selector";
 import Footer from "./components/footer";
-import Eligible from "./pages/user/eligible";
+import Eligible1 from "./pages/user/eligible1";
+import Eligible2 from "./pages/user/eligible2";
 
 function App() {
   const darkQuery = window.matchMedia("(prefers-color-scheme: dark)");
@@ -73,7 +73,8 @@ function App() {
         <Route path="/blogs" element={<Blog />} />
         <Route path="/clinics" element={<Clinic />} />
         <Route path="/user" element={<Dashboard />} />
-        <Route path="/eligible" element={<Eligible />} />
+        <Route path="/eligible/1" element={<Eligible1 />} />
+        <Route path="/eligible/2" element={<Eligible2 />} />
       </Routes>
 
       <Footer />
