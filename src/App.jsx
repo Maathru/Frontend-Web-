@@ -8,10 +8,12 @@ import Landing from "./pages/landing";
 import Drug from "./pages/drug";
 import DrugAdd from "./pages/drugAdd";
 import Clinic from "./pages/clinic";
+import Forum from "./pages/forum";
 import { Button } from "flowbite-react";
 import { Route, Routes } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import LanguageSelector from "./components/language-selector";
+import AskQuestion from "./pages/question";
 
 function App() {
   const darkQuery = window.matchMedia("(prefers-color-scheme: dark)");
@@ -70,6 +72,8 @@ function App() {
         <Route path="/drugs/add" element={<DrugAdd />} />
         <Route path="/blogs" element={<Blog />} />
         <Route path="/clinics" element={<Clinic />} />
+        <Route path="/forum" element={<Forum />} />
+        <Route path="/forum/askquestion" element={<AskQuestion />} />
       </Routes>
     </main>
   );
