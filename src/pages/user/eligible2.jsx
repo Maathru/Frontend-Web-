@@ -204,10 +204,10 @@ const Eligible2 = () => {
         <Pagination>
           <PaginationContent>
             <PaginationItem>
-              <PaginationPrevious to="/eligible" />
+              <PaginationPrevious to="/eligible/1" />
             </PaginationItem>
             <PaginationItem>
-              <PaginationLink to="/eligible">1</PaginationLink>
+              <PaginationLink to="/eligible/1">1</PaginationLink>
             </PaginationItem>
             <PaginationItem>
               <PaginationLink to="#" isActive>

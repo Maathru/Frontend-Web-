@@ -14,6 +14,7 @@ import { useTranslation } from "react-i18next";
 import Footer from "./components/footer";
 import Eligible1 from "./pages/user/eligible1";
 import Eligible2 from "./pages/user/eligible2";
+import Eligible3 from "./pages/user/eligible3";
 
 function App() {
   const darkQuery = window.matchMedia("(prefers-color-scheme: dark)");
@@ -75,6 +76,7 @@ function App() {
         <Route path="/user" element={<Dashboard />} />
         <Route path="/eligible/1" element={<Eligible1 />} />
         <Route path="/eligible/2" element={<Eligible2 />} />
+        <Route path="/eligible/3" element={<Eligible3 />} />
       </Routes>
 
       <Footer />

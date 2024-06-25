@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const yesNoButton = () => {
+const YesNoButton = () => {
   const [isChecked, setIsChecked] = useState(false);
 
   const handleCheckboxChange = () => {
@@ -37,4 +37,4 @@ const yesNoButton = () => {
   );
 };
 
-export default yesNoButton;
+export default YesNoButton;
