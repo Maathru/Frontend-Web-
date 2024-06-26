@@ -7,7 +7,10 @@ import Navbar from "./components/navbar";
 import Landing from "./pages/landing";
 import Drug from "./pages/drug";
 import DrugAdd from "./pages/drugAdd";
-import Clinic from "./pages/clinic";
+import Clinic from "./pages/midwife/clinic";
+import ViewClinics from "./pages/midwife/viewClinics";
+import ClinicDates from "./pages/midwife/clinicDates";
+import ClinicReports from "./pages/midwife/clinicReports";
 import { Button } from "flowbite-react";
 import { Route, Routes } from "react-router-dom";
 import { useTranslation } from "react-i18next";
@@ -70,6 +73,9 @@ function App() {
         <Route path="/drugs/add" element={<DrugAdd />} />
         <Route path="/blogs" element={<Blog />} />
         <Route path="/clinics" element={<Clinic />} />
+        <Route path="/clinics/view" element={<ViewClinics />} />
+        <Route path="/clinics/dates" element={<ClinicDates />} />
+        <Route path="/clinics/reports" element={<ClinicReports />} />
       </Routes>
     </main>
   );
