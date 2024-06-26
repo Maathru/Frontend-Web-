@@ -15,6 +15,7 @@ import Footer from "./components/footer";
 import Eligible1 from "./pages/user/eligible1";
 import Eligible2 from "./pages/user/eligible2";
 import Eligible3 from "./pages/user/eligible3";
+import Eligible4 from "./pages/user/eligible4";
 
 function App() {
   const darkQuery = window.matchMedia("(prefers-color-scheme: dark)");
@@ -77,6 +78,7 @@ function App() {
         <Route path="/eligible/1" element={<Eligible1 />} />
         <Route path="/eligible/2" element={<Eligible2 />} />
         <Route path="/eligible/3" element={<Eligible3 />} />
+        <Route path="/eligible/4" element={<Eligible4 />} />
       </Routes>
 
       <Footer />

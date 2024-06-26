@@ -7,7 +7,7 @@ import { MdNotifications } from "react-icons/md";
 import { MdMenu } from "react-icons/md";
 import { MdClose } from "react-icons/md";
 import { useTranslation } from "react-i18next";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useLocation } from "react-router-dom";
 import enDark from "../assets/nav/en-dark.png";
 import enLight from "../assets/nav/en-light.png";
 import sinDark from "../assets/nav/sin-dark.png";
@@ -18,7 +18,8 @@ const Navbar = ({ themeFunction, mode }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [themeImage, setThemeImage] = useState(enDark);
   const [handleTheme, setHandleTheme] = useState(true);
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState("eligible");
+  const { pathname } = useLocation();
 
   const { i18n } = useTranslation();
 
@@ -148,6 +149,18 @@ const Navbar = ({ themeFunction, mode }) => {
                   Analysis
                 </NavLink>
               </>
+            )}
+            {user === "eligible" && (
+              <NavLink
+                to="/eligible/1"
+                className={({ isActive }) =>
+                  /^\/eligible(\/.*)?$/.test(pathname)
+                    ? "text-[#9C33C1]"
+                    : "hover:text-gray-500 text-black dark:text-gray-100"
+                }
+              >
+                Recovery Checklist
+              </NavLink>
             )}
           </div>
         </div>

@@ -10,6 +10,7 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
+import { useNavigate } from "react-router-dom";
 
 const conditions = [
   { title: "High blood pressure", placeholder: "IF yes, Who?" },
@@ -54,6 +55,8 @@ const nutrition = [
 ];
 
 const Eligible3 = () => {
+  const navigate = useNavigate();
+
   return (
     <div className="container my-10 font-poppins">
       <div className="flex items-center">
@@ -86,7 +89,7 @@ const Eligible3 = () => {
         <div className="grid grid-cols-4 gap-4 items-center mt-4">
           <p></p>
           <p className="text-center">Woman</p>
-          <p className="text-center">Men</p>
+          <p className="text-center">Man</p>
           <p></p>
         </div>
 
@@ -116,7 +119,7 @@ const Eligible3 = () => {
         <div className="grid grid-cols-4 gap-4 items-center mt-4">
           <p></p>
           <p className="text-center">Woman</p>
-          <p className="text-center">Men</p>
+          <p className="text-center">Man</p>
           <p></p>
         </div>
 
