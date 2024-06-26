@@ -80,7 +80,7 @@ const Navbar = ({ themeFunction, mode }) => {
               to="/"
               className={({ isActive }) =>
                 isActive
-                  ? "text-[#9C33C1]"
+                  ? "text-[#9C33C1] dark:text-[#ff8de7]"
                   : "hover:text-gray-500 text-black dark:text-gray-100"
               }
             >
@@ -90,7 +90,7 @@ const Navbar = ({ themeFunction, mode }) => {
               to="/blogs"
               className={({ isActive }) =>
                 isActive
-                  ? "text-[#9C33C1]"
+                  ? "text-[#9C33C1] dark:text-[#ff8de7]"
                   : "hover:text-gray-500 text-black dark:text-gray-100"
               }
             >
@@ -100,7 +100,7 @@ const Navbar = ({ themeFunction, mode }) => {
               to="/forum"
               className={({ isActive }) =>
                 isActive
-                  ? "text-[#9C33C1]"
+                  ? "text-[#9C33C1] dark:text-[#ff8de7]"
                   : "hover:text-gray-500 text-black dark:text-gray-100"
               }
             >
@@ -112,7 +112,7 @@ const Navbar = ({ themeFunction, mode }) => {
                   to="/clinics"
                   className={({ isActive }) =>
                     isActive
-                      ? "text-[#9C33C1]"
+                      ? "text-[#9C33C1] dark:text-[#ff8de7]"
                       : "hover:text-gray-500 text-black dark:text-gray-100"
                   }
                 >
@@ -122,7 +122,7 @@ const Navbar = ({ themeFunction, mode }) => {
                   to="/midwife"
                   className={({ isActive }) =>
                     isActive
-                      ? "text-[#9C33C1]"
+                      ? "text-[#9C33C1] dark:text-[#ff8de7]"
                       : "hover:text-gray-500 text-black dark:text-gray-100"
                   }
                 >
@@ -132,7 +132,7 @@ const Navbar = ({ themeFunction, mode }) => {
                   to="/drugs"
                   className={({ isActive }) =>
                     isActive
-                      ? "text-[#9C33C1]"
+                      ? "text-[#9C33C1] dark:text-[#ff8de7]"
                       : "hover:text-gray-500 text-black dark:text-gray-100"
                   }
                 >
@@ -142,7 +142,7 @@ const Navbar = ({ themeFunction, mode }) => {
                   to="/analytics"
                   className={({ isActive }) =>
                     isActive
-                      ? "text-[#9C33C1]"
+                      ? "text-[#9C33C1] dark:text-[#ff8de7]"
                       : "hover:text-gray-500 text-black dark:text-gray-100"
                   }
                 >
@@ -198,12 +198,12 @@ const Navbar = ({ themeFunction, mode }) => {
           ) : (
             <>
               <Link to="/signup">
-                <Button className="ms-5 bg-white text-[#9C33C1]">
+                <Button className="md:ms-5 ms-1 bg-white text-[#9C33C1]">
                   Sign Up
                 </Button>
               </Link>
               <Link to="/login">
-                <Button className="bg-[#9C33C1] dark:text-black text-gray-100">
+                <Button className="bg-[#9C33C1] dark:text-white text-gray-100">
                   Log In
                 </Button>
               </Link>

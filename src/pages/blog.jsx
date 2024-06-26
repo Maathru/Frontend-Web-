@@ -4,6 +4,7 @@ import Footer from "../components/footer";
 import { MdOutlineArrowBackIosNew } from "react-icons/md";
 import { MdCreate } from "react-icons/md";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import BlogImage from "../assets/blog/blog-image.png";
 import RecentBlogImage1 from "../assets/blog/recent-blog-image-1.png";
 import RecentBlogImage2 from "../assets/blog/recent-blog-image-2.png";
@@ -17,25 +18,27 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 
-import { Badge } from "@/components/ui/badge";
+const cardColor = "bg-pink-100 dark:bg-[#251F28] hover:dark:bg-[#1D1A1F]";
+const badgeColor = "bg-fuchsia-200 dark:bg-fuchsia-300 hover:dark:bg-fuchsia-100 dark:text-neutral-800";
+const readMoreColor = "text-[#9c3cc1] dark:text-neutral-300";
 
 const blog = () => {
   return (
-    <div className="bg-white">
+    <div className="">
       <div>
-        <div className="md:mt-10 mt-5 md:ml-10 ml-3 text-3xl font-semibold flex items-center text-black">
+        <div className="md:mt-10 mt-5 md:ml-10 ml-3 text-3xl font-semibold flex items-center text-neutral-800 dark:text-neutral-100">
           <MdOutlineArrowBackIosNew />
           <p className="ml-3 text-4xl"> Blogs</p>
         </div>
       </div>
 
-      <p className="md:mt-12 mt-8 ml-6 text-3xl font-semibold text-black">
+      <p className="md:mt-12 mt-8 ml-6 text-3xl font-semibold text-neutral-800 dark:text-neutral-100">
         Recent Blogs
       </p>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 md:gap-8 gap-4 md:mt-8 mt-4 mx-4">
+      <div className="grid grid-cols-1 lg:grid-cols-2 md:gap-8 gap-4 md:mt-8 mt-4 mx-4">
         <div className="row-span-2">
-          <Card className="bg-pink-50 flex flex-col justify-between h-[100%]">
+          <Card className={`${cardColor} flex flex-col justify-between h-[100%]`}>
             <CardHeader>
               <img
                 src={BlogImage}
@@ -58,25 +61,25 @@ const blog = () => {
               </p>
             </CardContent>
             <CardFooter className="pb-0">
-              <div className="flex flex-wrap">
-                <Badge variant="secondary" className="bg-fuchsia-200 m-1">
+              <div className="flex flex-wrap gap-2">
+                <Badge variant="secondary" className={badgeColor}>
                   Prenatal Nutrition
                 </Badge>
-                <Badge variant="secondary" className="bg-fuchsia-200 m-1">
+                <Badge variant="secondary" className={badgeColor}>
                   Meal Plan
                 </Badge>
-                <Badge variant="secondary" className="bg-fuchsia-200 m-1">
+                <Badge variant="secondary" className={badgeColor}>
                   Dietary Tips
                 </Badge>
               </div>
             </CardFooter>
-            <CardFooter className="text-sm flex justify-end text-[#9c3cc1]">
+            <CardFooter className={`text-sm flex justify-end ${readMoreColor}`}>
               <p>Read More</p>
             </CardFooter>
           </Card>
         </div>
 
-        <Card className="bg-pink-50 flex flex-row items-center row-span-1">
+        <Card className={`${cardColor} flex flex-row items-center row-span-1`}>
           <img
             src={RecentBlogImage1}
             alt="Blog Image"
@@ -101,22 +104,22 @@ const blog = () => {
               </p>
             </CardContent>
             <CardFooter className="pb-0">
-              <div className="flex flex-wrap">
-                <Badge variant="secondary" className="bg-fuchsia-200 m-1">
+              <div className="flex flex-wrap gap-2">
+                <Badge variant="secondary" className={badgeColor}>
                   Prenatal Visits
                 </Badge>
-                <Badge variant="secondary" className="bg-fuchsia-200 m-1">
+                <Badge variant="secondary" className={badgeColor}>
                   Health
                 </Badge>
               </div>
             </CardFooter>
-            <CardFooter className="text-sm flex justify-end text-[#9c3cc1]">
+            <CardFooter className={`text-sm flex justify-end ${readMoreColor}`}>
               <p>Read More</p>
             </CardFooter>
           </div>
         </Card>
 
-        <Card className="bg-pink-50 flex flex-row items-center row-span-1">
+        <Card className={`${cardColor} flex flex-row items-center row-span-1`}>
           <img
             src={RecentBlogImage2}
             alt="Blog Image"
@@ -143,26 +146,26 @@ const blog = () => {
               </p>
             </CardContent>
             <CardFooter className="pb-0">
-              <div className="flex flex-wrap">
-                <Badge variant="secondary" className="bg-fuchsia-200 m-1">
+              <div className="flex flex-wrap gap-2">
+                <Badge variant="secondary" className={badgeColor}>
                   Newborn
                 </Badge>
-                <Badge variant="secondary" className="bg-fuchsia-200 m-1">
+                <Badge variant="secondary" className={badgeColor}>
                   Vaccination
                 </Badge>
-                <Badge variant="secondary" className="bg-fuchsia-200 m-1">
+                <Badge variant="secondary" className={badgeColor}>
                   Health
                 </Badge>
               </div>
             </CardFooter>
-            <CardFooter className="text-sm flex justify-end text-[#9c3cc1]">
+            <CardFooter className={`text-sm flex justify-end ${readMoreColor}`}>
               <p>Read More</p>
             </CardFooter>
           </div>
         </Card>
       </div>
 
-      <Card className="mt-8 md:mt:12 shadow-fuchsia-100 shadow-lg mx-4 md:mx-8">
+      <Card className="mt-8 md:mt:12 shadow-fuchsia-100 dark:shadow-fuchsia-900 shadow-lg mx-4 md:mx-8">
         <CardHeader>
           <CardTitle className="font-semibold text-3xl ml-4">
             Time To Write A Blog
@@ -176,18 +179,18 @@ const blog = () => {
           </p>
         </CardContent>
         <CardFooter className="flex justify-center">
-          <Button className="bg-fuchsia-600 text-lg">
+          <Button className="bg-fuchsia-600 dark:bg-[#ff8de7] text-lg hover:bg-neutral-800 hover:dark:bg-neutral-100 hover:dark:text-[#9C33C1] duration-200">
             <MdCreate className="mr-2 h-4 w-4" /> Let's Write A Blog Article
           </Button>
         </CardFooter>
       </Card>
 
-      <p className="md:mt-10 mt-8 ml-6 text-3xl font-semibold text-black">
+      <p className="md:mt-10 mt-8 ml-6 text-3xl font-semibold text-neutral-800 dark:text-neutral-100">
         All Blogs
       </p>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 md:gap-8 md:mt-8 mt-4 mx-4">
-        <Card className="bg-pink-50 flex flex-col justify-between">
+      <div className="grid grid-cols-1 md:grid-cols-2 md:gap-8 gap-4 md:mt-8 mt-4 mx-4">
+        <Card className={`${cardColor} flex flex-col justify-between`}>
           <CardHeader>
             <img src={BlogImage} alt="Blog Image" className="rounded-md mb-2" />
             <CardTitle>Understanding Prenatal Nutrition</CardTitle>
@@ -206,24 +209,24 @@ const blog = () => {
             </p>
           </CardContent>
           <CardFooter className="pb-0">
-            <div className="flex flex-wrap">
-              <Badge variant="secondary" className="bg-fuchsia-200 m-1">
+            <div className="flex flex-wrap gap-2">
+              <Badge variant="secondary" className={badgeColor}>
                 Prenatal Nutrition
               </Badge>
-              <Badge variant="secondary" className="bg-fuchsia-200 m-1">
+              <Badge variant="secondary" className={badgeColor}>
                 Meal Plan
               </Badge>
-              <Badge variant="secondary" className="bg-fuchsia-200 m-1">
+              <Badge variant="secondary" className={badgeColor}>
                 Dietary Tips
               </Badge>
             </div>
           </CardFooter>
-          <CardFooter className="text-sm flex justify-end text-[#9c3cc1]">
+          <CardFooter className={`text-sm flex justify-end ${readMoreColor}`}>
             <p>Read More</p>
           </CardFooter>
         </Card>
 
-        <Card className="bg-pink-50 flex flex-col justify-between">
+        <Card className={`${cardColor} flex flex-col justify-between`}>
           <CardHeader>
             <img src={BlogImage} alt="Blog Image" className="rounded-md mb-2" />
             <CardTitle>Understanding Prenatal Nutrition</CardTitle>
@@ -242,24 +245,24 @@ const blog = () => {
             </p>
           </CardContent>
           <CardFooter className="pb-0">
-            <div className="flex flex-wrap">
-              <Badge variant="secondary" className="bg-fuchsia-200 m-1">
+            <div className="flex flex-wrap gap-2">
+              <Badge variant="secondary" className={badgeColor}>
                 Prenatal Nutrition
               </Badge>
-              <Badge variant="secondary" className="bg-fuchsia-200 m-1">
+              <Badge variant="secondary" className={badgeColor}>
                 Meal Plan
               </Badge>
-              <Badge variant="secondary" className="bg-fuchsia-200 m-1">
+              <Badge variant="secondary" className={badgeColor}>
                 Dietary Tips
               </Badge>
             </div>
           </CardFooter>
-          <CardFooter className="text-sm flex justify-end text-[#9c3cc1]">
+          <CardFooter className={`text-sm flex justify-end ${readMoreColor}`}>
             <p>Read More</p>
           </CardFooter>
         </Card>
 
-        <Card className="bg-pink-50 flex flex-col justify-between">
+        <Card className={`${cardColor} flex flex-col justify-between`}>
           <CardHeader>
             <img src={BlogImage} alt="Blog Image" className="rounded-md mb-2" />
             <CardTitle>Understanding Prenatal Nutrition</CardTitle>
@@ -278,24 +281,24 @@ const blog = () => {
             </p>
           </CardContent>
           <CardFooter className="pb-0">
-            <div className="flex flex-wrap">
-              <Badge variant="secondary" className="bg-fuchsia-200 m-1">
+            <div className="flex flex-wrap gap-2">
+              <Badge variant="secondary" className={badgeColor}>
                 Prenatal Nutrition
               </Badge>
-              <Badge variant="secondary" className="bg-fuchsia-200 m-1">
+              <Badge variant="secondary" className={badgeColor}>
                 Meal Plan
               </Badge>
-              <Badge variant="secondary" className="bg-fuchsia-200 m-1">
+              <Badge variant="secondary" className={badgeColor}>
                 Dietary Tips
               </Badge>
             </div>
           </CardFooter>
-          <CardFooter className="text-sm flex justify-end text-[#9c3cc1]">
+          <CardFooter className={`text-sm flex justify-end ${readMoreColor}`}>
             <p>Read More</p>
           </CardFooter>
         </Card>
 
-        <Card className="bg-pink-50 flex flex-col justify-between">
+        <Card className={`${cardColor} flex flex-col justify-between`}>
           <CardHeader>
             <img src={BlogImage} alt="Blog Image" className="rounded-md mb-2" />
             <CardTitle>Understanding Prenatal Nutrition</CardTitle>
@@ -314,24 +317,24 @@ const blog = () => {
             </p>
           </CardContent>
           <CardFooter className="pb-0">
-            <div className="flex flex-wrap">
-              <Badge variant="secondary" className="bg-fuchsia-200 m-1">
+            <div className="flex flex-wrap gap-2">
+              <Badge variant="secondary" className={badgeColor}>
                 Prenatal Nutrition
               </Badge>
-              <Badge variant="secondary" className="bg-fuchsia-200 m-1">
+              <Badge variant="secondary" className={badgeColor}>
                 Meal Plan
               </Badge>
-              <Badge variant="secondary" className="bg-fuchsia-200 m-1">
+              <Badge variant="secondary" className={badgeColor}>
                 Dietary Tips
               </Badge>
             </div>
           </CardFooter>
-          <CardFooter className="text-sm flex justify-end text-[#9c3cc1]">
+          <CardFooter className={`text-sm flex justify-end ${readMoreColor}`}>
             <p>Read More</p>
           </CardFooter>
         </Card>
 
-        <Card className="bg-pink-50 flex flex-col justify-between">
+        <Card className={`${cardColor} flex flex-col justify-between`}>
           <CardHeader>
             <img src={BlogImage} alt="Blog Image" className="rounded-md mb-2" />
             <CardTitle>Understanding Prenatal Nutrition</CardTitle>
@@ -350,24 +353,24 @@ const blog = () => {
             </p>
           </CardContent>
           <CardFooter className="pb-0">
-            <div className="flex flex-wrap">
-              <Badge variant="secondary" className="bg-fuchsia-200 m-1">
+            <div className="flex flex-wrap gap-2">
+              <Badge variant="secondary" className={badgeColor}>
                 Prenatal Nutrition
               </Badge>
-              <Badge variant="secondary" className="bg-fuchsia-200 m-1">
+              <Badge variant="secondary" className={badgeColor}>
                 Meal Plan
               </Badge>
-              <Badge variant="secondary" className="bg-fuchsia-200 m-1">
+              <Badge variant="secondary" className={badgeColor}>
                 Dietary Tips
               </Badge>
             </div>
           </CardFooter>
-          <CardFooter className="text-sm flex justify-end text-[#9c3cc1]">
+          <CardFooter className={`text-sm flex justify-end ${readMoreColor}`}>
             <p>Read More</p>
           </CardFooter>
         </Card>
 
-        <Card className="bg-pink-50 flex flex-col justify-between">
+        <Card className={`${cardColor} flex flex-col justify-between`}>
           <CardHeader>
             <img src={BlogImage} alt="Blog Image" className="rounded-md mb-2" />
             <CardTitle>Understanding Prenatal Nutrition</CardTitle>
@@ -386,22 +389,23 @@ const blog = () => {
             </p>
           </CardContent>
           <CardFooter className="pb-0">
-            <div className="flex flex-wrap">
-              <Badge variant="secondary" className="bg-fuchsia-200 m-1">
+            <div className="flex flex-wrap gap-2">
+              <Badge variant="secondary" className={badgeColor}>
                 Prenatal Nutrition
               </Badge>
-              <Badge variant="secondary" className="bg-fuchsia-200 m-1">
+              <Badge variant="secondary" className={badgeColor}>
                 Meal Plan
               </Badge>
-              <Badge variant="secondary" className="bg-fuchsia-200 m-1">
+              <Badge variant="secondary" className={badgeColor}>
                 Dietary Tips
               </Badge>
             </div>
           </CardFooter>
-          <CardFooter className="text-sm flex justify-end text-[#9c3cc1]">
+          <CardFooter className={`text-sm flex justify-end ${readMoreColor}`}>
             <p>Read More</p>
           </CardFooter>
         </Card>
+        
       </div>
 
       <div>
