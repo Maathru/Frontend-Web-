@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import { TextField, Typography, Chip, Paper, Input } from '@mui/material';
+import FormGroup from '@mui/material/FormGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
 import { Button } from 'flowbite-react';
 import ReactQuill from 'react-quill';
 import Footer from "../components/footer";
@@ -23,13 +26,13 @@ function AskQuestion() {
 
   return (
     <>
-    <Paper className="p-6 h-full max-w-4xl mx-auto my-8 rounded-lg shadow-md">
-      <Typography variant="h4" className="text-center mb-4">
-        Ask a Question
-      </Typography>
+      <div className="text-3xl text-[#5B5B5B] font-semibold text-center">
+          Ask a Question
+      </div>
       <Typography variant="subtitle1" className="text-center mb-8">
         Ask questions and get answers from our community of experts
       </Typography>
+      <Paper className="p-6 h-full max-w-4xl mx-auto my-8 rounded-3xl shadow-md">
       <form noValidate autoComplete="off">
         <Typography variant="body1" className="mb-4">
             Question Title
@@ -52,13 +55,15 @@ function AskQuestion() {
           />
         </div>
         <div className="flex flex-wrap gap-2 mb-4">
-          {keywords.map((keyword) => (
-            <Chip
-              key={keyword}
-              label={keyword}
-              className="bg-purple-100 text-purple-700"
-            />
-          ))}
+          <FormGroup row>
+            {keywords.map((keyword) => (
+              <FormControlLabel
+                key={keyword}
+                control={<Checkbox />}
+                label={keyword}
+              />
+            ))}
+          </FormGroup>
         </div>
         <TextField
           label="Other Keywords"
