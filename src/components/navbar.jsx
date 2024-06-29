@@ -7,45 +7,43 @@ import { MdNotifications } from "react-icons/md";
 import { MdMenu } from "react-icons/md";
 import { MdClose } from "react-icons/md";
 import { useTranslation } from "react-i18next";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useLocation } from "react-router-dom";
 import enDark from "../assets/nav/en-dark.png";
 import enLight from "../assets/nav/en-light.png";
 import sinDark from "../assets/nav/sin-dark.png";
 import sinLight from "../assets/nav/sin-light.png";
 import { Button } from "./ui/button";
 
-const languages = [
-  { code: "en", lang: "English" },
-  { code: "sin", lang: "Sinhala" },
-];
-
 const Navbar = ({ themeFunction, mode }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [themeImage, setThemeImage] = useState(enDark);
   const [handleTheme, setHandleTheme] = useState(true);
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState("eligible");
+  const { pathname } = useLocation();
+
+  const { i18n } = useTranslation();
 
   const handleMenuClick = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
-  useEffect(() => {
+  const setLanguage = () => {
     if (i18n.language === "sin") {
       if (mode === "dark") {
         setThemeImage(enDark);
       } else {
         setThemeImage(enLight);
       }
-      changeLanguage("en");
+      i18n.changeLanguage("en");
     } else {
       if (mode === "dark") {
         setThemeImage(sinDark);
       } else {
         setThemeImage(sinLight);
       }
-      changeLanguage("sin");
+      i18n.changeLanguage("sin");
     }
-  }, [handleTheme]);
+  };
 
   useEffect(() => {
     if (i18n.language === "sin") {
@@ -62,12 +60,6 @@ const Navbar = ({ themeFunction, mode }) => {
       }
     }
   }, [mode]);
-
-  const { i18n } = useTranslation();
-
-  const changeLanguage = (lng) => {
-    i18n.changeLanguage(lng);
-  };
 
   return (
     <div className="bg-bg-nav dark:bg-neutral-700">
@@ -158,20 +150,36 @@ const Navbar = ({ themeFunction, mode }) => {
                 </NavLink>
               </>
             )}
+            {user === "eligible" && (
+              <NavLink
+                to="/eligible/1"
+                className={({ isActive }) =>
+                  /^\/eligible(\/.*)?$/.test(pathname)
+                    ? "text-[#9C33C1]"
+                    : "hover:text-gray-500 text-black dark:text-gray-100"
+                }
+              >
+                Recovery Checklist
+              </NavLink>
+            )}
           </div>
         </div>
 
         <div className="nav-profile flex items-center justify-self-end gap-4 md:gap-6 text-black dark:text-gray-100">
-          <div className="text-2xl hover:text-gray-500" onClick={themeFunction}>
+          <div
+            className="text-2xl hover:text-primary-purple cursor-pointer"
+            onClick={themeFunction}
+          >
             {mode === "dark" ? <MdLightMode /> : <MdDarkMode />}
           </div>
 
           <img
             src={themeImage}
+            className="cursor-pointer"
             alt="Language icon"
             height={40}
             width={40}
-            onClick={() => setHandleTheme((prev) => !prev)}
+            onClick={() => setLanguage((prev) => !prev)}
           />
 
           {user !== null ? (
