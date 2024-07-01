@@ -34,7 +34,7 @@ const Forum = () => {
         </div>
 
         <Button className="bg-[#6F0096] h-10 min-w-max flexbox items-center" >
-          <NavLink to="askquestion">
+          <NavLink to="/forum/askquestion">
           Ask a Question
           </NavLink>
         </Button>

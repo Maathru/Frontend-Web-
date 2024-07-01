@@ -9,6 +9,7 @@ import Drug from "./pages/drug";
 import DrugAdd from "./pages/drugAdd";
 import Clinic from "./pages/clinic";
 import Forum from "./pages/forum";
+import Answer from "./pages/answer";
 import { Button } from "flowbite-react";
 import { Route, Routes } from "react-router-dom";
 import { useTranslation } from "react-i18next";
@@ -74,6 +75,7 @@ function App() {
         <Route path="/clinics" element={<Clinic />} />
         <Route path="/forum" element={<Forum />} />
         <Route path="/forum/askquestion" element={<AskQuestion />} />
+        <Route path="/forum/answer" element={<Answer />} />
       </Routes>
     </main>
   );

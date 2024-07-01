@@ -8,17 +8,22 @@ import {
   Typography, 
   Card, 
   CardContent, 
-  ListSubheader 
+  ListSubheader ,
+  CardActionArea
 } from '@mui/material';
+import { Badge } from "@/components/ui/badge";
 import { Button } from "flowbite-react";
 import { ImFire } from "react-icons/im";
 import { TiTick } from "react-icons/ti";
 import { Link } from 'react-router-dom';
 
+const badgeColor = "bg-fuchsia-200 dark:bg-fuchsia-300 hover:dark:bg-fuchsia-100 dark:text-neutral-800";
+
 export default function Item() {
   return (
     <>
       <Card className="my-3">
+      <CardActionArea action='/forum/answer'>
         <CardContent>
         <ListItem alignItems="" className="gap-4">
             <ListItemAvatar className="text-center">
@@ -43,9 +48,15 @@ export default function Item() {
                     Prenatal care is a critical component of a healthy pregnancy, providing essential medical support and guidance to expectant mothers. Regular check-ups and prenatal screenings....
                 </Typography>
                 <div className="flex gap-2 my-3">
-                    <Button className="bg-slate-400 h-10 flexbox items-center text-purple-800" > Parental Care</Button> 
-                    <Button className="bg-slate-400 h-10 flexbox items-center text-purple-800" > Nutrition </Button>
-                    <Button className="bg-slate-400 h-10 flexbox items-center text-purple-800" > Postpartum</Button>
+                    <Badge variant="secondary" className={badgeColor}>
+                      Prenatal Nutrition
+                    </Badge>
+                    <Badge variant="secondary" className={badgeColor}>
+                      Meal Plan
+                    </Badge>
+                    <Badge variant="secondary" className={badgeColor}>
+                      Dietary Tips
+                    </Badge>
                     <div className="flex ml-auto justify-center items-center gap-2">
                       <Avatar alt="Remy Sharp" src="src\assets\nav\sample-profile.png" />
                       <Link>User Name</Link>
@@ -60,6 +71,7 @@ export default function Item() {
             {/* <ListSubheader>Comment</ListSubheader> */}
         </ListItem>
         </CardContent>
+        </CardActionArea>
       </Card>
     </>
   )
