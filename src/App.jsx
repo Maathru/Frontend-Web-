@@ -75,7 +75,7 @@ function App() {
         <Route path="/clinics" element={<Clinic />} />
         <Route path="/forum" element={<Forum />} />
         <Route path="/forum/askquestion" element={<AskQuestion />} />
-        <Route path="/forum/answer" element={<Answer />} />
+        <Route path="/forum/answer/:questionId" element={<Answer />} />
       </Routes>
     </main>
   );

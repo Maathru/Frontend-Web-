@@ -6,12 +6,14 @@ import Checkbox from '@mui/material/Checkbox';
 import { Button } from 'flowbite-react';
 import ReactQuill from 'react-quill';
 import Footer from "../components/footer";
-import 'react-quill/dist/quill.snow.css'; // import styles
+import 'react-quill/dist/quill.snow.css'; 
 import { Card } from '@/components/ui/card';
 
+import axios from "axios";
+
 function AskQuestion() {
-  const [questionDetails, setQuestionDetails] = useState('');
-  const [questionTitle, setQuestionTitle] = useState('');
+  const [description, setDescription] = useState('');
+  const [title, setTitle] = useState('');
   const [selectedKeywords, setSelectedKeywords] = useState([]);
   const [customKeywords, setCustomKeywords] = useState([]);
   const [newKeyword, setNewKeyword] = useState('');
@@ -21,7 +23,7 @@ function AskQuestion() {
   ];
 
   const handleTitleChange = (e) => {
-    setQuestionTitle(e.target.value);
+    setTitle(e.target.value);
   }
 
   const handleKeywordChange = (keyword) => {
@@ -46,9 +48,21 @@ function AskQuestion() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('Title:', questionTitle);
-    console.log('Details:', questionDetails);
-    console.log('Keywords:', selectedKeywords);
+    const url = process.env.BACKEND_API_URL;
+    const data = {
+      title,
+      description,
+      keywords: selectedKeywords,
+      author: 1
+    };
+
+    axios.post(url + '/question', data)
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   }
 
   return (
@@ -65,7 +79,7 @@ function AskQuestion() {
             Question Title
           </Typography>
           <TextField
-            value={questionTitle}
+            value={title}
             onChange={handleTitleChange}
             variant="outlined"
             fullWidth
@@ -76,8 +90,8 @@ function AskQuestion() {
               Question Details
             </Typography>
             <ReactQuill
-              value={questionDetails}
-              onChange={setQuestionDetails}
+              value={description}
+              onChange={setDescription}
               className="bg-white rounded-lg shadow-sm"
             />
           </div>
