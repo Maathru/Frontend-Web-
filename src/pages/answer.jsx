@@ -3,12 +3,13 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Pagination from "../components/pagination";
 import Footer from "../components/footer";
+import { Button } from 'flowbite-react';
 import { MdOutlineArrowBackIosNew } from "react-icons/md";
 import { BiSolidLike, BiDislike } from "react-icons/bi";
 import { Badge } from "@/components/ui/badge";
 import { Link } from 'react-router-dom';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Avatar } from "@mui/material";
+import { Avatar, TextField } from "@mui/material";
 
 import axios from "axios";
 
@@ -23,9 +24,11 @@ const Answer = () => {
   const [question, setQuestion] = useState('');
   const [answers , setAnswers] = useState([]);
 
+  const [yourAnswer, setYourAnswer] = useState('');
+
   useEffect(() => {
     const fetchQuestion = () => {
-    const url = process.env.REACT_APP_BACKEND_API_URL || 'http://localhost:8080/api/v1';
+    const url = process.env.BACKEND_API_URL;
     axios.get(url + '/question/' + questionId)
       .then((response) => {
         console.log(response.data);
@@ -37,7 +40,7 @@ const Answer = () => {
     }
     
     const fetchAnswers = () => {
-      const url = process.env.REACT_APP_BACKEND_API_URL || 'http://localhost:8080/api/v1';
+      const url = process.env.BACKEND_API_URL;
       axios.get(url + '/answer/question/' + questionId )
         .then((response) => {
           console.log(response.data);
@@ -51,6 +54,30 @@ const Answer = () => {
     fetchQuestion();
     fetchAnswers();
   }, [questionId]);
+
+  const handleAnswerChange = (e) => {
+    setYourAnswer(e.target.value);
+  }
+
+  const handleAnswerSubmit = (e) => {
+    e.preventDefault();
+    const url = process.env.BACKEND_API_URL;
+    const data = {
+      answer: yourAnswer,
+      question: questionId,
+      author: 1
+    };
+
+    console.log(data);
+
+    axios.post(url + '/answer', data)
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
 
 
   return (
@@ -123,6 +150,21 @@ const Answer = () => {
           </CardFooter>
         </div>
         ))}
+
+      <div className="flex mt-5 gap-5">
+        <TextField 
+          value={yourAnswer}
+          onChange={handleAnswerChange}
+          id="outlined-basic" 
+          label="Add Your Answer" 
+          variant="outlined" 
+          className="w-[80%]"
+        />
+        <Button onClick={handleAnswerSubmit} type="submit" className="bg-blue-600 text-white px-4 py-2 rounded-md">
+          Submit
+        </Button>
+      </div>
+
       </div>
       <Pagination />
       <Footer />
