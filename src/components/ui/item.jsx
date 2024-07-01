@@ -23,7 +23,7 @@ export default function Item() {
   return (
     <>
       <Card className="my-3">
-      <CardActionArea action='/forum/answer'>
+      <CardActionArea>
         <CardContent>
         <ListItem alignItems="" className="gap-4">
             <ListItemAvatar className="text-center">
