@@ -8,6 +8,9 @@ import Landing from "./pages/landing";
 import Drug from "./pages/drug";
 import DrugAdd from "./pages/drugAdd";
 import Clinic from "./pages/clinic";
+import Forum from "./pages/forum";
+import Answer from "./pages/answer";
+import { Button } from "flowbite-react";
 import Dashboard from "./pages/user/dashboard";
 import { Route, Routes } from "react-router-dom";
 import { useTranslation } from "react-i18next";
@@ -17,6 +20,7 @@ import Eligible2 from "./pages/user/eligible2";
 import Eligible3 from "./pages/user/eligible3";
 import Eligible4 from "./pages/user/eligible4";
 import LanguageSelector from "./components/language-selector";
+import AskQuestion from "./pages/question";
 import Article from "./pages/article";
 
 function App() {
@@ -77,6 +81,9 @@ function App() {
         <Route path="/blogs" element={<Blog />} />
         <Route path="/blogs/article" element={<Article />} />
         <Route path="/clinics" element={<Clinic />} />
+        <Route path="/forum" element={<Forum />} />
+        <Route path="/forum/askquestion" element={<AskQuestion />} />
+        <Route path="/forum/answer/:questionId" element={<Answer />} />
         <Route path="/user" element={<Dashboard />} />
         <Route path="/eligible/1" element={<Eligible1 />} />
         <Route path="/eligible/2" element={<Eligible2 />} />
