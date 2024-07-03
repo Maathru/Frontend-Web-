@@ -19,6 +19,9 @@ module.exports = {
     extend: {
       colors: {
         "bg-nav": "rgb(48,0,65,0.02)",
+        "primary-purple": "#9C33C1",
+        "box-purple": "#CF48FF08",
+        "button-purple": "#53007099",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
