@@ -1,6 +1,10 @@
 import * as React from "react";
-import { alpha, styled } from "@mui/material/styles";
-import { DataGrid, gridClasses, GridToolbar,GridToolbarQuickFilter} from "@mui/x-data-grid";
+import { styled } from "@mui/material/styles";
+import {
+  DataGrid,
+  gridClasses,
+  GridToolbarQuickFilter,
+} from "@mui/x-data-grid";
 
 import {
   HiChevronLeft,
@@ -10,8 +14,7 @@ import {
 } from "react-icons/hi";
 import { Box, Chip, IconButton } from "@mui/material";
 import { Button } from "flowbite-react";
-// import { createTheme, ThemeProvider } from '@mui/material/styles';
-// import { orange } from '@mui/material/colors';
+import { useTranslation } from "react-i18next";
 
 const StripedDataGrid = styled(DataGrid)(({ theme }) => ({
   [`& .${gridClasses.row}.even`]: {
@@ -28,38 +31,35 @@ const StripedDataGrid = styled(DataGrid)(({ theme }) => ({
   "& .MuiDataGrid-cell:focus-within": {
     outline: "none",
   },
-
 }));
 
-
-
 function QuickSearchToolbar() {
-    return (
-      <Box
+  return (
+    <Box
+      sx={{
+        p: 0.5,
+        pb: 0,
+        m: 2,
+        display: "flex",
+        justifyContent: "flex-end",
+      }}
+    >
+      <GridToolbarQuickFilter
         sx={{
-          p: 0.5,
-          pb: 0,
-          m: 2,
-          display: "flex",
-          justifyContent: "flex-end",
-        }}
-      >
-        <GridToolbarQuickFilter 
-        sx={{
-            width: 400,
-            "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
-            border: "none",
-          },
+          width: 400,
+          "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline":
+            {
+              border: "none",
+            },
           "& .MuiOutlinedInput-root:focus-within": {
             outline: "none",
             boxShadow: "none",
           },
         }}
-        />
-      </Box>
-    );
-  };
-
+      />
+    </Box>
+  );
+}
 
 const columns = [
   {
@@ -204,20 +204,21 @@ const rows = [
 ];
 
 const drug = () => {
+  const { t } = useTranslation("drug");
   return (
-    <div className="p-12 grid content-start">
+    <div className="p-12 pt-8">
       <div className="flex justify-between mb-8">
         <div className="text-3xl text-[#5B5B5B] font-semibold ">
           <HiChevronLeft className="text-5xl inline" />
-          Drug Management
+          {t("title")}
         </div>
 
         <Button className="bg-[#6F0096] h-10 flexbox items-center">
-          Add New
+          {t("add")}
           <HiOutlinePlusSm className="ml-2 h-5 w-5" />
         </Button>
       </div>
-      <div style={{ height: "100%", width: "100%"}}>
+      <div style={{ height: "100%", width: "100%" }}>
         <StripedDataGrid
           rows={rows}
           columns={columns}
@@ -231,9 +232,7 @@ const drug = () => {
             params.indexRelativeToCurrentPage % 2 === 0 ? "even" : "odd"
           }
           disableRowSelectionOnClick
-        
-        slots={{ toolbar: QuickSearchToolbar}}
-
+          slots={{ toolbar: QuickSearchToolbar }}
         />
       </div>
     </div>

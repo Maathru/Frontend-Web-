@@ -1,0 +1,10 @@
+{
+    "title": "Drug Management - Add New Drug",
+    "add": "Add To Stock",
+    "brand":"Brand Name",
+    "batch":"Batch Number",
+    "strength":"Strength",
+    "manufactured":"Manufactured Date",
+    "expired":"Expiration Date",
+    "quantity":"Quantity"
+ }
