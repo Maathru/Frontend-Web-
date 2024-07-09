@@ -2,7 +2,10 @@ import { useEffect, useState } from "react";
 import "./App.css";
 import Login from "./pages/login";
 import Signup from "./pages/signup";
-import Blog from "./pages/blog";
+import Blog from "./pages/blog/blog";
+import Article from "./pages/blog/article";
+import WriteBlog1 from "./pages/blog/writeblog1";
+import WriteBlog2 from "./pages/blog/writeblog2";
 import Navbar from "./components/navbar";
 import Landing from "./pages/landing";
 import Drug from "./pages/drug";
@@ -17,7 +20,6 @@ import Eligible2 from "./pages/user/eligible2";
 import Eligible3 from "./pages/user/eligible3";
 import Eligible4 from "./pages/user/eligible4";
 import LanguageSelector from "./components/language-selector";
-import Article from "./pages/article";
 
 function App() {
   const darkQuery = window.matchMedia("(prefers-color-scheme: dark)");
@@ -82,6 +84,8 @@ function App() {
         <Route path="/eligible/2" element={<Eligible2 />} />
         <Route path="/eligible/3" element={<Eligible3 />} />
         <Route path="/eligible/4" element={<Eligible4 />} />
+        <Route path="/blogs/write/1" element={<WriteBlog1 />} />
+        <Route path="/blogs/write/2" element={<WriteBlog2 />} />
       </Routes>
 
       <Footer />

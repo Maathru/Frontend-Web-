@@ -72,7 +72,7 @@ const Navbar = ({ themeFunction, mode }) => {
         <div
           className={`${
             isMenuOpen ? "top-[8%] bg-white dark:bg-neutral-700" : "top-[-100%]"
-          } md:static absolute md:min-h-fit min-h-[50vh] left-0 md:w-auto w-full flex items-center px-5 duration-150`}
+          } md:static absolute md:min-h-fit min-h-[50vh] left-0 md:w-auto w-full flex items-center px-5 duration-150 z-50`}
         >
           <div className="flex md:flex-row flex-col md:items-center md:gap-[5vw] gap-8 text-lg font-medium md:ml-0 ml-4">
             <NavLink
