@@ -2,9 +2,7 @@ import React, { useState } from "react";
 import { HiChevronLeft } from "react-icons/hi";
 import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
-import { LineChart } from "@mui/x-charts/LineChart";
 import { InputLabel, MenuItem, Select, colors } from "@mui/material";
-import { BarChart } from "@mui/x-charts";
 import ReactApexChart from "react-apexcharts";
 
 const clinicReports = () => {

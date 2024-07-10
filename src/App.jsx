@@ -11,7 +11,7 @@ import Clinic from "./pages/doctor/clinic";
 import ViewClinics from "./pages/doctor/viewClinics";
 import ClinicDates from "./pages/doctor/clinicDates";
 import ClinicReports from "./pages/doctor/clinicReports";
-import Clinic from "./pages/clinic";
+// import Clinic from "./pages/doctor/clinic";
 import Forum from "./pages/forum";
 import Answer from "./pages/answer";
 import { Button } from "flowbite-react";
@@ -23,6 +23,7 @@ import Eligible1 from "./pages/user/eligible1";
 import Eligible2 from "./pages/user/eligible2";
 import Eligible3 from "./pages/user/eligible3";
 import Eligible4 from "./pages/user/eligible4";
+import Growth from "./pages/user/growth";
 import LanguageSelector from "./components/language-selector";
 import AskQuestion from "./pages/question";
 import Article from "./pages/article";
@@ -97,6 +98,7 @@ function App() {
         <Route path="/forum/answer/:questionId" element={<Answer />} />
           
         <Route path="/user" element={<Dashboard />} />
+        <Route path="/growth" element={<Growth />} />
         <Route path="/eligible/1" element={<Eligible1 />} />
         <Route path="/eligible/2" element={<Eligible2 />} />
         <Route path="/eligible/3" element={<Eligible3 />} />
