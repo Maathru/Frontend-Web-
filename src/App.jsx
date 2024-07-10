@@ -11,10 +11,8 @@ import Clinic from "./pages/doctor/clinic";
 import ViewClinics from "./pages/doctor/viewClinics";
 import ClinicDates from "./pages/doctor/clinicDates";
 import ClinicReports from "./pages/doctor/clinicReports";
-import Clinic from "./pages/clinic";
 import Forum from "./pages/forum";
 import Answer from "./pages/answer";
-import { Button } from "flowbite-react";
 import Dashboard from "./pages/user/dashboard";
 import { Route, Routes } from "react-router-dom";
 import { useTranslation } from "react-i18next";
@@ -77,16 +75,16 @@ function App() {
       <Navbar themeFunction={handleThemeSwitch} mode={theme} />
 
       <Routes>
-        <Route path="/" element={<Landing />} />          
+        <Route path="/" element={<Landing />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
-          
+
         <Route path="/drugs" element={<Drug />} />
         <Route path="/drugs/add" element={<DrugAdd />} />
-          
+
         <Route path="/blogs" element={<Blog />} />
         <Route path="/blogs/article" element={<Article />} />
-          
+
         <Route path="/clinics" element={<Clinic />} />
         <Route path="/clinics/view" element={<ViewClinics />} />
         <Route path="/clinics/dates" element={<ClinicDates />} />
@@ -95,7 +93,7 @@ function App() {
         <Route path="/forum" element={<Forum />} />
         <Route path="/forum/askquestion" element={<AskQuestion />} />
         <Route path="/forum/answer/:questionId" element={<Answer />} />
-          
+
         <Route path="/user" element={<Dashboard />} />
         <Route path="/eligible/1" element={<Eligible1 />} />
         <Route path="/eligible/2" element={<Eligible2 />} />
