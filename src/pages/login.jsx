@@ -22,14 +22,32 @@ import UserService from "@/service/userService";
 import { errorType, Toast } from "@/components/toast";
 import { userData } from "@/context/userAuth";
 
-const login = () => {
+const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const { setUserDetails } = useContext(userData);
+  const [errors, setErrors] = useState({});
+
+  const validate = () => {
+    const newErrors = {};
+
+    // Check if all fields are filled
+    if (!username) newErrors.email = "Username is required";
+    if (!password) newErrors.password = "Password is required";
+
+    return newErrors;
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const validationErrors = validate();
+
+    if (Object.keys(validationErrors).length !== 0) {
+      setErrors(validationErrors);
+      return;
+    }
 
     try {
       const response = await UserService.login(username, password);
@@ -55,6 +73,17 @@ const login = () => {
     } catch (error) {
       console.log(error.message);
       Toast(error.message, errorType.ERROR);
+
+      const newErrors = {};
+
+      if (error.response.data) {
+        error.response.data.map((msg) => {
+          Toast(msg.message, errorType.ERROR);
+          newErrors[msg.field] = msg.message;
+        });
+
+        setErrors(newErrors);
+      }
     }
   };
 
@@ -82,6 +111,9 @@ const login = () => {
 
         <div className="flex flex-col items-center w-full md:w-8/12 justify-center shadow-md rounded-r-2xl py-16">
           <p className="text-[#202244] font-bold text-2xl mb-8">{t("title")}</p>
+
+          {errors.email && <p>{errors.email}</p>}
+          {errors.password && <p>{errors.password}</p>}
 
           <TextField
             label={t("username")}
@@ -163,4 +195,4 @@ const login = () => {
   );
 };
 
-export default login;
+export default Login;

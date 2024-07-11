@@ -79,19 +79,18 @@ function App() {
       <Navbar themeFunction={handleThemeSwitch} mode={theme} />
 
       <Routes>
-        <Route path="/" element={<Landing />} />
-
-        {!userDetails.authenticated ? (
+        {!userDetails.authenticated && (
           <>
+            <Route path="*" element={<Landing />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
           </>
-        ) : (
-          <Route path="*" element={<Dashboard />} />
         )}
 
         {userDetails.authenticated && (
           <>
+            <Route path="*" element={<Dashboard />} />
+
             <Route path="/drugs" element={<Drug />} />
             <Route path="/drugs/add" element={<DrugAdd />} />
 
@@ -114,8 +113,6 @@ function App() {
             <Route path="/eligible/4" element={<Eligible4 />} />
           </>
         )}
-
-        <Route path="*" element={<Landing />} />
       </Routes>
 
       <Footer />
