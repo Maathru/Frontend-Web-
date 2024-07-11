@@ -21,6 +21,7 @@ import Eligible1 from "./pages/user/eligible1";
 import Eligible2 from "./pages/user/eligible2";
 import Eligible3 from "./pages/user/eligible3";
 import Eligible4 from "./pages/user/eligible4";
+import Growth from "./pages/user/growth";
 import AskQuestion from "./pages/question";
 import Article from "./pages/article";
 import NotFound from "./pages/notFound";
@@ -107,6 +108,7 @@ function App() {
             <Route path="/forum/answer/:questionId" element={<Answer />} />
 
             {/* <Route path="/user" element={<Dashboard />} /> */}
+            <Route path="/growth" element={<Growth />} />
             <Route path="/eligible/1" element={<Eligible1 />} />
             <Route path="/eligible/2" element={<Eligible2 />} />
             <Route path="/eligible/3" element={<Eligible3 />} />

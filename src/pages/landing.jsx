@@ -7,7 +7,7 @@ const landing = () => {
   const { t } = useTranslation("landing");
 
   return (
-    <div className="flex">
+    <div className="flex bg-white dark:bg-dark-background">
       <div className="pl-28 pt-12">
         <p className="text-3xl font-bold">{t("title")}</p>
         <p className="text-xl font-semibold mt-4 mb-36">{t("subTitle")}</p>
