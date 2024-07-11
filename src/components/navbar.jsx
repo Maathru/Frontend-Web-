@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import logo from "../assets/nav/maathru-nav-logo.png";
-import languageIcon from "../assets/nav/language-icon.png";
 import profilePhoto from "../assets/nav/sample-profile.png";
 import { MdDarkMode, MdLightMode } from "react-icons/md";
 import { MdNotifications } from "react-icons/md";
@@ -13,13 +12,27 @@ import enLight from "../assets/nav/en-light.png";
 import sinDark from "../assets/nav/sin-dark.png";
 import sinLight from "../assets/nav/sin-light.png";
 import { Button } from "./ui/button";
+import UserService from "@/service/userService";
+import { ToastContainer } from "react-toastify";
+import { errorType, Toast } from "./toast";
+import { userData } from "@/context/userAuth";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 
 const Navbar = ({ themeFunction, mode }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [themeImage, setThemeImage] = useState(enDark);
-  const [handleTheme, setHandleTheme] = useState(true);
-  const [user, setUser] = useState("eligible");
   const { pathname } = useLocation();
+  const { userDetails, setUserDetails } = useContext(userData);
 
   const { i18n } = useTranslation();
 
@@ -60,6 +73,20 @@ const Navbar = ({ themeFunction, mode }) => {
       }
     }
   }, [mode]);
+
+  const handleLogout = async () => {
+    const token = localStorage.getItem("jwt");
+    await UserService.logout(token);
+
+    setUserDetails({
+      authenticated: false,
+      name: "",
+      role: "",
+      accessToken: "",
+      refreshToken: "",
+    });
+    Toast("User Logged Out", errorType.INFO);
+  };
 
   return (
     <div className="bg-bg-nav dark:bg-neutral-700">
@@ -106,7 +133,7 @@ const Navbar = ({ themeFunction, mode }) => {
             >
               Discussion Forum
             </NavLink>
-            {user === "doctor" && (
+            {userDetails.role === "DOCTOR" && (
               <>
                 <NavLink
                   to="/clinics"
@@ -150,7 +177,7 @@ const Navbar = ({ themeFunction, mode }) => {
                 </NavLink>
               </>
             )}
-            {user === "eligible" && (
+            {userDetails.role === "ELIGIBLE" && (
               <NavLink
                 to="/eligible/1"
                 className={({ isActive }) =>
@@ -182,20 +209,7 @@ const Navbar = ({ themeFunction, mode }) => {
             onClick={() => setLanguage((prev) => !prev)}
           />
 
-          {user !== null ? (
-            <>
-              <div className="text-2xl hover:text-gray-500">
-                <MdNotifications />
-              </div>
-              <img className="w-10" src={profilePhoto} alt="Profile" />
-              <div
-                className="text-3xl hover:text-gray-500 cursor-pointer md:hidden"
-                onClick={handleMenuClick}
-              >
-                {isMenuOpen ? <MdClose /> : <MdMenu />}
-              </div>
-            </>
-          ) : (
+          {!userDetails.authenticated ? (
             <>
               <Link to="/signup">
                 <Button className="md:ms-5 ms-1 bg-white text-[#9C33C1]">
@@ -208,9 +222,48 @@ const Navbar = ({ themeFunction, mode }) => {
                 </Button>
               </Link>
             </>
+          ) : (
+            <>
+              <div className="text-2xl hover:text-gray-500">
+                <MdNotifications />
+              </div>
+              <img className="w-10" src={profilePhoto} alt="Profile" />
+              <div
+                className="text-3xl hover:text-gray-500 cursor-pointer md:hidden"
+                onClick={handleMenuClick}
+              >
+                {isMenuOpen ? <MdClose /> : <MdMenu />}
+              </div>
+
+              {/* logout */}
+              <AlertDialog>
+                <AlertDialogTrigger asChild>
+                  <Button className="bg-[#9C33C1] dark:text-white text-gray-100">
+                    Log Out
+                  </Button>
+                </AlertDialogTrigger>
+                <AlertDialogContent>
+                  <AlertDialogHeader>
+                    <AlertDialogTitle>
+                      Are you absolutely logout?
+                    </AlertDialogTitle>
+                    <AlertDialogDescription>
+                      This action cannot be undone.
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter>
+                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                    <AlertDialogAction onClick={handleLogout}>
+                      Continue
+                    </AlertDialogAction>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
+            </>
           )}
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 };
