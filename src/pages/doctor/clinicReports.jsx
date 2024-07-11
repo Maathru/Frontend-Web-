@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { HiChevronLeft } from "react-icons/hi";
 import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
@@ -24,10 +24,10 @@ const clinicReports = () => {
       colors: "#721D90",
       width: 4,
     },
-    
+
     grid: {
       row: {
-        colors: ["#f3f3f3", "transparent"], 
+        colors: ["#f3f3f3", "transparent"],
         opacity: 0.5,
       },
     },
@@ -60,7 +60,6 @@ const clinicReports = () => {
       data: [10, 41, 35, 51, 49, 62, 69, 91, 115, 98, 100, 110],
     },
   ]);
-
 
   // Patient Visits For each clinic chart data starts
   const [options2, setObject2] = useState({
@@ -147,7 +146,7 @@ const clinicReports = () => {
         </Select>
 
         <div className="mb-12 mt-8">
-        {/* patient visit line chat chart data */}
+          {/* patient visit line chat chart data */}
           <div id="chart" className="shadow-md  rounded-sm">
             <ReactApexChart
               options={options1}
@@ -167,7 +166,7 @@ const clinicReports = () => {
         </div>
 
         <div className="mb-12">
-        {/* Patient Visits For each clinic chart */}
+          {/* Patient Visits For each clinic chart */}
           <div id="chart" className="shadow-md  rounded-sm">
             <ReactApexChart
               options={options2}
