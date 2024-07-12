@@ -11,11 +11,12 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { HiChatBubbleLeftRight } from "react-icons/hi2";
 import { LuPhoneCall } from "react-icons/lu";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
+import { userData } from "@/context/userAuth";
 
 const provinces = [
   "Western",
@@ -32,6 +33,7 @@ const provinces = [
 const Dashboard = () => {
   const [province, setProvince] = useState("");
   const [showBanner, setShowBanner] = useState(true);
+  const { userDetails } = useContext(userData);
 
   const handleChange = (event) => {
     setProvince(event.target.value);
@@ -44,7 +46,9 @@ const Dashboard = () => {
       {/* Hero section */}
       <div className="flex lg:justify-center">
         <div className="lg:w-3/5 flex flex-col items-center lg:items-start">
-          <h1 className="text-3xl">{t("greeting")} Buddhika</h1>
+          <h1 className="text-3xl">
+            {t("greeting")} {userDetails.name}
+          </h1>
           <p className="text-xl mt-8 sm:ms-8 tracking-wider">{t("heading")}</p>
           <div className="w-10/12">
             <p className="text-xl my-8 sm:mx-14 text-center">{t("title1")}</p>

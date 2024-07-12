@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import TextField from '@mui/material/TextField';
+import TextField from "@mui/material/TextField";
 import { HiChevronLeft } from "react-icons/hi";
 import { Button } from "@/components/ui/button";
+import { useTranslation } from "react-i18next";
 
 const drugAdd = () => {
   const [name, setName] = useState("");
@@ -15,14 +16,12 @@ const drugAdd = () => {
 
   const [mDate, setMDate] = useState("");
   const [mDateError, setMDateError] = useState(false);
-  
+
   const [eDate, setEDate] = useState("");
   const [eDateError, setEDateError] = useState(false);
 
-
   const [quantity, setQuantity] = useState("");
   const [quantityError, setQuantityError] = useState(false);
-
 
   const handleNameChange = (e) => {
     setName(e.target.value);
@@ -75,19 +74,21 @@ const drugAdd = () => {
     }
   };
 
+  const { t } = useTranslation("drugAdd");
+
   return (
     <div>
       <div>
         <div className="text-3xl text-[#5B5B5B] font-semibold ">
           <HiChevronLeft className="text-5xl inline" />
-          Drug Management - Add New Drug
+          {t("title")}
         </div>
 
         <div className="flex justify-center">
           <div className=" w-8/12 py-12 px-36 flex flex-col gap-6 ">
             <TextField
               required
-              label="Brand Name"
+              label={t("brand")}
               variant="standard"
               value={name}
               onChange={handleNameChange}
@@ -100,7 +101,7 @@ const drugAdd = () => {
               value={bNumber}
               onChange={handlebNumberChange}
               error={bNumberError}
-              label="Batch Number"
+              label={t("batch")}
               variant="standard"
               helperText={nameError ? "Cannot be empty" : ""}
               // InputProps={{ sx: { backgroundColor: "white" } }}
@@ -110,7 +111,7 @@ const drugAdd = () => {
               value={strength}
               onChange={handleStrengthChange}
               error={strengthError}
-              label="Strength"
+              label={t("strength")}
               variant="standard"
               helperText={nameError ? "Cannot be empty" : ""}
               // InputProps={{ sx: { backgroundColor: "white" } }}
@@ -122,10 +123,8 @@ const drugAdd = () => {
               value={mDate}
               onChange={handleMDateChange}
               error={mDateError}
-              label="Manufactured Date"
-
+              label={t("manufactured")}
               variant="standard"
-
               InputLabelProps={{ shrink: true }}
               helperText={mDateError ? "Cannot be empty" : ""}
               // InputProps={{ sx: { backgroundColor: "white" } }}
@@ -136,9 +135,8 @@ const drugAdd = () => {
               value={eDate}
               onChange={handleEDateChange}
               error={eDateError}
-              label="Expired Date"
+              label={t("expired")}
               variant="standard"
-
               InputLabelProps={{ shrink: true }}
               helperText={mDateError ? "Cannot be empty" : ""}
               // InputProps={{ sx: { backgroundColor: "white" } }}
@@ -150,15 +148,14 @@ const drugAdd = () => {
               value={quantity}
               onChange={handleQuantityChange}
               error={quantityError}
-              label="Quantity"
+              label={t("quantity")}
               variant="standard"
-
               helperText={nameError ? "Cannot be empty" : ""}
               // InputProps={{ sx: { backgroundColor: "white" } }}
             />
 
             <Button className="w-1/2 self-center bg-[#620084] mt-5">
-              Add To Stock
+              {t("add")}
             </Button>
           </div>
         </div>
