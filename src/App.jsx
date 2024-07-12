@@ -29,6 +29,7 @@ import AskQuestion from "./pages/question";
 import NotFound from "./pages/notFound";
 import UserService from "./service/userService";
 import { userData } from "./context/userAuth";
+import ScrollToTop from "./components/ScrollToTop";
 
 function App() {
   const darkQuery = window.matchMedia("(prefers-color-scheme: dark)");
@@ -80,6 +81,7 @@ function App() {
   return (
     <main className="bg-neutral-100 text-neutral-800 dark:bg-neutral-800 dark:text-neutral-100 duration-100 scroll-smooth focus:scroll-auto">
       <Navbar themeFunction={handleThemeSwitch} mode={theme} />
+      <ScrollToTop />
 
       <Routes>
         {!userDetails.authenticated && (

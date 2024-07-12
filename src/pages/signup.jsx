@@ -4,7 +4,7 @@ import {
   HiOutlineCheckCircle,
 } from "react-icons/hi";
 import { Link, useNavigate } from "react-router-dom";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import google from "../assets/google.png";
 import fb from "../assets/facebook.png";
 import signupImg from "../assets/signupImg.png";
@@ -28,14 +28,6 @@ const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
 const Signup = () => {
   const [showPassword, setShowPassword] = useState(false);
-
-  const handleClickShowPassword = () => setShowPassword((show) => !show);
-
-  const handleMouseDownPassword = (event) => {
-    event.preventDefault();
-  };
-
-  const navigate = useNavigate();
   const [agree, setAgree] = useState(false);
   const [formData, setFormData] = useState({
     firstName: "",
@@ -44,42 +36,59 @@ const Signup = () => {
     password: "",
     confirmPassword: "",
   });
-
   const [errors, setErrors] = useState({});
+
+  const navigate = useNavigate();
+  const { t } = useTranslation("signup");
+
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
+    setErrors({ ...errors, [name]: validateField(name, value) });
+  };
+
+  const validateField = (name, value) => {
+    switch (name) {
+      case "firstName":
+        if (!value) return "First name is required";
+        break;
+      case "lastName":
+        if (!value) return "Last name is required";
+        break;
+      case "email":
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!value) return "Email is required";
+        if (!emailPattern.test(value)) return "Email is not valid";
+        break;
+      case "password":
+        const passwordPattern = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/;
+        if (!value) return "Password is required";
+        if (!passwordPattern.test(value))
+          return "Password must be at least 6 characters and contain both letters and numbers";
+        break;
+      case "confirmPassword":
+        if (!value) return "Confirm password is required";
+        if (value !== formData.password) return "Passwords do not match";
+        break;
+      default:
+        break;
+    }
+    return "";
   };
 
   const validate = () => {
     const newErrors = {};
 
-    // Check if all fields are filled
-    if (!formData.firstName) newErrors.firstName = "First name is required";
-    if (!formData.lastName) newErrors.lastName = "Last name is required";
-    if (!formData.email) newErrors.email = "Email is required";
-    if (!formData.password) newErrors.password = "Password is required";
-    if (!formData.confirmPassword)
-      newErrors.confirmPassword = "Confirm password is required";
-
-    // Validate email format
-    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (formData.email && !emailPattern.test(formData.email)) {
-      newErrors.email = "Email is not valid";
-    }
-
-    // Validate password (minimum 6 characters, contains letters and numbers)
-    const passwordPattern = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/;
-    if (formData.password && !passwordPattern.test(formData.password)) {
-      newErrors.password =
-        "Password must be at least 6 characters and contain both letters and numbers";
-    }
-
-    // Check if passwords match
-    if (formData.password !== formData.confirmPassword) {
-      newErrors.confirmPassword = "Passwords do not match";
-    }
+    Object.keys(formData).forEach((key) => {
+      const error = validateField(key, formData[key]);
+      if (error) newErrors[key] = error;
+    });
 
     return newErrors;
   };
@@ -133,7 +142,6 @@ const Signup = () => {
     }
   };
 
-  const { t } = useTranslation("signup");
   return (
     <div className="w-screen">
       <div className="flex md:p-12 md:py-2 justify-center">
@@ -197,7 +205,7 @@ const Signup = () => {
               <OutlinedInput
                 id="outlined-adornment-password"
                 type={showPassword ? "text" : "password"}
-                sx={{ borderRadius: 8, mb:1 }}
+                sx={{ borderRadius: 8, mb: 1 }}
                 endAdornment={
                   <InputAdornment position="end">
                     <IconButton
@@ -225,7 +233,7 @@ const Signup = () => {
               <OutlinedInput
                 id="outlined-adornment-password-confirm"
                 type={showPassword ? "text" : "password"}
-                sx={{ borderRadius: 8,  mb:1 }}
+                sx={{ borderRadius: 8, mb: 1 }}
                 endAdornment={
                   <InputAdornment position="end">
                     <IconButton
@@ -242,11 +250,10 @@ const Signup = () => {
                 name="confirmPassword"
                 value={formData.confirmPassword}
                 onChange={handleInputChange}
-
               />
-            {errors.confirmPassword && (
-              <p className="error">{errors.confirmPassword}</p>
-            )}
+              {errors.confirmPassword && (
+                <p className="error">{errors.confirmPassword}</p>
+              )}
             </FormControl>
 
             <p className="mt-3">
