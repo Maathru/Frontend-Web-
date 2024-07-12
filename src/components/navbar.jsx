@@ -245,7 +245,7 @@ const Navbar = ({ themeFunction, mode }) => {
                 <AlertDialogContent>
                   <AlertDialogHeader>
                     <AlertDialogTitle>
-                      Are you absolutely logout?
+                      Are you sure you need to logout?
                     </AlertDialogTitle>
                     <AlertDialogDescription>
                       This action cannot be undone.

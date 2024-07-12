@@ -15,6 +15,7 @@ import {
 import { Box, Chip, IconButton } from "@mui/material";
 import { Button } from "flowbite-react";
 import { useTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
 
 const StripedDataGrid = styled(DataGrid)(({ theme }) => ({
   [`& .${gridClasses.row}.even`]: {
@@ -213,10 +214,13 @@ const drug = () => {
           {t("title")}
         </div>
 
-        <Button className="bg-[#6F0096] h-10 flexbox items-center">
-          {t("add")}
-          <HiOutlinePlusSm className="ml-2 h-5 w-5" />
-        </Button>
+        <Link to={"/drugs/add"}>
+          <Button className="bg-[#6F0096] h-10 flexbox items-center">
+            {t("add")}
+            <HiOutlinePlusSm className="ml-2 h-5 w-5" />
+          </Button>
+        </Link>
+        
       </div>
       <div style={{ height: "100%", width: "100%" }}>
         <StripedDataGrid

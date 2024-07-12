@@ -186,9 +186,11 @@ const blog = () => {
           </p>
         </CardContent>
         <CardFooter className="flex justify-center">
+          <Link to={"/blogs/write/1"}>
           <Button className="bg-fuchsia-600 dark:bg-[#ff8de7] text-lg hover:dark:bg-neutral-100 hover:dark:text-[#9C33C1] duration-200">
             <MdCreate className="mr-2 h-4 w-4" /> Let's Write A Blog Article
           </Button>
+          </Link>
         </CardFooter>
       </Card>
 
