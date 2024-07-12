@@ -1,21 +1,18 @@
 import React from "react";
-import Footer from "../components/footer";
 import { MdOutlineArrowBackIosNew } from "react-icons/md";
 import { Badge } from "@/components/ui/badge";
-import ArticleImage from "../assets/blog/article-image.png";
-import BlogImage from "../assets/blog/blog-image.png";
+import ArticleImage from "../../assets/blog/article-image.png";
+import BlogImage from "../../assets/blog/blog-image.png";
 
 import {
   Card,
-  CardContent,
-  CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
 
-const badgeColor =
-  "bg-fuchsia-200 dark:bg-fuchsia-300 hover:dark:bg-fuchsia-100 dark:text-neutral-800 text-xl font-normal px-4 py-1 mt-6";
+const badgeStyle =
+  "bg-fuchsia-200 dark:bg-fuchsia-300 hover:dark:bg-fuchsia-100 dark:text-neutral-800 md:text-xl text-sm font-normal px-4 py-1";
 const cardColor = "bg-pink-100 dark:bg-[#251F28] hover:dark:bg-[#1D1A1F]";
 const readMoreColor = "text-[#9c3cc1] dark:text-neutral-300";
 
@@ -51,14 +48,14 @@ const Article = () => {
           </p>
         </div>
 
-        <div className="flex flex-wrap gap-4">
-          <Badge variant="secondary" className={badgeColor}>
+        <div className="flex flex-wrap md:gap-4 gap-2 mt-6">
+          <Badge variant="secondary" className={badgeStyle}>
             Prenatal Nutrition
           </Badge>
-          <Badge variant="secondary" className={badgeColor}>
+          <Badge variant="secondary" className={badgeStyle}>
             Meal Plan
           </Badge>
-          <Badge variant="secondary" className={badgeColor}>
+          <Badge variant="secondary" className={badgeStyle}>
             Dietary Tips
           </Badge>
         </div>
@@ -70,8 +67,9 @@ const Article = () => {
         </p>
 
         <div className="mt-5 mb-16 flex flex-row gap-5 overflow-x-auto">
-
-          <Card className={`${cardColor} flex flex-col justify-between md:min-w-[35%] min-w-[80%] p-0 `}>
+          <Card
+            className={`${cardColor} flex flex-col justify-between md:min-w-[35%] min-w-[80%] p-0 `}
+          >
             <CardHeader>
               <img
                 src={BlogImage}
@@ -85,7 +83,9 @@ const Article = () => {
             </CardFooter>
           </Card>
 
-          <Card className={`${cardColor} flex flex-col justify-between md:min-w-[35%] min-w-[80%] p-0 `}>
+          <Card
+            className={`${cardColor} flex flex-col justify-between md:min-w-[35%] min-w-[80%] p-0 `}
+          >
             <CardHeader>
               <img
                 src={BlogImage}
@@ -99,7 +99,9 @@ const Article = () => {
             </CardFooter>
           </Card>
 
-          <Card className={`${cardColor} flex flex-col justify-between md:min-w-[35%] min-w-[80%] p-0 `}>
+          <Card
+            className={`${cardColor} flex flex-col justify-between md:min-w-[35%] min-w-[80%] p-0 `}
+          >
             <CardHeader>
               <img
                 src={BlogImage}
@@ -113,7 +115,9 @@ const Article = () => {
             </CardFooter>
           </Card>
 
-          <Card className={`${cardColor} flex flex-col justify-between md:min-w-[35%] min-w-[80%] p-0 `}>
+          <Card
+            className={`${cardColor} flex flex-col justify-between md:min-w-[35%] min-w-[80%] p-0 `}
+          >
             <CardHeader>
               <img
                 src={BlogImage}
@@ -126,11 +130,10 @@ const Article = () => {
               <p>Read More</p>
             </CardFooter>
           </Card>
-
         </div>
       </div>
 
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 };
