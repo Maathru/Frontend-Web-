@@ -20,6 +20,7 @@ import { HiChatBubbleLeftRight } from "react-icons/hi2";
 import { LuPhoneCall } from "react-icons/lu";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
+import DateCalendarServerRequest from "@/components/DateCalendarServerRequest";
 import { userData } from "@/context/userAuth";
 
 const provinces = [
@@ -280,6 +281,26 @@ const Dashboard = () => {
                 <p className="text-white ps-2 pe-3">{t("call")}</p>
               </Button>
             </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="mx-40 mt-24">
+        <div className="flex w-full justify-between">
+          <h2 className="text-2xl font-semibold">Clinics(MOH & Home Visits)</h2>
+          <Link to="/clinic">
+            <Button>Visits Clinic Details</Button>
+          </Link>
+        </div>
+
+        <div className="mx-auto flex justify-around">
+          <div className="mt-4">
+            <h1 className="font-xl">MOH Clinic Days</h1>
+            <DateCalendarServerRequest />
+          </div>
+          <div className="mt-4">
+            <h1 className="font-xl">MOH Clinic Days</h1>
+            <DateCalendarServerRequest />
           </div>
         </div>
       </div>
