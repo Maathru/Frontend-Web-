@@ -56,10 +56,10 @@ const parentCards = [
     url: "/midwife",
   },
   {
-    title: "Memories",
+    title: "Child Growth",
     description: "Relive precious moments with access to  stored data",
     image: memory,
-    url: "/memory",
+    url: "/growth",
   },
 ];
 
@@ -285,7 +285,7 @@ const Dashboard = () => {
         </div>
       </div>
 
-      {userDetails.role === "ELIGIBLE" && (
+      {userDetails.role === "PARENT" && (
         <>
           <div className="mx-40 mt-24">
             <div className="flex w-full justify-between">
@@ -303,7 +303,7 @@ const Dashboard = () => {
                 <DateCalendarServerRequest />
               </div>
               <div className="mt-4">
-                <h1 className="font-xl">MOH Clinic Days</h1>
+                <h1 className="font-xl">Home Visit Days</h1>
                 <DateCalendarServerRequest />
               </div>
             </div>

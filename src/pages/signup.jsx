@@ -135,7 +135,7 @@ const Signup = () => {
 
   const { t } = useTranslation("signup");
   return (
-    <div className="w-screen">
+    <div className="w-screen ">
       <div className="flex md:p-12 md:py-2 justify-center">
         <img
           src={signupImg}
