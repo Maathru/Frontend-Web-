@@ -79,7 +79,7 @@ function App() {
   const { userDetails } = useContext(userData);
 
   return (
-    <main className="bg-neutral-100 text-neutral-800 dark:bg-neutral-800 dark:text-neutral-100 duration-100 scroll-smooth focus:scroll-auto">
+    <main className=" bg-white text-neutral-800 dark:bg-neutral-900 dark:text-neutral-100 duration-100 scroll-smooth focus:scroll-auto">
       <Navbar themeFunction={handleThemeSwitch} mode={theme} />
       <ScrollToTop />
 
