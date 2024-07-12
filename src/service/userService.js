@@ -110,14 +110,6 @@ class UserService {
     localStorage.removeItem("refresh");
     localStorage.removeItem("role");
     localStorage.removeItem("name");
-
-    // setUserDetails({
-    //   authenticated: false,
-    //   name: "",
-    //   role: "",
-    //   accessToken: "",
-    //   refreshToken: "",
-    // });
   }
 
   static isAuthenticated() {
