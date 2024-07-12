@@ -26,7 +26,6 @@ import Eligible3 from "./pages/user/eligible3";
 import Eligible4 from "./pages/user/eligible4";
 import Growth from "./pages/user/growth";
 import AskQuestion from "./pages/question";
-import Article from "./pages/article";
 import NotFound from "./pages/notFound";
 import UserService from "./service/userService";
 import { userData } from "./context/userAuth";
@@ -99,7 +98,7 @@ function App() {
             <Route path="/drugs/add" element={<DrugAdd />} />
 
             <Route path="/blogs" element={<Blog />} />
-            <Route path="/blogs/article" element={<Article />} />              
+            <Route path="/blogs/article" element={<Article />} />
             <Route path="/blogs/write/1" element={<WriteBlog1 />} />
             <Route path="/blogs/write/2" element={<WriteBlog2 />} />
 
