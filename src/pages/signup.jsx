@@ -154,44 +154,50 @@ const Signup = () => {
               {t("title")}
             </p>
 
-            {errors.firstName && <p>{errors.firstName}</p>}
-            {errors.lastName && <p>{errors.lastName}</p>}
-            {errors.email && <p>{errors.email}</p>}
-            {errors.password && <p>{errors.password}</p>}
-            {errors.confirmPassword && <p>{errors.confirmPassword}</p>}
+            <div>
+              <TextField
+                label={t("firstName")}
+                name="firstName"
+                value={formData.firstName}
+                onChange={handleInputChange}
+                variant="outlined"
+                InputProps={{ sx: { borderRadius: 8, width: "30vw", mb: 1 } }}
+              />
+              {errors.firstName && <p className="error">{errors.firstName}</p>}
+            </div>
 
-            <TextField
-              label={t("firstName")}
-              name="firstName"
-              value={formData.firstName}
-              onChange={handleInputChange}
-              variant="outlined"
-              InputProps={{ sx: { borderRadius: 8, width: "30vw", mb: 1 } }}
-            />
-            <TextField
-              label={t("lastName")}
-              name="lastName"
-              value={formData.lastName}
-              onChange={handleInputChange}
-              variant="outlined"
-              InputProps={{ sx: { borderRadius: 8, width: "30vw", mb: 1 } }}
-            />
-            <TextField
-              label={t("email")}
-              name="email"
-              value={formData.email}
-              onChange={handleInputChange}
-              variant="outlined"
-              InputProps={{ sx: { borderRadius: 8, width: "30vw", mb: 1 } }}
-            />
-            <FormControl sx={{ width: "30vw", mb: 1 }} variant="outlined">
+            <div>
+              <TextField
+                label={t("lastName")}
+                name="lastName"
+                value={formData.lastName}
+                onChange={handleInputChange}
+                variant="outlined"
+                InputProps={{ sx: { borderRadius: 8, width: "30vw", mb: 1 } }}
+              />
+              {errors.lastName && <p className="error">{errors.lastName}</p>}
+            </div>
+
+            <div>
+              <TextField
+                label={t("email")}
+                name="email"
+                value={formData.email}
+                onChange={handleInputChange}
+                variant="outlined"
+                InputProps={{ sx: { borderRadius: 8, width: "30vw", mb: 1 } }}
+              />
+              {errors.email && <p className="error">{errors.email}</p>}
+            </div>
+
+            <FormControl sx={{ width: "30vw" }} variant="outlined">
               <InputLabel htmlFor="outlined-adornment-password">
                 {t("password")}
               </InputLabel>
               <OutlinedInput
                 id="outlined-adornment-password"
                 type={showPassword ? "text" : "password"}
-                sx={{ borderRadius: 8 }}
+                sx={{ borderRadius: 8, mb:1 }}
                 endAdornment={
                   <InputAdornment position="end">
                     <IconButton
@@ -209,7 +215,9 @@ const Signup = () => {
                 value={formData.password}
                 onChange={handleInputChange}
               />
+              {errors.password && <p className="error">{errors.password}</p>}
             </FormControl>
+
             <FormControl sx={{ width: "30vw" }} variant="outlined">
               <InputLabel htmlFor="outlined-adornment-password-confirm">
                 {t("cPassword")}
@@ -217,7 +225,7 @@ const Signup = () => {
               <OutlinedInput
                 id="outlined-adornment-password-confirm"
                 type={showPassword ? "text" : "password"}
-                sx={{ borderRadius: 8 }}
+                sx={{ borderRadius: 8,  mb:1 }}
                 endAdornment={
                   <InputAdornment position="end">
                     <IconButton
@@ -234,7 +242,11 @@ const Signup = () => {
                 name="confirmPassword"
                 value={formData.confirmPassword}
                 onChange={handleInputChange}
+
               />
+            {errors.confirmPassword && (
+              <p className="error">{errors.confirmPassword}</p>
+            )}
             </FormControl>
 
             <p className="mt-3">
