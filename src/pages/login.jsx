@@ -115,18 +115,25 @@ const Login = () => {
         </div>
 
         <div className="flex flex-col items-center w-full md:w-8/12 justify-center shadow-md rounded-r-2xl py-16">
-          <p className="text-[#202244] font-bold text-2xl mb-8">{t("title")}</p>
+          <p className="text-[#202244] dark:text-[#eae0f4] font-bold text-2xl mb-8">{t("title")}</p>
 
-          {errors.email && <p>{errors.email}</p>}
-          {errors.password && <p>{errors.password}</p>}
 
-          <TextField
-            label={t("username")}
-            variant="outlined"
-            InputProps={{ sx: { borderRadius: 8, width: "30vw" } }}
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-          />
+          <div>
+            <TextField
+              label={t("username")}
+              variant="outlined"
+              InputProps={{ sx: { borderRadius: 8, width: "30vw" } }}
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              // InputLabelProps={{
+              //   style: { color: '#eae0f4' },
+              // }}
+              
+            />
+            {errors.email && (
+              <p className="error">{errors.email}</p>
+            )}
+          </div>
           <br />
           <div className="flex flex-col">
             <FormControl sx={{ m: 1, width: "30vw" }} variant="outlined">
@@ -153,6 +160,7 @@ const Login = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
+              {errors.password && <p className="error">{errors.password}</p>}
             </FormControl>
 
             <Link>

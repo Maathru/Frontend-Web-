@@ -78,6 +78,11 @@
   }
 }
 
+
+.error {
+  @apply text-error-red text-xs ml-4 pb-3;
+}
+
 /* width */
 ::-webkit-scrollbar {
   width: 5px;
