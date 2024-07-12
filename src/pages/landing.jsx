@@ -8,7 +8,7 @@ const landing = () => {
 
   return (
     <div className="flex bg-white dark:bg-dark-background">
-      <div className="pl-28 pt-12">
+      <div className="pl-28 pt-12 mb-20">
         <p className="text-3xl font-bold">{t("title")}</p>
         <p className="text-xl font-semibold mt-4 mb-36">{t("subTitle")}</p>
 

@@ -36,7 +36,7 @@ const Forum = () => {
   }, []);
 
   return (
-    <div className="p-12 grid content-start">
+    <div className="p-12 grid content-start min-h-screen">
       <div className="flex justify-between mb-8">
         <div className="text-3xl text-[#5B5B5B] font-semibold">
           <HiChevronLeft className="text-5xl inline" />
@@ -66,7 +66,7 @@ const Forum = () => {
         </List>
       </div>
       <Pagination />
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 };
