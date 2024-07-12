@@ -285,25 +285,31 @@ const Dashboard = () => {
         </div>
       </div>
 
-      <div className="mx-40 mt-24">
-        <div className="flex w-full justify-between">
-          <h2 className="text-2xl font-semibold">Clinics(MOH & Home Visits)</h2>
-          <Link to="/clinic">
-            <Button>Visits Clinic Details</Button>
-          </Link>
-        </div>
+      {userDetails.role === "ELIGIBLE" && (
+        <>
+          <div className="mx-40 mt-24">
+            <div className="flex w-full justify-between">
+              <h2 className="text-2xl font-semibold">
+                Clinics(MOH & Home Visits)
+              </h2>
+              <Link to="/clinic">
+                <Button>Visits Clinic Details</Button>
+              </Link>
+            </div>
 
-        <div className="mx-auto flex justify-around">
-          <div className="mt-4">
-            <h1 className="font-xl">MOH Clinic Days</h1>
-            <DateCalendarServerRequest />
+            <div className="mx-auto flex justify-around">
+              <div className="mt-4">
+                <h1 className="font-xl">MOH Clinic Days</h1>
+                <DateCalendarServerRequest />
+              </div>
+              <div className="mt-4">
+                <h1 className="font-xl">MOH Clinic Days</h1>
+                <DateCalendarServerRequest />
+              </div>
+            </div>
           </div>
-          <div className="mt-4">
-            <h1 className="font-xl">MOH Clinic Days</h1>
-            <DateCalendarServerRequest />
-          </div>
-        </div>
-      </div>
+        </>
+      )}
     </div>
   );
 };
