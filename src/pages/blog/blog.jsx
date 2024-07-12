@@ -39,6 +39,7 @@ const blog = () => {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 md:gap-8 gap-4 md:mt-8 mt-4 mx-4">
         <div className="row-span-2">
+          <Link to="/blogs/article">
           <Card
             className={`${cardColor} flex flex-col justify-between h-[100%]`}
           >
@@ -80,6 +81,7 @@ const blog = () => {
               <p>Read More</p>
             </CardFooter>
           </Card>
+          </Link>
         </div>
 
         <Card className={`${cardColor} flex flex-row items-center row-span-1`}>
