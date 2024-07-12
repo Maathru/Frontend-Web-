@@ -2,7 +2,10 @@ import { useContext, useEffect, useState } from "react";
 import "./App.css";
 import Login from "./pages/login";
 import Signup from "./pages/signup";
-import Blog from "./pages/blog";
+import Blog from "./pages/blog/blog";
+import Article from "./pages/blog/article";
+import WriteBlog1 from "./pages/blog/writeblog1";
+import WriteBlog2 from "./pages/blog/writeblog2";
 import Navbar from "./components/navbar";
 import Landing from "./pages/landing";
 import Drug from "./pages/drug";
@@ -96,7 +99,9 @@ function App() {
             <Route path="/drugs/add" element={<DrugAdd />} />
 
             <Route path="/blogs" element={<Blog />} />
-            <Route path="/blogs/article" element={<Article />} />
+            <Route path="/blogs/article" element={<Article />} />              
+            <Route path="/blogs/write/1" element={<WriteBlog1 />} />
+            <Route path="/blogs/write/2" element={<WriteBlog2 />} />
 
             <Route path="/clinics" element={<Clinic />} />
             <Route path="/clinics/view" element={<ViewClinics />} />
