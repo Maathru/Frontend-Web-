@@ -74,15 +74,20 @@ const Login = () => {
       console.log(error.message);
       Toast(error.message, errorType.ERROR);
 
-      const newErrors = {};
+      const data = error.response.data;
+      if (data) {
+        if (Array.isArray(data)) {
+          const newErrors = {};
+          data.map((msg) => {
+            Toast(msg.message, errorType.ERROR);
+            newErrors[msg.field] = msg.message;
+          });
 
-      if (error.response.data) {
-        error.response.data.map((msg) => {
-          Toast(msg.message, errorType.ERROR);
-          newErrors[msg.field] = msg.message;
-        });
-
-        setErrors(newErrors);
+          setErrors(newErrors);
+        } else {
+          console.log(data);
+          Toast(data, errorType.ERROR);
+        }
       }
     }
   };
