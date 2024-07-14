@@ -110,7 +110,7 @@ function App() {
             <Route path="/clinics/reports" element={<ClinicReports />} />
 
             <Route path="/forum" element={<Forum />} />
-            <Route path="/forum/askquestion" element={<AskQuestion />} />
+            <Route path="/forum/ask" element={<AskQuestion />} />
             <Route path="/forum/answer/:questionId" element={<Answer />} />
 
             {/* <Route path="/user" element={<Dashboard />} /> */}

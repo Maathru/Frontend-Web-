@@ -1,38 +1,43 @@
-import React, { useEffect, useState } from 'react';
-import {
-  HiChevronLeft,
-  HiOutlinePencilAlt,
-  HiOutlinePlusSm,
-  HiOutlineTrash,
-} from "react-icons/hi";
-import { List } from '@mui/material';
-import Item from '@/components/ui/item';
+import { useEffect, useState } from "react";
+import { HiChevronLeft } from "react-icons/hi";
+import { List } from "@mui/material";
+import Item from "@/components/ui/item";
 import Pagination from "@/components/pagination";
-import Footer from "@/components/footer";
 import { Button } from "flowbite-react";
-import SearchBar from '@mkyy/mui-search-bar';
-import { NavLink } from 'react-router-dom';
-
-import axios from 'axios';
+import SearchBar from "@mkyy/mui-search-bar";
+import { NavLink } from "react-router-dom";
+import ForumService from "@/service/forumService";
+import { errorType, Toast } from "@/components/toast";
 
 const Forum = () => {
   const handleSearch = (labelOptionValue) => {
     console.log(labelOptionValue);
   };
 
-  const [textFieldValue, setTextFieldValue] = useState('');
+  const [textFieldValue, setTextFieldValue] = useState("");
   const [questions, setQuestions] = useState([]);
+  const [pageSize, setPageSize] = useState(0);
+  const [offset, setOffset] = useState(10);
 
   useEffect(() => {
-    const url = process.env.REACT_APP_BACKEND_API_URL || 'http://localhost:8080/api/v1';
-    axios.get(url + '/question')
-      .then((response) => {
-        console.log(response.data);
-        setQuestions(response.data);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+    const fetchQuestions = async () => {
+      try {
+        const response = await ForumService.getAllQuestionsWithPagination(
+          pageSize,
+          offset
+        );
+        setQuestions(response.content);
+      } catch (error) {
+        console.log(error.message);
+        Toast(error.message, errorType.ERROR);
+
+        const data = error.response.data;
+        console.log(data);
+        Toast(data, errorType.ERROR);
+      }
+    };
+
+    fetchQuestions();
   }, []);
 
   return (
@@ -46,27 +51,24 @@ const Forum = () => {
           </div>
         </div>
         <Button className="bg-[#6F0096] h-10 min-w-max flexbox items-center">
-          <NavLink to="/forum/askquestion">
-            Ask a Question
-          </NavLink>
+          <NavLink to="/forum/ask">Ask a Question</NavLink>
         </Button>
       </div>
       <SearchBar
         value={textFieldValue}
-        onChange={newValue => setTextFieldValue(newValue)}
+        onChange={(newValue) => setTextFieldValue(newValue)}
         onSearch={handleSearch}
         width="80%"
         className="border-black"
       />
       <div>
-        <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
+        <List sx={{ width: "100%", bgcolor: "background.paper" }}>
           {questions.map((question) => (
             <Item key={question.id} question={question} />
           ))}
         </List>
       </div>
       <Pagination />
-      {/* <Footer /> */}
     </div>
   );
 };

@@ -75,8 +75,7 @@ const Navbar = ({ themeFunction, mode }) => {
   }, [mode]);
 
   const handleLogout = async () => {
-    const token = localStorage.getItem("jwt");
-    await UserService.logout(token);
+    await UserService.logout();
 
     setUserDetails({
       authenticated: false,
