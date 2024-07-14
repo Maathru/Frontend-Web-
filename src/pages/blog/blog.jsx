@@ -40,47 +40,49 @@ const blog = () => {
       <div className="grid grid-cols-1 lg:grid-cols-2 md:gap-8 gap-4 md:mt-8 mt-4 mx-4">
         <div className="row-span-2">
           <Link to="/blogs/article">
-          <Card
-            className={`${cardColor} flex flex-col justify-between h-[100%]`}
-          >
-            <CardHeader>
-              <img
-                src={BlogImage}
-                alt="Blog Image"
-                className="rounded-md mb-2"
-              />
-              <CardTitle>Understanding Prenatal Nutrition</CardTitle>
-              <CardDescription>
-                What to Eat for a Healthy Pregnancy
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="text-sm">
-              <p>
-                Maintaining a balanced diet during pregnancy is crucial for the
-                health of both the mother and the developing baby. In this post,
-                we'll explore essential nutrients needed during pregnancy,
-                healthy eating habits, and practical tips for managing common
-                dietary challenges. Discover how to create a nutritious meal
-                plan that supports a healthy pregnancy journey
-              </p>
-            </CardContent>
-            <CardFooter className="pb-0">
-              <div className="flex flex-wrap gap-2">
-                <Badge variant="secondary" className={badgeColor}>
-                  Prenatal Nutrition
-                </Badge>
-                <Badge variant="secondary" className={badgeColor}>
-                  Meal Plan
-                </Badge>
-                <Badge variant="secondary" className={badgeColor}>
-                  Dietary Tips
-                </Badge>
-              </div>
-            </CardFooter>
-            <CardFooter className={`text-sm flex justify-end ${readMoreColor}`}>
-              <p>Read More</p>
-            </CardFooter>
-          </Card>
+            <Card
+              className={`${cardColor} flex flex-col justify-between h-[100%]`}
+            >
+              <CardHeader>
+                <img
+                  src={BlogImage}
+                  alt="Blog Image"
+                  className="rounded-md mb-2"
+                />
+                <CardTitle>Understanding Prenatal Nutrition</CardTitle>
+                <CardDescription>
+                  What to Eat for a Healthy Pregnancy
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="text-sm">
+                <p>
+                  Maintaining a balanced diet during pregnancy is crucial for
+                  the health of both the mother and the developing baby. In this
+                  post, we'll explore essential nutrients needed during
+                  pregnancy, healthy eating habits, and practical tips for
+                  managing common dietary challenges. Discover how to create a
+                  nutritious meal plan that supports a healthy pregnancy journey
+                </p>
+              </CardContent>
+              <CardFooter className="pb-0">
+                <div className="flex flex-wrap gap-2">
+                  <Badge variant="secondary" className={badgeColor}>
+                    Prenatal Nutrition
+                  </Badge>
+                  <Badge variant="secondary" className={badgeColor}>
+                    Meal Plan
+                  </Badge>
+                  <Badge variant="secondary" className={badgeColor}>
+                    Dietary Tips
+                  </Badge>
+                </div>
+              </CardFooter>
+              <CardFooter
+                className={`text-sm flex justify-end ${readMoreColor}`}
+              >
+                <p>Read More</p>
+              </CardFooter>
+            </Card>
           </Link>
         </div>
 
@@ -184,10 +186,10 @@ const blog = () => {
           </p>
         </CardContent>
         <CardFooter className="flex justify-center">
-          <Link to="/blogs/write/1">
-            <Button className="bg-fuchsia-600 dark:bg-[#ff8de7] text-lg hover:bg-neutral-800 hover:dark:bg-neutral-100 hover:dark:text-[#9C33C1] duration-200">
-              <MdCreate className="mr-2 h-4 w-4" /> Let's Write A Blog Article
-            </Button>
+          <Link to={"/blogs/write/1"}>
+          <Button className="bg-fuchsia-600 dark:bg-[#ff8de7] text-lg hover:dark:bg-neutral-100 hover:dark:text-[#9C33C1] duration-200">
+            <MdCreate className="mr-2 h-4 w-4" /> Let's Write A Blog Article
+          </Button>
           </Link>
         </CardFooter>
       </Card>

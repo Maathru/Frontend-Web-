@@ -75,8 +75,7 @@ const Navbar = ({ themeFunction, mode }) => {
   }, [mode]);
 
   const handleLogout = async () => {
-    const token = localStorage.getItem("jwt");
-    await UserService.logout(token);
+    await UserService.logout();
 
     setUserDetails({
       authenticated: false,
@@ -212,7 +211,7 @@ const Navbar = ({ themeFunction, mode }) => {
           {!userDetails.authenticated ? (
             <>
               <Link to="/signup">
-                <Button className="md:ms-5 ms-1 bg-white text-[#9C33C1]">
+                <Button className="md:ms-5 ms-1 bg-white text-[#9C33C1] hover:text-white">
                   Sign Up
                 </Button>
               </Link>
@@ -245,7 +244,7 @@ const Navbar = ({ themeFunction, mode }) => {
                 <AlertDialogContent>
                   <AlertDialogHeader>
                     <AlertDialogTitle>
-                      Are you absolutely logout?
+                      Are you sure you need to logout?
                     </AlertDialogTitle>
                     <AlertDialogDescription>
                       This action cannot be undone.

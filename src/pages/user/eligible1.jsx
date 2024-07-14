@@ -102,7 +102,7 @@ const Eligible = () => {
             </div>
             <div className="flex my-4 gap-2">
               <p>Wife's Name:</p>
-              <p>Mia kalifa</p>
+              <p></p>
             </div>
             <div className="flex my-4 gap-2">
               <p>Husband's Name:</p>

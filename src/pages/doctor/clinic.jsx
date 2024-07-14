@@ -14,6 +14,7 @@ import {
 } from "@mui/x-data-grid";
 import { Box, Chip, IconButton } from "@mui/material";
 import { useTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
 
 const StripedDataGrid = styled(DataGrid)(({ theme }) => ({
   [`& .${gridClasses.row}.even`]: {
@@ -167,10 +168,18 @@ const Clinic = () => {
       </div>
 
       <div className="flex gap-36 justify-around px-24">
-        <Button className="flex-1 text-md">{t("past")}</Button>
+        <Link to={"/clinics/view"}>
+        {/* <Button className="flex-1 text-md">{t("past")}</Button> */}
         <Button className="flex-1 text-md">{t("clinics")}</Button>
+        </Link>
+
+        <Link to={"/clinics/dates"}>
         <Button className="flex-1 text-md">{t("dates")}</Button>
+        </Link>
+
+        <Link to={"/clinics/reports"}>
         <Button className="flex-1 text-md">{t("reports")}</Button>
+        </Link>
       </div>
 
       <div className="flex flex-col items-end mt-10">

@@ -83,6 +83,10 @@
   @apply text-error-red text-xs ml-4 pb-3;
 }
 
+.content{
+  @apply bg-white dark:bg-dark-background;
+}
+
 /* width */
 ::-webkit-scrollbar {
   width: 5px;

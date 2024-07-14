@@ -1,14 +1,13 @@
 import { Button } from "@/components/ui/button";
 import landingImg from "../assets/landingImg.png";
 import { useTranslation } from "react-i18next";
-import UserService from "@/service/userService";
 
-const landing = () => {
+const Landing = () => {
   const { t } = useTranslation("landing");
 
   return (
-    <div className="flex bg-white dark:bg-dark-background">
-      <div className="pl-28 pt-12">
+    <div className="flex content">
+      <div className="pl-28 mt-12">
         <p className="text-3xl font-bold">{t("title")}</p>
         <p className="text-xl font-semibold mt-4 mb-36">{t("subTitle")}</p>
 
@@ -17,11 +16,7 @@ const landing = () => {
         </p>
 
         <div className="flex gap-10 mt-10">
-          <Button
-            className="bg-[#9C33C1] px-10"
-            size="lg"
-            onClick={UserService.isAuthenticated}
-          >
+          <Button className="bg-[#9C33C1] px-10" size="lg">
             {t("button1")}
           </Button>
           <Button className="bg-[#9C33C1] px-10" size="lg">
@@ -29,9 +24,9 @@ const landing = () => {
           </Button>
         </div>
       </div>
-      <img src={landingImg} alt="" className="w-4/12" />
+      <img src={landingImg} alt="" className="w-5/12" />
     </div>
   );
 };
 
-export default landing;
+export default Landing;
