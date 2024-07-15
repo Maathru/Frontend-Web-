@@ -6,5 +6,7 @@
     "strength":"ශක්තිය",
     "manufactured":"නිෂ්පාදිත දිනය",
     "expired":"කල් ඉකුත්වන දිනය",
-    "quantity":"ප්රමාණය"
+    "quantity":"ප්රමාණය",
+    "composition":"සංයුතිය",
+    "dose":"නිර්දේශිත මාත්‍රාව"
  }

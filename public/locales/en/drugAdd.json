@@ -6,5 +6,7 @@
     "strength":"Strength",
     "manufactured":"Manufactured Date",
     "expired":"Expiration Date",
-    "quantity":"Quantity"
+    "quantity":"Quantity",
+    "composition":"Composition",
+    "dose":"Recommended Dose"
  }

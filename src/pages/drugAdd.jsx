@@ -23,6 +23,9 @@ const drugAdd = () => {
   const [quantity, setQuantity] = useState("");
   const [quantityError, setQuantityError] = useState(false);
 
+  const [composition, setComposition] = useState("");
+  const [compositionError, setCompositionError] = useState(false);
+
   const handleNameChange = (e) => {
     setName(e.target.value);
     if (e.target.validity.valid) {
@@ -31,6 +34,7 @@ const drugAdd = () => {
       setNameError(true);
     }
   };
+
   const handlebNumberChange = (e) => {
     setbNumber(e.target.value);
     if (e.target.validity.valid) {
@@ -39,6 +43,7 @@ const drugAdd = () => {
       setbNumberError(true);
     }
   };
+
   const handleStrengthChange = (e) => {
     setStrength(e.target.value);
     if (e.target.validity.valid) {
@@ -65,12 +70,22 @@ const drugAdd = () => {
       setEDateError(true);
     }
   };
+
   const handleQuantityChange = (e) => {
     setQuantity(e.target.value);
     if (e.target.validity.valid) {
       setQuantityError(false);
     } else {
       setQuantityError(true);
+    }
+  };
+
+  const handleCompositionChange = (e) => {
+    setComposition(e.target.value);
+    if (e.target.validity.valid) {
+      setCompositionError(false);
+    } else {
+      setCompositionError(true);
     }
   };
 
@@ -94,8 +109,8 @@ const drugAdd = () => {
               onChange={handleNameChange}
               error={nameError}
               helperText={nameError ? "Cannot be empty" : ""}
-              // InputProps={{ sx: { backgroundColor: "white" } }}
             />
+
             <TextField
               required
               value={bNumber}
@@ -104,8 +119,8 @@ const drugAdd = () => {
               label={t("batch")}
               variant="standard"
               helperText={nameError ? "Cannot be empty" : ""}
-              // InputProps={{ sx: { backgroundColor: "white" } }}
             />
+
             <TextField
               required
               value={strength}
@@ -114,7 +129,32 @@ const drugAdd = () => {
               label={t("strength")}
               variant="standard"
               helperText={nameError ? "Cannot be empty" : ""}
-              // InputProps={{ sx: { backgroundColor: "white" } }}
+            />
+
+            <TextField
+              required
+              type="number"
+              value={quantity}
+              onChange={handleQuantityChange}
+              error={quantityError}
+              label={t("quantity")}
+              variant="standard"
+              helperText={quantityError ? "Cannot be empty" : ""}
+            />
+            <TextField
+              required
+              value={composition}
+              onChange={handleCompositionChange}
+              error={compositionError}
+              label={t("composition")}
+              variant="standard"
+              helperText={compositionError ? "Cannot be empty" : ""}
+            />
+
+            <TextField
+              // value={dose}
+              label={t("dose")}
+              variant="standard"
             />
 
             <TextField
@@ -127,8 +167,8 @@ const drugAdd = () => {
               variant="standard"
               InputLabelProps={{ shrink: true }}
               helperText={mDateError ? "Cannot be empty" : ""}
-              // InputProps={{ sx: { backgroundColor: "white" } }}
             />
+
             <TextField
               type="date"
               required
@@ -139,19 +179,6 @@ const drugAdd = () => {
               variant="standard"
               InputLabelProps={{ shrink: true }}
               helperText={mDateError ? "Cannot be empty" : ""}
-              // InputProps={{ sx: { backgroundColor: "white" } }}
-            />
-
-            <TextField
-              required
-              type="number"
-              value={quantity}
-              onChange={handleQuantityChange}
-              error={quantityError}
-              label={t("quantity")}
-              variant="standard"
-              helperText={nameError ? "Cannot be empty" : ""}
-              // InputProps={{ sx: { backgroundColor: "white" } }}
             />
 
             <Button className="w-1/2 self-center bg-[#620084] mt-5">
