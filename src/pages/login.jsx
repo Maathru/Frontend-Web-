@@ -6,7 +6,6 @@ import loginImg from "../assets/loginImg.png";
 import { useTranslation } from "react-i18next";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
 import {
   FormControl,
   IconButton,
@@ -16,26 +15,51 @@ import {
   TextField,
 } from "@mui/material";
 import { MdVisibility, MdVisibilityOff } from "react-icons/md";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import UserService from "@/service/userService";
 import { errorType, Toast } from "@/components/toast";
 import { userData } from "@/context/userAuth";
 
 const Login = () => {
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [errors, setErrors] = useState({});
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
   const { setUserDetails } = useContext(userData);
-  const [errors, setErrors] = useState({});
+  const { t } = useTranslation("login");
+
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
+
+  const validateField = (name, value) => {
+    switch (name) {
+      case "email":
+        if (!value) return "Username is required";
+        break;
+      case "password":
+        if (!value) return "Password is required";
+        break;
+      default:
+        break;
+    }
+    return "";
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    if (name === "email") setEmail(value);
+    if (name === "password") setPassword(value);
+    setErrors({ ...errors, [name]: validateField(name, value) });
+  };
 
   const validate = () => {
     const newErrors = {};
-
-    // Check if all fields are filled
-    if (!username) newErrors.email = "Username is required";
+    if (!email) newErrors.email = "Username is required";
     if (!password) newErrors.password = "Password is required";
-
     return newErrors;
   };
 
@@ -43,14 +67,13 @@ const Login = () => {
     e.preventDefault();
 
     const validationErrors = validate();
-
     if (Object.keys(validationErrors).length !== 0) {
       setErrors(validationErrors);
       return;
     }
 
     try {
-      const response = await UserService.login(username, password);
+      const response = await UserService.login(email, password);
       if (response.status === 200) {
         localStorage.setItem("jwt", response.data.access_token);
         localStorage.setItem("refresh", response.data.refresh_token);
@@ -92,14 +115,6 @@ const Login = () => {
     }
   };
 
-  const [showPassword, setShowPassword] = useState(false);
-  const handleClickShowPassword = () => setShowPassword((show) => !show);
-  const handleMouseDownPassword = (event) => {
-    event.preventDefault();
-  };
-
-  const { t } = useTranslation("login");
-
   return (
     <div className="h- w-screen">
       <img
@@ -115,24 +130,20 @@ const Login = () => {
         </div>
 
         <div className="flex flex-col items-center w-full md:w-8/12 justify-center shadow-md rounded-r-2xl py-16">
-          <p className="text-[#202244] dark:text-[#eae0f4] font-bold text-2xl mb-8">{t("title")}</p>
-
+          <p className="text-[#202244] dark:text-[#eae0f4] font-bold text-2xl mb-8">
+            {t("title")}
+          </p>
 
           <div>
             <TextField
               label={t("username")}
+              name="email"
               variant="outlined"
               InputProps={{ sx: { borderRadius: 8, width: "30vw" } }}
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              // InputLabelProps={{
-              //   style: { color: '#eae0f4' },
-              // }}
-              
+              value={email}
+              onChange={handleInputChange}
             />
-            {errors.email && (
-              <p className="error">{errors.email}</p>
-            )}
+            {errors.email && <p className="error">{errors.email}</p>}
           </div>
           <br />
           <div className="flex flex-col">
@@ -142,6 +153,7 @@ const Login = () => {
               </InputLabel>
               <OutlinedInput
                 id="outlined-adornment-password"
+                name="password"
                 type={showPassword ? "text" : "password"}
                 sx={{ borderRadius: 8 }}
                 endAdornment={
@@ -158,7 +170,7 @@ const Login = () => {
                 }
                 label="Password"
                 value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                onChange={handleInputChange}
               />
               {errors.password && <p className="error">{errors.password}</p>}
             </FormControl>

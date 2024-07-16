@@ -26,10 +26,10 @@ import Eligible3 from "./pages/user/eligible3";
 import Eligible4 from "./pages/user/eligible4";
 import Growth from "./pages/user/growth";
 import AskQuestion from "./pages/question";
-import Article from "./pages/article";
 import NotFound from "./pages/notFound";
 import UserService from "./service/userService";
 import { userData } from "./context/userAuth";
+import ScrollToTop from "./components/ScrollToTop";
 
 function App() {
   const darkQuery = window.matchMedia("(prefers-color-scheme: dark)");
@@ -79,8 +79,9 @@ function App() {
   const { userDetails } = useContext(userData);
 
   return (
-    <main className="bg-neutral-100 text-neutral-800 dark:bg-neutral-800 dark:text-neutral-100 duration-100 scroll-smooth focus:scroll-auto">
+    <main className=" bg-white text-neutral-800 dark:bg-neutral-900 dark:text-neutral-100 duration-100 scroll-smooth focus:scroll-auto">
       <Navbar themeFunction={handleThemeSwitch} mode={theme} />
+      <ScrollToTop />
 
       <Routes>
         {!userDetails.authenticated && (
@@ -99,7 +100,7 @@ function App() {
             <Route path="/drugs/add" element={<DrugAdd />} />
 
             <Route path="/blogs" element={<Blog />} />
-            <Route path="/blogs/article" element={<Article />} />              
+            <Route path="/blogs/article" element={<Article />} />
             <Route path="/blogs/write/1" element={<WriteBlog1 />} />
             <Route path="/blogs/write/2" element={<WriteBlog2 />} />
 
@@ -109,7 +110,7 @@ function App() {
             <Route path="/clinics/reports" element={<ClinicReports />} />
 
             <Route path="/forum" element={<Forum />} />
-            <Route path="/forum/askquestion" element={<AskQuestion />} />
+            <Route path="/forum/ask" element={<AskQuestion />} />
             <Route path="/forum/answer/:questionId" element={<Answer />} />
 
             {/* <Route path="/user" element={<Dashboard />} /> */}

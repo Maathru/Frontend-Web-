@@ -18,7 +18,8 @@ const viewClinics = () => {
       </div>
 
       <div className="flex">
-        <div className="flex-1"></div>
+        <div className="">
+        </div>
         <div className="flex-1">
           <div className="mb-10">
             <h3 className="text-xl font-bold mb-6">MOH Office - Udahamulla</h3>

@@ -1,11 +1,12 @@
 import { Link } from "react-router-dom";
 import { IoIosArrowRoundForward } from "react-icons/io";
 
-const WrapperCard = ({ title, url, image }) => {
+const WrapperCard = ({ title, url, description, image }) => {
   return (
     <div className="w-72 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
       <div className="flex flex-col items-center m-4">
-        <h5 className="text-xl text-center">{title}</h5>
+        <h5 className="text-xl text-center font-medium">{title}</h5>
+        <p className="text-center mt-3">{description}</p>
       </div>
       <Link to={url} className="flex flex-col items-center">
         <img
