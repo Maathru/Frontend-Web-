@@ -1,4 +1,3 @@
-import * as React from "react";
 import { styled } from "@mui/material/styles";
 import {
   DataGrid,
@@ -16,6 +15,9 @@ import { Box, Chip, IconButton } from "@mui/material";
 import { Button } from "flowbite-react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import DrugService from "@/service/drugService";
+import { errorType, Toast } from "@/components/toast";
 
 const StripedDataGrid = styled(DataGrid)(({ theme }) => ({
   [`& .${gridClasses.row}.even`]: {
@@ -33,6 +35,15 @@ const StripedDataGrid = styled(DataGrid)(({ theme }) => ({
     outline: "none",
   },
 }));
+
+const transformDate = (params) => {
+  const originalDate = new Date(params.value);
+  const targetDate = new Date(originalDate);
+  targetDate.setFullYear(2024);
+  targetDate.setMonth(6); // Months are zero-based in JavaScript (0 = January, 6 = July)
+  targetDate.setDate(31);
+  return targetDate.toISOString().split("T")[0];
+};
 
 function QuickSearchToolbar() {
   return (
@@ -64,27 +75,32 @@ function QuickSearchToolbar() {
 
 const columns = [
   {
-    field: "id",
+    field: "drugId",
     headerName: "Drug ID",
     width: 70,
     fontSize: 18,
     fontWeight: "bold",
   },
-  { field: "product", headerName: "Product", width: 130 },
-  { field: "batch", headerName: "Batch Number", flex: 1 },
+  { field: "composition", headerName: "Product", width: 130 },
+  { field: "batchNumber", headerName: "Batch Number", flex: 1 },
   { field: "strength", headerName: "Strength", flex: 1 },
-  { field: "received", headerName: "Received Date", flex: 1 },
-  { field: "expired", headerName: "Expired Date", flex: 1 },
   {
-    field: "status",
+    field: "createdAt",
+    headerName: "Received Date",
+    flex: 1,
+    valueGetter: transformDate,
+  },
+  { field: "expiryDate", headerName: "Expired Date", flex: 1 },
+  {
+    field: "quantity",
     headerName: "Status",
     flex: 1,
     editable: true,
     renderCell: (params) => {
-      const isAvailable = params.value === "Available";
+      const isAvailable = params.value > 0;
       return (
         <Chip
-          label={params.value}
+          label={isAvailable ? "Available" : "Out of Stock"}
           size={"small"}
           sx={{
             backgroundColor: isAvailable ? "#EBF9F1" : "#F9EBEB", // Custom colors
@@ -131,81 +147,28 @@ const columns = [
   },
 ];
 
-const rows = [
-  {
-    id: 1,
-    product: "Snow",
-    batch: "Jon",
-    strength: 35,
-    received: "25/04/2024",
-    expired: "25/04/2024",
-    status: "Out of Stock",
-    action: "edit",
-  },
-  {
-    id: 2,
-    product: "Snow",
-    batch: "Jon",
-    strength: 35,
-    received: "25/04/2024",
-    expired: "25/04/2024",
-    status: "Available",
-    action: "edit",
-  },
-  {
-    id: 3,
-    product: "Snow",
-    batch: "Jon",
-    strength: 35,
-    received: "25/04/2024",
-    expired: "25/04/2024",
-    status: "Available",
-    action: "edit",
-  },
-  {
-    id: 4,
-    product: "Snow",
-    batch: "Jon",
-    strength: 35,
-    received: "25/04/2024",
-    expired: "25/04/2024",
-    status: "Out of Stock",
-    action: "edit",
-  },
-  {
-    id: 5,
-    product: "Snow",
-    batch: "Jon",
-    strength: 35,
-    received: "25/04/2024",
-    expired: "25/04/2024",
-    status: "Available",
-    action: "edit",
-  },
-  {
-    id: 6,
-    product: "Snow",
-    batch: "Jon",
-    strength: 35,
-    received: "25/04/2024",
-    expired: "25/04/2024",
-    status: "Available",
-    action: "edit",
-  },
-  {
-    id: 7,
-    product: "Snow",
-    batch: "Jon",
-    strength: 35,
-    received: "25/04/2024",
-    expired: "25/04/2024",
-    status: "Available",
-    action: "edit",
-  },
-];
-
-const drug = () => {
+const Drug = () => {
+  const [rows, setRows] = useState([]);
   const { t } = useTranslation("drug");
+
+  useEffect(() => {
+    const fetchDrugs = async () => {
+      try {
+        const response = await DrugService.getDrugs();
+        setRows(response);
+      } catch (error) {
+        console.log(error.message);
+        Toast(error.message, errorType.ERROR);
+
+        const data = error.response.data;
+        console.log(data);
+        Toast(data, errorType.ERROR);
+      }
+    };
+
+    fetchDrugs();
+  }, []);
+
   return (
     <div className="p-12 pt-8">
       <div className="flex justify-between mb-8">
@@ -220,10 +183,10 @@ const drug = () => {
             <HiOutlinePlusSm className="ml-2 h-5 w-5" />
           </Button>
         </Link>
-        
       </div>
       <div style={{ height: "100%", width: "100%" }}>
         <StripedDataGrid
+          getRowId={(row) => row.drugId}
           rows={rows}
           columns={columns}
           initialState={{
@@ -243,4 +206,4 @@ const drug = () => {
   );
 };
 
-export default drug;
+export default Drug;

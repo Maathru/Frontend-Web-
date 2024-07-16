@@ -3,93 +3,123 @@ import TextField from "@mui/material/TextField";
 import { HiChevronLeft } from "react-icons/hi";
 import { Button } from "@/components/ui/button";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
+import DrugService from "@/service/drugService";
+import { errorType, Toast } from "@/components/toast";
 
-const drugAdd = () => {
-  const [name, setName] = useState("");
-  const [nameError, setNameError] = useState(false);
-
-  const [bNumber, setbNumber] = useState("");
-  const [bNumberError, setbNumberError] = useState(false);
-
-  const [strength, setStrength] = useState("");
-  const [strengthError, setStrengthError] = useState(false);
-
-  const [mDate, setMDate] = useState("");
-  const [mDateError, setMDateError] = useState(false);
-
-  const [eDate, setEDate] = useState("");
-  const [eDateError, setEDateError] = useState(false);
-
-  const [quantity, setQuantity] = useState("");
-  const [quantityError, setQuantityError] = useState(false);
-
-  const [composition, setComposition] = useState("");
-  const [compositionError, setCompositionError] = useState(false);
-
-  const handleNameChange = (e) => {
-    setName(e.target.value);
-    if (e.target.validity.valid) {
-      setNameError(false);
-    } else {
-      setNameError(true);
-    }
-  };
-
-  const handlebNumberChange = (e) => {
-    setbNumber(e.target.value);
-    if (e.target.validity.valid) {
-      setbNumberError(false);
-    } else {
-      setbNumberError(true);
-    }
-  };
-
-  const handleStrengthChange = (e) => {
-    setStrength(e.target.value);
-    if (e.target.validity.valid) {
-      setStrengthError(false);
-    } else {
-      setStrengthError(true);
-    }
-  };
-
-  const handleMDateChange = (e) => {
-    setMDate(e.target.value);
-    if (e.target.validity.valid) {
-      setMDateError(false);
-    } else {
-      setMDateError(true);
-    }
-  };
-
-  const handleEDateChange = (e) => {
-    setEDate(e.target.value);
-    if (e.target.validity.valid) {
-      setEDateError(false);
-    } else {
-      setEDateError(true);
-    }
-  };
-
-  const handleQuantityChange = (e) => {
-    setQuantity(e.target.value);
-    if (e.target.validity.valid) {
-      setQuantityError(false);
-    } else {
-      setQuantityError(true);
-    }
-  };
-
-  const handleCompositionChange = (e) => {
-    setComposition(e.target.value);
-    if (e.target.validity.valid) {
-      setCompositionError(false);
-    } else {
-      setCompositionError(true);
-    }
-  };
-
+const DrugAdd = () => {
+  const [formData, setFormData] = useState({
+    brandName: "",
+    recommendedDose: "",
+    batchNumber: "",
+    strength: "",
+    manufacturedDate: "",
+    expiryDate: "",
+    quantity: "",
+    composition: "",
+  });
+  const [errors, setErrors] = useState({});
+  const navigate = useNavigate();
   const { t } = useTranslation("drugAdd");
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+    setErrors({ ...errors, [name]: validateField(name, value) });
+  };
+
+  const validateField = (name, value) => {
+    switch (name) {
+      case "brandName":
+        if (!value) return "Brand name is required";
+        break;
+      case "batchNumber":
+        if (!value) return "Batch number is required";
+        break;
+      case "strength":
+        if (!value) return "Strength is required";
+        break;
+      case "manufacturedDate":
+        if (!value) return "Manufactured date is required";
+        const manufacturedDate = new Date(value);
+        if (manufacturedDate >= new Date())
+          return "Manufactured date must be in the past";
+        break;
+      case "expiryDate":
+        if (!value) return "Expiry date is required";
+        const expiryDate = new Date(value);
+        if (expiryDate <= new Date())
+          return "Expiry date must be in the future";
+        break;
+      case "quantity":
+        if (!value || value == 0) return "Quantity cannot be empty";
+        if (value < 0) return "Quantity cannot be less than 0";
+        break;
+      case "composition":
+        if (!value) return "Composition is required";
+        break;
+      default:
+        break;
+    }
+    return "";
+  };
+
+  const validate = () => {
+    const newErrors = {};
+
+    Object.keys(formData).forEach((key) => {
+      const error = validateField(key, formData[key]);
+      if (error) newErrors[key] = error;
+    });
+
+    return newErrors;
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const validationErrors = validate();
+
+    if (Object.keys(validationErrors).length !== 0) {
+      setErrors(validationErrors);
+      return;
+    }
+    try {
+      const response = await DrugService.addDrug(formData);
+
+      setFormData({
+        brandName: "",
+        recommendedDose: "",
+        batchNumber: "",
+        strength: "",
+        manufacturedDate: "",
+        expiryDate: "",
+        quantity: "",
+        composition: "",
+      });
+      Toast(response, errorType.SUCCESS);
+      navigate("/drugs");
+    } catch (error) {
+      console.log(error.message);
+      Toast(error.message, errorType.ERROR);
+
+      const data = error.response.data;
+      if (data) {
+        if (Array.isArray(data)) {
+          const newErrors = {};
+          data.map((msg) => {
+            Toast(msg.message, errorType.ERROR);
+            newErrors[msg.field] = msg.message;
+          });
+
+          setErrors(newErrors);
+        } else {
+          console.log(data);
+          Toast(data, errorType.ERROR);
+        }
+      }
+    }
+  };
 
   return (
     <div>
@@ -104,84 +134,96 @@ const drugAdd = () => {
             <TextField
               required
               label={t("brand")}
+              name="brandName"
+              value={formData.brandName}
+              onChange={handleInputChange}
+              error={errors.brandName ? true : false}
+              helperText={errors.brandName ? errors.brandName : ""}
               variant="standard"
-              value={name}
-              onChange={handleNameChange}
-              error={nameError}
-              helperText={nameError ? "Cannot be empty" : ""}
             />
 
             <TextField
               required
-              value={bNumber}
-              onChange={handlebNumberChange}
-              error={bNumberError}
               label={t("batch")}
+              name="batchNumber"
+              value={formData.batchNumber}
+              onChange={handleInputChange}
+              error={errors.batchNumber ? true : false}
+              helperText={errors.batchNumber ? errors.batchNumber : ""}
               variant="standard"
-              helperText={nameError ? "Cannot be empty" : ""}
             />
 
             <TextField
               required
-              value={strength}
-              onChange={handleStrengthChange}
-              error={strengthError}
               label={t("strength")}
+              name="strength"
+              value={formData.strength}
+              onChange={handleInputChange}
+              error={errors.strength ? true : false}
+              helperText={errors.strength ? errors.strength : ""}
               variant="standard"
-              helperText={nameError ? "Cannot be empty" : ""}
             />
 
             <TextField
               required
               type="number"
-              value={quantity}
-              onChange={handleQuantityChange}
-              error={quantityError}
               label={t("quantity")}
+              name="quantity"
+              value={formData.quantity}
+              onChange={handleInputChange}
+              error={errors.quantity ? true : false}
+              helperText={errors.quantity ? errors.quantity : ""}
               variant="standard"
-              helperText={quantityError ? "Cannot be empty" : ""}
             />
             <TextField
               required
-              value={composition}
-              onChange={handleCompositionChange}
-              error={compositionError}
               label={t("composition")}
+              name="composition"
+              value={formData.composition}
+              onChange={handleInputChange}
+              error={errors.composition ? true : false}
+              helperText={errors.composition ? errors.composition : ""}
               variant="standard"
-              helperText={compositionError ? "Cannot be empty" : ""}
             />
 
             <TextField
-              // value={dose}
               label={t("dose")}
+              name="recommendedDose"
+              value={formData.recommendedDose}
+              onChange={handleInputChange}
               variant="standard"
             />
 
             <TextField
-              type="date"
               required
-              value={mDate}
-              onChange={handleMDateChange}
-              error={mDateError}
-              label={t("manufactured")}
+              type="date"
+              name="manufacturedDate"
+              value={formData.manufacturedDate}
+              onChange={handleInputChange}
+              error={errors.manufacturedDate ? true : false}
+              helperText={
+                errors.manufacturedDate ? errors.manufacturedDate : ""
+              }
               variant="standard"
               InputLabelProps={{ shrink: true }}
-              helperText={mDateError ? "Cannot be empty" : ""}
             />
 
             <TextField
-              type="date"
               required
-              value={eDate}
-              onChange={handleEDateChange}
-              error={eDateError}
-              label={t("expired")}
+              type="date"
+              name="expiryDate"
+              value={formData.expiryDate}
+              onChange={handleInputChange}
+              error={errors.expiryDate ? true : false}
+              helperText={errors.expiryDate ? errors.expiryDate : ""}
               variant="standard"
               InputLabelProps={{ shrink: true }}
-              helperText={mDateError ? "Cannot be empty" : ""}
             />
 
-            <Button className="w-1/2 self-center bg-[#620084] mt-5">
+            <Button
+              className="w-1/2 self-center bg-[#620084] mt-5"
+              onClick={handleSubmit}
+            >
               {t("add")}
             </Button>
           </div>
@@ -191,4 +233,4 @@ const drugAdd = () => {
   );
 };
 
-export default drugAdd;
+export default DrugAdd;
