@@ -8,6 +8,8 @@ import SearchBar from "@mkyy/mui-search-bar";
 import { NavLink } from "react-router-dom";
 import ForumService from "@/service/forumService";
 import { errorType, Toast } from "@/components/toast";
+import { Link, useNavigate } from "react-router-dom";
+import { IoIosArrowBack } from "react-icons/io";
 
 const Forum = () => {
   const handleSearch = (labelOptionValue) => {
@@ -18,6 +20,8 @@ const Forum = () => {
   const [questions, setQuestions] = useState([]);
   const [pageSize, setPageSize] = useState(0);
   const [offset, setOffset] = useState(10);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchQuestions = async () => {
@@ -43,11 +47,17 @@ const Forum = () => {
   return (
     <div className="p-12 grid content-start min-h-screen">
       <div className="flex justify-between mb-8">
-        <div className="text-3xl text-[#5B5B5B] font-semibold">
-          <HiChevronLeft className="text-5xl inline" />
-          Discussion Forum
-          <div className="text-xl text-[#5B5B5B] font-normal ml-12">
-            Connect with the community and share your experiences
+        <div className="flex text-3xl text-[#5B5B5B] font-semibold">
+          <IoIosArrowBack
+            size={45}
+            className="cursor-pointer"
+            onClick={() => navigate(-1)}
+          />
+          <div className="col ml-3">
+            Discussion Forum
+            <div className="text-xl text-[#5B5B5B] font-normal">
+              Connect with the community and share your experiences
+            </div>
           </div>
         </div>
         <Button className="bg-[#6F0096] h-10 min-w-max flexbox items-center">
