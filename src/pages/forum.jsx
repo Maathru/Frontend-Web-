@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { HiChevronLeft } from "react-icons/hi";
 import { List } from "@mui/material";
 import Item from "@/components/ui/item";
@@ -10,10 +10,11 @@ import ForumService from "@/service/forumService";
 import { errorType, Toast } from "@/components/toast";
 import { Link, useNavigate } from "react-router-dom";
 import { IoIosArrowBack } from "react-icons/io";
+import { userData } from "@/context/userAuth";
 
 const Forum = () => {
   const handleSearch = (labelOptionValue) => {
-    console.log(labelOptionValue);
+    // search logic
   };
 
   const [textFieldValue, setTextFieldValue] = useState("");
@@ -22,6 +23,8 @@ const Forum = () => {
   const [offset, setOffset] = useState(10);
 
   const navigate = useNavigate();
+
+  const { userDetails } = useContext(userData);
 
   useEffect(() => {
     const fetchQuestions = async () => {
@@ -44,6 +47,16 @@ const Forum = () => {
     fetchQuestions();
   }, []);
 
+  const handleAsk = (e) => {
+    if(userDetails){
+      navigate("/forum/ask");
+    }
+    else{
+      Toast("Log in to ask question");
+      navigate("/login");
+    }
+  }
+
   return (
     <div className="p-12 grid content-start min-h-screen">
       <div className="flex justify-between mb-8">
@@ -60,8 +73,8 @@ const Forum = () => {
             </div>
           </div>
         </div>
-        <Button className="bg-[#6F0096] h-10 min-w-max flexbox items-center">
-          <NavLink to="/forum/ask">Ask a Question</NavLink>
+        <Button className="bg-[#6F0096] h-10 min-w-max flexbox items-center" onClick={(e) =>handleAsk(e)}>
+          Ask a Question
         </Button>
       </div>
       <SearchBar
