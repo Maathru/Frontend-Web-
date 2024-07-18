@@ -8,10 +8,20 @@ const Eligible4Input = ({ index, title }) => {
       </p>
       <p></p>
       <div className="mx-auto">
-        <TextField size="small" className="w-48 shadow-xl" variant="standard" />
+        <TextField
+          disabled
+          size="small"
+          className="w-48 shadow-xl"
+          variant="standard"
+        />
       </div>
       <div className="mx-auto">
-        <TextField size="small" className="w-48 shadow-lg" variant="standard" />
+        <TextField
+          disabled
+          size="small"
+          className="w-48 shadow-lg"
+          variant="standard"
+        />
       </div>
     </div>
   );
