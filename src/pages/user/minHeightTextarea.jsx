@@ -3,6 +3,7 @@ export default function MinHeightTextarea({ cols }) {
     <textarea
       aria-label="minimum height"
       rows={cols}
+      disabled
       className="
         box-border
         w-full
