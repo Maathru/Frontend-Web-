@@ -13,7 +13,6 @@ class AnswerService {
   }
 
   static async getAnswersByQuestion(questionId) {
-    console.log("getAnswersByQuestion");
     try {
       const response = await axiosInstance.get(
         `/answer/question/${questionId}`
