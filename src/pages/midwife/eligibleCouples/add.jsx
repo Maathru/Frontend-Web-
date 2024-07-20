@@ -2,7 +2,8 @@ import { Button } from "@/components/ui/button";
 import { TextField, Typography } from "@mui/material";
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { HiChevronLeft, HiPlus } from "react-icons/hi";
+import { HiPlus } from "react-icons/hi";
+import PageHeading from "@/components/ui/pageHeading";
 
 const addCouples = () => {
   const [formData, setFormData] = useState({
@@ -143,15 +144,12 @@ const addCouples = () => {
   //       }
   //   }
 
+  const title = t("title");
+
   return (
     <div className="content-container">
-      <div className="">
-        <div className="text-3xl text-[#5B5B5B] font-semibold mb-8">
-          <HiChevronLeft className="text-5xl inline" />
-          {t("title")}
-        </div>
-      </div>
-
+      <PageHeading title={title} />
+              
       {/* main details layer */}
       <div>
         <Typography variant="h5">{t("subtitle1")}</Typography>

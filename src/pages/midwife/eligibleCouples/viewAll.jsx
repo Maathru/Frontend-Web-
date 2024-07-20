@@ -14,7 +14,7 @@ import {
 import { styled } from "@mui/material/styles";
 import { Box, Chip, IconButton } from "@mui/material";
 import { useTranslation } from "react-i18next";
-// import Typography from "@material-ui/core/Typography";
+import PageHeading from "@/components/ui/pageHeading";
 import { Typography } from "@mui/material";
 
 const StripedDataGrid = styled(DataGrid)(({ theme }) => ({
@@ -174,16 +174,12 @@ const rows = [
 ];
 
 const eligibleCouples = () => {
-  const { t } = useTranslation("eligibleCouple");
+  const { t } = useTranslation("eligibleCouples");
+  const title = t("title");
 
   return (
     <div className="content-container">
-      <div className="">
-        <div className="text-3xl text-[#5B5B5B] font-semibold mb-8">
-          <HiChevronLeft className="text-5xl inline" />
-          {t("title")}
-        </div>
-      </div>
+      <PageHeading title={title}/>
 
       <div className="flex flex-col items-end mt-10">
         <Button className="bg-[#6F0096] h-10 flexbox items-center ">

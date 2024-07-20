@@ -9,11 +9,15 @@ import { Button } from "@/components/ui/button";
 import { conditions2, meals, nutrition } from "@/data/eligibleData";
 import EligibleService from "@/service/eligibleService";
 import { errorType, Toast } from "@/components/toast";
+import PageHeading from "@/components/ui/pageHeading";
+import { useTranslation } from "react-i18next";
 
 const Eligible3 = () => {
   const [formObject, setFormObject] = useState({});
   const navigate = useNavigate();
   let isLoading = true;
+  const { t } = useTranslation("eligible3");
+  const title = t("title");
 
   const initiateFields = () => {
     const initialData = {};
@@ -110,14 +114,8 @@ const Eligible3 = () => {
 
   return (
     <div className="container my-10 font-poppins">
-      <div className="flex items-center">
-        <IoIosArrowBack
-          size={45}
-          className="cursor-pointer"
-          onClick={() => navigate(-1)}
-        />
-        <h2 className="text-2xl ms-8">Family health information</h2>
-      </div>
+              <PageHeading title={title} />
+
 
       <ul className="list-disc mt-12">
         <li>
