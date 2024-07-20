@@ -33,6 +33,7 @@ import NotFound from "./pages/notFound";
 import UserService from "./service/userService";
 import { userData } from "./context/userAuth";
 import ScrollToTop from "./components/ScrollToTop";
+import Loader from "./components/loader";
 
 function App() {
   const darkQuery = window.matchMedia("(prefers-color-scheme: dark)");
@@ -95,6 +96,11 @@ function App() {
           </>
         )}
 
+        <Route path="/blogs" element={<Blog />} />
+        <Route path="/blogs/article" element={<Article />} />
+        <Route path="/forum" element={<Forum />} />
+        <Route path="/forum/answer/:questionId" element={<Answer />} />
+
         {userDetails.authenticated && (
           <>
             <Route path="*" element={<Dashboard />} />
@@ -102,8 +108,6 @@ function App() {
             <Route path="/drugs" element={<Drug />} />
             <Route path="/drugs/add" element={<DrugAdd />} />
 
-            <Route path="/blogs" element={<Blog />} />
-            <Route path="/blogs/article" element={<Article />} />
             <Route path="/blogs/write/1" element={<WriteBlog1 />} />
             <Route path="/blogs/write/2" element={<WriteBlog2 />} />
 
@@ -112,11 +116,8 @@ function App() {
             <Route path="/clinics/dates" element={<ClinicDates />} />
             <Route path="/clinics/reports" element={<ClinicReports />} />
 
-            <Route path="/forum" element={<Forum />} />
             <Route path="/forum/ask" element={<AskQuestion />} />
-            <Route path="/forum/answer/:questionId" element={<Answer />} />
 
-            {/* <Route path="/user" element={<Dashboard />} /> */}
             <Route path="/growth" element={<Growth />} />
             <Route path="/eligible/1" element={<Eligible1 />} />
             <Route path="/eligible/2" element={<Eligible2 />} />

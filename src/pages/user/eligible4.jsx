@@ -3,14 +3,7 @@ import { IoIosArrowBack } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
 import MinHeightTextarea from "./minHeightTextarea";
 import { TextField } from "@mui/material";
-import {
-  Pagination,
-  PaginationContent,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-} from "@/components/ui/pagination";
+import EligiblePagination from "@/components/userComponents/eligiblePagination";
 
 const sections = [
   "Weight (kg)",
@@ -35,7 +28,9 @@ const Eligible4 = () => {
         />
         <div className="flex w-full justify-between">
           <h2 className="text-2xl ms-8">Your Details</h2>
-          <h2 className="text-2xl ms-8">Date:06/08/2024</h2>
+          <h2 className="text-2xl ms-8">
+            Date: {new Date().toLocaleDateString()}
+          </h2>
         </div>
       </div>
 
@@ -81,6 +76,7 @@ const Eligible4 = () => {
         <p></p>
         <div className="mx-auto">
           <TextField
+            disabled
             size="small"
             className="w-48 shadow-xl"
             variant="standard"
@@ -88,6 +84,7 @@ const Eligible4 = () => {
         </div>
         <div className="mx-auto">
           <TextField
+            disabled
             size="small"
             className="w-48 shadow-lg"
             variant="standard"
@@ -99,6 +96,7 @@ const Eligible4 = () => {
         <p></p>
         <div className="mx-auto">
           <TextField
+            disabled
             size="small"
             className="w-48 shadow-xl"
             variant="standard"
@@ -126,30 +124,7 @@ const Eligible4 = () => {
       <MinHeightTextarea cols={2} />
 
       <div className="flex w-full mt-24">
-        <Pagination>
-          <PaginationContent>
-            <PaginationItem>
-              <PaginationPrevious to="/eligible/3" />
-            </PaginationItem>
-            <PaginationItem>
-              <PaginationLink to="/eligible/1">1</PaginationLink>
-            </PaginationItem>
-            <PaginationItem>
-              <PaginationLink to="/eligible/2">2</PaginationLink>
-            </PaginationItem>
-            <PaginationItem>
-              <PaginationLink to="/eligible/3">3</PaginationLink>
-            </PaginationItem>
-            <PaginationItem>
-              <PaginationLink to="#" isActive>
-                4
-              </PaginationLink>
-            </PaginationItem>
-            <PaginationItem>
-              <PaginationNext to="#" />
-            </PaginationItem>
-          </PaginationContent>
-        </Pagination>
+        <EligiblePagination total={4} current={4} />
       </div>
     </div>
   );

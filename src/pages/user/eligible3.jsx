@@ -2,60 +2,111 @@ import EligibleCardBoolInput from "@/components/userComponents/eligibleCardBoolI
 import YesNoButton from "@/components/userComponents/yesNoButton";
 import { TextField } from "@mui/material";
 import { IoIosArrowBack } from "react-icons/io";
-import {
-  Pagination,
-  PaginationContent,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-} from "@/components/ui/pagination";
-import { useNavigate } from "react-router-dom";
-
-const conditions = [
-  { title: "High blood pressure", placeholder: "IF yes, Who?" },
-  { title: "Diabetes", placeholder: "IF yes, Who?" },
-  { title: "Heart Diseases", placeholder: "IF yes, Who?" },
-  { title: "Nervous disorders", placeholder: "IF yes, Who?" },
-  { title: "Hemophilia", placeholder: "IF yes, Who?" },
-  { title: "Thalassemia", placeholder: "IF yes, Who?" },
-  {
-    title: "A history of mental illness and suicide",
-    placeholder: "IF yes, Who?",
-  },
-  { title: "Twins", placeholder: "IF yes, Who?" },
-];
-
-const meals = [
-  {
-    title:
-      "Animal protein (meat, fish, milk, eggs, dried fruit) - 3 times a week",
-    placeholder: "Other Details",
-  },
-  {
-    title: "Plant protein/a grain (soy, lentil) - Daily",
-    placeholder: "Other Details",
-  },
-  { title: "Two types of vegetables - Daily", placeholder: "Other Details" },
-  { title: "One type of fruit - Daily", placeholder: "Other Details" },
-];
-
-const nutrition = [
-  {
-    title: "Do you all sit down for one meal as a family?",
-    placeholder: "Other Details",
-  },
-  {
-    title:
-      "Does your diet include anything from the garden (vegetables, fruits and legumes)?",
-    placeholder: "Other Details",
-  },
-  { title: "Are you consuming too much sugar?", placeholder: "Other Details" },
-  { title: "Are you eating too much fat?", placeholder: "Other Details" },
-];
+import { Navigate, useNavigate } from "react-router-dom";
+import EligiblePagination from "@/components/userComponents/eligiblePagination";
+import { useEffect, useState } from "react";
+import { Button } from "@/components/ui/button";
+import { conditions2, meals, nutrition } from "@/data/eligibleData";
+import EligibleService from "@/service/eligibleService";
+import { errorType, Toast } from "@/components/toast";
 
 const Eligible3 = () => {
+  const [formObject, setFormObject] = useState({});
   const navigate = useNavigate();
+  let isLoading = true;
+
+  const initiateFields = () => {
+    const initialData = {};
+
+    conditions2.forEach((condition) => {
+      initialData[condition.name + "_woman"] = false;
+      initialData[condition.name + "_man"] = false;
+      initialData[condition.name + "_other"] = "";
+    });
+
+    initialData["meal_woman"] = false;
+    initialData["meal_other"] = false;
+    initialData["meal_other"] = "";
+
+    meals.forEach((meal) => {
+      initialData[meal.name + "_woman"] = false;
+      initialData[meal.name + "_man"] = false;
+      initialData[meal.name + "_other"] = "";
+    });
+
+    nutrition.forEach((n) => {
+      initialData[n.name + "_man"] = false;
+      initialData[n.name + "_woman"] = false;
+      initialData[n.name + "_other"] = "";
+    });
+
+    return initialData;
+  };
+
+  const setData = (field, name, value) => {
+    const newObject = {};
+    newObject[name + "_" + field] = value || "";
+    setFormObject({ ...formObject, ...newObject });
+  };
+
+  const handleSave = async () => {
+    // formObject.stage = Math.max(formObject.stage, 4);
+    localStorage.setItem("formObject", JSON.stringify(formObject));
+    // navigate("/eligible/4");
+
+    await handleSubmit();
+  };
+
+  const handleSubmit = async () => {
+    const formData = EligibleService.createObject(formObject);
+
+    try {
+      const response = await EligibleService.addEligibleInfo(formData);
+      Toast(response, errorType.SUCCESS);
+    } catch (error) {
+      console.log(error.message);
+      Toast(error.message, errorType.ERROR);
+
+      const data = error.response.data;
+      if (data) {
+        if (Array.isArray(data)) {
+          const newErrors = {};
+          data.map((msg) => {
+            Toast(msg.message, errorType.ERROR);
+            newErrors[msg.field] = msg.message;
+          });
+
+          console.log(newErrors);
+        } else {
+          console.log(data);
+          Toast(data, errorType.ERROR);
+        }
+      }
+    }
+  };
+
+  useEffect(() => {
+    const getFromLocalStorage = () => {
+      const jsonString = localStorage.getItem("formObject");
+      if (jsonString) {
+        return JSON.parse(jsonString);
+      }
+      return { stage: 1 };
+    };
+
+    const obj2 = initiateFields();
+    const obj1 = getFromLocalStorage();
+    setFormObject({ ...formObject, ...obj2, ...obj1 });
+    isLoading = false;
+  }, []);
+
+  if (!isLoading && (!formObject || !formObject.stage)) {
+    return <Navigate to={"/eligible/2"} />;
+  }
+
+  if (!isLoading && formObject.stage < 3) {
+    return <Navigate to={"/eligible/2"} />;
+  }
 
   return (
     <div className="container my-10 font-poppins">
@@ -93,12 +144,18 @@ const Eligible3 = () => {
           <p></p>
         </div>
 
-        {conditions.map((condition, index) => (
+        {conditions2.map((condition, index) => (
           <EligibleCardBoolInput
+            key={index}
+            index={index}
             title={condition.title}
             placeholder={condition.placeholder}
-            index={index}
-            key={index}
+            value1={formObject[condition.name + "_woman"] || false}
+            value2={formObject[condition.name + "_man"] || false}
+            value3={formObject[condition.name + "_other"] || ""}
+            onChange={(filed, e) => {
+              setData(filed, condition.name, e);
+            }}
           />
         ))}
       </div>
@@ -125,58 +182,57 @@ const Eligible3 = () => {
 
         <div className="grid grid-cols-4 gap-4 items-center mt-4">
           <p>1. Did you have 3 main meals for the day?</p>
-          <YesNoButton />
-          <YesNoButton />
+          <YesNoButton
+            onChange={(e) => setData("woman", "meal", e)}
+            value={formObject.meal_woman || false}
+          />
+          <YesNoButton
+            onChange={(e) => setData("man", "meal", e)}
+            value={formObject.meal_man || false}
+          />
           <TextField
             label="Other Details"
             variant="outlined"
             className="w-72"
+            value={formObject.meal_other || ""}
+            onChange={(e) => setData("other", "meal", e.target.value)}
           />
         </div>
 
         {meals.map((meal, index) => (
           <EligibleCardBoolInput
+            key={index}
             title={meal.title}
             placeholder={meal.placeholder}
-            key={index}
+            value1={formObject[meal.name + "_woman"] || false}
+            value2={formObject[meal.name + "_man"] || false}
+            value3={formObject[meal.name + "_other"] || ""}
+            onChange={(filed, e) => {
+              setData(filed, meal.name, e);
+            }}
           />
         ))}
 
         {nutrition.map((n, index) => (
           <EligibleCardBoolInput
+            key={index}
+            index={index + 1}
             title={n.title}
             placeholder={n.placeholder}
-            index={index + 2}
-            key={index}
+            value1={formObject[n.name + "_woman"] || false}
+            value2={formObject[n.name + "_man"] || false}
+            value3={formObject[n.name + "_other"] || ""}
+            onChange={(filed, e) => {
+              setData(filed, n.name, e);
+            }}
           />
         ))}
       </div>
 
+      <Button onClick={handleSave}>Save and Submit</Button>
+
       <div className="flex w-full mt-24">
-        <Pagination>
-          <PaginationContent>
-            <PaginationItem>
-              <PaginationPrevious to="/eligible/2" />
-            </PaginationItem>
-            <PaginationItem>
-              <PaginationLink to="/eligible/1">1</PaginationLink>
-            </PaginationItem>
-            <PaginationItem>
-              <PaginationLink to="/eligible/2">2</PaginationLink>
-            </PaginationItem>
-            <PaginationItem>
-              <PaginationLink to="#" isActive>
-                3
-              </PaginationLink>
-            </PaginationItem>
-            <PaginationItem>
-              <PaginationLink to="/eligible/4">4</PaginationLink>
-            </PaginationItem>
-            <PaginationItem>
-              <PaginationNext to="/eligible/4" />
-            </PaginationItem>
-          </PaginationContent>
-        </Pagination>
+        <EligiblePagination total={4} current={3} />
       </div>
     </div>
   );
