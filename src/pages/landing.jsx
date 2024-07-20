@@ -6,10 +6,10 @@ const Landing = () => {
   const { t } = useTranslation("landing");
 
   return (
-    <div className="flex content">
-      <div className="pl-28 mt-12">
+    <div className="flex content-container">
+      <div className="pl-28 mt-12 flex-1">
         <p className="text-3xl font-bold">{t("title")}</p>
-        <p className="text-xl font-semibold mt-4 mb-36">{t("subTitle")}</p>
+        <p className="text-xl font-semibold mt-4 mb-24">{t("subTitle")}</p>
 
         <p className="text-lg w-8/12 text-justify font-normal">
           {t("content")}
@@ -24,7 +24,9 @@ const Landing = () => {
           </Button>
         </div>
       </div>
-      <img src={landingImg} alt="" className="w-5/12" />
+      <div className="flex-1">
+      <img src={landingImg} alt="" className="w-9/12"/>
+      </div>
     </div>
   );
 };

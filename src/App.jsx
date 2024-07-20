@@ -26,6 +26,9 @@ import Eligible3 from "./pages/user/eligible3";
 import Eligible4 from "./pages/user/eligible4";
 import Growth from "./pages/user/growth";
 import AskQuestion from "./pages/question";
+import EligibleCouples from "./pages/midwife/eligibleCouples/viewAll";
+import EligibleCouplesAdd from "./pages/midwife/eligibleCouples/add";
+import EligibleCouplesView from "./pages/midwife/eligibleCouples/view";
 import NotFound from "./pages/notFound";
 import UserService from "./service/userService";
 import { userData } from "./context/userAuth";
@@ -119,6 +122,12 @@ function App() {
             <Route path="/eligible/2" element={<Eligible2 />} />
             <Route path="/eligible/3" element={<Eligible3 />} />
             <Route path="/eligible/4" element={<Eligible4 />} />
+
+            <Route path="/midwife/eligible-couples" element={<EligibleCouples />} />
+            <Route path="/midwife/eligible-couples/view" element={<EligibleCouplesView />} />
+            <Route path="/midwife/eligible-couples/add" element={<EligibleCouplesAdd />} />
+
+        
           </>
         )}
       </Routes>
