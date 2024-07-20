@@ -170,7 +170,7 @@ const Drug = () => {
   }, []);
 
   return (
-    <div className="p-12 pt-8">
+    <div className="p-12 pt-8 content-container">
       <div className="flex justify-between mb-8">
         <div className="text-3xl text-[#5B5B5B] font-semibold ">
           <HiChevronLeft className="text-5xl inline" />

@@ -122,7 +122,7 @@ const DrugAdd = () => {
   };
 
   return (
-    <div>
+    <div className="content-container">
       <div>
         <div className="text-3xl text-[#5B5B5B] font-semibold ">
           <HiChevronLeft className="text-5xl inline" />
