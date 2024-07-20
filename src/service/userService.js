@@ -71,6 +71,26 @@ class UserService {
   static getRefreshToken() {
     return localStorage.getItem("refresh");
   }
+
+  static async getRegions(province, district, area) {
+    try {
+      const response = await axiosInstance.get(
+        `/user/${province}/${district}/${area}`
+      );
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  static async getMidwife(region) {
+    try {
+      const response = await axiosInstance.get(`/user/midwife/${region}`);
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  }
 }
 
 export default UserService;
