@@ -14,8 +14,9 @@ import {
 import { styled } from "@mui/material/styles";
 import { Box, Chip, IconButton } from "@mui/material";
 import { useTranslation } from "react-i18next";
-// import Typography from "@material-ui/core/Typography";
+import PageHeading from "@/components/ui/pageHeading";
 import { Typography } from "@mui/material";
+import { Link } from "react-router-dom";
 
 const StripedDataGrid = styled(DataGrid)(({ theme }) => ({
   [`& .${gridClasses.row}.even`]: {
@@ -174,22 +175,20 @@ const rows = [
 ];
 
 const eligibleCouples = () => {
-  const { t } = useTranslation("eligibleCouple");
+  const { t } = useTranslation("eligibleCouples");
+  const title = t("title");
 
   return (
     <div className="content-container">
-      <div className="">
-        <div className="text-3xl text-[#5B5B5B] font-semibold mb-8">
-          <HiChevronLeft className="text-5xl inline" />
-          {t("title")}
-        </div>
-      </div>
+      <PageHeading title={title}/>
 
       <div className="flex flex-col items-end mt-10">
+        <Link to={"/midwife/eligible-couples/add"}>
         <Button className="bg-[#6F0096] h-10 flexbox items-center ">
           {t("add")}
           <HiOutlinePlusSm className="ml-2 h-5 w-5" />
         </Button>
+        </Link>
 
         {/* clinics table */}
         <div style={{ height: "100%", width: "100%" }}>

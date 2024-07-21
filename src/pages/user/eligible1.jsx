@@ -12,6 +12,8 @@ import EligiblePagination from "@/components/userComponents/eligiblePagination";
 import { basicInfo, conditions1 } from "@/data/eligibleData";
 import { errorType, Toast } from "@/components/toast";
 import EligibleService from "@/service/eligibleService";
+import PageHeading from "@/components/ui/pageHeading";
+import { useTranslation } from "react-i18next";
 
 const Eligible = () => {
   const [formObject, setFormObject] = useState({ stage: 1 });
@@ -79,18 +81,15 @@ const Eligible = () => {
     setFormObject({ ...formObject, ...obj2, ...obj1 });
   }, []);
 
+  const { t } = useTranslation("eligible1");
+  const title = t("title");
+
   return (
     <div className="container my-10 font-poppins">
       {/* Hero section */}
       <div>
-        <div className="flex gap-2 items-center">
-          <IoIosArrowBack
-            size={45}
-            className="cursor-pointer"
-            onClick={() => navigate(-1)}
-          />
-          <h1 className="text-3xl">New Life Recovery Checklist</h1>
-        </div>
+      <PageHeading title={title} />
+
         <p className="text-xl mt-8">
           With the arrival of a new baby, you are stepping into a beautiful and
           joyous journey. Every mother wants to bring her baby into this world

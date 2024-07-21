@@ -29,6 +29,7 @@ import AskQuestion from "./pages/question";
 import EligibleCouples from "./pages/midwife/eligibleCouples/viewAll";
 import EligibleCouplesAdd from "./pages/midwife/eligibleCouples/add";
 import EligibleCouplesView from "./pages/midwife/eligibleCouples/view";
+import Parents from "./pages/midwife/parents/viewAll";
 import NotFound from "./pages/notFound";
 import UserService from "./service/userService";
 import { userData } from "./context/userAuth";
@@ -127,6 +128,8 @@ function App() {
             <Route path="/midwife/eligible-couples" element={<EligibleCouples />} />
             <Route path="/midwife/eligible-couples/view" element={<EligibleCouplesView />} />
             <Route path="/midwife/eligible-couples/add" element={<EligibleCouplesAdd />} />
+
+            <Route path="/midwife/parents" element={<Parents />} />
 
         
           </>
