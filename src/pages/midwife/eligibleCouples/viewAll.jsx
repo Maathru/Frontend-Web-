@@ -16,6 +16,7 @@ import { Box, Chip, IconButton } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import PageHeading from "@/components/ui/pageHeading";
 import { Typography } from "@mui/material";
+import { Link } from "react-router-dom";
 
 const StripedDataGrid = styled(DataGrid)(({ theme }) => ({
   [`& .${gridClasses.row}.even`]: {
@@ -182,10 +183,12 @@ const eligibleCouples = () => {
       <PageHeading title={title}/>
 
       <div className="flex flex-col items-end mt-10">
+        <Link to={"/midwife/eligible-couples/add"}>
         <Button className="bg-[#6F0096] h-10 flexbox items-center ">
           {t("add")}
           <HiOutlinePlusSm className="ml-2 h-5 w-5" />
         </Button>
+        </Link>
 
         {/* clinics table */}
         <div style={{ height: "100%", width: "100%" }}>

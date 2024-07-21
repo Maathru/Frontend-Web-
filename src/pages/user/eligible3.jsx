@@ -114,8 +114,7 @@ const Eligible3 = () => {
 
   return (
     <div className="container my-10 font-poppins">
-              <PageHeading title={title} />
-
+      <PageHeading title={title} />
 
       <ul className="list-disc mt-12">
         <li>
