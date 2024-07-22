@@ -13,8 +13,20 @@ import { IoIosArrowBack } from "react-icons/io";
 import { userData } from "@/context/userAuth";
 
 const Forum = () => {
-  const handleSearch = (labelOptionValue) => {
-    // search logic
+  const handleSearch = async (labelOptionValue) => {
+    try {
+      const response = await ForumService.searchQuestionsByKeyword(
+        textFieldValue
+      );
+      setQuestions(response);
+    } catch (error) {
+      console.log(error.message);
+      Toast(error.message, errorType.ERROR);
+
+      const data = error.response.data;
+      console.log(data);
+      Toast(data, errorType.ERROR);
+    }
   };
 
   const [textFieldValue, setTextFieldValue] = useState("");
@@ -79,7 +91,7 @@ const Forum = () => {
       </div>
       <SearchBar
         value={textFieldValue}
-        onChange={(newValue) => setTextFieldValue(newValue)}
+        onChange={newValue => setTextFieldValue(newValue)}
         onSearch={handleSearch}
         width="80%"
         className="border-black"
