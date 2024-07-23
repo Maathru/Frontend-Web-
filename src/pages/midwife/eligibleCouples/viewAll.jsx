@@ -1,20 +1,22 @@
 import { Button } from "@/components/ui/button";
+import {
+  DataGrid,
+  gridClasses,
+  GridToolbarQuickFilter,
+} from "@mui/x-data-grid";
 import React from "react";
 import {
+  HiChevronLeft,
   HiOutlinePencilAlt,
   HiOutlinePlusSm,
   HiOutlineTrash,
 } from "react-icons/hi";
 import { styled } from "@mui/material/styles";
-import {
-  DataGrid,
-  GridToolbarQuickFilter,
-  gridClasses,
-} from "@mui/x-data-grid";
 import { Box, Chip, IconButton } from "@mui/material";
 import { useTranslation } from "react-i18next";
-import { Link } from "react-router-dom";
 import PageHeading from "@/components/ui/pageHeading";
+import { Typography } from "@mui/material";
+import { Link } from "react-router-dom";
 
 const StripedDataGrid = styled(DataGrid)(({ theme }) => ({
   [`& .${gridClasses.row}.even`]: {
@@ -63,53 +65,84 @@ function QuickSearchToolbar() {
 
 const columns = [
   { field: "id", headerName: "Clinic ID", width: 70 },
-  { field: "name", headerName: "Clinic Name", width: 130 },
-  { field: "devision", headerName: "Devision", flex: 1 },
-  { field: "date", headerName: "Date", flex: 1 },
-  { field: "time", headerName: "Time", flex: 1 },
-  { field: "appoinments", headerName: "No. of Appoinments", flex: 1 },
+  //   { field: "name", headerName: "Mother's Name <br/>Father's Name", width: 130 },
   {
-    field: "view",
-    headerName: "View Appoinments",
+    field: "name",
+    headerName: "Mother / Father",
     flex: 1,
-    renderCell: () => {
+    // width: 300,
+    renderCell: (params) => (
+      <div>
+        <Typography>{params.value.woman}</Typography>
+        <Typography>{params.value.man}</Typography>
+      </div>
+    ),
+  },
+  { field: "address", headerName: "Address", flex: 1 },
+  {
+    field: "phone",
+    headerName: "Telephone",
+    flex: 1,
+    renderCell: (params) => (
+      <div>
+        <Typography>{params.value.womanPhone}</Typography>
+        <Typography>{params.value.manPhone}</Typography>
+      </div>
+    ),
+  },
+  {
+    field: "dob",
+    headerName: "Date of Birth",
+    flex: 1,
+    renderCell: (params) => (
+      <div>
+        <Typography>{params.value.womanDob}</Typography>
+        <Typography>{params.value.manDob}</Typography>
+      </div>
+    ),
+  },
+  {
+    field: "status",
+    headerName: "Status",
+    flex: 1,
+    renderCell: (params) => {
+      const isEligible = params.value === "Eligible";
       return (
         <Chip
+          label={params.value}
           size={"small"}
-          label="View"
           sx={{
-            backgroundColor: "#EBF9F1",
-            color: "#1F9254",
+            backgroundColor: isEligible ? "#EBF9F1" : "#C5BCFF", // Custom colors
+            color: isEligible ? "#1F9254" : "#1F4692",
             width: "60%",
           }}
         />
       );
     },
   },
-  {
-    field: "edit",
-    headerName: "",
-    flex: 0.1,
-    renderCell: (params) => (
-      <IconButton
-        // onClick={() => handleDelete(params.row.id)}
-        aria-label="delete"
-        size="small"
-        sx={{
-          color: "#624DE3",
-        }}
-      >
-        <HiOutlinePencilAlt />
-      </IconButton>
-    ),
-  },
+  //   {
+  //     field: "edit",
+  //     headerName: "",
+  //     flex: 0.1,
+  //     renderCell: (params) => (
+  //       <IconButton
+  //         // onClick={() => handleDelete(params.row.id)}
+  //         aria-label="delete"
+  //         size="small"
+  //         sx={{
+  //           color: "#624DE3",
+  //         }}
+  //       >
+  //         <HiOutlinePencilAlt />
+  //       </IconButton>
+  //     ),
+  //   },
   {
     field: "delete",
     headerName: "",
     flex: 0.1,
     renderCell: (params) => (
       <IconButton
-        // onClick={() => handleEdit(params.row.id)}
         aria-label="delete"
         size="small"
         sx={{
@@ -125,63 +158,37 @@ const columns = [
 const rows = [
   {
     id: 1,
-    name: "Clinic1",
-    devision: "Piliyandala",
-    date: "25/04/2024",
-    time: "8am-5pm",
-    appoinments: "12",
-    View: "Out of Stock",
-    // action: "edit",
+    name: { woman: "P.D.D.D.Rodrigo", man: "B.M.Nandalal" },
+    address: "154/A, Kaleniya",
+    phone: { womanPhone: "0714578650", manPhone: "0714578650" },
+    dob: { womanDob: "01/03/1989", manDob: "11/05/1988" },
+    status: "Eligible",
   },
   {
     id: 2,
-    name: "Clinic1",
-    devision: "Piliyandala",
-    date: "25/04/2024",
-    time: "8am-5pm",
-    appoinments: "12",
-    View: "Out of Stock",
-    // action: "edit",
-  },
-  {
-    id: 3,
-    name: "Clinic1",
-    devision: "Piliyandala",
-    date: "25/04/2024",
-    time: "8am-5pm",
-    appoinments: "12",
-    View: "Out of Stock",
-    // action: "edit",
+    name: { woman: "P.D.D.D.Rodrigo", man: "B.M.Nandalal" },
+    address: "154/A, Kaleniya",
+    phone: { womanPhone: "0714578650", manPhone: "0714578650" },
+    dob: { womanDob: "01/03/1989", manDob: "11/05/1988" },
+    status: "Baby1",
   },
 ];
 
-const Clinic = () => {
-  const { t } = useTranslation("clinic");
+const eligibleCouples = () => {
+  const { t } = useTranslation("eligibleCouples");
   const title = t("title");
 
   return (
     <div className="content-container">
-      <PageHeading title={title} />
+      <PageHeading title={title}/>
 
-      <div className="flex gap-36 justify-around px-24">
-        <Link to={"/clinics/view"}>
-          {/* <Button className="flex-1 text-md">{t("past")}</Button> */}
-          <Button className="flex-1 text-md">{t("clinics")}</Button>
-        </Link>
-
-        <Link to={"/clinics/dates"}>
-          <Button className="flex-1 text-md">{t("dates")}</Button>
-        </Link>
-
-        <Link to={"/clinics/reports"}>
-          <Button className="flex-1 text-md">{t("reports")}</Button>
-        </Link>
-      </div>
       <div className="flex flex-col items-end mt-10">
+        <Link to={"/midwife/eligible-couples/add"}>
         <Button className="bg-[#6F0096] h-10 flexbox items-center ">
           {t("add")}
           <HiOutlinePlusSm className="ml-2 h-5 w-5" />
         </Button>
+        </Link>
 
         {/* clinics table */}
         <div style={{ height: "100%", width: "100%" }}>
@@ -206,4 +213,4 @@ const Clinic = () => {
   );
 };
 
-export default Clinic;
+export default eligibleCouples;

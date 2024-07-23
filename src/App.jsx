@@ -26,10 +26,15 @@ import Eligible3 from "./pages/user/eligible3";
 import Eligible4 from "./pages/user/eligible4";
 import Growth from "./pages/user/growth";
 import AskQuestion from "./pages/question";
+import EligibleCouples from "./pages/midwife/eligibleCouples/viewAll";
+import EligibleCouplesAdd from "./pages/midwife/eligibleCouples/add";
+import EligibleCouplesView from "./pages/midwife/eligibleCouples/view";
+import Parents from "./pages/midwife/parents/viewAll";
 import NotFound from "./pages/notFound";
 import UserService from "./service/userService";
 import { userData } from "./context/userAuth";
 import ScrollToTop from "./components/ScrollToTop";
+import Loader from "./components/loader";
 
 function App() {
   const darkQuery = window.matchMedia("(prefers-color-scheme: dark)");
@@ -92,6 +97,11 @@ function App() {
           </>
         )}
 
+        <Route path="/blogs" element={<Blog />} />
+        <Route path="/blogs/article" element={<Article />} />
+        <Route path="/forum" element={<Forum />} />
+        <Route path="/forum/answer/:questionId" element={<Answer />} />
+
         {userDetails.authenticated && (
           <>
             <Route path="*" element={<Dashboard />} />
@@ -99,8 +109,6 @@ function App() {
             <Route path="/drugs" element={<Drug />} />
             <Route path="/drugs/add" element={<DrugAdd />} />
 
-            <Route path="/blogs" element={<Blog />} />
-            <Route path="/blogs/article" element={<Article />} />
             <Route path="/blogs/write/1" element={<WriteBlog1 />} />
             <Route path="/blogs/write/2" element={<WriteBlog2 />} />
 
@@ -109,16 +117,21 @@ function App() {
             <Route path="/clinics/dates" element={<ClinicDates />} />
             <Route path="/clinics/reports" element={<ClinicReports />} />
 
-            <Route path="/forum" element={<Forum />} />
             <Route path="/forum/ask" element={<AskQuestion />} />
-            <Route path="/forum/answer/:questionId" element={<Answer />} />
 
-            {/* <Route path="/user" element={<Dashboard />} /> */}
             <Route path="/growth" element={<Growth />} />
             <Route path="/eligible/1" element={<Eligible1 />} />
             <Route path="/eligible/2" element={<Eligible2 />} />
             <Route path="/eligible/3" element={<Eligible3 />} />
             <Route path="/eligible/4" element={<Eligible4 />} />
+
+            <Route path="/midwife/eligible-couples" element={<EligibleCouples />} />
+            <Route path="/midwife/eligible-couples/view" element={<EligibleCouplesView />} />
+            <Route path="/midwife/eligible-couples/add" element={<EligibleCouplesAdd />} />
+
+            <Route path="/midwife/parents" element={<Parents />} />
+
+        
           </>
         )}
       </Routes>

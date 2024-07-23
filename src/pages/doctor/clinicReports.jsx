@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { HiChevronLeft } from "react-icons/hi";
 import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
 import { InputLabel, MenuItem, Select, colors } from "@mui/material";
 import ReactApexChart from "react-apexcharts";
+import PageHeading from "@/components/ui/pageHeading";
 
 const clinicReports = () => {
   const { t } = useTranslation("clinicReports");
@@ -120,13 +120,12 @@ const clinicReports = () => {
     },
   ]);
 
+  const title = t("title");
+
   return (
-    <div className="p-12 pt-8">
+    <div className="content-container">
       <div className="pl-10">
-        <div className="text-3xl text-[#5B5B5B] font-semibold mb-4">
-          <HiChevronLeft className="text-5xl inline" />
-          {t("title")}
-        </div>
+        <PageHeading title={title} />
 
         <div className="flex justify-between">
           <h3 className="text-2xl text-[#5B5B5B] font-semibold mb-8">

@@ -82,6 +82,8 @@ const Answer = () => {
       const response = await AnswerService.addAnswer(data);
       Toast(response, errorType.SUCCESS);
       setPageLoader((pre) => !pre);
+
+      setYourAnswer("")
     } catch (error) {
       console.log(error.message);
       Toast(error.message, errorType.ERROR);

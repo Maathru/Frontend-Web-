@@ -5,13 +5,18 @@ import App from "./App.jsx";
 import "./index.css";
 import "./i18n.js";
 import UserAuth from "./context/userAuth.jsx";
+import { ThemeProvider } from '@mui/material/styles';
+import theme from './theme.js';
+import Loader from "./components/loader.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <React.Suspense fallback="Loading...">
+    <React.Suspense fallback={<Loader />}>
       <Router>
         <UserAuth>
+        <ThemeProvider theme={theme}> 
           <App />
+          </ThemeProvider>
         </UserAuth>
       </Router>
     </React.Suspense>

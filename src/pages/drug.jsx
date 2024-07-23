@@ -12,12 +12,13 @@ import {
   HiOutlineTrash,
 } from "react-icons/hi";
 import { Box, Chip, IconButton } from "@mui/material";
-import { Button } from "flowbite-react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import DrugService from "@/service/drugService";
 import { errorType, Toast } from "@/components/toast";
+import PageHeading from "@/components/ui/pageHeading";
+import { Button } from "@/components/ui/button";
 
 const StripedDataGrid = styled(DataGrid)(({ theme }) => ({
   [`& .${gridClasses.row}.even`]: {
@@ -169,13 +170,12 @@ const Drug = () => {
     fetchDrugs();
   }, []);
 
+  const title = t("title");
+
   return (
-    <div className="p-12 pt-8">
+    <div className="p-12 pt-8 content-container">
       <div className="flex justify-between mb-8">
-        <div className="text-3xl text-[#5B5B5B] font-semibold ">
-          <HiChevronLeft className="text-5xl inline" />
-          {t("title")}
-        </div>
+        <PageHeading title={title}/>
 
         <Link to={"/drugs/add"}>
           <Button className="bg-[#6F0096] h-10 flexbox items-center">
