@@ -24,6 +24,7 @@ import Eligible1 from "./pages/user/eligible1";
 import Eligible2 from "./pages/user/eligible2";
 import Eligible3 from "./pages/user/eligible3";
 import Eligible4 from "./pages/user/eligible4";
+import Pregnancy1 from "./pages/pregnancycard/pregnancy1";
 import Growth from "./pages/user/growth";
 import AskQuestion from "./pages/question";
 import EligibleCouples from "./pages/midwife/eligibleCouples/viewAll";
@@ -35,6 +36,7 @@ import UserService from "./service/userService";
 import { userData } from "./context/userAuth";
 import ScrollToTop from "./components/ScrollToTop";
 import Loader from "./components/loader";
+import Pregnancy2 from "./pages/pregnancycard/pregnancy2";
 
 function App() {
   const darkQuery = window.matchMedia("(prefers-color-scheme: dark)");
@@ -131,6 +133,8 @@ function App() {
 
             <Route path="/midwife/parents" element={<Parents />} />
 
+            <Route path="/pregnancy/1" element={<Pregnancy1 />} />
+            <Route path="/pregnancy/2" element={<Pregnancy2 />} />\
         
           </>
         )}
