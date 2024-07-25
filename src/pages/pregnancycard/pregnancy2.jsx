@@ -151,17 +151,16 @@ const Pregnancy2 = () => {
             />
             
               {presentObstetricDates.map((input, index) => (
-                <div className="grid grid-cols-3 gap-4 items-center mt-4 mx-14" key={index}>
                   <DateInput
+                    key={index}
                     title={input.title}
-                    index={index}
+                    index={index + 2 }
                     placeholder={input.placeholder}
                     value={formObject[input.name] || ""}
                     onChange={(filed, e) => {
                       setData(filed, input.name, e);
                     }}
                   />
-                </div>
               ))}
 
             <SingleInput 
