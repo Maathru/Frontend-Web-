@@ -37,6 +37,7 @@ import { userData } from "./context/userAuth";
 import ScrollToTop from "./components/ScrollToTop";
 import Loader from "./components/loader";
 import Pregnancy2 from "./pages/pregnancycard/pregnancy2";
+import Pregnancy3 from "./pages/pregnancycard/pregnancy3";
 
 function App() {
   const darkQuery = window.matchMedia("(prefers-color-scheme: dark)");
@@ -134,7 +135,8 @@ function App() {
             <Route path="/midwife/parents" element={<Parents />} />
 
             <Route path="/pregnancy/1" element={<Pregnancy1 />} />
-            <Route path="/pregnancy/2" element={<Pregnancy2 />} />\
+            <Route path="/pregnancy/2" element={<Pregnancy2 />} />
+            <Route path="/pregnancy/3" element={<Pregnancy3 />} />
         
           </>
         )}
