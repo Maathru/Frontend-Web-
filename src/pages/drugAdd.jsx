@@ -6,6 +6,7 @@ import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import DrugService from "@/service/drugService";
 import { errorType, Toast } from "@/components/toast";
+import PageHeading from "@/components/ui/pageHeading";
 
 const DrugAdd = () => {
   const [formData, setFormData] = useState({
@@ -121,13 +122,12 @@ const DrugAdd = () => {
     }
   };
 
+  const title = t("title");
+
   return (
     <div className="content-container">
       <div>
-        <div className="text-3xl text-[#5B5B5B] font-semibold ">
-          <HiChevronLeft className="text-5xl inline" />
-          {t("title")}
-        </div>
+        <PageHeading title={title} />
 
         <div className="flex justify-center">
           <div className=" w-8/12 py-12 px-36 flex flex-col gap-6 ">

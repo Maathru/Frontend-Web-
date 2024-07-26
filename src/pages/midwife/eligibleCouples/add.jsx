@@ -7,6 +7,7 @@ import { AiOutlineClose } from "react-icons/ai";
 import EligibleService from "@/service/eligibleService";
 import { errorType, Toast } from "@/components/toast";
 import { useParams } from "react-router-dom";
+import PageHeading from "@/components/ui/pageHeading";
 
 const addCouples = () => {
   const { userEmail } = useParams();
@@ -260,15 +261,12 @@ const addCouples = () => {
     }
   };
 
+  const title = t("title");
+
   return (
     <div className="content-container">
-      <div className="">
-        <div className="text-3xl text-[#5B5B5B] font-semibold mb-8">
-          <HiChevronLeft className="text-5xl inline" />
-          {t("title")}
-        </div>
-      </div>
-
+      <PageHeading title={title} />
+              
       {/* main details layer */}
       <div>
         <Typography variant="h5">{t("subtitle1")}</Typography>

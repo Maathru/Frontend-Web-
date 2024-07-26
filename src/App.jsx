@@ -29,11 +29,13 @@ import AskQuestion from "./pages/question";
 import EligibleCouples from "./pages/midwife/eligibleCouples/viewAll";
 import EligibleCouplesAdd from "./pages/midwife/eligibleCouples/add";
 import EligibleCouplesView from "./pages/midwife/eligibleCouples/view";
+import Parents from "./pages/midwife/parents/viewAll";
 import NotFound from "./pages/notFound";
 import UserService from "./service/userService";
 import { userData } from "./context/userAuth";
 import ScrollToTop from "./components/ScrollToTop";
 import Loader from "./components/loader";
+import ManageUsers from "./pages/manageusers";
 
 function App() {
   const darkQuery = window.matchMedia("(prefers-color-scheme: dark)");
@@ -133,6 +135,11 @@ function App() {
               path="/midwife/eligible/add/:userEmail"
               element={<EligibleCouplesAdd />}
             />
+
+            <Route path="/midwife/parents" element={<Parents />} />
+            <Route path="/manageusers" element={<ManageUsers />} />
+        
+
           </>
         )}
       </Routes>
