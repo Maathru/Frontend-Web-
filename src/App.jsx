@@ -35,6 +35,7 @@ import UserService from "./service/userService";
 import { userData } from "./context/userAuth";
 import ScrollToTop from "./components/ScrollToTop";
 import Loader from "./components/loader";
+import ManageUsers from "./pages/manageusers";
 
 function App() {
   const darkQuery = window.matchMedia("(prefers-color-scheme: dark)");
@@ -130,7 +131,7 @@ function App() {
             <Route path="/midwife/eligible-couples/add" element={<EligibleCouplesAdd />} />
 
             <Route path="/midwife/parents" element={<Parents />} />
-
+            <Route path="/manageusers" element={<ManageUsers />} />
         
           </>
         )}
