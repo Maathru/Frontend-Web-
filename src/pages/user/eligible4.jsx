@@ -4,19 +4,34 @@ import { useNavigate } from "react-router-dom";
 import MinHeightTextarea from "./minHeightTextarea";
 import { TextField } from "@mui/material";
 import EligiblePagination from "@/components/userComponents/eligiblePagination";
+import { useEffect, useState } from "react";
 
 const sections = [
-  "Weight (kg)",
-  "Height (m)",
-  "Body mass index (BMI) kg/m^2",
-  "Blood type",
-  "Hemoglobin level",
+  { title: "Weight (kg)", name: "Weight" },
+  { title: "Height (cm)", name: "Height" },
+  { title: "Body mass index (BMI) kg/m^2", name: "Bmi" },
+  { title: "Blood type", name: "BloodType" },
+  { title: "Hemoglobin level", name: "Hemoglobin" },
 ];
 
 const examinations = ["BP", "CVC", "RS", "Abd", "CNS"];
 
 const Eligible4 = () => {
+  const [formObject, setFormObject] = useState({});
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const getFromLocalStorage = () => {
+      const jsonString = localStorage.getItem("formObject");
+      if (jsonString) {
+        return JSON.parse(jsonString);
+      }
+      return { stage: 1 };
+    };
+
+    const obj1 = getFromLocalStorage();
+    setFormObject({ ...formObject, ...obj1 });
+  }, []);
 
   return (
     <div className="container my-10 font-poppins w-full">
@@ -47,19 +62,25 @@ const Eligible4 = () => {
         </div>
 
         {sections.map((section, index) => (
-          <Eligible4Input title={section} index={index} key={index} />
+          <Eligible4Input
+            title={section.title}
+            index={index}
+            key={index}
+            value1={formObject[`woman${section.name}`]}
+            value2={formObject[`man${section.name}`]}
+          />
         ))}
       </div>
 
       <ul className="list-disc mt-12">
         <li>Special cases recognized by the midwife</li>
       </ul>
-      <MinHeightTextarea cols={3} />
+      <MinHeightTextarea cols={3} value={formObject.special || ""} />
 
       <ul className="list-disc mt-12">
         <li>Dates attended for counseling session</li>
       </ul>
-      <MinHeightTextarea cols={3} />
+      <MinHeightTextarea cols={3} value={formObject.session || ""} />
 
       <ul className="list-disc mt-12">
         <li>This Section was filled by the MOH Doctor.</li>

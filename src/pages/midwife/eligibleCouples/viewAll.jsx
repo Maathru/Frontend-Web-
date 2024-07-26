@@ -4,18 +4,14 @@ import {
   gridClasses,
   GridToolbarQuickFilter,
 } from "@mui/x-data-grid";
-import React from "react";
-import {
-  HiChevronLeft,
-  HiOutlinePencilAlt,
-  HiOutlinePlusSm,
-  HiOutlineTrash,
-} from "react-icons/hi";
+import { useEffect, useState } from "react";
+import { HiChevronLeft, HiOutlinePlusSm, HiOutlineTrash } from "react-icons/hi";
 import { styled } from "@mui/material/styles";
 import { Box, Chip, IconButton } from "@mui/material";
 import { useTranslation } from "react-i18next";
-// import Typography from "@material-ui/core/Typography";
 import { Typography } from "@mui/material";
+import EligibleService from "@/service/eligibleService";
+import { errorType, Toast } from "@/components/toast";
 
 const StripedDataGrid = styled(DataGrid)(({ theme }) => ({
   [`& .${gridClasses.row}.even`]: {
@@ -63,8 +59,7 @@ function QuickSearchToolbar() {
 }
 
 const columns = [
-  { field: "id", headerName: "Clinic ID", width: 70 },
-  //   { field: "name", headerName: "Mother's Name <br/>Father's Name", width: 130 },
+  { field: "id", headerName: "E. Couple ID", width: 70 },
   {
     field: "name",
     headerName: "Mother / Father",
@@ -72,8 +67,8 @@ const columns = [
     // width: 300,
     renderCell: (params) => (
       <div>
-        <Typography>{params.value.woman}</Typography>
-        <Typography>{params.value.man}</Typography>
+        <Typography>{params.value.womanName}</Typography>
+        <Typography>{params.value.manName}</Typography>
       </div>
     ),
   },
@@ -105,10 +100,12 @@ const columns = [
     headerName: "Status",
     flex: 1,
     renderCell: (params) => {
-      const isEligible = params.value === "Eligible";
+      const isEligible = params.value.role === "ELIGIBLE";
       return (
         <Chip
-          label={params.value}
+          label={
+            isEligible ? params.value.role : `Baby ${params.value.children}`
+          }
           size={"small"}
           sx={{
             backgroundColor: isEligible ? "#EBF9F1" : "#C5BCFF", // Custom colors
@@ -119,23 +116,6 @@ const columns = [
       );
     },
   },
-  //   {
-  //     field: "edit",
-  //     headerName: "",
-  //     flex: 0.1,
-  //     renderCell: (params) => (
-  //       <IconButton
-  //         // onClick={() => handleDelete(params.row.id)}
-  //         aria-label="delete"
-  //         size="small"
-  //         sx={{
-  //           color: "#624DE3",
-  //         }}
-  //       >
-  //         <HiOutlinePencilAlt />
-  //       </IconButton>
-  //     ),
-  //   },
   {
     field: "delete",
     headerName: "",
@@ -154,27 +134,39 @@ const columns = [
   },
 ];
 
-const rows = [
-  {
-    id: 1,
-    name: { woman: "P.D.D.D.Rodrigo", man: "B.M.Nandalal" },
-    address: "154/A, Kaleniya",
-    phone: { womanPhone: "0714578650", manPhone: "0714578650" },
-    dob: { womanDob: "01/03/1989", manDob: "11/05/1988" },
-    status: "Eligible",
-  },
-  {
-    id: 2,
-    name: { woman: "P.D.D.D.Rodrigo", man: "B.M.Nandalal" },
-    address: "154/A, Kaleniya",
-    phone: { womanPhone: "0714578650", manPhone: "0714578650" },
-    dob: { womanDob: "01/03/1989", manDob: "11/05/1988" },
-    status: "Baby1",
-  },
-];
-
 const eligibleCouples = () => {
   const { t } = useTranslation("eligibleCouple");
+  const [rows, setRows] = useState([]);
+
+  useEffect(() => {
+    const fetchEligibleListForMidwife = async () => {
+      try {
+        const response = await EligibleService.getEligibleListForMidwife();
+        const updatedRows = response.map((r) => ({
+          id: r.id,
+          name: { womanName: r.womanName, manName: r.manName },
+          address: r.address,
+          phone: {
+            womanPhone: r.womanPhone,
+            manPhone: r.manPhone,
+          },
+          dob: { womanDob: r.womanDob, manDob: r.manDob },
+          status: { role: r.role, children: r.children },
+        }));
+
+        setRows(updatedRows);
+      } catch (error) {
+        console.log(error.message);
+        Toast(error.message, errorType.ERROR);
+
+        const data = error.response.data;
+        console.log(data);
+        Toast(data, errorType.ERROR);
+      }
+    };
+
+    fetchEligibleListForMidwife();
+  }, []);
 
   return (
     <div className="content-container">
