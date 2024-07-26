@@ -1,5 +1,9 @@
 import axiosInstance from "./axiosInstance";
 
+const Capitalize = (str) => {
+  return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+};
+
 class EligibleService {
   static async addEligibleInfo(formData) {
     try {
@@ -193,6 +197,14 @@ class EligibleService {
       occupation_man: eligibleDto.basicInfoDto.manOccupation,
       occupation_woman: eligibleDto.basicInfoDto.womanOccupation,
       marriage: eligibleDto.basicInfoDto.marriedDate,
+      region: eligibleDto.basicInfoDto.region,
+      area: Capitalize(eligibleDto.basicInfoDto.moh[0]),
+      district: Capitalize(eligibleDto.basicInfoDto.moh[1]),
+      userId: eligibleDto.basicInfoDto.userId,
+      womanName: eligibleDto.basicInfoDto.womanName,
+      manName: eligibleDto.basicInfoDto.manName,
+      address: eligibleDto.basicInfoDto.address,
+      createdDate: eligibleDto.basicInfoDto.createdDate,
 
       anemia_woman: eligibleDto.medicalHistoryDto.womenAnemia,
       rheumatism_woman: eligibleDto.medicalHistoryDto.womanHeartDisease,
@@ -343,8 +355,95 @@ class EligibleService {
       diet_garden_other: eligibleDto.familyNutritionDto.gardenDietDetails,
       diet_sugar_other: eligibleDto.familyNutritionDto.muchSugarDetails,
       diet_fat_other: eligibleDto.familyNutritionDto.muchFatDetails,
+
+      womanWeight: eligibleDto.midwifeAssessmentDto.womanWeight,
+      womanHeight: eligibleDto.midwifeAssessmentDto.womanHeight,
+      womanBmi: eligibleDto.midwifeAssessmentDto.womanBmi,
+      womanBloodType: eligibleDto.midwifeAssessmentDto.womanBloodType,
+      womanHemoglobin: eligibleDto.midwifeAssessmentDto.womanHemoglobin,
+
+      manWeight: eligibleDto.midwifeAssessmentDto.manWeight,
+      manHeight: eligibleDto.midwifeAssessmentDto.manHeight,
+      manBmi: eligibleDto.midwifeAssessmentDto.manBmi,
+      manBloodType: eligibleDto.midwifeAssessmentDto.manBloodType,
+      manHemoglobin: eligibleDto.midwifeAssessmentDto.manHemoglobin,
+
+      special: eligibleDto.midwifeAssessmentDto.special,
+      session: eligibleDto.midwifeAssessmentDto.session,
     };
   }
-}
 
+  static createMidwifeEligibleObject(
+    userEmail,
+    formObject,
+    pastPregnancies,
+    familyPlanningMethods
+  ) {
+    return {
+      email: userEmail,
+      womanName: formObject.womanName,
+      manName: formObject.manName,
+      address: formObject.address,
+      womanPhone: formObject.womanPhone,
+      manPhone: formObject.manPhone,
+      womanDob: formObject.womanDob,
+      manDob: formObject.manDob,
+      womanAgeMarried: formObject.womanAgeMarried,
+      manAgeMarried: formObject.manAgeMarried,
+      womanEducationLevel: formObject.womanEducationLevel,
+      manEducationLevel: formObject.manEducationLevel,
+      womanOccupation: formObject.womanOccupation,
+      manOccupation: formObject.manOccupation,
+      womanWeight: formObject.womanWeight,
+      manWeight: formObject.manWeight,
+      womanHeight: formObject.womanHeight,
+      manHeight: formObject.manHeight,
+      womanBmi: formObject.womanBmi,
+      manBmi: formObject.manBmi,
+      womanBloodType: formObject.womanBloodType,
+      manBloodType: formObject.manBloodType,
+      womanHemoglobin: formObject.womanHemoglobin,
+      manHemoglobin: formObject.manHemoglobin,
+      children: formObject.children,
+      special: formObject.special,
+      session: formObject.session,
+      pastPregnancies: pastPregnancies, // Array of past pregnancy objects
+      familyPlanningMethods: familyPlanningMethods, // Array of family planning method objects}
+    };
+  }
+
+  // By midwife
+  static async createEligibleInfo(formData) {
+    try {
+      const response = await axiosInstance.post(`/eligible/midwife/add`, {
+        ...formData,
+      });
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  // For midwife
+  static async getEligibleInfoForMidwife(email) {
+    try {
+      const response = await axiosInstance.get(
+        `/eligible/midwife/get/${email}`
+      );
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  // For midwife
+  static async getEligibleListForMidwife() {
+    try {
+      const response = await axiosInstance.get(`/eligible/midwife/get`);
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  }
+}
 export default EligibleService;

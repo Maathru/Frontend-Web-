@@ -126,13 +126,20 @@ function App() {
             <Route path="/eligible/3" element={<Eligible3 />} />
             <Route path="/eligible/4" element={<Eligible4 />} />
 
-            <Route path="/midwife/eligible-couples" element={<EligibleCouples />} />
-            <Route path="/midwife/eligible-couples/view" element={<EligibleCouplesView />} />
-            <Route path="/midwife/eligible-couples/add" element={<EligibleCouplesAdd />} />
+            <Route path="/midwife/eligible" element={<EligibleCouples />} />
+            <Route
+              path="/midwife/eligible/view"
+              element={<EligibleCouplesView />}
+            />
+            <Route
+              path="/midwife/eligible/add/:userEmail"
+              element={<EligibleCouplesAdd />}
+            />
 
             <Route path="/midwife/parents" element={<Parents />} />
             <Route path="/manageusers" element={<ManageUsers />} />
         
+
           </>
         )}
       </Routes>
