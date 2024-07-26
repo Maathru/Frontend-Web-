@@ -17,8 +17,10 @@ import {
   specials3,
   specials4,
 } from "@/data/eligibleData";
+import { useTitle } from "@/hooks/useTitle";
 
 const Eligible2 = () => {
+  useTitle("Recovery Checklist - Page 2");
   const [formObject, setFormObject] = useState({});
   const navigate = useNavigate();
   let isLoading = true;

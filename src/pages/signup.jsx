@@ -23,10 +23,12 @@ import { Button } from "@/components/ui/button";
 import { ToastContainer } from "react-toastify";
 import { errorType, Toast } from "@/components/toast";
 import UserService from "@/service/userService";
+import { useTitle } from "@/hooks/useTitle";
 
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
 const Signup = () => {
+  useTitle("Sign Up");
   const [showPassword, setShowPassword] = useState(false);
   const [agree, setAgree] = useState(false);
   const [formData, setFormData] = useState({

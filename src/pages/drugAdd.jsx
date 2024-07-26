@@ -7,8 +7,10 @@ import { useNavigate } from "react-router-dom";
 import DrugService from "@/service/drugService";
 import { errorType, Toast } from "@/components/toast";
 import PageHeading from "@/components/ui/pageHeading";
+import { useTitle } from "@/hooks/useTitle";
 
 const DrugAdd = () => {
+  useTitle("Add Drug");
   const [formData, setFormData] = useState({
     brandName: "",
     recommendedDose: "",

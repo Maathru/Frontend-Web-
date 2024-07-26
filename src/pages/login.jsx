@@ -20,8 +20,10 @@ import { Button } from "@/components/ui/button";
 import UserService from "@/service/userService";
 import { errorType, Toast } from "@/components/toast";
 import { userData } from "@/context/userAuth";
+import { useTitle } from "@/hooks/useTitle";
 
 const Login = () => {
+  useTitle("Log In");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
