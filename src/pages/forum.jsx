@@ -8,8 +8,10 @@ import SearchBar from "@mkyy/mui-search-bar";
 import { NavLink } from "react-router-dom";
 import ForumService from "@/service/forumService";
 import { errorType, Toast } from "@/components/toast";
+import { useTitle } from "@/hooks/useTitle";
 
 const Forum = () => {
+  useTitle("Forum");
   const handleSearch = (labelOptionValue) => {
     console.log(labelOptionValue);
   };

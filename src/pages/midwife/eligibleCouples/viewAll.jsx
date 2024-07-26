@@ -14,6 +14,7 @@ import EligibleService from "@/service/eligibleService";
 import { errorType, Toast } from "@/components/toast";
 import PageHeading from "@/components/ui/pageHeading";
 import { Link } from "react-router-dom";
+import { useTitle } from "@/hooks/useTitle";
 
 const StripedDataGrid = styled(DataGrid)(({ theme }) => ({
   [`& .${gridClasses.row}.even`]: {
@@ -137,10 +138,10 @@ const columns = [
 ];
 
 const eligibleCouples = () => {
-  const { t } = useTranslation("eligibleCouples");
-  const title = t("title");
+  useTitle("Eligible Couples");
   const { t } = useTranslation("eligibleCouple");
   const [rows, setRows] = useState([]);
+  const title = t("title");
 
   useEffect(() => {
     const fetchEligibleListForMidwife = async () => {
@@ -174,14 +175,14 @@ const eligibleCouples = () => {
 
   return (
     <div className="content-container">
-      <PageHeading title={title}/>
+      <PageHeading title={title} />
 
       <div className="flex flex-col items-end mt-10">
         <Link to={"/midwife/eligible-couples/add"}>
-        <Button className="bg-[#6F0096] h-10 flexbox items-center ">
-          {t("add")}
-          <HiOutlinePlusSm className="ml-2 h-5 w-5" />
-        </Button>
+          <Button className="bg-[#6F0096] h-10 flexbox items-center ">
+            {t("add")}
+            <HiOutlinePlusSm className="ml-2 h-5 w-5" />
+          </Button>
         </Link>
 
         {/* clinics table */}

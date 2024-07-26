@@ -26,6 +26,7 @@ import { mohData } from "@/data/mohData";
 import { FormHelperText } from "@mui/material";
 import UserService from "@/service/userService";
 import { errorType, Toast } from "@/components/toast";
+import { useTitle } from "@/hooks/useTitle";
 
 const formatDisplayName = (value) => {
   return value
@@ -64,6 +65,7 @@ const parentCards = [
 ];
 
 const Dashboard = () => {
+  useTitle("Dashboard");
   const [province, setProvince] = useState("");
   const [district, setDistrict] = useState("");
   const [area, setArea] = useState("");

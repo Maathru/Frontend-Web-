@@ -14,8 +14,10 @@ import { errorType, Toast } from "@/components/toast";
 import EligibleService from "@/service/eligibleService";
 import PageHeading from "@/components/ui/pageHeading";
 import { useTranslation } from "react-i18next";
+import { useTitle } from "@/hooks/useTitle";
 
 const Eligible = () => {
+  useTitle("Recovery Checklist - Page 1");
   const [formObject, setFormObject] = useState({ stage: 1 });
   const navigate = useNavigate();
 
@@ -88,7 +90,7 @@ const Eligible = () => {
     <div className="container my-10 font-poppins">
       {/* Hero section */}
       <div>
-      <PageHeading title={title} />
+        <PageHeading title={title} />
 
         <p className="text-xl mt-8">
           With the arrival of a new baby, you are stepping into a beautiful and

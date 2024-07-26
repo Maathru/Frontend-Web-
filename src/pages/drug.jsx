@@ -19,6 +19,7 @@ import DrugService from "@/service/drugService";
 import { errorType, Toast } from "@/components/toast";
 import PageHeading from "@/components/ui/pageHeading";
 import { Button } from "@/components/ui/button";
+import { useTitle } from "@/hooks/useTitle";
 
 const StripedDataGrid = styled(DataGrid)(({ theme }) => ({
   [`& .${gridClasses.row}.even`]: {
@@ -149,6 +150,7 @@ const columns = [
 ];
 
 const Drug = () => {
+  useTitle("Drugs");
   const [rows, setRows] = useState([]);
   const { t } = useTranslation("drug");
 
@@ -175,7 +177,7 @@ const Drug = () => {
   return (
     <div className="p-12 pt-8 content-container">
       <div className="flex justify-between mb-8">
-        <PageHeading title={title}/>
+        <PageHeading title={title} />
 
         <Link to={"/drugs/add"}>
           <Button className="bg-[#6F0096] h-10 flexbox items-center">

@@ -11,8 +11,10 @@ import EligibleService from "@/service/eligibleService";
 import { errorType, Toast } from "@/components/toast";
 import PageHeading from "@/components/ui/pageHeading";
 import { useTranslation } from "react-i18next";
+import { useTitle } from "@/hooks/useTitle";
 
 const Eligible3 = () => {
+  useTitle("Recovery Checklist - Page 3");
   const [formObject, setFormObject] = useState({});
   const navigate = useNavigate();
   let isLoading = true;

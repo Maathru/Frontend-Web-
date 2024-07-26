@@ -5,6 +5,7 @@ import MinHeightTextarea from "./minHeightTextarea";
 import { TextField } from "@mui/material";
 import EligiblePagination from "@/components/userComponents/eligiblePagination";
 import { useEffect, useState } from "react";
+import { useTitle } from "@/hooks/useTitle";
 
 const sections = [
   { title: "Weight (kg)", name: "Weight" },
@@ -17,6 +18,7 @@ const sections = [
 const examinations = ["BP", "CVC", "RS", "Abd", "CNS"];
 
 const Eligible4 = () => {
+  useTitle("Recovery Checklist - Page 4");
   const [formObject, setFormObject] = useState({});
   const navigate = useNavigate();
 

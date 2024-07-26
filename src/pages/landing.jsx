@@ -1,8 +1,10 @@
 import { Button } from "@/components/ui/button";
 import landingImg from "../assets/landingImg.png";
 import { useTranslation } from "react-i18next";
+import { useTitle } from "@/hooks/useTitle";
 
 const Landing = () => {
+  useTitle("Maathru");
   const { t } = useTranslation("landing");
 
   return (
@@ -25,7 +27,7 @@ const Landing = () => {
         </div>
       </div>
       <div className="flex-1">
-      <img src={landingImg} alt="" className="w-9/12"/>
+        <img src={landingImg} alt="" className="w-9/12" />
       </div>
     </div>
   );

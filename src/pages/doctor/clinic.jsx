@@ -15,6 +15,7 @@ import { Box, Chip, IconButton } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import PageHeading from "@/components/ui/pageHeading";
+import { useTitle } from "@/hooks/useTitle";
 
 const StripedDataGrid = styled(DataGrid)(({ theme }) => ({
   [`& .${gridClasses.row}.even`]: {
@@ -156,6 +157,7 @@ const rows = [
 ];
 
 const Clinic = () => {
+  useTitle("Clinics");
   const { t } = useTranslation("clinic");
   const title = t("title");
 
