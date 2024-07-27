@@ -6,11 +6,13 @@ import { Typography, TextField, IconButton } from "@mui/material";
 import { AiOutlineClose } from "react-icons/ai";
 import EligibleService from "@/service/eligibleService";
 import { errorType, Toast } from "@/components/toast";
-import { useParams } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import Heading from "@/components/ui/heading";
 
 const addCouples = () => {
-  const { userEmail } = useParams();
+  const location = useLocation();
+  const navigate = useNavigate();
+  const { userId } = useParams();
   const [formData, setFormData] = useState({
     womanName: "",
     manName: "",
@@ -46,15 +48,22 @@ const addCouples = () => {
   const [familyMethods, setFamilyMethods] = useState([
     { id: 1, method: "", date: "" },
   ]);
+  const editMode =
+    location.pathname.split("/")[2] === "add" ||
+    location.pathname.split("/")[2] === "edit";
   const { t } = useTranslation("eligibleCouplesAdd");
 
   const addPregnancySection = () => {
+    if (!editMode) return;
+
     setPastPregnancySections([
       ...pastPregnancySections,
       { id: pastPregnancySections.length + 1, gender: "", result: "" },
     ]);
   };
   const addFamilySection = () => {
+    if (!editMode) return;
+
     setFamilyMethods([
       ...familyMethods,
       { id: familyMethods.length + 1, method: "", date: "" },
@@ -62,11 +71,15 @@ const addCouples = () => {
   };
 
   const removePregnancySection = (id) => {
+    if (!editMode) return;
+
     setPastPregnancySections(
       pastPregnancySections.filter((section) => section.id !== id)
     );
   };
   const removeFamilySection = (id) => {
+    if (!editMode) return;
+
     setFamilyMethods(familyMethods.filter((section) => section.id !== id));
   };
 
@@ -175,7 +188,7 @@ const addCouples = () => {
     const fetchEligibleInfoForMidwife = async () => {
       try {
         const response = await EligibleService.getEligibleInfoForMidwife(
-          userEmail
+          userId
         );
         setFormData({ ...formData, ...response });
 
@@ -211,7 +224,7 @@ const addCouples = () => {
 
         const data = error.response.data;
         console.log(data);
-        Toast(data, errorType.ERROR);
+        Toast(data || "Error occurred", errorType.ERROR);
       }
     };
 
@@ -221,6 +234,8 @@ const addCouples = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if (!editMode) return;
+
     const validationErrors = validate();
 
     if (Object.keys(validationErrors).length !== 0) {
@@ -229,7 +244,7 @@ const addCouples = () => {
     }
 
     const formObject = EligibleService.createMidwifeEligibleObject(
-      userEmail,
+      userId,
       formData,
       pastPregnancySections,
       familyMethods
@@ -238,6 +253,7 @@ const addCouples = () => {
     try {
       const response = await EligibleService.createEligibleInfo(formObject);
       Toast(response, errorType.SUCCESS);
+      navigate(`/eligible/view/${location.pathname.split("/")[3]}`);
     } catch (error) {
       console.log(error.message);
 
@@ -253,13 +269,18 @@ const addCouples = () => {
           console.log(newErrors);
         } else {
           console.log(data);
-          Toast(data, errorType.ERROR);
+          Toast(data || "Error occurred", errorType.ERROR);
         }
       }
     }
   };
 
-  const title = t("title");
+  const title =
+    location.pathname.split("/")[2] === "view"
+      ? `View Eligible Couple - ID ${location.pathname.split("/")[3]}`
+      : location.pathname.split("/")[2] === "edit"
+      ? `Edit Eligible Couple - ID ${location.pathname.split("/")[3]}`
+      : "Add New Eligible Couple";
 
   return (
     <div className="content-container">
@@ -268,6 +289,14 @@ const addCouples = () => {
       {/* main details layer */}
       <div>
         <Typography variant="h5">{t("subtitle1")}</Typography>
+
+        {/* If view page move to edit page */}
+        {!editMode && (
+          <Link to={`/eligible/edit/${location.pathname.split("/")[3]}`}>
+            <Button>Edit</Button>
+          </Link>
+        )}
+
         <div className="">
           <Typography variant="h6">{t("subtitle1.1")}</Typography>
           <div className="grid eligible-form grid-rows-9 gap-x-20 gap-y-5">
@@ -277,6 +306,7 @@ const addCouples = () => {
             <Typography variant="body1">1. Name</Typography>
             <TextField
               required
+              disabled={!editMode}
               className="rounded"
               size="small"
               value={formData.womanName || ""}
@@ -286,6 +316,7 @@ const addCouples = () => {
               helperText={errors.womanName ? errors.womanName : ""}
             ></TextField>
             <TextField
+              disabled={!editMode}
               className="rounded"
               size="small"
               value={formData.manName || ""}
@@ -298,6 +329,7 @@ const addCouples = () => {
             <Typography variant="body1">2. Address</Typography>
             <TextField
               required
+              disabled={!editMode}
               className="rounded col-span-2"
               size="small"
               value={formData.address || ""}
@@ -310,6 +342,7 @@ const addCouples = () => {
             <Typography variant="body1">3. Telephone Number</Typography>
             <TextField
               required
+              disabled={!editMode}
               className="rounded"
               size="small"
               value={formData.womanPhone || ""}
@@ -319,6 +352,7 @@ const addCouples = () => {
               helperText={errors.womanPhone ? errors.womanPhone : ""}
             ></TextField>
             <TextField
+              disabled={!editMode}
               className="rounded"
               size="small"
               value={formData.manPhone || ""}
@@ -331,6 +365,7 @@ const addCouples = () => {
             <Typography variant="body1">4. Date of Birth</Typography>
             <TextField
               required
+              disabled={!editMode}
               className="rounded"
               size="small"
               type="date"
@@ -341,6 +376,7 @@ const addCouples = () => {
               helperText={errors.womanDob ? errors.womanDob : ""}
             ></TextField>
             <TextField
+              disabled={!editMode}
               className="rounded"
               size="small"
               type="date"
@@ -354,6 +390,7 @@ const addCouples = () => {
             <Typography variant="body1">5. Age married</Typography>
             <TextField
               required
+              disabled={!editMode}
               className="rounded"
               size="small"
               type="number"
@@ -364,6 +401,7 @@ const addCouples = () => {
               helperText={errors.womanAgeMarried ? errors.womanAgeMarried : ""}
             ></TextField>
             <TextField
+              disabled={!editMode}
               className="rounded"
               size="small"
               type="number"
@@ -377,6 +415,7 @@ const addCouples = () => {
             <Typography variant="body1">6. Highest Education Level </Typography>
             <TextField
               required
+              disabled={!editMode}
               className="rounded"
               size="small"
               value={formData.womanEducationLevel || ""}
@@ -388,6 +427,7 @@ const addCouples = () => {
               }
             ></TextField>
             <TextField
+              disabled={!editMode}
               className="rounded"
               size="small"
               value={formData.manEducationLevel || ""}
@@ -402,6 +442,7 @@ const addCouples = () => {
             <Typography variant="body1">7. Occupation</Typography>
             <TextField
               required
+              disabled={!editMode}
               className="rounded"
               size="small"
               value={formData.womanOccupation || ""}
@@ -411,6 +452,7 @@ const addCouples = () => {
               helperText={errors.womanOccupation ? errors.womanOccupation : ""}
             ></TextField>
             <TextField
+              disabled={!editMode}
               className="rounded"
               size="small"
               value={formData.manOccupation || ""}
@@ -425,6 +467,7 @@ const addCouples = () => {
             </Typography>
             <TextField
               required
+              disabled={!editMode}
               className="rounded col-span-2"
               size="small"
               value={formData.children || ""}
@@ -438,13 +481,15 @@ const addCouples = () => {
 
         <div className="mt-24">
           <Typography variant="h6">{t("subtitle1.2")}</Typography>
-          <div
-            className="flex items-center gap-2 text-primary-purple cursor-pointer"
-            onClick={addPregnancySection}
-          >
-            <HiPlus className="inline" />
-            <Typography>Add more</Typography>
-          </div>
+          {editMode && (
+            <div
+              className="flex items-center gap-2 text-primary-purple cursor-pointer"
+              onClick={addPregnancySection}
+            >
+              <HiPlus className="inline" />
+              <Typography>Add more</Typography>
+            </div>
+          )}
 
           {pastPregnancySections.map((section) => (
             <div
@@ -455,6 +500,7 @@ const addCouples = () => {
                 Pregnancy <span>{section.id}</span>
               </Typography>
               <TextField
+                disabled={!editMode}
                 className="rounded"
                 size="small"
                 label="Gender"
@@ -470,6 +516,7 @@ const addCouples = () => {
                 }}
               />
               <TextField
+                disabled={!editMode}
                 className="rounded"
                 size="small"
                 label="Result"
@@ -484,28 +531,35 @@ const addCouples = () => {
                   );
                 }}
               />
-              <IconButton onClick={() => removePregnancySection(section.id)}>
-                <AiOutlineClose />
-              </IconButton>
+              {editMode && (
+                <IconButton onClick={() => removePregnancySection(section.id)}>
+                  <AiOutlineClose />
+                </IconButton>
+              )}
             </div>
           ))}
         </div>
 
         <div className="mt-24">
           <Typography variant="h6">{t("subtitle1.3")}</Typography>
-          <div
-            className="flex items-center gap-2 text-primary-purple cursor-pointer"
-            onClick={addFamilySection}
-          >
-            <HiPlus className="inline" />
-            <Typography>Add more</Typography>
-          </div>
+
+          {editMode && (
+            <div
+              className="flex items-center gap-2 text-primary-purple cursor-pointer"
+              onClick={addFamilySection}
+            >
+              <HiPlus className="inline" />
+              <Typography>Add more</Typography>
+            </div>
+          )}
+
           {familyMethods.map((familyMethod) => (
             <div
               key={familyMethod.id}
               className="flex gap-8 justify-center items-center mt-4"
             >
               <TextField
+                disabled={!editMode}
                 className="rounded"
                 size="small"
                 label="Method"
@@ -521,6 +575,7 @@ const addCouples = () => {
                 }}
               />
               <TextField
+                disabled={!editMode}
                 className="rounded"
                 size="small"
                 label="Accepted Date"
@@ -537,9 +592,14 @@ const addCouples = () => {
                 }}
                 InputLabelProps={{ shrink: true }}
               />
-              <IconButton onClick={() => removeFamilySection(familyMethod.id)}>
-                <AiOutlineClose />
-              </IconButton>
+
+              {editMode && (
+                <IconButton
+                  onClick={() => removeFamilySection(familyMethod.id)}
+                >
+                  <AiOutlineClose />
+                </IconButton>
+              )}
             </div>
           ))}
         </div>
@@ -556,6 +616,7 @@ const addCouples = () => {
 
             <Typography variant="body1">1. Weight (kg)</Typography>
             <TextField
+              disabled={!editMode}
               required
               className="rounded"
               size="small"
@@ -567,6 +628,7 @@ const addCouples = () => {
               helperText={errors.womanWeight ? errors.womanWeight : ""}
             ></TextField>
             <TextField
+              disabled={!editMode}
               className="rounded"
               size="small"
               type="number"
@@ -580,6 +642,7 @@ const addCouples = () => {
             <Typography variant="body1">2. Height (cm)</Typography>
             <TextField
               required
+              disabled={!editMode}
               className="rounded"
               size="small"
               type="number"
@@ -590,6 +653,7 @@ const addCouples = () => {
               helperText={errors.womanHeight ? errors.womanHeight : ""}
             ></TextField>
             <TextField
+              disabled={!editMode}
               className="rounded"
               size="small"
               type="number"
@@ -603,6 +667,7 @@ const addCouples = () => {
             <Typography variant="body1">3. BMI</Typography>
             <TextField
               required
+              disabled={!editMode}
               className="rounded"
               size="small"
               type="number"
@@ -613,6 +678,7 @@ const addCouples = () => {
               helperText={errors.womanBmi ? errors.womanBmi : ""}
             ></TextField>
             <TextField
+              disabled={!editMode}
               className="rounded"
               size="small"
               type="number"
@@ -626,6 +692,7 @@ const addCouples = () => {
             <Typography variant="body1">4. Blood Type</Typography>
             <TextField
               required
+              disabled={!editMode}
               className="rounded"
               size="small"
               value={formData.womanBloodType || ""}
@@ -635,6 +702,7 @@ const addCouples = () => {
               helperText={errors.womanBloodType ? errors.womanBloodType : ""}
             ></TextField>
             <TextField
+              disabled={!editMode}
               className="rounded"
               size="small"
               value={formData.manBloodType || ""}
@@ -647,6 +715,7 @@ const addCouples = () => {
             <Typography variant="body1">5. Hemoglobin level</Typography>
             <TextField
               required
+              disabled={!editMode}
               className="rounded"
               size="small"
               type="number"
@@ -657,6 +726,7 @@ const addCouples = () => {
               helperText={errors.womanHemoglobin ? errors.womanHemoglobin : ""}
             ></TextField>
             <TextField
+              disabled={!editMode}
               className="rounded"
               size="small"
               type="number"
@@ -672,6 +742,7 @@ const addCouples = () => {
         <div className="mt-24">
           <Typography variant="h6">{t("subtitle2.2")}</Typography>
           <TextField
+            disabled={!editMode}
             name="special"
             value={formData.special || ""}
             onChange={handleInputChange}
@@ -682,6 +753,7 @@ const addCouples = () => {
         <div className="mt-24">
           <Typography variant="h6">{t("subtitle2.3")}</Typography>
           <TextField
+            disabled={!editMode}
             name="session"
             value={formData.session || ""}
             onChange={handleInputChange}
@@ -691,11 +763,13 @@ const addCouples = () => {
         </div>
       </div>
 
-      <div className="flex justify-center mt-16">
-        <Button className="px-20 text-lg" onClick={handleSubmit}>
-          {t("submit")}
-        </Button>
-      </div>
+      {editMode && (
+        <div className="flex justify-center mt-16">
+          <Button className="px-20 text-lg" onClick={handleSubmit}>
+            {t("submit")}
+          </Button>
+        </div>
+      )}
     </div>
   );
 };

@@ -13,13 +13,11 @@ import { Typography } from "@mui/material";
 import EligibleService from "@/service/eligibleService";
 import { errorType, Toast } from "@/components/toast";
 import Heading from "@/components/ui/heading";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useTitle } from "@/hooks/useTitle";
 import Popup from "reactjs-popup";
 
 const StripedDataGrid = styled(DataGrid)(({ theme }) => {
-  console.log("Current theme:", theme);
-
   return {
     [`& .${gridClasses.row}.even`]: {
       backgroundColor: theme.palette.mode === "dark" ? "#333333" : "#FAEDFF",
@@ -147,9 +145,12 @@ const columns = [
 
 const eligibleCouples = () => {
   useTitle("Eligible Couples");
-  const { t } = useTranslation("eligibleCouples");
   const [rows, setRows] = useState([]);
   const [errors, setErrors] = useState({});
+  const [showExisting, setShowExisting] = useState(false);
+  const [showNew, setShowNew] = useState(false);
+  const navigate = useNavigate();
+  const { t } = useTranslation("eligibleCouples");
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -188,6 +189,7 @@ const eligibleCouples = () => {
           },
           dob: { womanDob: r.womanDob, manDob: r.manDob },
           status: { role: r.role, children: r.children },
+          userId: r.userId,
         }));
 
         setRows(updatedRows);
@@ -196,15 +198,16 @@ const eligibleCouples = () => {
 
         const data = error.response.data;
         console.log(data);
-        Toast(data, errorType.ERROR);
+        Toast(data || "Error occurred", errorType.ERROR);
       }
     };
 
     fetchEligibleListForMidwife();
   }, []);
 
-  const [showExisting, setShowExisting] = useState(false);
-  const [showNew, setShowNew] = useState(false);
+  const handleRowClick = (params) => {
+    navigate(`/eligible/view/${params.row.userId}`);
+  };
 
   return (
     <div className="content-container">
@@ -312,6 +315,7 @@ const eligibleCouples = () => {
             }
             disableRowSelectionOnClick
             slots={{ toolbar: QuickSearchToolbar }}
+            onRowClick={handleRowClick}
           />
         </div>
       </div>

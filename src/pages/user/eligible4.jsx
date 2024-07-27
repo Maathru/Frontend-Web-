@@ -98,7 +98,7 @@ const Eligible4 = () => {
           console.log(newErrors);
         } else {
           console.log(data);
-          Toast(data, errorType.ERROR);
+          Toast(data || "Error occurred", errorType.ERROR);
         }
       }
     }
