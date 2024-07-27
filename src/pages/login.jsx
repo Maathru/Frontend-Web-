@@ -134,7 +134,7 @@ const Login = () => {
             {t("title")}
           </p>
 
-          <div>
+          <div className="sm:w-6/12 w-9/12">
             <TextField
               label={t("username")}
               name="email"
@@ -144,14 +144,14 @@ const Login = () => {
                 className: "dark:bg-dark-background",
               }}
               value={email}
-              InputLabelProps={{ className: "dark:text-dark-text" }}
               onChange={handleInputChange}
+              fullWidth
             />
             {errors.email && <p className="error">{errors.email}</p>}
           </div>
           <br />
-          <div className="flex flex-col">
-            <FormControl sx={{ m: 1, width: "30vw" }} variant="outlined">
+          <div className="flex flex-col sm:w-6/12 w-9/12">
+            <FormControl sx={{ m: 1}} variant="outlined" fullWidth>
               <InputLabel htmlFor="outlined-adornment-password">
                 {t("password")}
               </InputLabel>

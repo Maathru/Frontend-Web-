@@ -7,7 +7,7 @@ import {
 import { useEffect, useState } from "react";
 import { HiChevronLeft, HiOutlinePlusSm, HiOutlineTrash } from "react-icons/hi";
 import { styled } from "@mui/material/styles";
-import { Box, Chip, IconButton } from "@mui/material";
+import { Box, Chip, IconButton, TextField } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { Typography } from "@mui/material";
 import EligibleService from "@/service/eligibleService";
@@ -15,6 +15,7 @@ import { errorType, Toast } from "@/components/toast";
 import Heading from "@/components/ui/heading";
 import { Link, useNavigate } from "react-router-dom";
 import { useTitle } from "@/hooks/useTitle";
+import Popup from "reactjs-popup";
 
 const StripedDataGrid = styled(DataGrid)(({ theme }) => {
   return {
@@ -144,9 +145,35 @@ const columns = [
 
 const eligibleCouples = () => {
   useTitle("Eligible Couples");
-  const { t } = useTranslation("eligibleCouples");
   const [rows, setRows] = useState([]);
+  const [errors, setErrors] = useState({});
+  const [showExisting, setShowExisting] = useState(false);
+  const [showNew, setShowNew] = useState(false);
   const navigate = useNavigate();
+  const { t } = useTranslation("eligibleCouples");
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    // setFormData({ ...formData, [name]: value });
+    setErrors({ ...errors, [name]: validateField(name, value) });
+  };
+
+  const validateField = (name, value) => {
+    switch (name) {
+      case "firstName":
+        if (!value) return "First name is required";
+        break;
+      case "lastName":
+        if (!value) return "Last name is required";
+        break;
+      case "email":
+        if (!value) return "Email address is required";
+        break;
+      default:
+        break;
+    }
+    return "";
+  };
 
   useEffect(() => {
     const fetchEligibleListForMidwife = async () => {
@@ -187,12 +214,90 @@ const eligibleCouples = () => {
       <Heading title={t("title")} />
 
       <div className="flex flex-col items-end mt-10">
-        <Link to={"/midwife/eligible-couples/add"}>
-          <Button className="bg-[#6F0096] h-10 flexbox items-center ">
-            {t("add")}
-            <HiOutlinePlusSm className="ml-2 h-5 w-5" />
-          </Button>
-        </Link>
+        <Popup
+          trigger={
+            <Button className="bg-[#6F0096] h-10 flexbox items-center ">
+              {t("add")}
+              <HiOutlinePlusSm className="ml-2 h-5 w-5" />
+            </Button>
+          }
+          modal
+          nested
+          // overlayClassName="overlay"
+          overlayStyle={{
+            backgroundColor: "rgba(0, 0, 0, 0.6)",
+          }}
+          // className="centered-popup"
+        >
+          <div className="bg-white dark:bg-dark-popup w-fit p-10 rounded-md">
+            <p className="m-10 mt-0 text-xl font-semibold">
+              Existing User or new couple?
+            </p>
+            {!showExisting && !showNew && (
+              <div className="buttons flex gap-12 w-full justify-center">
+                <Button className="" onClick={() => setShowExisting(true)}>
+                  Existing
+                </Button>
+                <Button onClick={() => setShowNew(true)}>New</Button>
+              </div>
+            )}
+            {showExisting && (
+              <div className="existing flex flex-col items-center gap-8">
+                <TextField
+                  label="Email Address"
+                  type="email"
+                  required
+                  variant="standard"
+                  fullWidth
+                  name="email"
+                  onChange={handleInputChange}
+                  error={errors.email ? true : false}
+                  helperText={errors.email ? errors.email : ""}
+                  // className="rounded"
+                ></TextField>
+
+                <Button className="px-10">Submit</Button>
+              </div>
+            )}
+            {showNew && (
+              <div className="new flex flex-col items-center gap-8">
+                <TextField
+                  label="First Name"
+                  required
+                  variant="standard"
+                  fullWidth
+                  name="firstName"
+                  onChange={handleInputChange}
+                  error={errors.firstName ? true : false}
+                  helperText={errors.firstName ? errors.firstName : ""}
+                ></TextField>
+                <TextField
+                  label="Last Name"
+                  required
+                  variant="standard"
+                  fullWidth
+                  name="lastName"
+                  onChange={handleInputChange}
+                  error={errors.lastName ? true : false}
+                  helperText={errors.lastName ? errors.lastName : ""}
+                ></TextField>
+                <TextField
+                  label="Email Address"
+                  type="email"
+                  required
+                  variant="standard"
+                  fullWidth
+                  name="email"
+                  onChange={handleInputChange}
+                  error={errors.email ? true : false}
+                  helperText={errors.email ? errors.email : ""}
+                ></TextField>
+
+                <Button className="px-10">Submit</Button>
+              </div>
+            )}
+          </div>
+        </Popup>
 
         {/* clinics table */}
         <div style={{ height: "100%", width: "100%" }}>

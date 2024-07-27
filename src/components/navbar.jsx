@@ -267,7 +267,7 @@ const Navbar = ({ themeFunction, mode }) => {
           {!userDetails.authenticated ? (
             <>
               <Link to="/signup">
-                <Button className="md:ms-5 ms-1 bg-white text-[#9C33C1] hover:text-white">
+                <Button variant="outline" className="md:ms-5 ms-1 bg-white text-[#9C33C1] hover:text-white">
                   Sign Up
                 </Button>
               </Link>
