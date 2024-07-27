@@ -1,6 +1,5 @@
 import { Typography } from "@mui/material";
 import BabyImage from "../assets/babycry.png";
-import { t } from "i18next";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { useTranslation } from "react-i18next";
@@ -15,7 +14,7 @@ const NotFound = () => {
       <Typography variant="h6">{t("error")}</Typography>
 
       <br />
-      <Link>
+      <Link to="/">
         <Button>{t("return")}</Button>
       </Link>
     </div>
