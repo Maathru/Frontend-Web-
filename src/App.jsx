@@ -166,6 +166,7 @@ function App() {
 
             <Route path="/blogs/write/1" element={<WriteBlog1 />} />
             <Route path="/blogs/write/2" element={<WriteBlog2 />} />
+
             <Route path="/forum/ask" element={<AskQuestion />} />
           </>
         )}

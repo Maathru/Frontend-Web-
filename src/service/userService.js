@@ -44,12 +44,12 @@ class UserService {
 
   static isAdmin() {
     const role = localStorage.getItem("role");
-    return role === "ADMIN";
+    return role === role.ADMIN;
   }
 
   static isUser() {
     const role = localStorage.getItem("role");
-    return role === "USER";
+    return role === role.USER;
   }
 
   static adminOnly() {

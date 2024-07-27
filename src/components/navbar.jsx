@@ -16,6 +16,7 @@ import UserService from "@/service/userService";
 import { errorType, Toast } from "./toast";
 import { userData } from "@/context/userAuth";
 import LogoutDialog from "@/components/logoutDialog";
+import { role } from "@/data/roleData";
 
 const Navbar = ({ themeFunction, mode }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
