@@ -14,7 +14,7 @@ import {
 import { Box, Chip, IconButton } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
-import PageHeading from "@/components/ui/pageHeading";
+import Heading from "@/components/ui/heading";
 import { useTitle } from "@/hooks/useTitle";
 
 const StripedDataGrid = styled(DataGrid)(({ theme }) => ({
@@ -163,7 +163,7 @@ const Clinic = () => {
 
   return (
     <div className="content-container">
-      <PageHeading title={title} />
+      <Heading title={title} />
 
       <div className="flex gap-36 justify-around px-24">
         <Link to={"/clinics/view"}>

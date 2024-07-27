@@ -17,7 +17,7 @@ import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import DrugService from "@/service/drugService";
 import { errorType, Toast } from "@/components/toast";
-import PageHeading from "@/components/ui/pageHeading";
+import Heading from "@/components/ui/heading";
 import { Button } from "@/components/ui/button";
 import { useTitle } from "@/hooks/useTitle";
 
@@ -177,7 +177,7 @@ const Drug = () => {
   return (
     <div className="p-12 pt-8 content-container">
       <div className="flex justify-between mb-8">
-        <PageHeading title={title} />
+        <Heading title={title} />
 
         <Link to={"/drugs/add"}>
           <Button className="bg-[#6F0096] h-10 flexbox items-center">

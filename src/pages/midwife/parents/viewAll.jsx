@@ -1,11 +1,8 @@
-import Heading from "../../../components/ui/pageHeading";
-
-
+import Heading from "../../../components/ui/heading";
 
 const viewAllParents = () => {
-    
-    const title = "i need some coffee";
-    return (
+  const title = "i need some coffee";
+  return (
     <div className="content-container">
       <Heading title={title} />
     </div>

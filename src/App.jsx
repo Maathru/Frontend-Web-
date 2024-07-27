@@ -24,6 +24,7 @@ import Eligible1 from "./pages/user/eligible1";
 import Eligible2 from "./pages/user/eligible2";
 import Eligible3 from "./pages/user/eligible3";
 import Eligible4 from "./pages/user/eligible4";
+import Eligible5 from "./pages/user/eligible5";
 import Growth from "./pages/user/growth";
 import AskQuestion from "./pages/question";
 import EligibleCouples from "./pages/midwife/eligibleCouples/viewAll";
@@ -103,44 +104,71 @@ function App() {
 
         {userDetails.authenticated && (
           <>
-            <Route path="/" element={<Dashboard />} />
+            {/* Admin routes */}
+            {userDetails.role === "ADMIN" && (
+              <>
+                <Route path="/users" element={<ManageUsers />} />
+              </>
+            )}
 
-            <Route path="/drugs" element={<Drug />} />
-            <Route path="/drugs/add" element={<DrugAdd />} />
+            {/* Doctor routes */}
+            {userDetails.role === "DOCTOR" && (
+              <>
+                <Route path="/drugs" element={<Drug />} />
+                <Route path="/drugs/add" element={<DrugAdd />} />
+
+                <Route path="/clinics" element={<Clinic />} />
+                <Route path="/clinics/view" element={<ViewClinics />} />
+                <Route path="/clinics/dates" element={<ClinicDates />} />
+                <Route path="/clinics/reports" element={<ClinicReports />} />
+              </>
+            )}
+
+            {/* Midwife routes */}
+            {userDetails.role === "MIDWIFE" && (
+              <>
+                <Route path="/eligible" element={<EligibleCouples />} />
+                <Route
+                  path="/eligible/view"
+                  element={<EligibleCouplesView />}
+                />
+                <Route
+                  path="/eligible/add/:userEmail"
+                  element={<EligibleCouplesAdd />}
+                />
+                <Route path="/parents" element={<Parents />} />
+              </>
+            )}
+
+            {/* Parent routes */}
+            {userDetails.role === "PARENT" && (
+              <>
+                <Route path="/growth" element={<Growth />} />
+              </>
+            )}
+
+            {/* Parent and Eligible routes */}
+            {(userDetails.role === "PARENT" ||
+              userDetails.role === "ELIGIBLE") && (
+              <>
+                <Route path="/eligible/1" element={<Eligible1 />} />
+                <Route path="/eligible/2" element={<Eligible2 />} />
+                <Route path="/eligible/3" element={<Eligible3 />} />
+                <Route path="/eligible/4" element={<Eligible4 />} />
+                <Route path="/eligible/5" element={<Eligible5 />} />
+              </>
+            )}
+
+            {/* Common routes */}
+            <Route path="/" element={<Dashboard />} />
 
             <Route path="/blogs/write/1" element={<WriteBlog1 />} />
             <Route path="/blogs/write/2" element={<WriteBlog2 />} />
-
-            <Route path="/clinics" element={<Clinic />} />
-            <Route path="/clinics/view" element={<ViewClinics />} />
-            <Route path="/clinics/dates" element={<ClinicDates />} />
-            <Route path="/clinics/reports" element={<ClinicReports />} />
-
             <Route path="/forum/ask" element={<AskQuestion />} />
-
-            <Route path="/growth" element={<Growth />} />
-            <Route path="/eligible/1" element={<Eligible1 />} />
-            <Route path="/eligible/2" element={<Eligible2 />} />
-            <Route path="/eligible/3" element={<Eligible3 />} />
-            <Route path="/eligible/4" element={<Eligible4 />} />
-
-            <Route path="/midwife/eligible" element={<EligibleCouples />} />
-            <Route
-              path="/midwife/eligible/view"
-              element={<EligibleCouplesView />}
-            />
-            <Route
-              path="/midwife/eligible/add/:userEmail"
-              element={<EligibleCouplesAdd />}
-            />
-
-            <Route path="/midwife/parents" element={<Parents />} />
-            <Route path="/users" element={<ManageUsers />} />
           </>
         )}
         <Route path="*" element={<NotFound />} />
       </Routes>
-
       <Footer />
     </main>
   );

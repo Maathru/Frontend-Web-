@@ -1,11 +1,7 @@
 import React from "react";
-import {
-  HiLocationMarker,
-  HiMailOpen,
-  HiPhone,
-} from "react-icons/hi";
+import { HiLocationMarker, HiMailOpen, HiPhone } from "react-icons/hi";
 import { useTranslation } from "react-i18next";
-import PageHeading from "@/components/ui/pageHeading";
+import Heading from "@/components/ui/heading";
 
 const viewClinics = () => {
   const { t } = useTranslation("viewClinics");
@@ -13,7 +9,7 @@ const viewClinics = () => {
 
   return (
     <div className="content-container">
-      <PageHeading title={title} />
+      <Heading title={title} />
 
       <div className="flex">
         <div className=""></div>

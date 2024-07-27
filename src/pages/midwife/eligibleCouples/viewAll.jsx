@@ -12,7 +12,7 @@ import { useTranslation } from "react-i18next";
 import { Typography } from "@mui/material";
 import EligibleService from "@/service/eligibleService";
 import { errorType, Toast } from "@/components/toast";
-import PageHeading from "@/components/ui/pageHeading";
+import Heading from "@/components/ui/heading";
 import { Link } from "react-router-dom";
 import { useTitle } from "@/hooks/useTitle";
 
@@ -175,7 +175,7 @@ const eligibleCouples = () => {
 
   return (
     <div className="content-container">
-      <PageHeading title={title} />
+      <Heading title={title} />
 
       <div className="flex flex-col items-end mt-10">
         <Link to={"/midwife/eligible-couples/add"}>

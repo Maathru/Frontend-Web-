@@ -13,7 +13,7 @@ import {
 } from "@mui/x-data-grid";
 import { Box, IconButton } from "@mui/material";
 import { useTranslation } from "react-i18next";
-import PageHeading from "@/components/ui/pageHeading";
+import Heading from "@/components/ui/heading";
 import { useTitle } from "@/hooks/useTitle";
 import UserService from "@/service/userService";
 import { errorType, Toast } from "@/components/toast";
@@ -165,7 +165,7 @@ const ManageUsers = () => {
 
   return (
     <div className="content-container">
-      <PageHeading title={title} />
+      <Heading title={title} />
 
       <div style={{ height: "100%", width: "100%", marginTop: "20px" }}>
         <StripedDataGrid

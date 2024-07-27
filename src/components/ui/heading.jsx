@@ -9,7 +9,7 @@ const Heading = ({ title }) => {
         className="text-5xl inline cursor-pointer"
         onClick={() => navigate(-1)}
       />
-      {title}
+      {title || ""}
     </div>
   );
 };
