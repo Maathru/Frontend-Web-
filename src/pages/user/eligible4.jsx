@@ -85,7 +85,6 @@ const Eligible4 = () => {
       Toast(response, errorType.SUCCESS);
     } catch (error) {
       console.log(error.message);
-      Toast(error.message, errorType.ERROR);
 
       const data = error.response.data;
       if (data) {

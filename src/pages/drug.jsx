@@ -4,9 +4,7 @@ import {
   gridClasses,
   GridToolbarQuickFilter,
 } from "@mui/x-data-grid";
-
 import {
-  HiChevronLeft,
   HiOutlinePencilAlt,
   HiOutlinePlusSm,
   HiOutlineTrash,
@@ -161,7 +159,6 @@ const Drug = () => {
         setRows(response);
       } catch (error) {
         console.log(error.message);
-        Toast(error.message, errorType.ERROR);
 
         const data = error.response.data;
         console.log(data);

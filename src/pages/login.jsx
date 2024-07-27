@@ -4,7 +4,6 @@ import { HiOutlineArrowRight } from "react-icons/hi";
 import { Link, useNavigate } from "react-router-dom";
 import loginImg from "../assets/loginImg.png";
 import { useTranslation } from "react-i18next";
-import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import {
   FormControl,
@@ -97,7 +96,6 @@ const Login = () => {
       }
     } catch (error) {
       console.log(error.message);
-      Toast(error.message, errorType.ERROR);
 
       const data = error.response.data;
       if (data) {
@@ -217,7 +215,6 @@ const Login = () => {
           </p>
         </div>
       </div>
-      <ToastContainer />
     </div>
   );
 };
