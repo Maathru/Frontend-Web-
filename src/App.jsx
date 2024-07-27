@@ -36,6 +36,8 @@ import ScrollToTop from "./components/ScrollToTop";
 import ManageUsers from "./pages/manageusers";
 import { ToastContainer } from "react-toastify";
 import { role } from "./data/roleData";
+import { ThemeProvider } from "@mui/material/styles";
+import getTheme from "./theme.js";
 
 function App() {
   const darkQuery = window.matchMedia("(prefers-color-scheme: dark)");
@@ -85,91 +87,93 @@ function App() {
   const { userDetails } = useContext(userData);
 
   return (
-    <main className=" bg-white text-neutral-800 dark:bg-neutral-900 dark:text-neutral-100 duration-100 scroll-smooth focus:scroll-auto">
-      <Navbar themeFunction={handleThemeSwitch} mode={theme} />
-      <ScrollToTop />
+    <ThemeProvider theme={getTheme(theme)}>
+      <main className=" bg-white text-neutral-800 dark:bg-neutral-900 dark:text-neutral-100 duration-100 scroll-smooth focus:scroll-auto">
+        <Navbar themeFunction={handleThemeSwitch} mode={theme} />
+        <ScrollToTop />
 
-      <Routes>
-        {!userDetails.authenticated && (
-          <>
-            <Route path="/" element={<Landing />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<Signup />} />
-          </>
-        )}
+        <Routes>
+          {!userDetails.authenticated && (
+            <>
+              <Route path="/" element={<Landing />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/signup" element={<Signup />} />
+            </>
+          )}
 
-        <Route path="/blogs" element={<Blog />} />
-        <Route path="/blogs/article" element={<Article />} />
-        <Route path="/forum" element={<Forum />} />
-        <Route path="/forum/answer/:questionId" element={<Answer />} />
+          <Route path="/blogs" element={<Blog />} />
+          <Route path="/blogs/article" element={<Article />} />
+          <Route path="/forum" element={<Forum />} />
+          <Route path="/forum/answer/:questionId" element={<Answer />} />
 
-        {userDetails.authenticated && (
-          <>
-            {/* Admin routes */}
-            {userDetails.role === role.ADMIN && (
-              <>
-                <Route path="/users" element={<ManageUsers />} />
-              </>
-            )}
+          {userDetails.authenticated && (
+            <>
+              {/* Admin routes */}
+              {userDetails.role === role.ADMIN && (
+                <>
+                  <Route path="/users" element={<ManageUsers />} />
+                </>
+              )}
 
-            {/* Doctor routes */}
-            {userDetails.role === role.DOCTOR && (
-              <>
-                <Route path="/drugs" element={<Drug />} />
-                <Route path="/drugs/add" element={<DrugAdd />} />
+              {/* Doctor routes */}
+              {userDetails.role === role.DOCTOR && (
+                <>
+                  <Route path="/drugs" element={<Drug />} />
+                  <Route path="/drugs/add" element={<DrugAdd />} />
 
-                <Route path="/clinics" element={<Clinic />} />
-                <Route path="/clinics/view" element={<ViewClinics />} />
-                <Route path="/clinics/dates" element={<ClinicDates />} />
-                <Route path="/clinics/reports" element={<ClinicReports />} />
-              </>
-            )}
+                  <Route path="/clinics" element={<Clinic />} />
+                  <Route path="/clinics/view" element={<ViewClinics />} />
+                  <Route path="/clinics/dates" element={<ClinicDates />} />
+                  <Route path="/clinics/reports" element={<ClinicReports />} />
+                </>
+              )}
 
-            {/* Midwife routes */}
-            {userDetails.role === role.MIDWIFE && (
-              <>
-                <Route path="/eligible" element={<EligibleCouples />} />
-                <Route
-                  path="/eligible/add/:userEmail"
-                  element={<EligibleCouplesAdd />}
-                />
-                <Route path="/parents" element={<Parents />} />
-              </>
-            )}
+              {/* Midwife routes */}
+              {userDetails.role === role.MIDWIFE && (
+                <>
+                  <Route path="/eligible" element={<EligibleCouples />} />
+                  <Route
+                    path="/eligible/add/:userEmail"
+                    element={<EligibleCouplesAdd />}
+                  />
+                  <Route path="/parents" element={<Parents />} />
+                </>
+              )}
 
-            {/* Parent routes */}
-            {userDetails.role === role.PARENT && (
-              <>
-                <Route path="/growth" element={<Growth />} />
-              </>
-            )}
+              {/* Parent routes */}
+              {userDetails.role === role.PARENT && (
+                <>
+                  <Route path="/growth" element={<Growth />} />
+                </>
+              )}
 
-            {/* Parent and Eligible routes */}
-            {(userDetails.role === role.PARENT ||
-              userDetails.role === role.ELIGIBLE) && (
-              <>
-                <Route path="/eligible/1" element={<Eligible1 />} />
-                <Route path="/eligible/2" element={<Eligible2 />} />
-                <Route path="/eligible/3" element={<Eligible3 />} />
-                <Route path="/eligible/4" element={<Eligible4 />} />
-                <Route path="/eligible/5" element={<Eligible5 />} />
-              </>
-            )}
+              {/* Parent and Eligible routes */}
+              {(userDetails.role === role.PARENT ||
+                userDetails.role === role.ELIGIBLE) && (
+                <>
+                  <Route path="/eligible/1" element={<Eligible1 />} />
+                  <Route path="/eligible/2" element={<Eligible2 />} />
+                  <Route path="/eligible/3" element={<Eligible3 />} />
+                  <Route path="/eligible/4" element={<Eligible4 />} />
+                  <Route path="/eligible/5" element={<Eligible5 />} />
+                </>
+              )}
 
-            {/* Common routes */}
-            <Route path="/" element={<Dashboard />} />
+              {/* Common routes */}
+              <Route path="/" element={<Dashboard />} />
 
-            <Route path="/blogs/write/1" element={<WriteBlog1 />} />
-            <Route path="/blogs/write/2" element={<WriteBlog2 />} />
+              <Route path="/blogs/write/1" element={<WriteBlog1 />} />
+              <Route path="/blogs/write/2" element={<WriteBlog2 />} />
 
-            <Route path="/forum/ask" element={<AskQuestion />} />
-          </>
-        )}
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-      <ToastContainer />
-      <Footer />
-    </main>
+              <Route path="/forum/ask" element={<AskQuestion />} />
+            </>
+          )}
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+        <ToastContainer />
+        <Footer />
+      </main>
+    </ThemeProvider>
   );
 }
 
