@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { MdOutlineArrowBackIosNew } from "react-icons/md";
 import { Progress } from "@/components/ui/progress";
 import { Input } from "@/components/ui/input";
+import { IoImageOutline } from "react-icons/io5";
 
 const accentColor = "bg-[#9c3cc1]";
 
@@ -10,7 +11,9 @@ const WriteBlog1 = () => {
   return (
     <div className="">
       <div className="md:mt-10 mt-5 md:ml-10 ml-3 text-3xl font-semibold text-neutral-800 dark:text-neutral-100">
-        <MdOutlineArrowBackIosNew />
+        <Link to="/blogs">
+          <MdOutlineArrowBackIosNew />
+        </Link>
       </div>
 
       <div className="flex justify-center">
@@ -104,10 +107,17 @@ const WriteBlog1 = () => {
                 placeholder="Description of the image"
               />
 
-              <Input id="picture" type="file" className="md:col-span-2" />
+              <label
+                htmlFor="picture"
+                className="md:col-span-2 w-full md:h-12 h-10 mt-4 px-3 py-2 border-2 border-[#e0e0e0] text-neutral-400 rounded-full text-lg focus:outline-none focus:border-[#9c3cc1] dark:bg-neutral-800 cursor-pointer flex items-center gap-2"
+              >
+                <IoImageOutline />
+                Choose File
+              </label>
+              <Input id="picture" type="file" className="hidden" />
               <div className="flex justify-center md:block">
                 <button
-                  className={`${accentColor} px-4 py-2 md:h-12 h-10 md:col-span-1 mt-4 rounded-full text-base hover:bg-neutral-100 text-white dark:hover:bg-neutral-900 hover:text-fuchsia-700 hover:ring-fuchsia-700 hover:ring-inset hover:ring-2`}
+                  className={`${accentColor} px-4 py-2 md:h-12 h-10 md:col-span-1 mt-4 rounded-full text-sm hover:bg-neutral-100 text-white dark:hover:bg-neutral-900 hover:text-fuchsia-700 hover:ring-fuchsia-700 hover:ring-inset hover:ring-2`}
                 >
                   Preview Image
                 </button>
@@ -119,11 +129,11 @@ const WriteBlog1 = () => {
 
       <div className="flex justify-center">
         <Link to="/blogs/write/2">
-        <button
-          className={`${accentColor} px-8 md:px-16 py-3 mt-8 md:mt-12 mb-4 rounded-lg text-xl font-semibold hover:bg-neutral-100 text-white dark:hover:bg-neutral-900 hover:text-fuchsia-700 hover:ring-fuchsia-700 hover:ring-inset hover:ring-2`}
-        >
-          Next
-        </button>
+          <button
+            className={`${accentColor} px-8 md:px-16 py-3 mt-8 md:mt-12 mb-4 rounded-lg text-xl font-semibold hover:bg-neutral-100 text-white dark:hover:bg-neutral-900 hover:text-fuchsia-700 hover:ring-fuchsia-700 hover:ring-inset hover:ring-2`}
+          >
+            Next
+          </button>
         </Link>
       </div>
     </div>

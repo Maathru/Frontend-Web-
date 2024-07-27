@@ -1,21 +1,17 @@
 import React from "react";
-import {useState} from "react";
 import { Link } from "react-router-dom";
 import { MdOutlineArrowBackIosNew } from "react-icons/md";
 import { Progress } from "@/components/ui/progress";
 import { Input } from "@/components/ui/input";
-import ReactQuill from "react-quill";
-import "react-quill/dist/quill.snow.css";
+import { IoImageOutline } from "react-icons/io5";
 
 const accentColor = "bg-[#9c3cc1]";
 
-function WriteBlog2 () {
-  const [description, setDescription] = useState("");
-
+const WriteBlog4 = () => {
   return (
     <div className="">
       <div className="md:mt-10 mt-5 md:ml-10 ml-3 text-3xl font-semibold text-neutral-800 dark:text-neutral-100">
-        <Link to="/blogs/write/1">
+        <Link to="/blogs/write/3">
           <MdOutlineArrowBackIosNew />
         </Link>
       </div>
@@ -48,7 +44,7 @@ function WriteBlog2 () {
             2
           </div>
 
-          <Progress value={50} />
+          <Progress value={100} />
 
           <div
             className={`${accentColor} rounded-full md:min-h-10 md:min-w-10 min-h-7 min-w-7 text-white md:text-2xl text-lg flex justify-center items-center`}
@@ -56,7 +52,7 @@ function WriteBlog2 () {
             3
           </div>
 
-          <Progress value={0} />
+          <Progress value={100} />
 
           <div
             className={`${accentColor} rounded-full md:min-h-10 md:min-w-10 min-h-7 min-w-7 text-white md:text-2xl text-lg flex justify-center items-center`}
@@ -69,36 +65,44 @@ function WriteBlog2 () {
 
         <div>
           <div className="md:mt-14 mt-10 md:ml-6 font-bold md:text-2xl text-xl">
-            Draft the Blog
+            Posting the Blog
           </div>
-          <div className="mt-6 md:ml-6 mb-8">
-            <ReactQuill
-              value={description}
-              onChange={setDescription}
-              className="bg-white dark:bg-neutral-900 text-neutral-800 dark:text-neutral-100 h-[400px]"
-            />
+          <div className="mt-2 md:ml-6 md:text-lg text-base font-medium text-[#6f6c90] dark:text-neutral-400">
+            Confirm that you want to publish the article.
+          </div>
+
+          <div className="md:w-[90%] mx-auto">
+            <div className="flex justify-around">
+              <Link to="#">
+                <button
+                  className={`${accentColor} px-8 md:px-16 py-3 mt-8 md:mt-12 mb-4 rounded-lg text-xl font-semibold hover:bg-neutral-100 text-white dark:hover:bg-neutral-900 hover:text-fuchsia-700 hover:ring-fuchsia-700 hover:ring-inset hover:ring-2`}
+                >
+                  Preview
+                </button>
+              </Link>
+              <Link to="/blogs">
+                <button
+                  className={`${accentColor} px-8 md:px-16 py-3 mt-8 md:mt-12 mb-4 rounded-lg text-xl font-semibold hover:bg-neutral-100 text-white dark:hover:bg-neutral-900 hover:text-fuchsia-700 hover:ring-fuchsia-700 hover:ring-inset hover:ring-2`}
+                >
+                  Post
+                </button>
+              </Link>
+            </div>
+          </div>
+
+          <div className="flex justify-center">
+            <Link to="/blogs/write/3">
+              <button
+                className={`${accentColor} px-8 md:px-16 py-3 mt-8 md:mt-12 mb-4 rounded-lg text-xl font-semibold hover:bg-neutral-100 text-white dark:hover:bg-neutral-900 hover:text-fuchsia-700 hover:ring-fuchsia-700 hover:ring-inset hover:ring-2`}
+              >
+                Previous
+              </button>
+            </Link>
           </div>
         </div>
-      </div>
-
-      <div className="md:w-[90%] w-[95%] mx-auto flex justify-between">
-        <Link to="/blogs/write/1">
-          <button
-            className={`${accentColor} px-8 md:px-16 py-3 mt-8 md:mt-12 mb-4 rounded-lg text-xl font-semibold hover:bg-neutral-100 text-white dark:hover:bg-neutral-900 hover:text-fuchsia-700 hover:ring-fuchsia-700 hover:ring-inset hover:ring-2`}
-          >
-            Previous
-          </button>
-        </Link>
-        <Link to="/blogs/write/3">
-          <button
-            className={`${accentColor} px-8 md:px-16 py-3 mt-8 md:mt-12 mb-4 rounded-lg text-xl font-semibold hover:bg-neutral-100 text-white dark:hover:bg-neutral-900 hover:text-fuchsia-700 hover:ring-fuchsia-700 hover:ring-inset hover:ring-2`}
-          >
-            Next
-          </button>
-        </Link>
       </div>
     </div>
   );
 };
 
-export default WriteBlog2;
+export default WriteBlog4;
