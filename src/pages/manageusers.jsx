@@ -18,6 +18,7 @@ import { useTitle } from "@/hooks/useTitle";
 import UserService from "@/service/userService";
 import { errorType, Toast } from "@/components/toast";
 import { format } from "date-fns";
+import { StripedDataGrid } from "@/components/StripedDataGrid";
 
 const Capitalize = (str) => {
   return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
@@ -33,23 +34,6 @@ const FormattedDateTime = (params) => {
 
   return `${readableTime} at ${readableDate}`;
 };
-
-const StripedDataGrid = styled(DataGrid)(({ theme }) => ({
-  [`& .${gridClasses.row}.even`]: {
-    backgroundColor: "#FAEDFF",
-  },
-  [`& .${gridClasses.row}.odd`]: {
-    backgroundColor: "#ffffff",
-  },
-  border: "none",
-
-  "& .MuiDataGrid-cell:focus": {
-    outline: "none",
-  },
-  "& .MuiDataGrid-cell:focus-within": {
-    outline: "none",
-  },
-}));
 
 function QuickSearchToolbar() {
   const { t } = useTranslation("Manageusers");

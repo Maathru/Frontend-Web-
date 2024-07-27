@@ -9,13 +9,13 @@ const getTheme = (mode) =>
       h5: {
         fontSize: "24px",
         fontWeight: 500,
-        color: "#000000",
+        color: mode === "dark" ? "#d1ced6" : "#000000", // Change color based on mode
         margin: "10px 0 10px 0",
       },
       h6: {
         fontSize: "20px",
         fontWeight: 200,
-        color: "#5B5B5B",
+        color: mode === "dark" ? "#d1ced6" : "#5B5B5B",
         margin: "20px 0 10px 0",
       },
     },

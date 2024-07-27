@@ -288,15 +288,18 @@ const addCouples = () => {
 
       {/* main details layer */}
       <div>
+        <div className="flex justify-between">
+
         <Typography variant="h5">{t("subtitle1")}</Typography>
 
         {/* If view page move to edit page */}
         {!editMode && (
           <Link to={`/eligible/edit/${location.pathname.split("/")[3]}`}>
-            <Button>Edit</Button>
+            <Button className="px-10">Edit</Button>
           </Link>
         )}
 
+        </div>
         <div className="">
           <Typography variant="h6">{t("subtitle1.1")}</Typography>
           <div className="grid eligible-form grid-rows-9 gap-x-20 gap-y-5">

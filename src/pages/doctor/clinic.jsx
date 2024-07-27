@@ -16,23 +16,7 @@ import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import Heading from "@/components/ui/heading";
 import { useTitle } from "@/hooks/useTitle";
-
-const StripedDataGrid = styled(DataGrid)(({ theme }) => ({
-  [`& .${gridClasses.row}.even`]: {
-    backgroundColor: "#FAEDFF",
-  },
-  [`& .${gridClasses.row}.odd`]: {
-    backgroundColor: "#ffffff",
-  },
-  border: "none",
-
-  "& .MuiDataGrid-cell:focus": {
-    outline: "none",
-  },
-  "& .MuiDataGrid-cell:focus-within": {
-    outline: "none",
-  },
-}));
+import { StripedDataGrid } from "@/components/StripedDataGrid";
 
 function QuickSearchToolbar() {
   return (
