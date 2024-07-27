@@ -13,7 +13,6 @@ import sinDark from "../assets/nav/sin-dark.png";
 import sinLight from "../assets/nav/sin-light.png";
 import { Button } from "./ui/button";
 import UserService from "@/service/userService";
-import { ToastContainer } from "react-toastify";
 import { errorType, Toast } from "./toast";
 import { userData } from "@/context/userAuth";
 import LogoutDialog from "@/components/logoutDialog";
@@ -127,7 +126,7 @@ const Navbar = ({ themeFunction, mode }) => {
             </NavLink>
 
             {/* Admin Links */}
-            {userDetails.role === "ADMIN" && (
+            {userDetails.role === role.ADMIN && (
               <>
                 <NavLink
                   to="/users"
@@ -143,7 +142,7 @@ const Navbar = ({ themeFunction, mode }) => {
             )}
 
             {/* Doctor Links */}
-            {userDetails.role === "DOCTOR" && (
+            {userDetails.role === role.DOCTOR && (
               <>
                 <NavLink
                   to="/clinics"
@@ -189,7 +188,7 @@ const Navbar = ({ themeFunction, mode }) => {
             )}
 
             {/* Midwife links */}
-            {userDetails.role === "MIDWIFE" && (
+            {userDetails.role === role.MIDWIFE && (
               <>
                 <NavLink
                   to="/eligible"
@@ -215,7 +214,7 @@ const Navbar = ({ themeFunction, mode }) => {
             )}
 
             {/* Parent Links */}
-            {userDetails.role === "PARENT" && (
+            {userDetails.role === role.PARENT && (
               <>
                 <NavLink
                   to="/growth"
@@ -231,8 +230,8 @@ const Navbar = ({ themeFunction, mode }) => {
             )}
 
             {/* Parent and Eligible links */}
-            {(userDetails.role === "PARENT" ||
-              userDetails.role === "ELIGIBLE") && (
+            {(userDetails.role === role.PARENT ||
+              userDetails.role === role.ELIGIBLE) && (
               <NavLink
                 to="/eligible/1"
                 className={({ isActive }) =>
@@ -296,7 +295,6 @@ const Navbar = ({ themeFunction, mode }) => {
           )}
         </div>
       </div>
-      <ToastContainer />
     </div>
   );
 };

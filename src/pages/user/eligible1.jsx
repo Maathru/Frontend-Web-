@@ -69,7 +69,6 @@ const Eligible = () => {
         setFormObject({ ...formObject, ...existing });
       } catch (error) {
         console.log(error.message);
-        Toast(error.message, errorType.ERROR);
 
         console.log(error);
         const data = error.response.data;

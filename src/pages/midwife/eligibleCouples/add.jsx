@@ -208,7 +208,6 @@ const addCouples = () => {
         );
       } catch (error) {
         console.log(error.message);
-        Toast(error.message, errorType.ERROR);
 
         const data = error.response.data;
         console.log(data);
@@ -241,7 +240,6 @@ const addCouples = () => {
       Toast(response, errorType.SUCCESS);
     } catch (error) {
       console.log(error.message);
-      Toast(error.message, errorType.ERROR);
 
       const data = error.response.data;
       if (data) {

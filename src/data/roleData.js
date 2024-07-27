@@ -1,0 +1,9 @@
+export const role = {
+  ADMIN: "ADMIN",
+  DOCTOR: "DOCTOR",
+  MIDWIFE: "MIDWIFE",
+  PARENT: "PARENT",
+  ELIGIBLE: "ELIGIBLE",
+  PENDING: "PENDING",
+  USER: "USER",
+};

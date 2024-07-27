@@ -35,6 +35,8 @@ import NotFound from "./pages/notFound";
 import { userData } from "./context/userAuth";
 import ScrollToTop from "./components/ScrollToTop";
 import ManageUsers from "./pages/manageusers";
+import { ToastContainer } from "react-toastify";
+import { role } from "./data/roleData";
 
 function App() {
   const darkQuery = window.matchMedia("(prefers-color-scheme: dark)");
@@ -105,14 +107,14 @@ function App() {
         {userDetails.authenticated && (
           <>
             {/* Admin routes */}
-            {userDetails.role === "ADMIN" && (
+            {userDetails.role === role.ADMIN && (
               <>
                 <Route path="/users" element={<ManageUsers />} />
               </>
             )}
 
             {/* Doctor routes */}
-            {userDetails.role === "DOCTOR" && (
+            {userDetails.role === role.DOCTOR && (
               <>
                 <Route path="/drugs" element={<Drug />} />
                 <Route path="/drugs/add" element={<DrugAdd />} />
@@ -125,7 +127,7 @@ function App() {
             )}
 
             {/* Midwife routes */}
-            {userDetails.role === "MIDWIFE" && (
+            {userDetails.role === role.MIDWIFE && (
               <>
                 <Route path="/eligible" element={<EligibleCouples />} />
                 <Route
@@ -141,15 +143,15 @@ function App() {
             )}
 
             {/* Parent routes */}
-            {userDetails.role === "PARENT" && (
+            {userDetails.role === role.PARENT && (
               <>
                 <Route path="/growth" element={<Growth />} />
               </>
             )}
 
             {/* Parent and Eligible routes */}
-            {(userDetails.role === "PARENT" ||
-              userDetails.role === "ELIGIBLE") && (
+            {(userDetails.role === role.PARENT ||
+              userDetails.role === role.ELIGIBLE) && (
               <>
                 <Route path="/eligible/1" element={<Eligible1 />} />
                 <Route path="/eligible/2" element={<Eligible2 />} />
@@ -169,6 +171,7 @@ function App() {
         )}
         <Route path="*" element={<NotFound />} />
       </Routes>
+      <ToastContainer />
       <Footer />
     </main>
   );

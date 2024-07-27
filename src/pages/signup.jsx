@@ -20,7 +20,6 @@ import {
 } from "@mui/material";
 import { MdVisibility, MdVisibilityOff } from "react-icons/md";
 import { Button } from "@/components/ui/button";
-import { ToastContainer } from "react-toastify";
 import { errorType, Toast } from "@/components/toast";
 import UserService from "@/service/userService";
 import { useTitle } from "@/hooks/useTitle";
@@ -124,7 +123,6 @@ const Signup = () => {
       navigate("/login?login=true");
     } catch (error) {
       console.log(error.message);
-      Toast(error.message, errorType.ERROR);
 
       const data = error.response.data;
       if (data) {
@@ -308,7 +306,6 @@ const Signup = () => {
           </div>
         </div>
       </div>
-      <ToastContainer />
     </div>
   );
 };

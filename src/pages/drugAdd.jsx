@@ -104,7 +104,6 @@ const DrugAdd = () => {
       navigate("/drugs");
     } catch (error) {
       console.log(error.message);
-      Toast(error.message, errorType.ERROR);
 
       const data = error.response.data;
       if (data) {
