@@ -139,8 +139,9 @@ const Login = () => {
               label={t("username")}
               name="email"
               variant="outlined"
-              InputProps={{ sx: { borderRadius: 8, width: "30vw" } }}
+              InputProps={{ sx: { borderRadius: 8, width: "30vw" }, className: "dark:bg-dark-background" }}
               value={email}
+              InputLabelProps={{className: "dark:text-dark-text"}}
               onChange={handleInputChange}
             />
             {errors.email && <p className="error">{errors.email}</p>}

@@ -30,6 +30,7 @@ module.exports = {
         "light-badge-green": "#EBF9F1",
         "light-success-green": "#1F9254",
         "error-red": "#cc0000",
+        "dark-text": "#ffffff",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",

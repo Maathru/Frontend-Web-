@@ -80,7 +80,7 @@ const Navbar = ({ themeFunction, mode }) => {
   };
 
   return (
-    <div className="bg-bg-nav dark:bg-neutral-700">
+    <div className="bg-bg-nav dark:bg-dark-background">
       <div className="flex justify-between items-center w-[92%] mx-auto">
         <div className="">
           <NavLink to="/">
@@ -89,7 +89,7 @@ const Navbar = ({ themeFunction, mode }) => {
         </div>
         <div
           className={`${
-            isMenuOpen ? "top-[8%] bg-white dark:bg-neutral-700" : "top-[-100%]"
+            isMenuOpen ? "top-[8%] bg-white dark:bg-dark-background" : "top-[-100%]"
           } md:static absolute md:min-h-fit min-h-[50vh] left-0 md:w-auto w-full flex items-center px-5 duration-150 z-50`}
         >
           <div className="flex md:flex-row flex-col md:items-center md:gap-[5vw] gap-8 text-lg font-medium md:ml-0 ml-4">
@@ -204,7 +204,7 @@ const Navbar = ({ themeFunction, mode }) => {
                 <NavLink
                   to="/parents"
                   className={({ isActive }) =>
-                    /^\/eligible(\/.*)?$/.test(pathname)
+                    /^\/parents(\/.*)?$/.test(pathname)
                       ? "text-[#9C33C1]"
                       : "hover:text-gray-500 text-black dark:text-gray-100"
                   }

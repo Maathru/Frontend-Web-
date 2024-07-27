@@ -16,22 +16,29 @@ import Heading from "@/components/ui/heading";
 import { Link } from "react-router-dom";
 import { useTitle } from "@/hooks/useTitle";
 
-const StripedDataGrid = styled(DataGrid)(({ theme }) => ({
-  [`& .${gridClasses.row}.even`]: {
-    backgroundColor: "#FAEDFF",
-  },
-  [`& .${gridClasses.row}.odd`]: {
-    backgroundColor: "#ffffff",
-  },
-  border: "none",
+const StripedDataGrid = styled(DataGrid)(({ theme }) => {
+  console.log('Current theme:', theme);
 
-  "& .MuiDataGrid-cell:focus": {
-    outline: "none",
-  },
-  "& .MuiDataGrid-cell:focus-within": {
-    outline: "none",
-  },
-}));
+  return {
+    [`& .${gridClasses.row}.even`]: {
+      backgroundColor: theme.palette.mode === 'dark' ? "#333333" : "#FAEDFF",
+    },
+    [`& .${gridClasses.row}.odd`]: {
+      backgroundColor: theme.palette.mode === 'dark' ? "#444444" : "#ffffff",
+    },
+    border: "none",
+
+    "& .MuiDataGrid-cell:focus": {
+      outline: "none",
+    },
+    "& .MuiDataGrid-cell:focus-within": {
+      outline: "none",
+    },
+    "& .MuiDataGrid-columnHeaders": {
+      backgroundColor: theme.palette.mode === 'dark' ? "#000000" : "#555555", // Light vs dark mode header color
+    },
+  };
+});
 
 function QuickSearchToolbar() {
   return (
@@ -139,9 +146,8 @@ const columns = [
 
 const eligibleCouples = () => {
   useTitle("Eligible Couples");
-  const { t } = useTranslation("eligibleCouple");
+  const { t } = useTranslation("eligibleCouples");
   const [rows, setRows] = useState([]);
-  const title = t("title");
 
   useEffect(() => {
     const fetchEligibleListForMidwife = async () => {
@@ -174,7 +180,7 @@ const eligibleCouples = () => {
 
   return (
     <div className="content-container">
-      <Heading title={title} />
+      <Heading title={t("title")} />
 
       <div className="flex flex-col items-end mt-10">
         <Link to={"/midwife/eligible-couples/add"}>

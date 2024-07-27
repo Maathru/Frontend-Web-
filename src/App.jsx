@@ -29,7 +29,6 @@ import Growth from "./pages/user/growth";
 import AskQuestion from "./pages/question";
 import EligibleCouples from "./pages/midwife/eligibleCouples/viewAll";
 import EligibleCouplesAdd from "./pages/midwife/eligibleCouples/add";
-import EligibleCouplesView from "./pages/midwife/eligibleCouples/view";
 import Parents from "./pages/midwife/parents/viewAll";
 import NotFound from "./pages/notFound";
 import { userData } from "./context/userAuth";
@@ -130,10 +129,6 @@ function App() {
             {userDetails.role === role.MIDWIFE && (
               <>
                 <Route path="/eligible" element={<EligibleCouples />} />
-                <Route
-                  path="/eligible/view"
-                  element={<EligibleCouplesView />}
-                />
                 <Route
                   path="/eligible/add/:userEmail"
                   element={<EligibleCouplesAdd />}
