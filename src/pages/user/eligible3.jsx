@@ -1,25 +1,21 @@
 import EligibleCardBoolInput from "@/components/userComponents/eligibleCardBoolInput";
 import YesNoButton from "@/components/userComponents/yesNoButton";
 import { TextField } from "@mui/material";
-import { IoIosArrowBack } from "react-icons/io";
 import { Navigate, useNavigate } from "react-router-dom";
 import EligiblePagination from "@/components/userComponents/eligiblePagination";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { conditions2, meals, nutrition } from "@/data/eligibleData";
-import EligibleService from "@/service/eligibleService";
-import { errorType, Toast } from "@/components/toast";
-import PageHeading from "@/components/ui/pageHeading";
+import Heading from "@/components/ui/heading";
 import { useTranslation } from "react-i18next";
 import { useTitle } from "@/hooks/useTitle";
 
 const Eligible3 = () => {
   useTitle("Recovery Checklist - Page 3");
   const [formObject, setFormObject] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
-  let isLoading = true;
   const { t } = useTranslation("eligible3");
-  const title = t("title");
 
   const initiateFields = () => {
     const initialData = {};
@@ -31,7 +27,7 @@ const Eligible3 = () => {
     });
 
     initialData["meal_woman"] = false;
-    initialData["meal_other"] = false;
+    initialData["meal_man"] = false;
     initialData["meal_other"] = "";
 
     meals.forEach((meal) => {
@@ -56,39 +52,9 @@ const Eligible3 = () => {
   };
 
   const handleSave = async () => {
-    // formObject.stage = Math.max(formObject.stage, 4);
+    formObject.stage = Math.max(formObject.stage, 4);
     localStorage.setItem("formObject", JSON.stringify(formObject));
-    // navigate("/eligible/4");
-
-    await handleSubmit();
-  };
-
-  const handleSubmit = async () => {
-    const formData = EligibleService.createObject(formObject);
-
-    try {
-      const response = await EligibleService.addEligibleInfo(formData);
-      Toast(response, errorType.SUCCESS);
-    } catch (error) {
-      console.log(error.message);
-      Toast(error.message, errorType.ERROR);
-
-      const data = error.response.data;
-      if (data) {
-        if (Array.isArray(data)) {
-          const newErrors = {};
-          data.map((msg) => {
-            Toast(msg.message, errorType.ERROR);
-            newErrors[msg.field] = msg.message;
-          });
-
-          console.log(newErrors);
-        } else {
-          console.log(data);
-          Toast(data, errorType.ERROR);
-        }
-      }
-    }
+    navigate("/eligible/4");
   };
 
   useEffect(() => {
@@ -103,11 +69,11 @@ const Eligible3 = () => {
     const obj2 = initiateFields();
     const obj1 = getFromLocalStorage();
     setFormObject({ ...formObject, ...obj2, ...obj1 });
-    isLoading = false;
+    setIsLoading(false);
   }, []);
 
   if (!isLoading && (!formObject || !formObject.stage)) {
-    return <Navigate to={"/eligible/2"} />;
+    return <Navigate to={"/eligible/1"} />;
   }
 
   if (!isLoading && formObject.stage < 3) {
@@ -116,7 +82,7 @@ const Eligible3 = () => {
 
   return (
     <div className="container my-10 font-poppins">
-      <PageHeading title={title} />
+      <Heading title={t("title")} />
 
       <ul className="list-disc mt-12">
         <li>
@@ -228,10 +194,10 @@ const Eligible3 = () => {
         ))}
       </div>
 
-      <Button onClick={handleSave}>Save and Submit</Button>
+      <Button onClick={handleSave}>Save and Next</Button>
 
       <div className="flex w-full mt-24">
-        <EligiblePagination total={4} current={3} />
+        <EligiblePagination total={5} current={3} />
       </div>
     </div>
   );

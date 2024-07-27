@@ -15,6 +15,7 @@ import meal1 from "../../assets/user/salmon-eggs.png";
 import meal2 from "../../assets/user/tofu.png";
 import walking from "../../assets/user/walking.png";
 import { useTitle } from "@/hooks/useTitle";
+import Heading from "@/components/ui/heading";
 
 const cardColor = "bg-white dark:bg-dark-card";
 const badgeColor = "bg-light-badge-green text-light-success-green";
@@ -35,10 +36,7 @@ const growth = () => {
   return (
     <div className="bg-white dark:bg-dark-background p-12 pt-8">
       <div className="mb-8">
-        <div className="text-3xl text-[#5B5B5B] font-semibold ">
-          <HiChevronLeft className="text-5xl inline" />
-          {t("title")}
-        </div>
+        <Heading title={t("title")} />
         <p className="ml-12 text-lg ">{t("subtitle")}</p>
       </div>
 

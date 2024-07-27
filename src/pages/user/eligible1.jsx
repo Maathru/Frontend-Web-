@@ -12,7 +12,7 @@ import EligiblePagination from "@/components/userComponents/eligiblePagination";
 import { basicInfo, conditions1 } from "@/data/eligibleData";
 import { errorType, Toast } from "@/components/toast";
 import EligibleService from "@/service/eligibleService";
-import PageHeading from "@/components/ui/pageHeading";
+import Heading from "@/components/ui/heading";
 import { useTranslation } from "react-i18next";
 import { useTitle } from "@/hooks/useTitle";
 
@@ -71,6 +71,7 @@ const Eligible = () => {
         console.log(error.message);
         Toast(error.message, errorType.ERROR);
 
+        console.log(error);
         const data = error.response.data;
         console.log(data);
         Toast(data, errorType.ERROR);
@@ -90,7 +91,7 @@ const Eligible = () => {
     <div className="container my-10 font-poppins">
       {/* Hero section */}
       <div>
-        <PageHeading title={title} />
+        <Heading title={title} />
 
         <p className="text-xl mt-8">
           With the arrival of a new baby, you are stepping into a beautiful and
@@ -102,7 +103,7 @@ const Eligible = () => {
           <div className="mx-8 mt-5 text-sm md:text-base p-4">
             <div className="flex my-4 gap-2">
               <p>Regional Health Service Unit:</p>
-              <p>{formObject.district || "qwe"}</p>
+              <p>{formObject.district || ""}</p>
             </div>
             <div className="flex my-4 gap-2">
               <p>Medical Officer in Health:</p>
@@ -227,7 +228,7 @@ const Eligible = () => {
       <Button onClick={handleSave}>Save and Next</Button>
 
       <div className="flex w-full mt-24">
-        <EligiblePagination total={4} current={1} />
+        <EligiblePagination total={5} current={1} />
       </div>
     </div>
   );

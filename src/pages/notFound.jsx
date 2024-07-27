@@ -9,7 +9,11 @@ const NotFound = () => {
 
   return (
     <div className="flex flex-col items-center content-container">
-      <img src={BabyImage} alt="crying baby" className="w-2/12" />
+      <img
+        src={BabyImage}
+        alt="crying baby"
+        className="w-2/12  animate-harmonicMotion"
+      />
       <Typography variant="h3">{t("title")}</Typography>
       <Typography variant="h6">{t("error")}</Typography>
 
