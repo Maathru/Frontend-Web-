@@ -91,6 +91,15 @@ class UserService {
       throw error;
     }
   }
+
+  static async getAllUsers() {
+    try {
+      const response = await axiosInstance.get(`/user/getAll`);
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  }
 }
 
 export default UserService;

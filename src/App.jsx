@@ -17,7 +17,7 @@ import ClinicReports from "./pages/doctor/clinicReports";
 import Forum from "./pages/forum";
 import Answer from "./pages/answer";
 import Dashboard from "./pages/user/dashboard";
-import { Navigate, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import Footer from "./components/footer";
 import Eligible1 from "./pages/user/eligible1";
@@ -31,10 +31,8 @@ import EligibleCouplesAdd from "./pages/midwife/eligibleCouples/add";
 import EligibleCouplesView from "./pages/midwife/eligibleCouples/view";
 import Parents from "./pages/midwife/parents/viewAll";
 import NotFound from "./pages/notFound";
-import UserService from "./service/userService";
 import { userData } from "./context/userAuth";
 import ScrollToTop from "./components/ScrollToTop";
-import Loader from "./components/loader";
 import ManageUsers from "./pages/manageusers";
 
 function App() {
@@ -92,7 +90,7 @@ function App() {
       <Routes>
         {!userDetails.authenticated && (
           <>
-            <Route path="*" element={<Landing />} />
+            <Route path="/" element={<Landing />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
           </>
@@ -105,7 +103,7 @@ function App() {
 
         {userDetails.authenticated && (
           <>
-            <Route path="*" element={<Dashboard />} />
+            <Route path="/" element={<Dashboard />} />
 
             <Route path="/drugs" element={<Drug />} />
             <Route path="/drugs/add" element={<DrugAdd />} />
@@ -137,11 +135,10 @@ function App() {
             />
 
             <Route path="/midwife/parents" element={<Parents />} />
-            <Route path="/manageusers" element={<ManageUsers />} />
-        
-
+            <Route path="/users" element={<ManageUsers />} />
           </>
         )}
+        <Route path="*" element={<NotFound />} />
       </Routes>
 
       <Footer />
