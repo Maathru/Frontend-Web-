@@ -136,7 +136,7 @@ const Signup = () => {
           setErrors(newErrors);
         } else {
           console.log(data);
-          Toast(data, errorType.ERROR);
+          Toast(data || "Error occurred", errorType.ERROR);
         }
       }
     }

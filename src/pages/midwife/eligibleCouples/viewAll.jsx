@@ -13,18 +13,16 @@ import { Typography } from "@mui/material";
 import EligibleService from "@/service/eligibleService";
 import { errorType, Toast } from "@/components/toast";
 import Heading from "@/components/ui/heading";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useTitle } from "@/hooks/useTitle";
 
 const StripedDataGrid = styled(DataGrid)(({ theme }) => {
-  console.log('Current theme:', theme);
-
   return {
     [`& .${gridClasses.row}.even`]: {
-      backgroundColor: theme.palette.mode === 'dark' ? "#333333" : "#FAEDFF",
+      backgroundColor: theme.palette.mode === "dark" ? "#333333" : "#FAEDFF",
     },
     [`& .${gridClasses.row}.odd`]: {
-      backgroundColor: theme.palette.mode === 'dark' ? "#444444" : "#ffffff",
+      backgroundColor: theme.palette.mode === "dark" ? "#444444" : "#ffffff",
     },
     border: "none",
 
@@ -35,7 +33,7 @@ const StripedDataGrid = styled(DataGrid)(({ theme }) => {
       outline: "none",
     },
     "& .MuiDataGrid-columnHeaders": {
-      backgroundColor: theme.palette.mode === 'dark' ? "#000000" : "#555555", // Light vs dark mode header color
+      backgroundColor: theme.palette.mode === "dark" ? "#000000" : "#555555", // Light vs dark mode header color
     },
   };
 });
@@ -148,6 +146,7 @@ const eligibleCouples = () => {
   useTitle("Eligible Couples");
   const { t } = useTranslation("eligibleCouples");
   const [rows, setRows] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchEligibleListForMidwife = async () => {
@@ -163,6 +162,7 @@ const eligibleCouples = () => {
           },
           dob: { womanDob: r.womanDob, manDob: r.manDob },
           status: { role: r.role, children: r.children },
+          userId: r.userId,
         }));
 
         setRows(updatedRows);
@@ -171,12 +171,16 @@ const eligibleCouples = () => {
 
         const data = error.response.data;
         console.log(data);
-        Toast(data, errorType.ERROR);
+        Toast(data || "Error occurred", errorType.ERROR);
       }
     };
 
     fetchEligibleListForMidwife();
   }, []);
+
+  const handleRowClick = (params) => {
+    navigate(`/eligible/view/${params.row.userId}`);
+  };
 
   return (
     <div className="content-container">
@@ -206,6 +210,7 @@ const eligibleCouples = () => {
             }
             disableRowSelectionOnClick
             slots={{ toolbar: QuickSearchToolbar }}
+            onRowClick={handleRowClick}
           />
         </div>
       </div>

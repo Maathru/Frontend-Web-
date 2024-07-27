@@ -34,7 +34,7 @@ const Forum = () => {
 
         const data = error.response.data;
         console.log(data);
-        Toast(data, errorType.ERROR);
+        Toast(data || "Error occurred", errorType.ERROR);
       }
     };
 

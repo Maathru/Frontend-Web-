@@ -496,13 +496,13 @@ class EligibleService {
   }
 
   static createMidwifeEligibleObject(
-    userEmail,
+    userId,
     formObject,
     pastPregnancies,
     familyPlanningMethods
   ) {
     return {
-      email: userEmail,
+      userId: userId,
       womanName: formObject.womanName,
       manName: formObject.manName,
       address: formObject.address,
@@ -547,10 +547,10 @@ class EligibleService {
   }
 
   // For midwife
-  static async getEligibleInfoForMidwife(email) {
+  static async getEligibleInfoForMidwife(userId) {
     try {
       const response = await axiosInstance.get(
-        `/eligible/midwife/get/${email}`
+        `/eligible/midwife/get/${userId}`
       );
       return response.data;
     } catch (error) {

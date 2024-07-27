@@ -109,7 +109,7 @@ const Login = () => {
           setErrors(newErrors);
         } else {
           console.log(data);
-          Toast(data, errorType.ERROR);
+          Toast(data || "Error occurred", errorType.ERROR);
         }
       }
     }
@@ -139,9 +139,12 @@ const Login = () => {
               label={t("username")}
               name="email"
               variant="outlined"
-              InputProps={{ sx: { borderRadius: 8, width: "30vw" }, className: "dark:bg-dark-background" }}
+              InputProps={{
+                sx: { borderRadius: 8, width: "30vw" },
+                className: "dark:bg-dark-background",
+              }}
               value={email}
-              InputLabelProps={{className: "dark:text-dark-text"}}
+              InputLabelProps={{ className: "dark:text-dark-text" }}
               onChange={handleInputChange}
             />
             {errors.email && <p className="error">{errors.email}</p>}
