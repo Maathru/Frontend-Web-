@@ -27,6 +27,7 @@ import Eligible4 from "./pages/user/eligible4";
 import Eligible5 from "./pages/user/eligible5";
 import Growth from "./pages/user/growth";
 import AskQuestion from "./pages/question";
+import MidwifeDashboard from "./pages/midwife/dashboard";
 import EligibleCouples from "./pages/midwife/eligibleCouples/viewAll";
 import EligibleCouplesAdd from "./pages/midwife/eligibleCouples/add";
 import Parents from "./pages/midwife/parents/viewAll";
@@ -131,6 +132,7 @@ function App() {
               {/* Midwife routes */}
               {userDetails.role === role.MIDWIFE && (
                 <>
+                  <Route path="/midwife" element={<MidwifeDashboard />} />
                   <Route path="/eligible" element={<EligibleCouples />} />
                   <Route
                     path="/eligible/add/:userId"

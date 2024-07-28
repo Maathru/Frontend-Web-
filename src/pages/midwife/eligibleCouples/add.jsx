@@ -506,7 +506,7 @@ const addCouples = () => {
           {pastPregnancySections.map((section) => (
             <div
               key={section.id}
-              className="flex gap-8 justify-center items-center mt-4"
+              className="flex gap-8 justify-center items-end mt-4"
             >
               <Typography>
                 Pregnancy <span>{section.id}</span>
@@ -530,14 +530,19 @@ const addCouples = () => {
               /> */}
 
               <FormControl>
-                <InputLabel id="district-select-label">
+                <InputLabel
+                  id="district-select-label"
+                  sx={{
+                    position: "relative",
+                    top: 20,
+                  }}
+                >
                   Select gender
                 </InputLabel>
                 <Select
                   disabled={!editMode}
-                  className="rounded"
                   size="small"
-                  label="Gender"
+                  label="Select Gender"
                   value={section.gender || ""}
                   name={`gender_${section.id}`}
                   onChange={(e) => {
@@ -547,6 +552,11 @@ const addCouples = () => {
                       "gender",
                       e.target.value
                     );
+                  }}
+                  sx={{
+                    width: "15rem",
+                    padding: 0.5,
+                    borderRadius: "30px",
                   }}
                 >
                   <MenuItem value="MALE">MALE</MenuItem>
