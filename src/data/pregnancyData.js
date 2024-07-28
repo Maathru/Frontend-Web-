@@ -18,12 +18,6 @@ export const basicInfo = [
       name: "number",
     },
     {
-      title: "Date of Birth",
-      placeholder1: "",
-      placeholder2: "",
-      name: "dob",
-    },
-    {
       title: "Age",
       placeholder1: "",
       placeholder2: "",
