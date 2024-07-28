@@ -305,6 +305,15 @@ const Navbar = ({ themeFunction, mode }) => {
             {mode === "dark" ? <MdLightMode /> : <MdDarkMode />}
           </div>
 
+          <img
+            src={themeImage}
+            className="cursor-pointer"
+            alt="Language icon"
+            height={40}
+            width={40}
+            onClick={() => setLanguage((prev) => !prev)}
+          />
+
           {!userDetails.authenticated ? (
             <>
               <Link to="/signup">

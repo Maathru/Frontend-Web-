@@ -47,7 +47,7 @@ function QuickSearchToolbar() {
 }
 
 const columns = [
-  { field: "id", headerName: "E. Couple ID", width: 100,},
+  { field: "id", headerName: "E. Couple ID", width: 100 },
   {
     field: "name",
     headerName: "Mother / Father",
@@ -159,7 +159,7 @@ const eligibleCouples = () => {
   }, []);
 
   const handleRowClick = (params) => {
-    navigate(`/eligible/view/${params.row.userId}`);
+    navigate(`/eligible/view/${params.row.userId}/${params.row.id}`);
   };
 
   return (

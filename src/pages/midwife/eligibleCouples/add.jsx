@@ -2,7 +2,15 @@ import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { HiChevronLeft, HiPlus } from "react-icons/hi";
-import { Typography, TextField, IconButton } from "@mui/material";
+import {
+  Typography,
+  TextField,
+  IconButton,
+  InputLabel,
+  Select,
+  MenuItem,
+  FormControl,
+} from "@mui/material";
 import { AiOutlineClose } from "react-icons/ai";
 import EligibleService from "@/service/eligibleService";
 import { errorType, Toast } from "@/components/toast";
@@ -12,7 +20,7 @@ import Heading from "@/components/ui/heading";
 const addCouples = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { userId } = useParams();
+  const { userId, eligibleId } = useParams();
   const [formData, setFormData] = useState({
     womanName: "",
     manName: "",
@@ -253,7 +261,7 @@ const addCouples = () => {
     try {
       const response = await EligibleService.createEligibleInfo(formObject);
       Toast(response, errorType.SUCCESS);
-      navigate(`/eligible/view/${location.pathname.split("/")[3]}`);
+      navigate(`/eligible/view/${userId}/${eligibleId}`);
     } catch (error) {
       console.log(error.message);
 
@@ -277,9 +285,9 @@ const addCouples = () => {
 
   const title =
     location.pathname.split("/")[2] === "view"
-      ? `View Eligible Couple - ID ${location.pathname.split("/")[3]}`
+      ? `View Eligible Couple - ID ${eligibleId}`
       : location.pathname.split("/")[2] === "edit"
-      ? `Edit Eligible Couple - ID ${location.pathname.split("/")[3]}`
+      ? `Edit Eligible Couple - ID ${eligibleId}`
       : "Add New Eligible Couple";
 
   return (
@@ -289,16 +297,14 @@ const addCouples = () => {
       {/* main details layer */}
       <div>
         <div className="flex justify-between">
+          <Typography variant="h5">{t("subtitle1")}</Typography>
 
-        <Typography variant="h5">{t("subtitle1")}</Typography>
-
-        {/* If view page move to edit page */}
-        {!editMode && (
-          <Link to={`/eligible/edit/${location.pathname.split("/")[3]}`}>
-            <Button className="px-10">Edit</Button>
-          </Link>
-        )}
-
+          {/* If view page move to edit page */}
+          {!editMode && (
+            <Link to={`/eligible/edit/${userId}/${eligibleId}`}>
+              <Button className="px-10">Edit</Button>
+            </Link>
+          )}
         </div>
         <div className="">
           <Typography variant="h6">{t("subtitle1.1")}</Typography>
@@ -502,7 +508,8 @@ const addCouples = () => {
               <Typography>
                 Pregnancy <span>{section.id}</span>
               </Typography>
-              <TextField
+
+              {/* <TextField
                 disabled={!editMode}
                 className="rounded"
                 size="small"
@@ -514,10 +521,36 @@ const addCouples = () => {
                   handlePregnancyInputChange(
                     section.id,
                     "gender",
-                    e.target.value
+                    e.target.value.toUpperCase()
                   );
                 }}
-              />
+              /> */}
+
+              <FormControl>
+                <InputLabel id="district-select-label">
+                  Select gender
+                </InputLabel>
+                <Select
+                  disabled={!editMode}
+                  className="rounded"
+                  size="small"
+                  label="Gender"
+                  value={section.gender || ""}
+                  name={`gender_${section.id}`}
+                  onChange={(e) => {
+                    handleInputChange(e);
+                    handlePregnancyInputChange(
+                      section.id,
+                      "gender",
+                      e.target.value
+                    );
+                  }}
+                >
+                  <MenuItem value="MALE">MALE</MenuItem>
+                  <MenuItem value="FEMALE">FEMALE</MenuItem>
+                </Select>
+              </FormControl>
+
               <TextField
                 disabled={!editMode}
                 className="rounded"

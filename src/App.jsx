@@ -133,15 +133,15 @@ function App() {
                 <>
                   <Route path="/eligible" element={<EligibleCouples />} />
                   <Route
-                    path="/eligible/add/:userId"
+                    path="/eligible/add/:userId/:eligibleId"
                     element={<EligibleCouplesAdd />}
                   />
                   <Route
-                    path="/eligible/edit/:userId"
+                    path="/eligible/edit/:userId/:eligibleId"
                     element={<EligibleCouplesAdd />}
                   />
                   <Route
-                    path="/eligible/view/:userId"
+                    path="/eligible/view/:userId/:eligibleId"
                     element={<EligibleCouplesAdd />}
                   />
                   <Route path="/parents" element={<Parents />} />
