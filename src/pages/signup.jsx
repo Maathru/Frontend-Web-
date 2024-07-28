@@ -4,7 +4,6 @@ import {
   HiOutlineCheckCircle,
 } from "react-icons/hi";
 import { Link, useNavigate } from "react-router-dom";
-import React, { useEffect, useState } from "react";
 import google from "../assets/google.png";
 import fb from "../assets/facebook.png";
 import signupImg from "../assets/signupImg.png";
@@ -21,8 +20,9 @@ import {
 import { MdVisibility, MdVisibilityOff } from "react-icons/md";
 import { Button } from "@/components/ui/button";
 import { errorType, Toast } from "@/components/toast";
-import UserService from "@/service/userService";
 import { useTitle } from "@/hooks/useTitle";
+import AuthService from "@/service/authService";
+import { useState } from "react";
 
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
@@ -110,7 +110,7 @@ const Signup = () => {
     }
 
     try {
-      const response = await UserService.register(formData);
+      const response = await AuthService.register(formData);
 
       setFormData({
         firstName: "",
@@ -119,8 +119,8 @@ const Signup = () => {
         password: "",
         confirmPassword: "",
       });
-      Toast(response.message, errorType.SUCCESS);
-      navigate("/login?login=true");
+      Toast(response.message.split("/")[1], errorType.SUCCESS);
+      navigate("/login");
     } catch (error) {
       console.log(error.message);
 

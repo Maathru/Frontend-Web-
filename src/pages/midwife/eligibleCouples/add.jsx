@@ -260,8 +260,11 @@ const addCouples = () => {
 
     try {
       const response = await EligibleService.createEligibleInfo(formObject);
-      Toast(response, errorType.SUCCESS);
-      navigate(`/eligible/view/${userId}/${eligibleId}`);
+      Toast(response.split("/")[1], errorType.SUCCESS);
+      console.log(response.split("/")[0], response.split("/")[1]);
+      navigate(
+        `/eligible/view/${userId}/${eligibleId || response.split("/")[0]}`
+      );
     } catch (error) {
       console.log(error.message);
 
