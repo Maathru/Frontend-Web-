@@ -1,20 +1,16 @@
 import { useEffect, useState } from "react";
-
-import { IoIosArrowBack } from "react-icons/io";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import BoolTextInput from "@/components/userComponents/boolTextInput";
+import DoubleInput from "@/components/userComponents/doubleInput";
 import BasicInfoInput from "@/components/userComponents/basicInfoInput";
 import DateInput from "@/components/userComponents/dateInput";
 import { Button } from "@/components/ui/button";
-import dayjs from "dayjs";
 import EligiblePagination from "@/components/userComponents/eligiblePagination";
-import { presentObstetricDates , currentPregnancyStatus, otherSituations } from "@/data/pregnancyData";
-import { conditions1 , basicInfo, familyDisease } from "@/data/pregnancyData"
+import { presentObstetricDates, currentPregnancyStatus, otherSituations } from "@/data/pregnancyData";
 import { errorType, Toast } from "@/components/toast";
 import EligibleService from "@/service/eligibleService";
 import PageHeading from "@/components/ui/pageHeading";
 import { useTranslation } from "react-i18next";
-import { duration } from "@mui/material";
 import SingleInput from "@/components/userComponents/singleInput";
 
 const Pregnancy2 = () => {
@@ -41,44 +37,34 @@ const Pregnancy2 = () => {
   }, []);
 
   const initiateFields = () => {
-    const initialData = {};
+    const initialData = {
+      no_of_pregnancies_g: "",
+      no_of_pregnancies_p: "",
+      no_of_living_children: "",
+      youngest_child_dob: "",
+    };
 
-    initialData["no_of_pregnancies_g"] = "";
-    initialData["no_of_pregnancies_p"] = "";
-    initialData["no_of_living_children"] = "";
-    initialData["youngest_child_dob"] = "";
-
-    basicInfo.forEach((info) => {
-      initialData[info.name + "_man"] = "";
-      initialData[info.name + "_woman"] = "";
-    });
-    conditions1.forEach((condition) => {
-      initialData[condition.name + "_man"] = "";
-      initialData[condition.name + "_woman"] = "";
-      initialData[condition.name + "_other"] = "";
-    });
     presentObstetricDates.forEach((input) => {
-        initialData[input.name] = "";
+      initialData[input.name] = "";
     });
     currentPregnancyStatus.forEach((input) => {
-        initialData[input.name] = "";
-        initialData[input.name + "_other"] = "";
+      initialData[input.name] = "";
+      initialData[input.name + "_other"] = "";
     });
     otherSituations.forEach((input) => {
-        initialData[input.name] = "";
-        initialData[input.name + "_other"] = "";
+      initialData[input.name] = "";
+      initialData[input.name + "_other"] = "";
     });
     initialData.marriage = null;
-    console.log(initialData);
 
     return initialData;
   };
 
-
   const setData = (field, name, value) => {
+    console.log(field, name, value);
     const newObject = {};
-    newObject[name + "_" + field] = value || "";
-    setFormObject({ ...formObject, ...newObject });
+    newObject[name + (field ? `_${field}` : "")] = value || "";
+    setFormObject((prev) => ({ ...prev, ...newObject }));
   };
 
   const handleSave = () => {
@@ -98,7 +84,7 @@ const Pregnancy2 = () => {
 
     const obj2 = initiateFields();
     const obj1 = getFromLocalStorage();
-    setFormObject({ ...formObject, ...obj2, ...obj1 });
+    setFormObject((prev) => ({ ...prev, ...obj2, ...obj1 }));
   }, []);
 
   const { t } = useTranslation("pregnancy1");
@@ -108,130 +94,111 @@ const Pregnancy2 = () => {
     <div className="container my-10 font-poppins">
       {/* Hero section */}
       <div>
-      <PageHeading title={title} />
+        <PageHeading title={title} />
 
         <p className="text-xl font-bold mt-8">
           Mother&apos;s Name : A.P. Gamage
         </p>
-
       </div>
 
       {/* Form section */}
       <div className="mt-20">
-
         {/* Form container */}
         <div className="mt-10">
           <h3 className="text-xl font-bold">Present Obstetric History</h3>
-
           {/* Input box */}
-
           <div>
-            <BasicInfoInput
-                key={0}
-                index={0}
-                title="How Many Pregnancies for now?"
-                value1={formObject["no_of_pregnancies_g"] || ""}
-                value2={formObject["no_of_pregnancies_p"] || ""}
-                placeholder1="P"
-                placeholder2="G"
-                onChange={(filed, e) => {
-                    setData(filed, "no_of_pregnancies" , e.target.value);
-                }}
-            />
-
-            
-            <SingleInput 
-                title="How many living children do you have?" 
-                index={1} 
-                placeholder="No of Living Children" 
-                value={formObject["no_of_living_children"] || ""} 
-                onChange={(filed, e) => {
-                    setData(filed , "no_of_living_children" , e.target.value)
-                }} 
-            />
-            
-              {presentObstetricDates.map((input, index) => (
-                  <DateInput
-                    key={index}
-                    title={input.title}
-                    index={index + 2 }
-                    placeholder={input.placeholder}
-                    value={formObject[input.name] || ""}
-                    onChange={(filed, e) => {
-                      setData(filed, input.name, e);
-                    }}
-                  />
-              ))}
-
-            <SingleInput 
-                title="Number of gestational weeks at enrollment" 
-                index={8} 
-                placeholder="Gestational Weeks" 
-                value={formObject["gestational_weeks"] || ""} 
-                onChange={(filed, e) => {
-                    setData(filed , "gestational_weeks" , e.target.value)
-                }} 
-            />
-
-            <SingleInput 
-                title="Any usage of Family Planning methods before Pregnancy" 
-                index={9} 
-                placeholder="Family Planning Methods" 
-                value={formObject["family_planning_methods"] || ""} 
-                onChange={(filed, e) => {
-                    setData(filed , "family_planning_methods" , e.target.value)
-                }} 
-            />
-          </div>
-        </div>
-      </div>
-
-      <h3 className="text-xl font-bold mt-10">Current pregnancy status</h3>
-
-      {/* Diseases */}
-        <div className="m-10">
-            {currentPregnancyStatus.map((condition, index) => (
-            <BoolTextInput
-                key={index}
-                index={index}
-                title={condition.title}
-                placeholder={condition.placeholder}
-                value1={formObject[condition.name] || false}
-                value3={formObject[condition.name + "_other"] || ""}
-                onChange={(filed, e) => {
-                setData(filed, condition.name, e);
-                }}
-            />
-            ))}
-        </div>
-
-      <h3 className="text-xl mt-12">
-        <span className="font-bold">Other Situations</span>
-      </h3>
-
-      <div className="mt-12">
-        <div className="m-12">
-          {otherSituations.map((condition, index) => (
-            <BoolTextInput
-              key={index}
-              index={index}
-              title={condition.title}
-              placeholder={condition.placeholder}
-              value1={formObject[condition.name] || false}
-              value3={formObject[condition.name + "_other"] || ""}
-              onChange={(filed, e) => {
-                setData(filed, condition.name, e);
+            <DoubleInput
+              key={0}
+              index={0}
+              title="How Many Pregnancies for now?"
+              value1={formObject["no_of_pregnancies_g"] || ""}
+              value2={formObject["no_of_pregnancies_p"] || ""}
+              placeholder1="P"
+              placeholder2="G"
+              onChange={(field, value) => {
+                setFormObject(prevState => ({
+                  ...prevState,
+                  [field]: value
+                }));
               }}
             />
-          ))}
+
+            <SingleInput
+              title="How many living children do you have?"
+              index={1}
+              placeholder="No of Living Children"
+              value={formObject["no_of_living_children"] || ""}
+              onChange={(field, value) => {
+                setData(field, "no_of_living_children", value);
+              }}
+            />
+
+            {presentObstetricDates.map((input, index) => (
+              <DateInput
+                key={index}
+                title={input.title}
+                index={index + 2}
+                placeholder={input.placeholder}
+                value={formObject[input.name] || ""}
+                onChange={(field, value) => {
+                  setData(field, input.name, value);
+                }}
+              />
+            ))}
+
+            <SingleInput
+              title="Number of gestational weeks at enrollment"
+              index={8}
+              placeholder="Gestational Weeks"
+              value={formObject["gestational_weeks"] || ""}
+              onChange={(field, value) => {
+                setData(field, "gestational_weeks", value);
+              }}
+            />
+          </div>
+
+          <h3 className="text-xl font-bold mt-10">Current Pregnancy</h3>
+          <div className="grid grid-cols-2 gap-4">
+            {currentPregnancyStatus.map((input, index) => (
+              <BoolTextInput
+                key={index}
+                index={index}
+                title={input.title}
+                placeholder={input.placeholder}
+                value1={formObject[input.name + "_woman"] || ""}
+                value2={formObject[input.name + "_other"] || ""}
+                onChange={(field, value) => {
+                  setData(field, input.name, value);
+                }}
+              />
+            ))}
+          </div>
+
+          <h3 className="text-xl font-bold mt-10">Other Situations</h3>
+          <div className="grid grid-cols-2 gap-4">
+            {otherSituations.map((input, index) => (
+              <BoolTextInput
+                key={index}
+                index={index}
+                title={input.title}
+                placeholder={input.placeholder}
+                value1={formObject[input.name + "_woman"] || ""}
+                value2={formObject[input.name + "_other"] || ""}
+                onChange={(field, value) => {
+                  setData(field, input.name, value);
+                }}
+              />
+            ))}
+          </div>
+        </div>
+
+        {/* Save & Continue button */}
+        <div className="flex justify-end gap-5">
+          <Button onClick={handleSave}>Save & Continue</Button>
         </div>
       </div>
-
-      <Button onClick={handleSave}>Save and Next</Button>
-
-      <div className="flex w-full mt-24">
-        <EligiblePagination total={4} current={1} />
-      </div>
+      <EligiblePagination stage={2} />
     </div>
   );
 };
