@@ -1,71 +1,24 @@
-import React from "react";
-import {useState} from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
-import { MdOutlineArrowBackIosNew } from "react-icons/md";
-import { Progress } from "@/components/ui/progress";
-import { Input } from "@/components/ui/input";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import Heading from "@/components/ui/heading";
+import BlogProgress from "@/components/blogComponents/BlogProgress";
+import BlogHeading from "@/components/blogComponents/blogHeading";
 
 const accentColor = "bg-[#9c3cc1]";
 
-function WriteBlog2 () {
+function WriteBlog2() {
   const [description, setDescription] = useState("");
 
   return (
-    <div className="">
-      <div className="md:mt-10 mt-5 md:ml-10 ml-3 text-3xl font-semibold text-neutral-800 dark:text-neutral-100">
-        <Link to="/blogs/write/1">
-          <MdOutlineArrowBackIosNew />
-        </Link>
-      </div>
+    <div className="content-container">
+      <Heading />
 
-      <div className="flex justify-center">
-        <div className="md:mt-5 mt-3 md:text-4xl text-3xl font-bold text-neutral-800 dark:text-neutral-100">
-          Write a Blog Article
-        </div>
-      </div>
-
-      <div className="flex justify-center">
-        <div className="md:mt-3 mt-2 md:text-2xl text-lg font-medium text-[#6f6c90] dark:text-neutral-400">
-          Please fill the form below to post the blog article.
-        </div>
-      </div>
+      <BlogHeading />
 
       <div className="md:w-[90%] w-[95%] mx-auto md:mt-10 mt-6 md:p-10 px-4 py-10 bg-white dark:bg-neutral-900 rounded-xl shadow-md">
-        <div className="md:w-[70%] w-[80%} flex gap-3 place-items-center mx-auto mb-10">
-          <div
-            className={`${accentColor} rounded-full md:min-h-10 md:min-w-10 min-h-7 min-w-7 text-white md:text-2xl text-lg flex justify-center items-center`}
-          >
-            1
-          </div>
-
-          <Progress value={100} />
-
-          <div
-            className={`${accentColor} rounded-full md:min-h-10 md:min-w-10 min-h-7 min-w-7 text-white md:text-2xl text-lg flex justify-center items-center`}
-          >
-            2
-          </div>
-
-          <Progress value={50} />
-
-          <div
-            className={`${accentColor} rounded-full md:min-h-10 md:min-w-10 min-h-7 min-w-7 text-white md:text-2xl text-lg flex justify-center items-center`}
-          >
-            3
-          </div>
-
-          <Progress value={0} />
-
-          <div
-            className={`${accentColor} rounded-full md:min-h-10 md:min-w-10 min-h-7 min-w-7 text-white md:text-2xl text-lg flex justify-center items-center`}
-          >
-            4
-          </div>
-        </div>
-
-        <hr className="w-[90%] mx-auto mt-5 border-2"></hr>
+        <BlogProgress value1={100} value2={50} value3={0} />
 
         <div>
           <div className="md:mt-14 mt-10 md:ml-6 font-bold md:text-2xl text-xl">
@@ -99,6 +52,6 @@ function WriteBlog2 () {
       </div>
     </div>
   );
-};
+}
 
 export default WriteBlog2;

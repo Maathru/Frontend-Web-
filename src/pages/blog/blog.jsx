@@ -18,6 +18,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { useTitle } from "@/hooks/useTitle";
+import Heading from "@/components/ui/heading";
 
 const cardColor = "bg-pink-100 dark:bg-[#251F28] hover:dark:bg-[#1D1A1F]";
 const badgeColor =
@@ -27,13 +28,8 @@ const readMoreColor = "text-[#9c3cc1] dark:text-neutral-300";
 const blog = () => {
   useTitle("Blogs");
   return (
-    <div className="">
-      <div>
-        <div className="md:mt-10 mt-5 md:ml-10 ml-3 text-3xl font-semibold flex items-center text-neutral-800 dark:text-neutral-100">
-          <MdOutlineArrowBackIosNew />
-          <p className="ml-3 text-4xl"> Blogs</p>
-        </div>
-      </div>
+    <div className="content-container">
+      <Heading title={"Blogs"} />
 
       <p className="md:mt-12 mt-8 ml-6 text-3xl font-semibold text-neutral-800 dark:text-neutral-100">
         Recent Blogs
