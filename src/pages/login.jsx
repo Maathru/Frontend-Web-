@@ -14,12 +14,12 @@ import {
   TextField,
 } from "@mui/material";
 import { MdVisibility, MdVisibilityOff } from "react-icons/md";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { Button } from "@/components/ui/button";
-import UserService from "@/service/userService";
 import { errorType, Toast } from "@/components/toast";
 import { userData } from "@/context/userAuth";
 import { useTitle } from "@/hooks/useTitle";
+import AuthService from "@/service/authService";
 
 const Login = () => {
   useTitle("Log In");
@@ -74,7 +74,7 @@ const Login = () => {
     }
 
     try {
-      const response = await UserService.login(email, password);
+      const response = await AuthService.login(email, password);
       if (response.status === 200) {
         localStorage.setItem("jwt", response.data.access_token);
         localStorage.setItem("refresh", response.data.refresh_token);
@@ -151,7 +151,7 @@ const Login = () => {
           </div>
           <br />
           <div className="flex flex-col sm:w-6/12 w-9/12">
-            <FormControl sx={{ m: 1}} variant="outlined" fullWidth>
+            <FormControl sx={{ m: 1 }} variant="outlined" fullWidth>
               <InputLabel htmlFor="outlined-adornment-password">
                 {t("password")}
               </InputLabel>

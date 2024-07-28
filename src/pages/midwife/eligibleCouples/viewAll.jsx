@@ -1,19 +1,13 @@
-import { Button } from "@/components/ui/button";
-import {
-  DataGrid,
-  gridClasses,
-  GridToolbarQuickFilter,
-} from "@mui/x-data-grid";
+import { GridToolbarQuickFilter } from "@mui/x-data-grid";
 import { useEffect, useState } from "react";
-import { HiChevronLeft, HiOutlinePlusSm, HiOutlineTrash } from "react-icons/hi";
-import { styled } from "@mui/material/styles";
+import { HiOutlineTrash } from "react-icons/hi";
 import { Box, Chip, IconButton, TextField } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { Typography } from "@mui/material";
 import EligibleService from "@/service/eligibleService";
 import { errorType, Toast } from "@/components/toast";
 import Heading from "@/components/ui/heading";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useTitle } from "@/hooks/useTitle";
 import EligiblePopup from "@/components/eligiblePopup";
 import { StripedDataGrid } from "@/components/StripedDataGrid";

@@ -15,11 +15,11 @@ import enLight from "../assets/nav/en-light.png";
 import sinDark from "../assets/nav/sin-dark.png";
 import sinLight from "../assets/nav/sin-light.png";
 import { Button } from "./ui/button";
-import UserService from "@/service/userService";
 import { errorType, Toast } from "./toast";
 import { userData } from "@/context/userAuth";
 import LogoutDialog from "@/components/logoutDialog";
 import { role } from "@/data/roleData";
+import AuthService from "@/service/authService";
 
 const Navbar = ({ themeFunction, mode }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -77,7 +77,7 @@ const Navbar = ({ themeFunction, mode }) => {
   }, [mode]);
 
   const handleLogout = async () => {
-    await UserService.logout();
+    await AuthService.logout();
 
     setUserDetails({
       authenticated: false,
