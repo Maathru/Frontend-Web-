@@ -6,32 +6,23 @@ import { MdNotifications } from "react-icons/md";
 import { MdMenu } from "react-icons/md";
 import { MdClose } from "react-icons/md";
 import { useTranslation } from "react-i18next";
-import { Link, NavLink, useLocation } from "react-router-dom";
+import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import enDark from "../assets/nav/en-dark.png";
 import enLight from "../assets/nav/en-light.png";
 import sinDark from "../assets/nav/sin-dark.png";
 import sinLight from "../assets/nav/sin-light.png";
 import { Button } from "./ui/button";
 import UserService from "@/service/userService";
-import { ToastContainer } from "react-toastify";
 import { errorType, Toast } from "./toast";
 import { userData } from "@/context/userAuth";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
+import LogoutDialog from "@/components/logoutDialog";
+import { role } from "@/data/roleData";
 
 const Navbar = ({ themeFunction, mode }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [themeImage, setThemeImage] = useState(enDark);
   const { pathname } = useLocation();
+  const navigate = useNavigate();
   const { userDetails, setUserDetails } = useContext(userData);
 
   const { i18n } = useTranslation();
@@ -85,6 +76,7 @@ const Navbar = ({ themeFunction, mode }) => {
       refreshToken: "",
     });
     Toast("User Logged Out", errorType.INFO);
+    navigate("/");
   };
 
   return (
@@ -101,6 +93,7 @@ const Navbar = ({ themeFunction, mode }) => {
           } md:static absolute md:min-h-fit min-h-[50vh] left-0 md:w-auto w-full flex items-center px-5 duration-150 z-50`}
         >
           <div className="flex md:flex-row flex-col md:items-center md:gap-[5vw] gap-8 text-lg font-medium md:ml-0 ml-4">
+            {/* Common links */}
             <NavLink
               exact="true"
               to="/"
@@ -132,12 +125,30 @@ const Navbar = ({ themeFunction, mode }) => {
             >
               Discussion Forum
             </NavLink>
-            {userDetails.role === "DOCTOR" && (
+
+            {/* Admin Links */}
+            {userDetails.role === role.ADMIN && (
+              <>
+                <NavLink
+                  to="/users"
+                  className={({ isActive }) =>
+                    /^\/users(\/.*)?$/.test(pathname)
+                      ? "text-[#9C33C1] dark:text-[#ff8de7]"
+                      : "hover:text-gray-500 text-black dark:text-gray-100"
+                  }
+                >
+                  Users
+                </NavLink>
+              </>
+            )}
+
+            {/* Doctor Links */}
+            {userDetails.role === role.DOCTOR && (
               <>
                 <NavLink
                   to="/clinics"
                   className={({ isActive }) =>
-                    isActive
+                    /^\/clinics(\/.*)?$/.test(pathname)
                       ? "text-[#9C33C1] dark:text-[#ff8de7]"
                       : "hover:text-gray-500 text-black dark:text-gray-100"
                   }
@@ -157,7 +168,7 @@ const Navbar = ({ themeFunction, mode }) => {
                 <NavLink
                   to="/drugs"
                   className={({ isActive }) =>
-                    isActive
+                    /^\/drugs(\/.*)?$/.test(pathname)
                       ? "text-[#9C33C1] dark:text-[#ff8de7]"
                       : "hover:text-gray-500 text-black dark:text-gray-100"
                   }
@@ -176,7 +187,52 @@ const Navbar = ({ themeFunction, mode }) => {
                 </NavLink>
               </>
             )}
-            {userDetails.role === "ELIGIBLE" && (
+
+            {/* Midwife links */}
+            {userDetails.role === role.MIDWIFE && (
+              <>
+                <NavLink
+                  to="/eligible"
+                  className={({ isActive }) =>
+                    /^\/eligible(\/.*)?$/.test(pathname)
+                      ? "text-[#9C33C1]"
+                      : "hover:text-gray-500 text-black dark:text-gray-100"
+                  }
+                >
+                  Eligibles
+                </NavLink>
+                <NavLink
+                  to="/parents"
+                  className={({ isActive }) =>
+                    /^\/eligible(\/.*)?$/.test(pathname)
+                      ? "text-[#9C33C1]"
+                      : "hover:text-gray-500 text-black dark:text-gray-100"
+                  }
+                >
+                  Parents
+                </NavLink>
+              </>
+            )}
+
+            {/* Parent Links */}
+            {userDetails.role === role.PARENT && (
+              <>
+                <NavLink
+                  to="/growth"
+                  className={({ isActive }) =>
+                    isActive
+                      ? "text-[#9C33C1]"
+                      : "hover:text-gray-500 text-black dark:text-gray-100"
+                  }
+                >
+                  Growth
+                </NavLink>
+              </>
+            )}
+
+            {/* Parent and Eligible links */}
+            {(userDetails.role === role.PARENT ||
+              userDetails.role === role.ELIGIBLE) && (
               <NavLink
                 to="/eligible/1"
                 className={({ isActive }) =>
@@ -235,34 +291,11 @@ const Navbar = ({ themeFunction, mode }) => {
               </div>
 
               {/* logout */}
-              <AlertDialog>
-                <AlertDialogTrigger asChild>
-                  <Button className="bg-[#9C33C1] dark:text-white text-gray-100">
-                    Log Out
-                  </Button>
-                </AlertDialogTrigger>
-                <AlertDialogContent>
-                  <AlertDialogHeader>
-                    <AlertDialogTitle>
-                      Are you sure you need to logout?
-                    </AlertDialogTitle>
-                    <AlertDialogDescription>
-                      This action cannot be undone.
-                    </AlertDialogDescription>
-                  </AlertDialogHeader>
-                  <AlertDialogFooter>
-                    <AlertDialogCancel>Cancel</AlertDialogCancel>
-                    <AlertDialogAction onClick={handleLogout}>
-                      Continue
-                    </AlertDialogAction>
-                  </AlertDialogFooter>
-                </AlertDialogContent>
-              </AlertDialog>
+              <LogoutDialog handleLogout={handleLogout} />
             </>
           )}
         </div>
       </div>
-      <ToastContainer />
     </div>
   );
 };

@@ -17,6 +17,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { useTitle } from "@/hooks/useTitle";
 
 const cardColor = "bg-pink-100 dark:bg-[#251F28] hover:dark:bg-[#1D1A1F]";
 const badgeColor =
@@ -24,6 +25,7 @@ const badgeColor =
 const readMoreColor = "text-[#9c3cc1] dark:text-neutral-300";
 
 const blog = () => {
+  useTitle("Blogs");
   return (
     <div className="">
       <div>
@@ -187,9 +189,9 @@ const blog = () => {
         </CardContent>
         <CardFooter className="flex justify-center">
           <Link to={"/blogs/write/1"}>
-          <Button className="bg-fuchsia-600 dark:bg-[#ff8de7] text-lg hover:dark:bg-neutral-100 hover:dark:text-[#9C33C1] duration-200">
-            <MdCreate className="mr-2 h-4 w-4" /> Let's Write A Blog Article
-          </Button>
+            <Button className="bg-fuchsia-600 dark:bg-[#ff8de7] text-lg hover:dark:bg-neutral-100 hover:dark:text-[#9C33C1] duration-200">
+              <MdCreate className="mr-2 h-4 w-4" /> Let's Write A Blog Article
+            </Button>
           </Link>
         </CardFooter>
       </Card>

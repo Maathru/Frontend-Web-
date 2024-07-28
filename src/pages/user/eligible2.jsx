@@ -1,6 +1,5 @@
 import SpeciallyWomenInput from "@/components/userComponents/speciallyWomenInput";
 import { TextField } from "@mui/material";
-import { IoIosArrowBack } from "react-icons/io";
 import YesNoButton from "@/components/userComponents/yesNoButton";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
@@ -17,11 +16,14 @@ import {
   specials3,
   specials4,
 } from "@/data/eligibleData";
+import { useTitle } from "@/hooks/useTitle";
+import Heading from "@/components/ui/heading";
 
 const Eligible2 = () => {
+  useTitle("Recovery Checklist - Page 2");
   const [formObject, setFormObject] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
-  let isLoading = true;
 
   const initiateFields = () => {
     const initialData = {};
@@ -85,7 +87,7 @@ const Eligible2 = () => {
     const obj2 = initiateFields();
     const obj1 = getFromLocalStorage();
     setFormObject({ ...formObject, ...obj2, ...obj1 });
-    isLoading = false;
+    setIsLoading(false);
   }, []);
 
   if (!isLoading && (!formObject || !formObject.stage)) {
@@ -98,14 +100,8 @@ const Eligible2 = () => {
 
   return (
     <div className="container my-10 font-poppins">
+      <Heading />
       <div>
-        <div className="">
-          <IoIosArrowBack
-            size={45}
-            className="cursor-pointer"
-            onClick={() => navigate(-1)}
-          />
-        </div>
         <h2 className="text-2xl mt-12">
           Details of medical conditions (Do you have or have you ever had any of
           the following medical conditions? )
@@ -281,7 +277,7 @@ const Eligible2 = () => {
       <Button onClick={handleSave}>Save and Next</Button>
 
       <div className="flex w-full mt-24">
-        <EligiblePagination total={4} current={2} />
+        <EligiblePagination total={5} current={2} />
       </div>
     </div>
   );

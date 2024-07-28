@@ -41,7 +41,6 @@ const Answer = () => {
         setQuestion(response);
       } catch (error) {
         console.log(error.message);
-        Toast(error.message, errorType.ERROR);
 
         const data = error.response.data;
         console.log(data);
@@ -60,7 +59,6 @@ const Answer = () => {
         console.log(response);
       } catch (error) {
         console.log(error.message);
-        Toast(error.message, errorType.ERROR);
 
         const data = error.response.data;
         console.log(data);
@@ -83,11 +81,13 @@ const Answer = () => {
       Toast(response, errorType.SUCCESS);
       setPageLoader((pre) => !pre);
 
-      setYourAnswer("")
+      setYourAnswer("");
     } catch (error) {
       console.log(error.message);
-      Toast(error.message, errorType.ERROR);
-      console.log(error);
+
+      const data = error.response.data;
+      console.log(data);
+      Toast(data, errorType.ERROR);
     }
   };
 

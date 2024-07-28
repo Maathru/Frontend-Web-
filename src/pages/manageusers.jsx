@@ -1,23 +1,38 @@
-import { styled } from "@mui/material/styles";
-import {
-  DataGrid,
-  gridClasses,
-  GridToolbarQuickFilter,
-} from "@mui/x-data-grid";
+import { Button } from "@/components/ui/button";
+import { useEffect, useState } from "react";
 import {
   HiOutlinePencilAlt,
   HiOutlinePlusSm,
   HiOutlineTrash,
 } from "react-icons/hi";
-import { Box, Chip, IconButton } from "@mui/material";
+import { styled } from "@mui/material/styles";
+import {
+  DataGrid,
+  GridToolbarQuickFilter,
+  gridClasses,
+} from "@mui/x-data-grid";
+import { Box, IconButton } from "@mui/material";
 import { useTranslation } from "react-i18next";
-import { Link } from "react-router-dom";
-import { useEffect, useState } from "react";
-import DrugService from "@/service/drugService";
-import { errorType, Toast } from "@/components/toast";
 import Heading from "@/components/ui/heading";
-import { Button } from "@/components/ui/button";
 import { useTitle } from "@/hooks/useTitle";
+import UserService from "@/service/userService";
+import { errorType, Toast } from "@/components/toast";
+import { format } from "date-fns";
+
+const Capitalize = (str) => {
+  return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+};
+
+const FormattedDateTime = (params) => {
+  if (!params) return "";
+
+  const date = new Date(params);
+
+  const readableDate = format(date, "MMMM do, yyyy"); // "July 26th, 2024"
+  const readableTime = format(date, "hh:mm:ss a"); // "06:39:04 PM"
+
+  return `${readableTime} at ${readableDate}`;
+};
 
 const StripedDataGrid = styled(DataGrid)(({ theme }) => ({
   [`& .${gridClasses.row}.even`]: {
@@ -36,16 +51,9 @@ const StripedDataGrid = styled(DataGrid)(({ theme }) => ({
   },
 }));
 
-const transformDate = (params) => {
-  const originalDate = new Date(params.value);
-  const targetDate = new Date(originalDate);
-  targetDate.setFullYear(2024);
-  targetDate.setMonth(6); // Months are zero-based in JavaScript (0 = January, 6 = July)
-  targetDate.setDate(31);
-  return targetDate.toISOString().split("T")[0];
-};
-
 function QuickSearchToolbar() {
+  const { t } = useTranslation("Manageusers");
+
   return (
     <Box
       sx={{
@@ -53,7 +61,8 @@ function QuickSearchToolbar() {
         pb: 0,
         m: 2,
         display: "flex",
-        justifyContent: "flex-end",
+        justifyContent: "space-between",
+        alignItems: "center",
       }}
     >
       <GridToolbarQuickFilter
@@ -69,48 +78,31 @@ function QuickSearchToolbar() {
           },
         }}
       />
+      <Button className="bg-[#6F0096] h-10 flexbox items-center">
+        {t("Add New User")}
+        <HiOutlinePlusSm className="ml-2 h-5 w-5" />
+      </Button>
     </Box>
   );
 }
 
 const columns = [
+  { field: "id", headerName: "User ID", width: 70 },
+  { field: "name", headerName: "User Name", width: 130 },
+  { field: "email", headerName: "User Email", flex: 1 },
   {
-    field: "drugId",
-    headerName: "Drug ID",
-    width: 70,
-    fontSize: 18,
-    fontWeight: "bold",
-  },
-  { field: "composition", headerName: "Product", width: 130 },
-  { field: "batchNumber", headerName: "Batch Number", flex: 1 },
-  { field: "strength", headerName: "Strength", flex: 1 },
-  {
-    field: "createdAt",
-    headerName: "Received Date",
+    field: "role",
+    headerName: "User Role",
     flex: 1,
-    valueGetter: transformDate,
+    valueGetter: Capitalize,
   },
-  { field: "expiryDate", headerName: "Expired Date", flex: 1 },
   {
-    field: "quantity",
-    headerName: "Status",
+    field: "lastLogin",
+    headerName: "Last Login",
     flex: 1,
-    editable: true,
-    renderCell: (params) => {
-      const isAvailable = params.value > 0;
-      return (
-        <Chip
-          label={isAvailable ? "Available" : "Out of Stock"}
-          size={"small"}
-          sx={{
-            backgroundColor: isAvailable ? "#EBF9F1" : "#F9EBEB", // Custom colors
-            color: isAvailable ? "#1F9254" : "#A30D11",
-          }}
-        />
-      );
-    },
+    valueGetter: FormattedDateTime,
   },
-  //   { field: "action", headerName: "Edit/Delete", flex: 1 },
+
   {
     field: "edit",
     headerName: "",
@@ -147,15 +139,16 @@ const columns = [
   },
 ];
 
-const Drug = () => {
-  useTitle("Drugs");
+const ManageUsers = () => {
+  useTitle("Users");
   const [rows, setRows] = useState([]);
-  const { t } = useTranslation("drug");
+  const { t } = useTranslation("Manageusers");
+  const title = t("Manage Users");
 
   useEffect(() => {
-    const fetchDrugs = async () => {
+    const fetchUsers = async () => {
       try {
-        const response = await DrugService.getDrugs();
+        const response = await UserService.getAllUsers();
         setRows(response);
       } catch (error) {
         console.log(error.message);
@@ -166,26 +159,15 @@ const Drug = () => {
       }
     };
 
-    fetchDrugs();
+    fetchUsers();
   }, []);
 
-  const title = t("title");
-
   return (
-    <div className="p-12 pt-8 content-container">
-      <div className="flex justify-between mb-8">
-        <Heading title={title} />
+    <div className="content-container">
+      <Heading title={title} />
 
-        <Link to={"/drugs/add"}>
-          <Button className="bg-[#6F0096] h-10 flexbox items-center">
-            {t("add")}
-            <HiOutlinePlusSm className="ml-2 h-5 w-5" />
-          </Button>
-        </Link>
-      </div>
-      <div style={{ height: "100%", width: "100%" }}>
+      <div style={{ height: "100%", width: "100%", marginTop: "20px" }}>
         <StripedDataGrid
-          getRowId={(row) => row.drugId}
           rows={rows}
           columns={columns}
           initialState={{
@@ -205,4 +187,4 @@ const Drug = () => {
   );
 };
 
-export default Drug;
+export default ManageUsers;

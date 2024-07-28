@@ -8,7 +8,7 @@ import {
 import styled from "@emotion/styled";
 import { Box } from "@mui/material";
 import { useState } from "react";
-import PageHeading from "@/components/ui/pageHeading";
+import Heading from "@/components/ui/heading";
 
 const StripedDataGrid = styled(DataGrid)(({ theme }) => ({
   [`& .${gridClasses.row}.even`]: {
@@ -77,7 +77,7 @@ const clinicDates = () => {
 
   return (
     <div className="content-container">
-      <PageHeading title={title} />
+      <Heading title={title} />
 
       <div className="flex gap-36">
         <div>

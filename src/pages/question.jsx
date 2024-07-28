@@ -69,8 +69,10 @@ function AskQuestion() {
       navigate("/forum");
     } catch (error) {
       console.log(error.message);
-      Toast(error.message, errorType.ERROR);
-      console.log(error);
+
+      const data = error.response.data;
+      console.log(data);
+      Toast(data, errorType.ERROR);
     }
   };
 
