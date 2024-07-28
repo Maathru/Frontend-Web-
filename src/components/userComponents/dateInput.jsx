@@ -12,20 +12,17 @@ const DateInput = ({
 }) => {
   return (
     <div className="grid grid-cols-3 gap-4 items-center mt-4 mx-14">
-        <p>{index + 1} . {title} </p>
+        <p>{index + 1}. {title}</p>
         <LocalizationProvider dateAdapter={AdapterDayjs}>
-        <DatePicker
+          <DatePicker
             label={title}
             className="w-96"
-            value={dayjs(value || null)}
-            onChange={(e) => {onChange("" , e)}
-            }
-        />
+            value={value ? dayjs(value) : null}
+            onChange={(e) => onChange("", e)}
+          />
         </LocalizationProvider>
     </div>
-  )
-}
+  );
+};
 
 export default DateInput;
-
-
