@@ -1,7 +1,5 @@
 import { useEffect, useState } from "react";
-
-import { IoIosArrowBack } from "react-icons/io";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
@@ -10,13 +8,11 @@ import BasicInfoInput from "@/components/userComponents/basicInfoInput";
 import { Button } from "@/components/ui/button";
 import dayjs from "dayjs";
 import EligiblePagination from "@/components/userComponents/eligiblePagination";
-import { conditions1 , familyDisease } from "@/data/pregnancyData";
-import { basicInfo } from "@/data/pregnancyData"
+import { conditions1, familyDisease, basicInfo } from "@/data/pregnancyData";
 import { errorType, Toast } from "@/components/toast";
 import EligibleService from "@/service/eligibleService";
 import PageHeading from "@/components/ui/pageHeading";
 import { useTranslation } from "react-i18next";
-import { duration } from "@mui/material";
 
 const Pregnancy1 = () => {
   const [formObject, setFormObject] = useState({ stage: 1 });
@@ -49,26 +45,32 @@ const Pregnancy1 = () => {
       initialData[info.name + "_woman"] = "";
     });
     conditions1.forEach((condition) => {
-      initialData[condition.name + "_man"] = "";
+      // initialData[condition.name + "_man"] = "";
       initialData[condition.name + "_woman"] = "";
       initialData[condition.name + "_other"] = "";
     });
     initialData.marriage = null;
+    initialData.dob_woman = null;
+    initialData.dob_man = null;
     console.log(initialData);
 
     return initialData;
   };
 
-
   const setData = (field, name, value) => {
     const newObject = {};
     newObject[name + "_" + field] = value || "";
-    setFormObject({ ...formObject, ...newObject });
+    setFormObject((prevFormObject) => ({ ...prevFormObject, ...newObject }));
   };
 
   const handleSave = () => {
     formObject.stage = Math.max(formObject.stage, 2);
-    localStorage.setItem("formObject", JSON.stringify(formObject));
+
+    // Create a shallow copy of formObject to avoid any circular references
+    const shallowFormObject = { ...formObject };
+
+    localStorage.setItem("formObject", JSON.stringify(shallowFormObject));
+    console.log(shallowFormObject);
     navigate("/pregnancy/2");
   };
 
@@ -83,7 +85,7 @@ const Pregnancy1 = () => {
 
     const obj2 = initiateFields();
     const obj1 = getFromLocalStorage();
-    setFormObject({ ...formObject, ...obj2, ...obj1 });
+    setFormObject((prevFormObject) => ({ ...prevFormObject, ...obj2, ...obj1 }));
   }, []);
 
   const { t } = useTranslation("pregnancy1");
@@ -93,7 +95,7 @@ const Pregnancy1 = () => {
     <div className="container my-10 font-poppins">
       {/* Hero section */}
       <div>
-      <PageHeading title={title} />
+        <PageHeading title={title} />
 
         <p className="text-xl font-bold mt-8">
           Mother&apos;s Name : A.P. Gamage
@@ -131,17 +133,15 @@ const Pregnancy1 = () => {
           <div className="bg-box-purple rounded-xl sm:m-8 relative shadow-md">
             <div className="mt-5 text-sm md:text-base p-4">
               <div className="flex my-4 gap-2 font-semibold">
-                Any Identified Obstetric Risk Conditions/Medical Conditions: 
+                Any Identified Obstetric Risk Conditions/Medical Conditions:
               </div>
             </div>
           </div>
         </div>
-
       </div>
 
       {/* Form section */}
       <div className="mt-20">
-
         {/* Form container */}
         <div className="mt-10">
           <h3 className="text-xl font-bold">Parents' Details</h3>
@@ -153,7 +153,6 @@ const Pregnancy1 = () => {
           </div>
 
           {/* Input box */}
-
           <div>
             {basicInfo.map((detail, index) => (
               <BasicInfoInput
@@ -169,103 +168,121 @@ const Pregnancy1 = () => {
                 }}
               />
             ))}
-            <BasicInfoInput
-                key={8}
-                index={8}
-                title={"Duration for the office"}
-                value={formObject[duration] || ""}
-                placeholder={""}
-                onChange={(filed, e) => {
-                  setData(filed, duration, e.target.value);
-                }}
-              />
+            {/* <BasicInfoInput
+              key={8}
+              index={8}
+              title={"Duration for the office"}
+              value1={formObject.duration_woman || ""}
+              value2={formObject.duration_man || ""}
+              placeholder1={"Woman's duration"}
+              placeholder2={"Man's duration"}
+              onChange={
+                (e) => {
+                  formObject.duration_woman = e.target.value;
+                }
+              } 
+            /> */}
             <div className="grid grid-cols-3 gap-4 items-center mt-4 mx-14">
               <p>9. Date of Birth</p>
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DatePicker
-                  label="Date of birth"
+                  label="Woman's Date of Birth"
                   className="w-96"
-                  value={dayjs(formObject.dob_woman || null)}
-                  onChange={(e) => {
-                    formObject.dob_woman = e;
+                  value={formObject.dob_woman ? dayjs(formObject.dob_woman) : null}
+                  onChange={(newValue) => {
+                    const isoDate = newValue ? newValue.toISOString() : null;
+                    setFormObject((prevFormObject) => ({
+                      ...prevFormObject,
+                      dob_woman: isoDate,
+                    }));
                   }}
                 />
               </LocalizationProvider>
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DatePicker
-                  label="Date of birth"
+                  label="Man's Date of Birth"
                   className="w-96"
-                  value={dayjs(formObject.dob_man || null)}
-                  onChange={(e) => {
-                    formObject.dob_woman = e;
+                  value={formObject.dob_man ? dayjs(formObject.dob_man) : null}
+                  onChange={(newValue) => {
+                    const isoDate = newValue ? newValue.toISOString() : null;
+                    setFormObject((prevFormObject) => ({
+                      ...prevFormObject,
+                      dob_man: isoDate,
+                    }));
                   }}
                 />
               </LocalizationProvider>
-              <p></p>
             </div>
             <div className="grid grid-cols-3 gap-4 items-center mt-4 mx-14">
-              <p>10. Date of marriage</p>
+              <p>10. Marriage Date</p>
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DatePicker
-                  label="Date of marriage"
-                  className="w-96"
-                  value={dayjs(formObject.marriage || null)}
-                  onChange={(e) => {
-                    formObject.marriage = e;
+                  label="Marriage Date"
+                  className="w-96 col-span-2"
+                  value={formObject.marriage ? dayjs(formObject.marriage) : null}
+                  onChange={(newValue) => {
+                    const isoDate = newValue ? newValue.toISOString() : null;
+                    setFormObject((prevFormObject) => ({
+                      ...prevFormObject,
+                      marriage: isoDate,
+                    }));
                   }}
                 />
               </LocalizationProvider>
-              <p></p>
             </div>
           </div>
-        </div>
-      </div>
 
-      {/* Diseases */}
-      <div className="mt-24">
-        <div className="m-12">
-          {conditions1.map((condition, index) => (
-            <BoolTextInput
-              key={index}
-              index={index}
-              title={condition.title}
-              placeholder={condition.placeholder}
-              value1={formObject[condition.name] || false}
-              value3={formObject[condition.name + "_other"] || ""}
-              onChange={(filed, e) => {
-                setData(filed, condition.name, e);
-              }}
-            />
-          ))}
-        </div>
-      </div>
+          {/* Family health conditions */}
+          <h3 className="text-xl font-bold mt-10">
+            Family History of Diseases/Other Health Conditions
+          </h3>
 
-      <h3 className="text-xl mt-12">
-        <span className="font-bold">Family Medical History</span>
-      </h3>
+          <div className="mt-4">
+            {familyDisease.map((condition, index) => (
+              <BoolTextInput
+                key={index}
+                index={index}
+                title={condition.title}
+                value1={formObject[condition.name + "_woman"] || ""}
+                value2={formObject[condition.name + "_other"] || ""}
+                placeholder={condition.placeholder}
+                onChange={(field, value) => {
+                  setData(field, condition.name, value);
+                }}
+              />
+            ))}
+          </div>
 
-      <div className="mt-12">
-        <div className="m-12">
-          {familyDisease.map((condition, index) => (
-            <BoolTextInput
-              key={index}
-              index={index}
-              title={condition.title}
-              placeholder={condition.placeholder}
-              value1={formObject[condition.name] || false}
-              value3={formObject[condition.name + "_other"] || ""}
-              onChange={(filed, e) => {
-                setData(filed, condition.name, e);
-              }}
-            />
-          ))}
+          {/* Medical history */}
+          <h3 className="text-xl font-bold mt-10">
+            Pre-Existing Medical Conditions
+          </h3>
+
+          <div className="mt-4">
+            {conditions1.map((condition, index) => (
+              <BoolTextInput
+                key={index}
+                index={index}
+                title={condition.title}
+                value1={formObject[condition.name + "_woman"] || ""}
+                value2={formObject[condition.name + "_other"] || ""}
+                placeholder={condition.placeholder}
+                onChange={(field, value) => {
+                  setData(field, condition.name, value);
+                }}
+              />
+            ))}
+          </div>
         </div>
       </div>
 
       <Button onClick={handleSave}>Save and Next</Button>
 
-      <div className="flex w-full mt-24">
-        <EligiblePagination total={4} current={1} />
+      <div className="container flex items-center mt-10 mb-5 gap-4">
+        <Button type="button" variant="contained" color="primary" onClick={handleSave}>
+          Next
+        </Button>
+        <EligiblePagination stage={1} />
       </div>
     </div>
   );
