@@ -17,7 +17,7 @@ const SingleInput = ({
         label={placeholder}
         variant="outlined"
         className="w-96"
-        onChange={(e) => onChange("woman", e)}
+        onChange={(e) => onChange("", e.target.value)}
       />
     </div>
   );
