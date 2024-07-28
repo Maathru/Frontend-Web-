@@ -6,6 +6,11 @@ const getTheme = (mode) =>
       mode,
     },
     typography: {
+      h4: {
+        fontSize: "26px",
+        fontWeight: 600,
+        margin: "20px 0 10px 0",
+      },
       h5: {
         fontSize: "24px",
         fontWeight: 500,
@@ -21,6 +26,19 @@ const getTheme = (mode) =>
     },
     components: {
       MuiTextField: {
+        styleOverrides: {
+          root: {
+            "&.rounded": {
+              "& .MuiOutlinedInput-root": {
+                borderRadius: 30,
+                boxShadow: "0 4px 20px rgba(168, 88, 196, 0.15)",
+                padding: 4,
+              },
+            },
+          },
+        },
+      },
+      MuiSelect: {
         styleOverrides: {
           root: {
             "&.rounded": {

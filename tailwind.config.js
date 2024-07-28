@@ -31,9 +31,12 @@ module.exports = {
         "dark-subtitle": "",
         "light-badge-green": "#EBF9F1",
         "light-success-green": "#1F9254",
+        "light-home-visit" : "#CFA5CB",
+        "light-clinics" : "#620084",
         "error-red": "#cc0000",
         "dark-text": "#ffffff",
         "dark-popup": "#4f4d54",
+        
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
