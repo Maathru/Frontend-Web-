@@ -35,6 +35,7 @@ import NotFound from "./pages/notFound";
 import { userData } from "./context/userAuth";
 import ScrollToTop from "./components/ScrollToTop";
 import ManageUsers from "./pages/manageusers";
+import ManageClinics from "./pages/manageClinics";
 import { ToastContainer } from "react-toastify";
 import { role } from "./data/roleData";
 import { ThemeProvider } from "@mui/material/styles";
@@ -113,6 +114,7 @@ function App() {
               {userDetails.role === role.ADMIN && (
                 <>
                   <Route path="/users" element={<ManageUsers />} />
+                  <Route path="/clinics" element={<ManageClinics />} />
                 </>
               )}
 
