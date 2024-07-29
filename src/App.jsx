@@ -36,6 +36,7 @@ import { userData } from "./context/userAuth";
 import ScrollToTop from "./components/ScrollToTop";
 import ManageUsers from "./pages/manageusers";
 import ManageClinics from "./pages/manageClinics";
+import Memories from "./pages/memories";
 import { ToastContainer } from "react-toastify";
 import { role } from "./data/roleData";
 import { ThemeProvider } from "@mui/material/styles";
@@ -158,6 +159,7 @@ function App() {
               {userDetails.role === role.PARENT && (
                 <>
                   <Route path="/growth" element={<Growth />} />
+                  <Route path="/memories" element={<Memories />} />
                 </>
               )}
 
@@ -187,7 +189,7 @@ function App() {
         <ToastContainer />
         <Footer />
       </main>
-    </ThemeProvider>
+    </ThemeProvider>          
   );
 }
 
