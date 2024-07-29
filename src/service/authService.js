@@ -64,6 +64,10 @@ class AuthService {
     return localStorage.getItem("name");
   }
 
+  static getUserId() {
+    return localStorage.getItem("userId");
+  }
+
   static getAccessToken() {
     return localStorage.getItem("jwt");
   }
