@@ -11,8 +11,10 @@ import { errorType, Toast } from "@/components/toast";
 import { Link, useNavigate } from "react-router-dom";
 import { IoIosArrowBack } from "react-icons/io";
 import { userData } from "@/context/userAuth";
+import { useTitle } from "@/hooks/useTitle";
 
 const Forum = () => {
+  useTitle("Forum");
   const handleSearch = async (labelOptionValue) => {
     try {
       const response = await ForumService.searchQuestionsByKeyword(
@@ -48,11 +50,10 @@ const Forum = () => {
         setQuestions(response.content);
       } catch (error) {
         console.log(error.message);
-        Toast(error.message, errorType.ERROR);
 
         const data = error.response.data;
         console.log(data);
-        Toast(data, errorType.ERROR);
+        Toast(data || "Error occurred", errorType.ERROR);
       }
     };
 

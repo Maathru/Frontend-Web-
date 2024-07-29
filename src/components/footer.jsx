@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
-    <div className="mx-auto w-[100%] px-5 text-sm my-3 mt-auto mb-0 absolute bg-footer-purple text-white">
+    <div className="mx-auto w-[100%] px-5 text-sm my-3 mt-auto mb-0 relative bottom-0 bg-white dark:bg-dark-background dark:text-white">
       <div className="flex justify-around md:justify-between py-5">
         <div>
           <p>© 2024 Maathru Inc.</p>

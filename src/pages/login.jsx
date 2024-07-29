@@ -4,7 +4,6 @@ import { HiOutlineArrowRight } from "react-icons/hi";
 import { Link, useNavigate } from "react-router-dom";
 import loginImg from "../assets/loginImg.png";
 import { useTranslation } from "react-i18next";
-import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import {
   FormControl,
@@ -15,13 +14,15 @@ import {
   TextField,
 } from "@mui/material";
 import { MdVisibility, MdVisibilityOff } from "react-icons/md";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { Button } from "@/components/ui/button";
-import UserService from "@/service/userService";
 import { errorType, Toast } from "@/components/toast";
 import { userData } from "@/context/userAuth";
+import { useTitle } from "@/hooks/useTitle";
+import AuthService from "@/service/authService";
 
 const Login = () => {
+  useTitle("Log In");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
@@ -73,7 +74,7 @@ const Login = () => {
     }
 
     try {
-      const response = await UserService.login(email, password);
+      const response = await AuthService.login(email, password);
       if (response.status === 200) {
         localStorage.setItem("jwt", response.data.access_token);
         localStorage.setItem("refresh", response.data.refresh_token);
@@ -95,7 +96,6 @@ const Login = () => {
       }
     } catch (error) {
       console.log(error.message);
-      Toast(error.message, errorType.ERROR);
 
       const data = error.response.data;
       if (data) {
@@ -109,7 +109,7 @@ const Login = () => {
           setErrors(newErrors);
         } else {
           console.log(data);
-          Toast(data, errorType.ERROR);
+          Toast(data || "Error occurred", errorType.ERROR);
         }
       }
     }
@@ -134,20 +134,24 @@ const Login = () => {
             {t("title")}
           </p>
 
-          <div>
+          <div className="sm:w-6/12 w-9/12">
             <TextField
               label={t("username")}
               name="email"
               variant="outlined"
-              InputProps={{ sx: { borderRadius: 8, width: "30vw" } }}
+              InputProps={{
+                sx: { borderRadius: 8, width: "30vw" },
+                className: "dark:bg-dark-background",
+              }}
               value={email}
               onChange={handleInputChange}
+              fullWidth
             />
             {errors.email && <p className="error">{errors.email}</p>}
           </div>
           <br />
-          <div className="flex flex-col">
-            <FormControl sx={{ m: 1, width: "30vw" }} variant="outlined">
+          <div className="flex flex-col sm:w-6/12 w-9/12">
+            <FormControl sx={{ m: 1 }} variant="outlined" fullWidth>
               <InputLabel htmlFor="outlined-adornment-password">
                 {t("password")}
               </InputLabel>
@@ -215,7 +219,6 @@ const Login = () => {
           </p>
         </div>
       </div>
-      <ToastContainer />
     </div>
   );
 };

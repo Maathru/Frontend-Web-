@@ -1,25 +1,18 @@
 import React from "react";
-import {
-  HiChevronLeft,
-  HiLocationMarker,
-  HiMailOpen,
-  HiPhone,
-} from "react-icons/hi";
+import { HiLocationMarker, HiMailOpen, HiPhone } from "react-icons/hi";
 import { useTranslation } from "react-i18next";
+import Heading from "@/components/ui/heading";
 
 const viewClinics = () => {
   const { t } = useTranslation("viewClinics");
+  const title = t("title");
 
   return (
-    <div className="p-12 pt-8">
-      <div className="text-3xl text-[#5B5B5B] font-semibold mb-8">
-        <HiChevronLeft className="text-5xl inline" />
-        {t("title")}
-      </div>
+    <div className="content-container">
+      <Heading title={title} />
 
       <div className="flex">
-        <div className="">
-        </div>
+        <div className=""></div>
         <div className="flex-1">
           <div className="mb-10">
             <h3 className="text-xl font-bold mb-6">MOH Office - Udahamulla</h3>

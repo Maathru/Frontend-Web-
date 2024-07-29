@@ -47,11 +47,10 @@ const Answer = () => {
         setQuestion(response);
       } catch (error) {
         console.log(error.message);
-        Toast(error.message, errorType.ERROR);
 
         const data = error.response.data;
         console.log(data);
-        Toast(data, errorType.ERROR);
+        Toast(data || "Error occurred", errorType.ERROR);
       }
     };
 
@@ -66,11 +65,10 @@ const Answer = () => {
         console.log(response);
       } catch (error) {
         console.log(error.message);
-        Toast(error.message, errorType.ERROR);
 
         const data = error.response.data;
         console.log(data);
-        Toast(data, errorType.ERROR);
+        Toast(data || "Error occurred", errorType.ERROR);
       }
     };
 
@@ -87,11 +85,15 @@ const Answer = () => {
     try {
       const response = await AnswerService.addAnswer(data);
       Toast(response, errorType.SUCCESS);
-      setPageLoader((prev) => !prev);
+      setPageLoader((pre) => !pre);
+
+      setYourAnswer("");
     } catch (error) {
       console.log(error.message);
-      Toast(error.message, errorType.ERROR);
-      console.log(error);
+
+      const data = error.response.data;
+      console.log(data);
+      Toast(data || "Error occurred", errorType.ERROR);
     }
   };
 

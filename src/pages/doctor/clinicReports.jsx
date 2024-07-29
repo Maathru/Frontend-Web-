@@ -1,14 +1,14 @@
 import { useState } from "react";
-import { HiChevronLeft } from "react-icons/hi";
 import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
 import { InputLabel, MenuItem, Select, colors } from "@mui/material";
 import ReactApexChart from "react-apexcharts";
+import Heading from "@/components/ui/heading";
 
 const clinicReports = () => {
   const { t } = useTranslation("clinicReports");
 
-  // patient visit line chat chart data starts
+  // patient visit line chart data starts
   const [options1, setObject1] = useState({
     chart: {
       type: "line",
@@ -120,13 +120,12 @@ const clinicReports = () => {
     },
   ]);
 
+  const title = t("title");
+
   return (
-    <div className="p-12 pt-8">
+    <div className="content-container">
       <div className="pl-10">
-        <div className="text-3xl text-[#5B5B5B] font-semibold mb-4">
-          <HiChevronLeft className="text-5xl inline" />
-          {t("title")}
-        </div>
+        <Heading title={title} />
 
         <div className="flex justify-between">
           <h3 className="text-2xl text-[#5B5B5B] font-semibold mb-8">

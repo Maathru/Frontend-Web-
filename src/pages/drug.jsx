@@ -4,37 +4,21 @@ import {
   gridClasses,
   GridToolbarQuickFilter,
 } from "@mui/x-data-grid";
-
 import {
-  HiChevronLeft,
   HiOutlinePencilAlt,
   HiOutlinePlusSm,
   HiOutlineTrash,
 } from "react-icons/hi";
 import { Box, Chip, IconButton } from "@mui/material";
-import { Button } from "flowbite-react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import DrugService from "@/service/drugService";
 import { errorType, Toast } from "@/components/toast";
-
-const StripedDataGrid = styled(DataGrid)(({ theme }) => ({
-  [`& .${gridClasses.row}.even`]: {
-    backgroundColor: "#FAEDFF",
-  },
-  [`& .${gridClasses.row}.odd`]: {
-    backgroundColor: "#ffffff",
-  },
-  border: "none",
-
-  "& .MuiDataGrid-cell:focus": {
-    outline: "none",
-  },
-  "& .MuiDataGrid-cell:focus-within": {
-    outline: "none",
-  },
-}));
+import Heading from "@/components/ui/heading";
+import { Button } from "@/components/ui/button";
+import { useTitle } from "@/hooks/useTitle";
+import { StripedDataGrid } from "@/components/StripedDataGrid";
 
 const transformDate = (params) => {
   const originalDate = new Date(params.value);
@@ -148,6 +132,7 @@ const columns = [
 ];
 
 const Drug = () => {
+  useTitle("Drugs");
   const [rows, setRows] = useState([]);
   const { t } = useTranslation("drug");
 
@@ -158,24 +143,22 @@ const Drug = () => {
         setRows(response);
       } catch (error) {
         console.log(error.message);
-        Toast(error.message, errorType.ERROR);
 
         const data = error.response.data;
         console.log(data);
-        Toast(data, errorType.ERROR);
+        Toast(data || "Error occurred", errorType.ERROR);
       }
     };
 
     fetchDrugs();
   }, []);
 
+  const title = t("title");
+
   return (
-    <div className="p-12 pt-8">
+    <div className="p-12 pt-8 content-container">
       <div className="flex justify-between mb-8">
-        <div className="text-3xl text-[#5B5B5B] font-semibold ">
-          <HiChevronLeft className="text-5xl inline" />
-          {t("title")}
-        </div>
+        <Heading title={title} />
 
         <Link to={"/drugs/add"}>
           <Button className="bg-[#6F0096] h-10 flexbox items-center">
