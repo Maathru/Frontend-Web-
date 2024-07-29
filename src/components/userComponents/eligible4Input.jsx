@@ -14,6 +14,7 @@ const Eligible5Input = ({ index, title, value1, value2 }) => {
           className="w-48 shadow-xl"
           variant="standard"
           value={value1 || ""}
+          inputProps={{min: 0, style: { textAlign: 'center' }}} 
         />
       </div>
       <div className="mx-auto">
@@ -23,6 +24,7 @@ const Eligible5Input = ({ index, title, value1, value2 }) => {
           className="w-48 shadow-lg"
           variant="standard"
           value={value2 || ""}
+          inputProps={{min: 0, style: { textAlign: 'center' }}} 
         />
       </div>
     </div>

@@ -1,37 +1,16 @@
-import { Button } from "@/components/ui/button";
-import {
-  DataGrid,
-  gridClasses,
-  GridToolbarQuickFilter,
-} from "@mui/x-data-grid";
+import { GridToolbarQuickFilter } from "@mui/x-data-grid";
 import { useEffect, useState } from "react";
-import { HiChevronLeft, HiOutlinePlusSm, HiOutlineTrash } from "react-icons/hi";
-import { styled } from "@mui/material/styles";
-import { Box, Chip, IconButton } from "@mui/material";
+import { HiOutlineTrash } from "react-icons/hi";
+import { Box, Chip, IconButton, TextField } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { Typography } from "@mui/material";
 import EligibleService from "@/service/eligibleService";
 import { errorType, Toast } from "@/components/toast";
 import Heading from "@/components/ui/heading";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useTitle } from "@/hooks/useTitle";
-
-const StripedDataGrid = styled(DataGrid)(({ theme }) => ({
-  [`& .${gridClasses.row}.even`]: {
-    backgroundColor: "#FAEDFF",
-  },
-  [`& .${gridClasses.row}.odd`]: {
-    backgroundColor: "#ffffff",
-  },
-  border: "none",
-
-  "& .MuiDataGrid-cell:focus": {
-    outline: "none",
-  },
-  "& .MuiDataGrid-cell:focus-within": {
-    outline: "none",
-  },
-}));
+import EligiblePopup from "@/components/eligiblePopup";
+import { StripedDataGrid } from "@/components/StripedDataGrid";
 
 function QuickSearchToolbar() {
   return (
@@ -39,9 +18,9 @@ function QuickSearchToolbar() {
       sx={{
         p: 0.5,
         pb: 0,
-        m: 2,
+        mb: 2,
         display: "flex",
-        justifyContent: "flex-end",
+        justifyContent: "flex-start",
       }}
     >
       <GridToolbarQuickFilter
@@ -62,7 +41,7 @@ function QuickSearchToolbar() {
 }
 
 const columns = [
-  { field: "id", headerName: "E. Couple ID", width: 70 },
+  { field: "id", headerName: "E. Couple ID", width: 100 },
   {
     field: "name",
     headerName: "Mother / Father",
@@ -101,7 +80,7 @@ const columns = [
   {
     field: "status",
     headerName: "Status",
-    flex: 1,
+    width: 170,
     renderCell: (params) => {
       const isEligible = params.value.role === "ELIGIBLE";
       return (
@@ -139,9 +118,9 @@ const columns = [
 
 const eligibleCouples = () => {
   useTitle("Eligible Couples");
-  const { t } = useTranslation("eligibleCouple");
   const [rows, setRows] = useState([]);
-  const title = t("title");
+  const navigate = useNavigate();
+  const { t } = useTranslation("eligibleCouples");
 
   useEffect(() => {
     const fetchEligibleListForMidwife = async () => {
@@ -157,6 +136,7 @@ const eligibleCouples = () => {
           },
           dob: { womanDob: r.womanDob, manDob: r.manDob },
           status: { role: r.role, children: r.children },
+          userId: r.userId,
         }));
 
         setRows(updatedRows);
@@ -165,24 +145,23 @@ const eligibleCouples = () => {
 
         const data = error.response.data;
         console.log(data);
-        Toast(data, errorType.ERROR);
+        Toast(data || "Error occurred", errorType.ERROR);
       }
     };
 
     fetchEligibleListForMidwife();
   }, []);
 
+  const handleRowClick = (params) => {
+    navigate(`/eligible/view/${params.row.userId}/${params.row.id}`);
+  };
+
   return (
     <div className="content-container">
-      <Heading title={title} />
+      <Heading title={t("title")} />
 
-      <div className="flex flex-col items-end mt-10">
-        <Link to={"/midwife/eligible-couples/add"}>
-          <Button className="bg-[#6F0096] h-10 flexbox items-center ">
-            {t("add")}
-            <HiOutlinePlusSm className="ml-2 h-5 w-5" />
-          </Button>
-        </Link>
+      <div className="flex flex-col items-end">
+        <EligiblePopup addButton={t("add")}></EligiblePopup>
 
         {/* clinics table */}
         <div style={{ height: "100%", width: "100%" }}>
@@ -200,6 +179,7 @@ const eligibleCouples = () => {
             }
             disableRowSelectionOnClick
             slots={{ toolbar: QuickSearchToolbar }}
+            onRowClick={handleRowClick}
           />
         </div>
       </div>
