@@ -144,7 +144,7 @@ const Pregnancy1 = () => {
       <div className="mt-20">
         {/* Form container */}
         <div className="mt-10">
-          <h3 className="text-xl font-bold">Parents' Details</h3>
+          <h3 className="text-xl font-bold">Parent Details</h3>
 
           <div className="grid grid-cols-3 gap-4 items-center mx-14">
             <p></p>
@@ -232,6 +232,27 @@ const Pregnancy1 = () => {
             </div>
           </div>
 
+          {/* Medical history */}
+          <h3 className="text-xl font-bold mt-10">
+            Pre-Existing Medical Conditions
+          </h3>
+
+          <div className="mt-4">
+            {conditions1.map((condition, index) => (
+              <BoolTextInput
+                key={index}
+                index={index}
+                title={condition.title}
+                value1={formObject[condition.name + "_woman"] || ""}
+                value2={formObject[condition.name + "_other"] || ""}
+                placeholder={condition.placeholder}
+                onChange={(field, value) => {
+                  setData(field, condition.name, value);
+                }}
+              />
+            ))}
+          </div>
+
           {/* Family health conditions */}
           <h3 className="text-xl font-bold mt-10">
             Family History of Diseases/Other Health Conditions
@@ -253,26 +274,7 @@ const Pregnancy1 = () => {
             ))}
           </div>
 
-          {/* Medical history */}
-          <h3 className="text-xl font-bold mt-10">
-            Pre-Existing Medical Conditions
-          </h3>
-
-          <div className="mt-4">
-            {conditions1.map((condition, index) => (
-              <BoolTextInput
-                key={index}
-                index={index}
-                title={condition.title}
-                value1={formObject[condition.name + "_woman"] || ""}
-                value2={formObject[condition.name + "_other"] || ""}
-                placeholder={condition.placeholder}
-                onChange={(field, value) => {
-                  setData(field, condition.name, value);
-                }}
-              />
-            ))}
-          </div>
+          
         </div>
       </div>
 

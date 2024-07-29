@@ -52,7 +52,7 @@ export const conditions1 = [
   {
     title : "Did she check the pregnancy before?",
     placeholder: "",
-    name: "check_pregnancy"
+    name: "pregnancy_screening"
   },
   {
     title : "Took folic acid earlier?",
@@ -108,12 +108,17 @@ export const presentObstetricDates = [
   {
     title : "US corrected Expected date of delivery",
     placeholder: "",
-    name: "us_expected_delivery"
+    name: "expected_delivery_by_ultrasound"
   },
   {
     title : "Expected Period Begin",
     placeholder: "",
     name: "expected_period_begin"
+  },
+  {
+    title : "Expected Period End",
+    placeholder: "",
+    name: "expected_period_end"
   },
   {
     title : "Date of first sensation of rotational motion",
@@ -149,7 +154,7 @@ export const currentPregnancyStatus = [
     name: "multiple_births"
   },
   {
-    title : "Casual positions",
+    title : "Casual positions", 
     placeholder: "Other details",
     name: "casual_positions"
   },
@@ -161,7 +166,7 @@ export const currentPregnancyStatus = [
   {
     title : "Any other things to consider?",
     placeholder: "Other details",
-    name: "other_details"
+    name: "other"
   }
 ];
 

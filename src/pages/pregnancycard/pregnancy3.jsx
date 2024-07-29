@@ -21,7 +21,7 @@ const Pregnancy3 = () => {
       try {
         const response = await EligibleService.getEligibleInfo();
         const existing = EligibleService.mapDtoToFormObject(response);
-        localStorage.setItem("formObject", JSON.stringify(existing));
+        // localStorage.setItem("formObject", JSON.stringify(existing));
       } catch (error) {
         console.log(error.message);
         Toast(error.message, errorType.ERROR);
@@ -59,22 +59,22 @@ const Pregnancy3 = () => {
 
   const handleSave = () => {
     formObject.stage = Math.max(formObject.stage, 2);
-    localStorage.setItem("formObject", JSON.stringify(formObject));
+    // localStorage.setItem("formObject", JSON.stringify(formObject));
     navigate("/pregnancy/3");
   };
 
   useEffect(() => {
-    const getFromLocalStorage = () => {
-      const jsonString = localStorage.getItem("formObject");
-      if (jsonString) {
-        return JSON.parse(jsonString);
-      }
-      return {};
-    };
+    // const getFromLocalStorage = () => {
+    //   const jsonString = localStorage.getItem("formObject");
+    //   if (jsonString) {
+    //     return JSON.parse(jsonString);
+    //   }
+    //   return {};
+    // };
 
-    const obj2 = initiateFields();
-    const obj1 = getFromLocalStorage();
-    setFormObject({ ...formObject, ...obj2, ...obj1 });
+    // const obj2 = initiateFields();
+    // const obj1 = getFromLocalStorage();
+    // setFormObject({ ...formObject, ...obj2, ...obj1 });
   }, []);
 
   const { t } = useTranslation("pregnancy1");
@@ -157,7 +157,7 @@ const Pregnancy3 = () => {
                     setData(filed , "leave" , e.target.value)
                 }} 
             />
-
+{/* 
             <SingleInput 
                 title="Letters about it" 
                 index={27} 
@@ -166,7 +166,7 @@ const Pregnancy3 = () => {
                 onChange={(filed, e) => {
                     setData(filed , "leave_letter" , e.target.value)
                 }} 
-            />
+            /> */}
           </div>
         </div>
       </div>
