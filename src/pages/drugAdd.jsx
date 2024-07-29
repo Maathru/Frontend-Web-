@@ -6,9 +6,11 @@ import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import DrugService from "@/service/drugService";
 import { errorType, Toast } from "@/components/toast";
-import PageHeading from "@/components/ui/pageHeading";
+import Heading from "@/components/ui/heading";
+import { useTitle } from "@/hooks/useTitle";
 
 const DrugAdd = () => {
+  useTitle("Add Drug");
   const [formData, setFormData] = useState({
     brandName: "",
     recommendedDose: "",
@@ -102,7 +104,6 @@ const DrugAdd = () => {
       navigate("/drugs");
     } catch (error) {
       console.log(error.message);
-      Toast(error.message, errorType.ERROR);
 
       const data = error.response.data;
       if (data) {
@@ -116,7 +117,7 @@ const DrugAdd = () => {
           setErrors(newErrors);
         } else {
           console.log(data);
-          Toast(data, errorType.ERROR);
+          Toast(data || "Error occurred", errorType.ERROR);
         }
       }
     }
@@ -127,7 +128,7 @@ const DrugAdd = () => {
   return (
     <div className="content-container">
       <div>
-        <PageHeading title={title} />
+        <Heading title={title} />
 
         <div className="flex justify-center">
           <div className=" w-8/12 py-12 px-36 flex flex-col gap-6 ">

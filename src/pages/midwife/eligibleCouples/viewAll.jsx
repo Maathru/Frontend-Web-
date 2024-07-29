@@ -1,39 +1,16 @@
-import { Button } from "@/components/ui/button";
-import {
-  DataGrid,
-  gridClasses,
-  GridToolbarQuickFilter,
-} from "@mui/x-data-grid";
-import React from "react";
-import {
-  HiChevronLeft,
-  HiOutlinePencilAlt,
-  HiOutlinePlusSm,
-  HiOutlineTrash,
-} from "react-icons/hi";
-import { styled } from "@mui/material/styles";
-import { Box, Chip, IconButton } from "@mui/material";
+import { GridToolbarQuickFilter } from "@mui/x-data-grid";
+import { useEffect, useState } from "react";
+import { HiOutlineTrash } from "react-icons/hi";
+import { Box, Chip, IconButton, TextField } from "@mui/material";
 import { useTranslation } from "react-i18next";
-import PageHeading from "@/components/ui/pageHeading";
 import { Typography } from "@mui/material";
-import { Link } from "react-router-dom";
-
-const StripedDataGrid = styled(DataGrid)(({ theme }) => ({
-  [`& .${gridClasses.row}.even`]: {
-    backgroundColor: "#FAEDFF",
-  },
-  [`& .${gridClasses.row}.odd`]: {
-    backgroundColor: "#ffffff",
-  },
-  border: "none",
-
-  "& .MuiDataGrid-cell:focus": {
-    outline: "none",
-  },
-  "& .MuiDataGrid-cell:focus-within": {
-    outline: "none",
-  },
-}));
+import EligibleService from "@/service/eligibleService";
+import { errorType, Toast } from "@/components/toast";
+import Heading from "@/components/ui/heading";
+import { useNavigate } from "react-router-dom";
+import { useTitle } from "@/hooks/useTitle";
+import EligiblePopup from "@/components/eligiblePopup";
+import { StripedDataGrid } from "@/components/StripedDataGrid";
 
 function QuickSearchToolbar() {
   return (
@@ -41,9 +18,9 @@ function QuickSearchToolbar() {
       sx={{
         p: 0.5,
         pb: 0,
-        m: 2,
+        mb: 2,
         display: "flex",
-        justifyContent: "flex-end",
+        justifyContent: "flex-start",
       }}
     >
       <GridToolbarQuickFilter
@@ -64,8 +41,7 @@ function QuickSearchToolbar() {
 }
 
 const columns = [
-  { field: "id", headerName: "Clinic ID", width: 70 },
-  //   { field: "name", headerName: "Mother's Name <br/>Father's Name", width: 130 },
+  { field: "id", headerName: "E. Couple ID", width: 100 },
   {
     field: "name",
     headerName: "Mother / Father",
@@ -73,8 +49,8 @@ const columns = [
     // width: 300,
     renderCell: (params) => (
       <div>
-        <Typography>{params.value.woman}</Typography>
-        <Typography>{params.value.man}</Typography>
+        <Typography>{params.value.womanName}</Typography>
+        <Typography>{params.value.manName}</Typography>
       </div>
     ),
   },
@@ -104,12 +80,14 @@ const columns = [
   {
     field: "status",
     headerName: "Status",
-    flex: 1,
+    width: 170,
     renderCell: (params) => {
-      const isEligible = params.value === "Eligible";
+      const isEligible = params.value.role === "ELIGIBLE";
       return (
         <Chip
-          label={params.value}
+          label={
+            isEligible ? params.value.role : `Baby ${params.value.children}`
+          }
           size={"small"}
           sx={{
             backgroundColor: isEligible ? "#EBF9F1" : "#C5BCFF", // Custom colors
@@ -120,23 +98,6 @@ const columns = [
       );
     },
   },
-  //   {
-  //     field: "edit",
-  //     headerName: "",
-  //     flex: 0.1,
-  //     renderCell: (params) => (
-  //       <IconButton
-  //         // onClick={() => handleDelete(params.row.id)}
-  //         aria-label="delete"
-  //         size="small"
-  //         sx={{
-  //           color: "#624DE3",
-  //         }}
-  //       >
-  //         <HiOutlinePencilAlt />
-  //       </IconButton>
-  //     ),
-  //   },
   {
     field: "delete",
     headerName: "",
@@ -155,40 +116,52 @@ const columns = [
   },
 ];
 
-const rows = [
-  {
-    id: 1,
-    name: { woman: "P.D.D.D.Rodrigo", man: "B.M.Nandalal" },
-    address: "154/A, Kaleniya",
-    phone: { womanPhone: "0714578650", manPhone: "0714578650" },
-    dob: { womanDob: "01/03/1989", manDob: "11/05/1988" },
-    status: "Eligible",
-  },
-  {
-    id: 2,
-    name: { woman: "P.D.D.D.Rodrigo", man: "B.M.Nandalal" },
-    address: "154/A, Kaleniya",
-    phone: { womanPhone: "0714578650", manPhone: "0714578650" },
-    dob: { womanDob: "01/03/1989", manDob: "11/05/1988" },
-    status: "Baby1",
-  },
-];
-
 const eligibleCouples = () => {
+  useTitle("Eligible Couples");
+  const [rows, setRows] = useState([]);
+  const navigate = useNavigate();
   const { t } = useTranslation("eligibleCouples");
-  const title = t("title");
+
+  useEffect(() => {
+    const fetchEligibleListForMidwife = async () => {
+      try {
+        const response = await EligibleService.getEligibleListForMidwife();
+        const updatedRows = response.map((r) => ({
+          id: r.id,
+          name: { womanName: r.womanName, manName: r.manName },
+          address: r.address,
+          phone: {
+            womanPhone: r.womanPhone,
+            manPhone: r.manPhone,
+          },
+          dob: { womanDob: r.womanDob, manDob: r.manDob },
+          status: { role: r.role, children: r.children },
+          userId: r.userId,
+        }));
+
+        setRows(updatedRows);
+      } catch (error) {
+        console.log(error.message);
+
+        const data = error.response.data;
+        console.log(data);
+        Toast(data || "Error occurred", errorType.ERROR);
+      }
+    };
+
+    fetchEligibleListForMidwife();
+  }, []);
+
+  const handleRowClick = (params) => {
+    navigate(`/eligible/view/${params.row.userId}/${params.row.id}`);
+  };
 
   return (
     <div className="content-container">
-      <PageHeading title={title}/>
+      <Heading title={t("title")} />
 
-      <div className="flex flex-col items-end mt-10">
-        <Link to={"/midwife/eligible-couples/add"}>
-        <Button className="bg-[#6F0096] h-10 flexbox items-center ">
-          {t("add")}
-          <HiOutlinePlusSm className="ml-2 h-5 w-5" />
-        </Button>
-        </Link>
+      <div className="flex flex-col items-end">
+        <EligiblePopup addButton={t("add")}></EligiblePopup>
 
         {/* clinics table */}
         <div style={{ height: "100%", width: "100%" }}>
@@ -206,6 +179,7 @@ const eligibleCouples = () => {
             }
             disableRowSelectionOnClick
             slots={{ toolbar: QuickSearchToolbar }}
+            onRowClick={handleRowClick}
           />
         </div>
       </div>

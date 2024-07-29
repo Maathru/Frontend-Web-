@@ -1,35 +1,57 @@
-import { createTheme } from '@mui/material/styles';
+import { createTheme } from "@mui/material/styles";
 
-const theme = createTheme({
-  typography: {
-    h5: {
-      fontSize: '24px',
-      fontWeight: 500,
-      color: '#000000',
-      margin: "10px 0 10px 0"
+const getTheme = (mode) =>
+  createTheme({
+    palette: {
+      mode,
     },
-    h6: {
-      fontSize: '20px',
-      fontWeight: 200,
-      color: '#5B5B5B',
-      margin: '20px 0 10px 0',
+    typography: {
+      h4: {
+        fontSize: "26px",
+        fontWeight: 600,
+        margin: "20px 0 10px 0",
+      },
+      h5: {
+        fontSize: "24px",
+        fontWeight: 500,
+        color: mode === "dark" ? "#d1ced6" : "#000000", // Change color based on mode
+        margin: "10px 0 10px 0",
+      },
+      h6: {
+        fontSize: "20px",
+        fontWeight: 200,
+        color: mode === "dark" ? "#d1ced6" : "#5B5B5B",
+        margin: "20px 0 10px 0",
+      },
     },
-  },
-  components: {
-    MuiTextField: {
-      styleOverrides: {
-        root: {
-          '&.rounded': {
-            '& .MuiOutlinedInput-root': {
-              borderRadius: 30,
-              boxShadow: "0 4px 20px rgba(168, 88, 196, 0.15)",
-              padding: 4,
+    components: {
+      MuiTextField: {
+        styleOverrides: {
+          root: {
+            "&.rounded": {
+              "& .MuiOutlinedInput-root": {
+                borderRadius: 30,
+                boxShadow: "0 4px 20px rgba(168, 88, 196, 0.15)",
+                padding: 4,
+              },
+            },
+          },
+        },
+      },
+      MuiSelect: {
+        styleOverrides: {
+          root: {
+            "&.rounded": {
+              "& .MuiOutlinedInput-root": {
+                borderRadius: 30,
+                boxShadow: "0 4px 20px rgba(168, 88, 196, 0.15)",
+                padding: 4,
+              },
             },
           },
         },
       },
     },
-  },
-});
+  });
 
-export default theme;
+export default getTheme;

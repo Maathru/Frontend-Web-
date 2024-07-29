@@ -12,31 +12,14 @@ import EligiblePagination from "@/components/userComponents/eligiblePagination";
 import { basicInfo, conditions1 } from "@/data/eligibleData";
 import { errorType, Toast } from "@/components/toast";
 import EligibleService from "@/service/eligibleService";
-import PageHeading from "@/components/ui/pageHeading";
+import Heading from "@/components/ui/heading";
 import { useTranslation } from "react-i18next";
+import { useTitle } from "@/hooks/useTitle";
 
 const Eligible = () => {
+  useTitle("Recovery Checklist - Page 1");
   const [formObject, setFormObject] = useState({ stage: 1 });
   const navigate = useNavigate();
-
-  useEffect(() => {
-    const fetchEligibleInfo = async () => {
-      try {
-        const response = await EligibleService.getEligibleInfo();
-        const existing = EligibleService.mapDtoToFormObject(response);
-        localStorage.setItem("formObject", JSON.stringify(existing));
-      } catch (error) {
-        console.log(error.message);
-        Toast(error.message, errorType.ERROR);
-
-        const data = error.response.data;
-        console.log(data);
-        Toast(data, errorType.ERROR);
-      }
-    };
-
-    fetchEligibleInfo();
-  }, []);
 
   const initiateFields = () => {
     const initialData = {};
@@ -51,6 +34,9 @@ const Eligible = () => {
       initialData[condition.name + "_other"] = "";
     });
     initialData.marriage = null;
+    initialData.area = "";
+    initialData.district = "";
+    initialData.region = "";
 
     return initialData;
   };
@@ -76,9 +62,25 @@ const Eligible = () => {
       return {};
     };
 
-    const obj2 = initiateFields();
-    const obj1 = getFromLocalStorage();
-    setFormObject({ ...formObject, ...obj2, ...obj1 });
+    const fetchEligibleInfo = async () => {
+      try {
+        const response = await EligibleService.getEligibleInfo();
+        const existing = EligibleService.mapDtoToFormObject(response);
+        setFormObject({ ...formObject, ...existing });
+      } catch (error) {
+        console.log(error.message);
+
+        console.log(error);
+        const data = error.response.data;
+        console.log(data);
+        Toast(data, errorType.ERROR);
+      }
+    };
+
+    const obj1 = initiateFields();
+    const obj2 = getFromLocalStorage();
+    fetchEligibleInfo();
+    setFormObject({ ...formObject, ...obj1, ...obj2 });
   }, []);
 
   const { t } = useTranslation("eligible1");
@@ -88,7 +90,7 @@ const Eligible = () => {
     <div className="container my-10 font-poppins">
       {/* Hero section */}
       <div>
-      <PageHeading title={title} />
+        <Heading title={title} />
 
         <p className="text-xl mt-8">
           With the arrival of a new baby, you are stepping into a beautiful and
@@ -100,35 +102,35 @@ const Eligible = () => {
           <div className="mx-8 mt-5 text-sm md:text-base p-4">
             <div className="flex my-4 gap-2">
               <p>Regional Health Service Unit:</p>
-              <p>Kotte</p>
+              <p>{formObject.district || ""}</p>
             </div>
             <div className="flex my-4 gap-2">
               <p>Medical Officer in Health:</p>
-              <p>Udahamulla</p>
+              <p>{formObject.area || ""}</p>
             </div>
             <div className="flex my-4 gap-2">
               <p>Family Health Service Unit:</p>
-              <p>Nugegoda</p>
+              <p>{formObject.region || ""}</p>
             </div>
             <div className="flex my-4 gap-2">
               <p>User ID:</p>
-              <p>2024/Nu/32</p>
+              <p>{formObject.userId || ""}</p>
             </div>
             <div className="flex my-4 gap-2">
               <p>Wife's Name:</p>
-              <p></p>
+              <p>{formObject.womanName || ""}</p>
             </div>
             <div className="flex my-4 gap-2">
               <p>Husband's Name:</p>
-              <p>Buddhika Senanayake</p>
+              <p>{formObject.manName || ""}</p>
             </div>
             <div className="flex my-4 gap-2">
               <p>Address:</p>
-              <p>48/16, Udahamulla, Nugegoda</p>
+              <p>{formObject.address || ""}</p>
             </div>
             <div className="flex my-4 gap-2">
               <p>Date:</p>
-              <p>2024/06/24</p>
+              <p>{formObject.createdDate || ""}</p>
             </div>
           </div>
         </div>
@@ -225,7 +227,7 @@ const Eligible = () => {
       <Button onClick={handleSave}>Save and Next</Button>
 
       <div className="flex w-full mt-24">
-        <EligiblePagination total={4} current={1} />
+        <EligiblePagination total={5} current={1} />
       </div>
     </div>
   );

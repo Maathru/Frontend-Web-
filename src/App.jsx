@@ -17,24 +17,32 @@ import ClinicReports from "./pages/doctor/clinicReports";
 import Forum from "./pages/forum";
 import Answer from "./pages/answer";
 import Dashboard from "./pages/user/dashboard";
-import { Navigate, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import Footer from "./components/footer";
 import Eligible1 from "./pages/user/eligible1";
 import Eligible2 from "./pages/user/eligible2";
 import Eligible3 from "./pages/user/eligible3";
 import Eligible4 from "./pages/user/eligible4";
+import Eligible5 from "./pages/user/eligible5";
 import Pregnancy1 from "./pages/pregnancycard/pregnancy1";
 import Growth from "./pages/user/growth";
 import AskQuestion from "./pages/question";
+import MidwifeDashboard from "./pages/midwife/dashboard";
 import EligibleCouples from "./pages/midwife/eligibleCouples/viewAll";
 import EligibleCouplesAdd from "./pages/midwife/eligibleCouples/add";
-import EligibleCouplesView from "./pages/midwife/eligibleCouples/view";
 import Parents from "./pages/midwife/parents/viewAll";
 import NotFound from "./pages/notFound";
-import UserService from "./service/userService";
 import { userData } from "./context/userAuth";
 import ScrollToTop from "./components/ScrollToTop";
+import ManageUsers from "./pages/manageusers";
+import ManageClinics from "./pages/manageClinics";
+import Memories from "./pages/memories";
+import { ToastContainer } from "react-toastify";
+import { role } from "./data/roleData";
+import { ThemeProvider } from "@mui/material/styles";
+import getTheme from "./theme.js";
+import AddClinic from "./pages/doctor/addClinic";
 import Loader from "./components/loader";
 import Pregnancy2 from "./pages/pregnancycard/pregnancy2";
 import Pregnancy3 from "./pages/pregnancycard/pregnancy3";
@@ -87,63 +95,109 @@ function App() {
   const { userDetails } = useContext(userData);
 
   return (
-    <main className=" bg-white text-neutral-800 dark:bg-neutral-900 dark:text-neutral-100 duration-100 scroll-smooth focus:scroll-auto">
-      <Navbar themeFunction={handleThemeSwitch} mode={theme} />
-      <ScrollToTop />
+    <ThemeProvider theme={getTheme(theme)}>
+      <main className=" bg-white text-neutral-800 dark:bg-neutral-900 dark:text-neutral-100 duration-100 scroll-smooth focus:scroll-auto">
+        <Navbar themeFunction={handleThemeSwitch} mode={theme} />
+        <ScrollToTop />
 
-      <Routes>
-        {!userDetails.authenticated && (
-          <>
-            <Route path="*" element={<Landing />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<Signup />} />
-          </>
-        )}
+        <Routes>
+          {!userDetails.authenticated && (
+            <>
+              <Route path="/" element={<Landing />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/signup" element={<Signup />} />
+            </>
+          )}
 
-        <Route path="/blogs" element={<Blog />} />
-        <Route path="/blogs/article" element={<Article />} />
-        <Route path="/forum" element={<Forum />} />
-        <Route path="/forum/answer/:questionId" element={<Answer />} />
+          <Route path="/blogs" element={<Blog />} />
+          <Route path="/blogs/article" element={<Article />} />
+          <Route path="/forum" element={<Forum />} />
+          <Route path="/forum/answer/:questionId" element={<Answer />} />
 
-        {userDetails.authenticated && (
-          <>
-            <Route path="*" element={<Dashboard />} />
+          {userDetails.authenticated && (
+            <>
+              {/* Admin routes */}
+              {userDetails.role === role.ADMIN && (
+                <>
+                  <Route path="/users" element={<ManageUsers />} />
+                  <Route path="/clinics" element={<ManageClinics />} />
+                </>
+              )}
 
-            <Route path="/drugs" element={<Drug />} />
-            <Route path="/drugs/add" element={<DrugAdd />} />
+              {/* Doctor routes */}
+              {userDetails.role === role.DOCTOR && (
+                <>
+                  <Route path="/drugs" element={<Drug />} />
+                  <Route path="/drugs/add" element={<DrugAdd />} />
 
-            <Route path="/blogs/write/1" element={<WriteBlog1 />} />
-            <Route path="/blogs/write/2" element={<WriteBlog2 />} />
+                  <Route path="/clinics" element={<Clinic />} />
+                  <Route path="/clinics/add" element={<AddClinic />} />
+                  <Route path="/clinics/view" element={<ViewClinics />} />
+                  <Route path="/clinics/dates" element={<ClinicDates />} />
+                  <Route path="/clinics/reports" element={<ClinicReports />} />
+                </>
+              )}
 
-            <Route path="/clinics" element={<Clinic />} />
-            <Route path="/clinics/view" element={<ViewClinics />} />
-            <Route path="/clinics/dates" element={<ClinicDates />} />
-            <Route path="/clinics/reports" element={<ClinicReports />} />
+              {/* Midwife routes */}
+              {userDetails.role === role.MIDWIFE && (
+                <>
+                  <Route path="/" element={<MidwifeDashboard />} />
+                  <Route path="/eligible" element={<EligibleCouples />} />
+                  <Route
+                    path="/eligible/add/:userId"
+                    element={<EligibleCouplesAdd />}
+                  />
+                  <Route
+                    path="/eligible/edit/:userId/:eligibleId"
+                    element={<EligibleCouplesAdd />}
+                  />
+                  <Route
+                    path="/eligible/view/:userId/:eligibleId"
+                    element={<EligibleCouplesAdd />}
+                  />
+                  <Route path="/parents" element={<Parents />} />
+                </>
+              )}
 
-            <Route path="/forum/ask" element={<AskQuestion />} />
+              {/* Parent routes */}
+              {userDetails.role === role.PARENT && (
+                <>
+                  <Route path="/growth" element={<Growth />} />
+                  <Route path="/memories" element={<Memories />} />
+                    
+                  <Route path="/pregnancy/1" element={<Pregnancy1 />} />
+                  <Route path="/pregnancy/2" element={<Pregnancy2 />} />
+                  <Route path="/pregnancy/3" element={<Pregnancy3 />} />
+                </>
+              )}
 
-            <Route path="/growth" element={<Growth />} />
-            <Route path="/eligible/1" element={<Eligible1 />} />
-            <Route path="/eligible/2" element={<Eligible2 />} />
-            <Route path="/eligible/3" element={<Eligible3 />} />
-            <Route path="/eligible/4" element={<Eligible4 />} />
+              {/* Parent and Eligible routes */}
+              {(userDetails.role === role.PARENT ||
+                userDetails.role === role.ELIGIBLE) && (
+                <>
+                  <Route path="/eligible/1" element={<Eligible1 />} />
+                  <Route path="/eligible/2" element={<Eligible2 />} />
+                  <Route path="/eligible/3" element={<Eligible3 />} />
+                  <Route path="/eligible/4" element={<Eligible4 />} />
+                  <Route path="/eligible/5" element={<Eligible5 />} />
+                </>
+              )}
 
-            <Route path="/midwife/eligible-couples" element={<EligibleCouples />} />
-            <Route path="/midwife/eligible-couples/view" element={<EligibleCouplesView />} />
-            <Route path="/midwife/eligible-couples/add" element={<EligibleCouplesAdd />} />
+              {/* Common routes */}
+              <Route path="/" element={<Dashboard />} />
 
-            <Route path="/midwife/parents" element={<Parents />} />
+              <Route path="/blogs/write/1" element={<WriteBlog1 />} />
+              <Route path="/blogs/write/2" element={<WriteBlog2 />} />
 
-            <Route path="/pregnancy/1" element={<Pregnancy1 />} />
-            <Route path="/pregnancy/2" element={<Pregnancy2 />} />
-            <Route path="/pregnancy/3" element={<Pregnancy3 />} />
-        
-          </>
-        )}
-      </Routes>
-
-      <Footer />
-    </main>
+              <Route path="/forum/ask" element={<AskQuestion />} />
+            </>
+          )}
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+        <ToastContainer />
+        <Footer />
+      </main>
+    </ThemeProvider>          
   );
 }
 

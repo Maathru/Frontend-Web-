@@ -14,24 +14,9 @@ import {
 import { Box, Chip, IconButton } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
-import PageHeading from "@/components/ui/pageHeading";
-
-const StripedDataGrid = styled(DataGrid)(({ theme }) => ({
-  [`& .${gridClasses.row}.even`]: {
-    backgroundColor: "#FAEDFF",
-  },
-  [`& .${gridClasses.row}.odd`]: {
-    backgroundColor: "#ffffff",
-  },
-  border: "none",
-
-  "& .MuiDataGrid-cell:focus": {
-    outline: "none",
-  },
-  "& .MuiDataGrid-cell:focus-within": {
-    outline: "none",
-  },
-}));
+import Heading from "@/components/ui/heading";
+import { useTitle } from "@/hooks/useTitle";
+import { StripedDataGrid } from "@/components/StripedDataGrid";
 
 function QuickSearchToolbar() {
   return (
@@ -156,12 +141,13 @@ const rows = [
 ];
 
 const Clinic = () => {
+  useTitle("Clinics");
   const { t } = useTranslation("clinic");
   const title = t("title");
 
   return (
     <div className="content-container">
-      <PageHeading title={title} />
+      <Heading title={title} />
 
       <div className="flex gap-36 justify-around px-24">
         <Link to={"/clinics/view"}>
