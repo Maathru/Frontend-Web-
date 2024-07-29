@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { HiChevronLeft } from "react-icons/hi";
 import { List } from "@mui/material";
 import Item from "@/components/ui/item";
@@ -8,18 +8,37 @@ import SearchBar from "@mkyy/mui-search-bar";
 import { NavLink } from "react-router-dom";
 import ForumService from "@/service/forumService";
 import { errorType, Toast } from "@/components/toast";
+import { Link, useNavigate } from "react-router-dom";
+import { IoIosArrowBack } from "react-icons/io";
+import { userData } from "@/context/userAuth";
 import { useTitle } from "@/hooks/useTitle";
 
 const Forum = () => {
   useTitle("Forum");
-  const handleSearch = (labelOptionValue) => {
-    console.log(labelOptionValue);
+  const handleSearch = async (labelOptionValue) => {
+    try {
+      const response = await ForumService.searchQuestionsByKeyword(
+        textFieldValue
+      );
+      setQuestions(response);
+    } catch (error) {
+      console.log(error.message);
+      Toast(error.message, errorType.ERROR);
+
+      const data = error.response.data;
+      console.log(data);
+      Toast(data, errorType.ERROR);
+    }
   };
 
   const [textFieldValue, setTextFieldValue] = useState("");
   const [questions, setQuestions] = useState([]);
   const [pageSize, setPageSize] = useState(0);
   const [offset, setOffset] = useState(10);
+
+  const navigate = useNavigate();
+
+  const { userDetails } = useContext(userData);
 
   useEffect(() => {
     const fetchQuestions = async () => {
@@ -41,23 +60,39 @@ const Forum = () => {
     fetchQuestions();
   }, []);
 
+  const handleAsk = (e) => {
+    if(userDetails){
+      navigate("/forum/ask");
+    }
+    else{
+      Toast("Log in to ask question");
+      navigate("/login");
+    }
+  }
+
   return (
     <div className="p-12 grid content-start min-h-screen">
       <div className="flex justify-between mb-8">
-        <div className="text-3xl text-[#5B5B5B] font-semibold">
-          <HiChevronLeft className="text-5xl inline" />
-          Discussion Forum
-          <div className="text-xl text-[#5B5B5B] font-normal ml-12">
-            Connect with the community and share your experiences
+        <div className="flex text-3xl text-[#5B5B5B] font-semibold">
+          <IoIosArrowBack
+            size={45}
+            className="cursor-pointer"
+            onClick={() => navigate(-1)}
+          />
+          <div className="col ml-3">
+            Discussion Forum
+            <div className="text-xl text-[#5B5B5B] font-normal">
+              Connect with the community and share your experiences
+            </div>
           </div>
         </div>
-        <Button className="bg-[#6F0096] h-10 min-w-max flexbox items-center">
-          <NavLink to="/forum/ask">Ask a Question</NavLink>
+        <Button className="bg-[#6F0096] h-10 min-w-max flexbox items-center" onClick={(e) =>handleAsk(e)}>
+          Ask a Question
         </Button>
       </div>
       <SearchBar
         value={textFieldValue}
-        onChange={(newValue) => setTextFieldValue(newValue)}
+        onChange={newValue => setTextFieldValue(newValue)}
         onSearch={handleSearch}
         width="80%"
         className="border-black"

@@ -40,6 +40,16 @@ class ForumService {
       throw error;
     }
   }
+  
+  static async searchQuestionsByKeyword(keyword){
+    try{
+      const response = await axiosInstance.get(`/question/search/keyword/${keyword}`);
+      return response.data;
+    }
+    catch(error){
+      throw error;
+    }
+  }
 }
 
 export default ForumService;
