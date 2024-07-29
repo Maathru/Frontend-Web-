@@ -37,6 +37,7 @@ import ScrollToTop from "./components/ScrollToTop";
 import Loader from "./components/loader";
 import ManageUsers from "./pages/manageusers";
 import Memories from "./pages/memories";
+import Healthstatics from "./pages/healthstatics";
 
 function App() {
   const darkQuery = window.matchMedia("(prefers-color-scheme: dark)");
@@ -134,6 +135,8 @@ function App() {
             <Route path="/midwife/parents" element={<Parents />} />
             <Route path="/manageusers" element={<ManageUsers />} />
             <Route path="/memories" element={<Memories />} />
+            <Route path="/healthstatics" element={<Healthstatics />} />
+
 
           </>
         )}
