@@ -40,6 +40,7 @@ import { ToastContainer } from "react-toastify";
 import { role } from "./data/roleData";
 import { ThemeProvider } from "@mui/material/styles";
 import getTheme from "./theme.js";
+import AddClinic from "./pages/doctor/addClinic";
 
 function App() {
   const darkQuery = window.matchMedia("(prefers-color-scheme: dark)");
@@ -125,6 +126,7 @@ function App() {
                   <Route path="/drugs/add" element={<DrugAdd />} />
 
                   <Route path="/clinics" element={<Clinic />} />
+                  <Route path="/clinics/add" element={<AddClinic />} />
                   <Route path="/clinics/view" element={<ViewClinics />} />
                   <Route path="/clinics/dates" element={<ClinicDates />} />
                   <Route path="/clinics/reports" element={<ClinicReports />} />
@@ -134,7 +136,7 @@ function App() {
               {/* Midwife routes */}
               {userDetails.role === role.MIDWIFE && (
                 <>
-                  <Route path="/midwife" element={<MidwifeDashboard />} />
+                  <Route path="/" element={<MidwifeDashboard />} />
                   <Route path="/eligible" element={<EligibleCouples />} />
                   <Route
                     path="/eligible/add/:userId"
