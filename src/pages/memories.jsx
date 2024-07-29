@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   Container,
   Typography,
@@ -12,29 +12,31 @@ import {
   Card,
   CardContent,
   CardMedia,
-} from '@mui/material';
-import { Upload as UploadIcon, Search as SearchIcon } from '@mui/icons-material';
-import PageHeading from "@/components/ui/pageHeading"; // Make sure to import your PageHeading component
-import babyImage from '@/assets/Babys-First-Words-When-Do-Babies-Start-Talking.jpg';
-
+} from "@mui/material";
+import {
+  Upload as UploadIcon,
+  Search as SearchIcon,
+} from "@mui/icons-material";
+import babyImage from "@/assets/Babys-First-Words-When-Do-Babies-Start-Talking.jpg";
+import Heading from "@/components/ui/heading";
 
 const memories = [
-  { title: 'Memories 1', date: '02/10/2024', video: '/path-to-video1' },
-  { title: 'Memories 2', date: '02/10/2024', video: '/path-to-video2' },
-  { title: 'Memories 3', date: '02/10/2024', video: '/path-to-video3' },
+  { title: "Memories 1", date: "02/10/2024", video: "/path-to-video1" },
+  { title: "Memories 2", date: "02/10/2024", video: "/path-to-video2" },
+  { title: "Memories 3", date: "02/10/2024", video: "/path-to-video3" },
 ];
 
 const scenarios = [
   {
-    date: '20/07/2024',
-    title: 'ADD TITLE',
-    description: 'Add Description',
+    date: "20/07/2024",
+    title: "ADD TITLE",
+    description: "Add Description",
     images: [babyImage, babyImage, babyImage, babyImage],
   },
   {
-    date: '05/08/2024',
-    title: '1 Month More',
-    description: '',
+    date: "05/08/2024",
+    title: "1 Month More",
+    description: "",
     images: [babyImage, babyImage, babyImage, babyImage],
   },
 ];
@@ -50,7 +52,6 @@ const Memories = () => {
           <MenuItem value="account2">Child Account 2</MenuItem>
         </Select>
       </Box>
-
       <Grid container spacing={2} mb={2}>
         {memories.map((memory, index) => (
           <Grid item xs={12} sm={6} md={4} key={index}>
@@ -69,51 +70,49 @@ const Memories = () => {
           </Grid>
         ))}
       </Grid>
-
       <Box display="flex" alignItems="center" mb={2}>
-      <TextField
-  label="Search your photos and albums"
-  variant="standard"
-  size="small"
-  sx={{
-    flexGrow: 1,
-    marginRight: 2,
-    '& .MuiInput-underline:before': {
-      borderBottom: '1px solid #ccc',
-    },
-    '& .MuiInput-underline:hover:before': {
-      borderBottom: '1px solid #000096', 
-    },
-    '& .MuiInput-underline:after': {
-      borderBottom: '2px solid #000096', 
-    },
-    '& .MuiInputBase-input': {
-      color: 'black',
-    },
-  }}
-  InputProps={{
-    endAdornment: (
-      <InputAdornment position="end">
-        <SearchIcon />
-      </InputAdornment>
-    ),
-  }}
-/>
+        <TextField
+          label="Search your photos and albums"
+          variant="standard"
+          size="small"
+          sx={{
+            flexGrow: 1,
+            marginRight: 2,
+            "& .MuiInput-underline:before": {
+              borderBottom: "1px solid #ccc",
+            },
+            "& .MuiInput-underline:hover:before": {
+              borderBottom: "1px solid #000096",
+            },
+            "& .MuiInput-underline:after": {
+              borderBottom: "2px solid #000096",
+            },
+            "& .MuiInputBase-input": {
+              color: "black",
+            },
+          }}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <SearchIcon />
+              </InputAdornment>
+            ),
+          }}
+        />
 
-<Button
-  variant="contained"
-  color="primary"
-  sx={{
-    marginLeft: 3,  
-    backgroundColor: '#9C33C1',
-    '&:hover': { backgroundColor: '#6F0096' },
-  }}
->
-  Upload Media
-  <UploadIcon sx={{ marginLeft: 1 }} />
-</Button>
+        <Button
+          variant="contained"
+          color="primary"
+          sx={{
+            marginLeft: 3,
+            backgroundColor: "#9C33C1",
+            "&:hover": { backgroundColor: "#6F0096" },
+          }}
+        >
+          Upload Media
+          <UploadIcon sx={{ marginLeft: 1 }} />
+        </Button>
       </Box>
-
       {scenarios.map((scenario, index) => (
         <Box key={index} mb={4}>
           <Typography variant="h6" gutterBottom>
@@ -135,10 +134,13 @@ const Memories = () => {
               </Grid>
             ))}
           </Grid>
-          <Typography align="right" variant="body2" sx={{ mt: 1, color: 'black' }}>
-           See More
+          <Typography
+            align="right"
+            variant="body2"
+            sx={{ mt: 1, color: "black" }}
+          >
+            See More
           </Typography>
-
         </Box>
       ))}
     </Container>

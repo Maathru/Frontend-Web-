@@ -3,12 +3,12 @@ import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
 import { InputLabel, MenuItem, Select, colors } from "@mui/material";
 import ReactApexChart from "react-apexcharts";
-import PageHeading from "@/components/ui/pageHeading";
+import Heading from "@/components/ui/heading";
 
 const clinicReports = () => {
   const { t } = useTranslation("clinicReports");
 
-  // patient visit line chat chart data starts
+  // patient visit line chart data starts
   const [options1, setObject1] = useState({
     chart: {
       type: "line",
@@ -125,7 +125,7 @@ const clinicReports = () => {
   return (
     <div className="content-container">
       <div className="pl-10">
-        <PageHeading title={title} />
+        <Heading title={title} />
 
         <div className="flex justify-between">
           <h3 className="text-2xl text-[#5B5B5B] font-semibold mb-8">

@@ -236,3 +236,101 @@ export const nutrition = [
     name: "diet_fat",
   },
 ];
+
+export const habits1 = [
+  {
+    title: "Cigarettes, betel nuts, tobacco",
+    placeholder: "Other Details",
+    name: "cigarettes",
+  },
+  {
+    title: "Alcohol",
+    placeholder: "Other Details",
+    name: "alcohol",
+  },
+  {
+    title: "Drugs",
+    placeholder: "Other Details",
+    name: "drugs",
+  },
+];
+
+export const habits2 = [
+  {
+    title:
+      "If you don't smoke, are you passively exposed to secondhand smoke at work at home? (Frequently hang out with people who smoke?)",
+    placeholder: "Other Details",
+    name: "smoke",
+  },
+  {
+    title:
+      "Is there an atmosphere in the head that is not violent physically or mentally?",
+    placeholder: "Other Details",
+    name: "violent",
+  },
+  {
+    title: "Do you practice daily religious rituals?",
+    placeholder: "Other Details",
+    name: "rituals",
+  },
+  {
+    title: "Are you making time for regular exercise?",
+    placeholder: "Other Details",
+    name: "exercise",
+  },
+  {
+    title: "Do you make time for hobbies?",
+    placeholder: "Other Details",
+    name: "hobbies",
+  },
+];
+
+export const facilities1 = [
+  {
+    title: "Clean safe water (use boiled water for drinking)",
+    placeholder: "Other Details",
+    name: "safeWater",
+  },
+  {
+    title: "Toilet facilities (sanitary, flush)",
+    placeholder: "Other Details",
+    name: "toilet",
+  },
+  {
+    title:
+      "Burying facilities to properly dispose of waste (garbage), making compost piles/handover to the municipality)",
+    placeholder: "Other Details",
+    name: "garbage",
+  },
+];
+
+export const facilities2 = [
+  {
+    title: "Chemicals (pesticides, fertilizers)",
+    placeholder: "Other Details",
+    name: "chemicals",
+  },
+  {
+    title: "Radioactive substances such as ext",
+    placeholder: "Other Details",
+    name: "radioactive",
+  },
+  {
+    title: "Extreme heat conditions",
+    placeholder: "Other Details",
+    name: "extremeHeat",
+  },
+  {
+    title: "Smoke from cooking or other things",
+    placeholder: "Other Details",
+    name: "smokeCooking",
+  },
+];
+
+export const sections = [
+  { title: "Weight (kg)", name: "Weight" },
+  { title: "Height (cm)", name: "Height" },
+  { title: "Body mass index (BMI) kg/m^2", name: "Bmi" },
+  { title: "Blood type", name: "BloodType" },
+  { title: "Hemoglobin level", name: "Hemoglobin" },
+];

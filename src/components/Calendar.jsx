@@ -15,20 +15,20 @@ function ServerDay(props) {
 
   const style = {
     backgroundColor: isToday
-      ? "red"
+      ? "#e8e1eb"
       : isSelected
-      ? "#9C33C1"
+      ? "#6F0096"
       : isWeekend
-      ? { color: "#9C33C1" }
+      ? { color: "#6F0096" }
       : undefined,
-    color: isToday || isSelected ? "white" : undefined,
+    color: isToday ? "#000000" : isSelected ? "white" : undefined,
     "&:hover": {
-      backgroundColor: "#232323",
+      backgroundColor: "#e8e1eb",
       color: "#676767",
     },
     "&.Mui-selected": {
-      backgroundColor: "#ff7070",
-      color: "#000000",
+      backgroundColor: "#CFA5CB",
+      color: "#ffffff",
     },
   };
 
@@ -39,8 +39,7 @@ function ServerDay(props) {
   return (
     <Badge
       key={props.day.toString()}
-      overlap="circular"
-      badgeContent={isSelected ? "🟢" : undefined}
+      // overlap="circular"
     >
       <PickersDay
         {...other}
@@ -53,7 +52,7 @@ function ServerDay(props) {
   );
 }
 
-export default function DateCalendarServerRequest() {
+export default function Calendar() {
   const [selectedDate, setSelectedDate] = React.useState(dayjs(new Date()));
   const exampleHighlightedDays = [
     "2024-07-02",

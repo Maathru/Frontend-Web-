@@ -96,6 +96,10 @@
   grid-template-columns: 1fr 2fr 2fr;
 }
 
+.overlay{
+  background-color: #2d0b0b;
+}
+
 /* width */
 ::-webkit-scrollbar {
   width: 5px;
