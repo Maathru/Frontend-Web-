@@ -8,6 +8,7 @@ import WriteBlog1 from "./pages/blog/writeblog1";
 import WriteBlog2 from "./pages/blog/writeblog2";
 import WriteBlog3 from "./pages/blog/writeblog3";
 import WriteBlog4 from "./pages/blog/writeblog4";
+import ManageBlog from "./pages/blog/manageblog";
 import Navbar from "./components/navbar";
 import Landing from "./pages/landing";
 import Drug from "./pages/drug";
@@ -170,6 +171,7 @@ function App() {
             <Route path="/blogs/write/2" element={<WriteBlog2 />} />
             <Route path="/blogs/write/3" element={<WriteBlog3 />} />
             <Route path="/blogs/write/4" element={<WriteBlog4 />} />
+            <Route path="/blogs/manage" element={<ManageBlog />} />
 
             <Route path="/forum/ask" element={<AskQuestion />} />
           </>
