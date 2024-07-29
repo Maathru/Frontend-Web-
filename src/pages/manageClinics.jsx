@@ -18,6 +18,7 @@ import {
 import { DataGrid, GridToolbarQuickFilter } from "@mui/x-data-grid";
 import { SearchIcon } from "lucide-react";
 import React from "react";
+import ClinicAddPopup from "@/components/ClinicAddPopup";
 
 const columns = [
   { field: "id", width: 20 },
@@ -69,7 +70,6 @@ const columns2 = [
 const rows2 = [
   { id: 1, patient: "saumya", doctor: "saumya" },
   { id: 2, patient: "saumya", doctor: "saumya" },
-
 ];
 
 function QuickSearchToolbar() {
@@ -130,9 +130,7 @@ const manageClinics = () => {
         <div className="flex">
           <div className="w-6/12">
             <DateCalendarServerRequest />
-            <p className="text-sm text-footer-purple">
-              Add New Clinic Schedule
-            </p>
+            <ClinicAddPopup />
           </div>
           <div className="shadow-md p-5 w-6/12 h-fit">
             <div className="flex justify-between">
