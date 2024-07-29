@@ -1,5 +1,5 @@
 import { useEffect, useState, useContext } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { NavLink , Link, useNavigate, useParams } from "react-router-dom";
 import { IoIosArrowBack } from "react-icons/io";
 import Pagination from "../components/pagination";
 import { Button } from "flowbite-react";
@@ -45,6 +45,8 @@ const Answer = () => {
       try {
         const response = await ForumService.getQuestion(questionId);
         setQuestion(response);
+        console.log(userDetails);
+        console.log(response);
       } catch (error) {
         console.log(error.message);
 
@@ -97,6 +99,19 @@ const Answer = () => {
     }
   };
 
+  const handleDelete = async (id) => {
+    try {
+      const response = await ForumService.deleteQuestion(id);
+      Toast(response, errorType.SUCCESS);
+      navigate("/forum");
+    } catch (error) {
+      console.log(error.message);
+      const data = error.response.data;
+      console.log(data);
+      Toast(data || "Error occurred", errorType.ERROR);
+    }
+  };
+
   return (
     <div className="">
       <div className="grid grid-cols-1">
@@ -134,10 +149,15 @@ const Answer = () => {
                           {keyword}
                         </Badge>
                       ))}
-                    {userDetails.name === question.authorName && (
-                      <Link to="/forum/question" className="mx-auto">
-                        Edit the question
-                      </Link>
+                    {userDetails.userId == question.authorId && (
+                      <div className="flex gap-5 ml-44">
+                        <NavLink to={`/forum/edit/` + question.id} className="mx-auto">
+                          Edit question
+                        </NavLink>
+                        <NavLink onClick={handleDelete(questionId)} className="mx-auto">
+                          Delete question
+                        </NavLink>
+                      </div>
                     )}
                     <div className="flex ml-auto items-center gap-1">
                       <Avatar
@@ -180,7 +200,7 @@ const Answer = () => {
               </div>
             </CardContent>
             <CardFooter className="text-sm flex justify-end text-[#9c3cc1]">
-              {userDetails.name === answer.authorName && (
+              {userDetails.userId === answer.authorId && (
                 <Link className="ml-auto mr-auto">Edit</Link>
               )}
               <div className="flex ml-auto items-center gap-1">
