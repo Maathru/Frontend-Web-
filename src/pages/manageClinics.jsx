@@ -1,4 +1,3 @@
-import DateCalendarServerRequest from "@/components/DateCalendarServerRequest";
 import { StripedDataGrid } from "@/components/StripedDataGrid";
 import { Button } from "@/components/ui/button";
 import Heading from "@/components/ui/heading";
@@ -19,6 +18,7 @@ import { DataGrid, GridToolbarQuickFilter } from "@mui/x-data-grid";
 import { SearchIcon } from "lucide-react";
 import React from "react";
 import ClinicAddPopup from "@/components/ClinicAddPopup";
+import Calendar from "@/components/Calendar";
 
 const columns = [
   { field: "id", width: 20 },
@@ -129,7 +129,7 @@ const manageClinics = () => {
         <Typography variant="h4">Clinic Days</Typography>
         <div className="flex">
           <div className="w-6/12">
-            <DateCalendarServerRequest />
+            <Calendar />
             <ClinicAddPopup />
           </div>
           <div className="shadow-md p-5 w-6/12 h-fit">
