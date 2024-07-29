@@ -1,12 +1,13 @@
-import Heading from "@/components/ui/heading";
 import { IoPeopleCircle } from "react-icons/io5";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { MdOutlinePregnantWoman } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { Typography } from "@mui/material";
 import { FaCircle } from "react-icons/fa";
 import { Button } from "flowbite-react";
 import ReactApexChart from "react-apexcharts";
+import Calendar from "@/components/Calendar";
+import { userData } from "@/context/userAuth";
 
 const Widget = ({ icon: Icon, count, label1, label2 }) => (
   <div className="card w-3/12 shadow-md rounded-lg ">
@@ -31,6 +32,7 @@ const Widget = ({ icon: Icon, count, label1, label2 }) => (
 );
 
 const dashboard = () => {
+  const { userDetails } = useContext(userData);
   // pregnancy visits line chart data starts
   const [options1, setObject1] = useState({
     chart: {
@@ -165,8 +167,8 @@ const dashboard = () => {
   ]);
 
   return (
-    <div className="content-container">
-      <Heading title={"Home"} />
+    <div className="container content-container">
+      <h1 className="text-3xl mb-5">Welcome {userDetails.name}</h1>
       <div className="flex justify-around flex-wrap mb-12">
         <Widget
           icon={IoPeopleCircle}
@@ -184,7 +186,9 @@ const dashboard = () => {
       <div>
         <Typography variant="h4">Upcoming Clinics & Home Visits</Typography>
         <div className="flex">
-          <div className="w-7/12">cal</div>
+          <div className="w-7/12">
+            <Calendar />
+          </div>
           <div className="w-5/12 flex flex-col gap-9">
             <div className="flex gap-10">
               <p className="text-lg">

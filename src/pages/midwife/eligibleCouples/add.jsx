@@ -512,23 +512,6 @@ const addCouples = () => {
                 Pregnancy <span>{section.id}</span>
               </Typography>
 
-              {/* <TextField
-                disabled={!editMode}
-                className="rounded"
-                size="small"
-                label="Gender"
-                value={section.gender || ""}
-                name={`gender_${section.id}`}
-                onChange={(e) => {
-                  handleInputChange(e);
-                  handlePregnancyInputChange(
-                    section.id,
-                    "gender",
-                    e.target.value.toUpperCase()
-                  );
-                }}
-              /> */}
-
               <FormControl>
                 <InputLabel
                   id="district-select-label"

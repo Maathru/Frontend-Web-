@@ -15,7 +15,11 @@ const EligiblePopup = ({ addButton }) => {
   const [showExisting, setShowExisting] = useState(false);
   const [showNew, setShowNew] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-  const [backendError, setBackendError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [backendError, setBackendError] = useState({
+    type: "error",
+    msg: "",
+  });
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -34,7 +38,7 @@ const EligiblePopup = ({ addButton }) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
     setErrors({ ...errors, [name]: validateField(name, value) });
-    setBackendError("");
+    setBackendError({ ...backendError, msg: "" });
   };
 
   const validateField = (name, value) => {
@@ -67,10 +71,13 @@ const EligiblePopup = ({ addButton }) => {
 
   const handleExistingSubmit = async (e) => {
     e.preventDefault();
-    setBackendError("");
+    setIsLoading(true);
+    setBackendError({ type: "info", msg: "Please wait..." });
 
     if (!formData.email) {
       setErrors({ ...errors, email: "Email address is required" });
+      setIsLoading(false);
+      setBackendError({ ...backendError, msg: "" });
       return;
     }
 
@@ -82,6 +89,8 @@ const EligiblePopup = ({ addButton }) => {
         lastName: "",
         email: "",
       });
+      setIsLoading(false);
+      setBackendError({ ...backendError, msg: "" });
       navigate(`/eligible/add/${response}`);
     } catch (error) {
       console.log(error);
@@ -90,18 +99,22 @@ const EligiblePopup = ({ addButton }) => {
       const data = error.response.data;
       console.log(data);
       Toast(data || "Error occurred", errorType.ERROR);
-      setBackendError(data || "Error occurred");
+      setIsLoading(false);
+      setBackendError({ type: "error", msg: data || "Error occurred" });
     }
   };
 
   const handleNewUserSubmit = async (e) => {
     e.preventDefault();
-    setBackendError("");
+    setIsLoading(true);
+    setBackendError({ type: "info", msg: "Please wait..." });
 
     const validationErrors = validate();
 
     if (Object.keys(validationErrors).length !== 0) {
       setErrors(validationErrors);
+      setIsLoading(false);
+      setBackendError({ ...backendError, msg: "" });
       return;
     }
 
@@ -113,11 +126,14 @@ const EligiblePopup = ({ addButton }) => {
         lastName: "",
         email: "",
       });
+      setIsLoading(false);
+      setBackendError({ ...backendError, msg: "" });
       Toast(response.message.split("/")[1], errorType.SUCCESS);
       navigate(`/eligible/add/${response.message.split("/")[0]}`);
     } catch (error) {
       console.log(error);
       console.log(error.message);
+      setIsLoading(false);
 
       const data = error.response.data;
       if (data) {
@@ -126,12 +142,14 @@ const EligiblePopup = ({ addButton }) => {
           data.map((msg) => {
             Toast(msg.message, errorType.ERROR);
             newErrors[msg.field] = msg.message;
+            setBackendError({ type: "error", msg: msg.message });
           });
 
           setErrors(newErrors);
         } else {
           console.log(data);
           Toast(data || "Error occurred", errorType.ERROR);
+          setBackendError({ type: "error", msg: data || "Error occurred" });
         }
       }
     }
@@ -143,7 +161,7 @@ const EligiblePopup = ({ addButton }) => {
       onOpen={() => setIsOpen(true)}
       onClose={() => {
         setIsOpen(false);
-        setBackendError("");
+        setBackendError({ ...backendError, msg: "" });
       }}
       trigger={
         <Button className="bg-[#6F0096] h-10 flexbox items-center ">
@@ -172,18 +190,18 @@ const EligiblePopup = ({ addButton }) => {
                 onClick={() => {
                   setShowNew(false);
                   setShowExisting(false);
-                  setBackendError("");
+                  setBackendError({ ...backendError, msg: "" });
                   setTitle("Existing User or new couple?");
                 }}
               />
             )}
           </div>
 
-          {backendError && (
+          {(backendError.msg || isLoading) && (
             <div className="px-5 pt-5">
-              <Alert severity="error" variant="outlined">
+              <Alert severity={backendError.type} variant="outlined">
                 <AlertTitle>Error</AlertTitle>
-                {backendError}
+                {backendError.msg}
               </Alert>
             </div>
           )}
@@ -227,7 +245,11 @@ const EligiblePopup = ({ addButton }) => {
                   // className="rounded"
                 ></TextField>
 
-                <Button className="px-10" onClick={handleExistingSubmit}>
+                <Button
+                  disabled={isLoading}
+                  className="px-10"
+                  onClick={handleExistingSubmit}
+                >
                   Submit
                 </Button>
               </div>
@@ -269,7 +291,11 @@ const EligiblePopup = ({ addButton }) => {
                   helperText={errors.email || ""}
                 ></TextField>
 
-                <Button className="px-10" onClick={handleNewUserSubmit}>
+                <Button
+                  disabled={isLoading}
+                  className="px-10"
+                  onClick={handleNewUserSubmit}
+                >
                   Submit
                 </Button>
               </div>
