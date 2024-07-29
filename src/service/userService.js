@@ -44,12 +44,12 @@ class UserService {
 
   static isAdmin() {
     const role = localStorage.getItem("role");
-    return role === "ADMIN";
+    return role === role.ADMIN;
   }
 
   static isUser() {
     const role = localStorage.getItem("role");
-    return role === "USER";
+    return role === role.USER;
   }
 
   static adminOnly() {
@@ -86,6 +86,15 @@ class UserService {
   static async getMidwife(region) {
     try {
       const response = await axiosInstance.get(`/user/midwife/${region}`);
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  static async getAllUsers() {
+    try {
+      const response = await axiosInstance.get(`/user/getAll`);
       return response.data;
     } catch (error) {
       throw error;

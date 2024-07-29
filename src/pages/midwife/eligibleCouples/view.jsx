@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next";
-import PageHeading from "@/components/ui/pageHeading";
+import Heading from "@/components/ui/heading";
 import { TextField, Typography } from "@mui/material";
 import { HiPlus } from "react-icons/hi";
 import { Button } from "@/components/ui/button";
@@ -16,7 +16,7 @@ const viewEligibleCouple = () => {
 
   return (
     <div className="content-container">
-      <PageHeading title={title} />
+      <Heading title={title} />
 
       {/* main details layer */}
       <div>

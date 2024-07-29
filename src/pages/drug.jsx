@@ -4,9 +4,7 @@ import {
   gridClasses,
   GridToolbarQuickFilter,
 } from "@mui/x-data-grid";
-
 import {
-  HiChevronLeft,
   HiOutlinePencilAlt,
   HiOutlinePlusSm,
   HiOutlineTrash,
@@ -17,8 +15,9 @@ import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import DrugService from "@/service/drugService";
 import { errorType, Toast } from "@/components/toast";
-import PageHeading from "@/components/ui/pageHeading";
+import Heading from "@/components/ui/heading";
 import { Button } from "@/components/ui/button";
+import { useTitle } from "@/hooks/useTitle";
 
 const StripedDataGrid = styled(DataGrid)(({ theme }) => ({
   [`& .${gridClasses.row}.even`]: {
@@ -149,6 +148,7 @@ const columns = [
 ];
 
 const Drug = () => {
+  useTitle("Drugs");
   const [rows, setRows] = useState([]);
   const { t } = useTranslation("drug");
 
@@ -159,7 +159,6 @@ const Drug = () => {
         setRows(response);
       } catch (error) {
         console.log(error.message);
-        Toast(error.message, errorType.ERROR);
 
         const data = error.response.data;
         console.log(data);
@@ -175,7 +174,7 @@ const Drug = () => {
   return (
     <div className="p-12 pt-8 content-container">
       <div className="flex justify-between mb-8">
-        <PageHeading title={title}/>
+        <Heading title={title} />
 
         <Link to={"/drugs/add"}>
           <Button className="bg-[#6F0096] h-10 flexbox items-center">

@@ -1,5 +1,9 @@
 import axiosInstance from "./axiosInstance";
 
+const Capitalize = (str) => {
+  return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+};
+
 class EligibleService {
   static async addEligibleInfo(formData) {
     try {
@@ -181,6 +185,68 @@ class EligibleService {
         muchSugarDetails: formObject.diet_sugar_other,
         muchFatDetails: formObject.diet_fat_other,
       },
+      parentHabitDto: {
+        manCigarettes: formObject.cigarettes_man,
+        manAlcohol: formObject.alcohol_man,
+        manDrugs: formObject.drugs_man,
+        manSmoke: formObject.smoke_man,
+        manViolent: formObject.violent_man,
+        manRituals: formObject.rituals_man,
+        manExercise: formObject.exercise_man,
+        manHobbies: formObject.hobbies_man,
+
+        womanCigarettes: formObject.cigarettes_woman,
+        womanAlcohol: formObject.alcohol_woman,
+        womanDrugs: formObject.drugs_woman,
+        womanSmoke: formObject.smoke_woman,
+        womanViolent: formObject.violent_woman,
+        womanRituals: formObject.rituals_woman,
+        womanExercise: formObject.exercise_woman,
+        womanHobbies: formObject.hobbies_woman,
+
+        cigarettesDetails: formObject.cigarettes_other,
+        alcoholDetails: formObject.alcohol_other,
+        drugsDetails: formObject.drugs_other,
+        smokeDetails: formObject.smoke_other,
+        violentDetails: formObject.violent_other,
+        ritualsDetails: formObject.rituals_other,
+        exerciseDetails: formObject.exercise_other,
+        hobbiesDetails: formObject.hobbies_other,
+      },
+      homeEnvironmentDto: {
+        manSafeWater: formObject.safeWater_man,
+        manToilet: formObject.toilet_man,
+        manGarbage: formObject.garbage_man,
+        manHazardous: formObject.hazardous_man,
+        manChemicals: formObject.chemicals_man,
+        manRadioactive: formObject.radioactive_man,
+        manExtremeHeat: formObject.extremeHeat_man,
+        manSmokeCooking: formObject.smokeCooking_man,
+        manNoisy: formObject.noisy_man,
+        manSaving: formObject.saving_man,
+
+        womanSafeWater: formObject.safeWater_woman,
+        womanToilet: formObject.toilet_woman,
+        womanGarbage: formObject.garbage_woman,
+        womanHazardous: formObject.hazardous_woman,
+        womanChemicals: formObject.chemicals_woman,
+        womanRadioactive: formObject.radioactive_woman,
+        womanExtremeHeat: formObject.extremeHeat_woman,
+        womanSmokeCooking: formObject.smokeCooking_woman,
+        womanNoisy: formObject.noisy_woman,
+        womanSaving: formObject.saving_woman,
+
+        waterDetails: formObject.safeWater_other,
+        toiletDetails: formObject.toilet_other,
+        garbageDetails: formObject.garbage_other,
+        hazardousDetails: formObject.hazardous_other,
+        chemicalsDetails: formObject.chemicals_other,
+        radioactiveDetails: formObject.radioactive_other,
+        extremeHeatDetails: formObject.extremeHeat_other,
+        smokeCookingDetails: formObject.smokeCooking_other,
+        noisyDetails: formObject.noisy_other,
+        savingDetails: formObject.saving_other,
+      },
     };
   }
 
@@ -193,6 +259,14 @@ class EligibleService {
       occupation_man: eligibleDto.basicInfoDto.manOccupation,
       occupation_woman: eligibleDto.basicInfoDto.womanOccupation,
       marriage: eligibleDto.basicInfoDto.marriedDate,
+      region: eligibleDto.basicInfoDto.region,
+      area: Capitalize(eligibleDto.basicInfoDto.moh[0]),
+      district: Capitalize(eligibleDto.basicInfoDto.moh[1]),
+      userId: eligibleDto.basicInfoDto.userId,
+      womanName: eligibleDto.basicInfoDto.womanName,
+      manName: eligibleDto.basicInfoDto.manName,
+      address: eligibleDto.basicInfoDto.address,
+      createdDate: eligibleDto.basicInfoDto.createdDate,
 
       anemia_woman: eligibleDto.medicalHistoryDto.womenAnemia,
       rheumatism_woman: eligibleDto.medicalHistoryDto.womanHeartDisease,
@@ -343,8 +417,155 @@ class EligibleService {
       diet_garden_other: eligibleDto.familyNutritionDto.gardenDietDetails,
       diet_sugar_other: eligibleDto.familyNutritionDto.muchSugarDetails,
       diet_fat_other: eligibleDto.familyNutritionDto.muchFatDetails,
+
+      cigarettes_man: eligibleDto.parentHabitDto.manCigarettes,
+      alcohol_man: eligibleDto.parentHabitDto.manAlcohol,
+      drugs_man: eligibleDto.parentHabitDto.manDrugs,
+      smoke_man: eligibleDto.parentHabitDto.manSmoke,
+      violent_man: eligibleDto.parentHabitDto.manViolent,
+      rituals_man: eligibleDto.parentHabitDto.manRituals,
+      exercise_man: eligibleDto.parentHabitDto.manExercise,
+      hobbies_man: eligibleDto.parentHabitDto.manHobbies,
+
+      cigarettes_woman: eligibleDto.parentHabitDto.womanCigarettes,
+      alcohol_woman: eligibleDto.parentHabitDto.womanAlcohol,
+      drugs_woman: eligibleDto.parentHabitDto.womanDrugs,
+      smoke_woman: eligibleDto.parentHabitDto.womanSmoke,
+      violent_woman: eligibleDto.parentHabitDto.womanViolent,
+      rituals_woman: eligibleDto.parentHabitDto.womanRituals,
+      exercise_woman: eligibleDto.parentHabitDto.womanExercise,
+      hobbies_woman: eligibleDto.parentHabitDto.womanHobbies,
+
+      cigarettes_other: eligibleDto.parentHabitDto.cigarettesDetails,
+      alcohol_other: eligibleDto.parentHabitDto.alcoholDetails,
+      drugs_other: eligibleDto.parentHabitDto.drugsDetails,
+      smoke_other: eligibleDto.parentHabitDto.smokeDetails,
+      violent_other: eligibleDto.parentHabitDto.violentDetails,
+      rituals_other: eligibleDto.parentHabitDto.ritualsDetails,
+      exercise_other: eligibleDto.parentHabitDto.exerciseDetails,
+      hobbies_other: eligibleDto.parentHabitDto.hobbiesDetails,
+
+      safeWater_man: eligibleDto.homeEnvironmentDto.manSafeWater,
+      toilet_man: eligibleDto.homeEnvironmentDto.manToilet,
+      garbage_man: eligibleDto.homeEnvironmentDto.manGarbage,
+      hazardous_man: eligibleDto.homeEnvironmentDto.manHazardous,
+      chemicals_man: eligibleDto.homeEnvironmentDto.manChemicals,
+      radioactive_man: eligibleDto.homeEnvironmentDto.manRadioactive,
+      extremeHeat_man: eligibleDto.homeEnvironmentDto.manExtremeHeat,
+      smokeCooking_man: eligibleDto.homeEnvironmentDto.manSmokeCooking,
+      noisy_man: eligibleDto.homeEnvironmentDto.manNoisy,
+      saving_man: eligibleDto.homeEnvironmentDto.manSaving,
+
+      safeWater_woman: eligibleDto.homeEnvironmentDto.womanSafeWater,
+      toilet_woman: eligibleDto.homeEnvironmentDto.womanToilet,
+      garbage_woman: eligibleDto.homeEnvironmentDto.womanGarbage,
+      hazardous_woman: eligibleDto.homeEnvironmentDto.womanHazardous,
+      chemicals_woman: eligibleDto.homeEnvironmentDto.womanChemicals,
+      radioactive_woman: eligibleDto.homeEnvironmentDto.womanRadioactive,
+      extremeHeat_woman: eligibleDto.homeEnvironmentDto.womanExtremeHeat,
+      smokeCooking_woman: eligibleDto.homeEnvironmentDto.womanSmokeCooking,
+      noisy_woman: eligibleDto.homeEnvironmentDto.womanNoisy,
+      saving_woman: eligibleDto.homeEnvironmentDto.womanSaving,
+
+      safeWater_other: eligibleDto.homeEnvironmentDto.waterDetails,
+      toilet_other: eligibleDto.homeEnvironmentDto.toiletDetails,
+      garbage_other: eligibleDto.homeEnvironmentDto.garbageDetails,
+      hazardous_other: eligibleDto.homeEnvironmentDto.hazardousDetails,
+      chemicals_other: eligibleDto.homeEnvironmentDto.chemicalsDetails,
+      radioactive_other: eligibleDto.homeEnvironmentDto.radioactiveDetails,
+      extremeHeat_other: eligibleDto.homeEnvironmentDto.extremeHeatDetails,
+      smokeCooking_other: eligibleDto.homeEnvironmentDto.smokeCookingDetails,
+      noisy_other: eligibleDto.homeEnvironmentDto.noisyDetails,
+      saving_other: eligibleDto.homeEnvironmentDto.savingDetails,
+
+      womanWeight: eligibleDto.midwifeAssessmentDto.womanWeight,
+      womanHeight: eligibleDto.midwifeAssessmentDto.womanHeight,
+      womanBmi: eligibleDto.midwifeAssessmentDto.womanBmi,
+      womanBloodType: eligibleDto.midwifeAssessmentDto.womanBloodType,
+      womanHemoglobin: eligibleDto.midwifeAssessmentDto.womanHemoglobin,
+
+      manWeight: eligibleDto.midwifeAssessmentDto.manWeight,
+      manHeight: eligibleDto.midwifeAssessmentDto.manHeight,
+      manBmi: eligibleDto.midwifeAssessmentDto.manBmi,
+      manBloodType: eligibleDto.midwifeAssessmentDto.manBloodType,
+      manHemoglobin: eligibleDto.midwifeAssessmentDto.manHemoglobin,
+
+      special: eligibleDto.midwifeAssessmentDto.special,
+      session: eligibleDto.midwifeAssessmentDto.session,
     };
   }
-}
 
+  static createMidwifeEligibleObject(
+    userEmail,
+    formObject,
+    pastPregnancies,
+    familyPlanningMethods
+  ) {
+    return {
+      email: userEmail,
+      womanName: formObject.womanName,
+      manName: formObject.manName,
+      address: formObject.address,
+      womanPhone: formObject.womanPhone,
+      manPhone: formObject.manPhone,
+      womanDob: formObject.womanDob,
+      manDob: formObject.manDob,
+      womanAgeMarried: formObject.womanAgeMarried,
+      manAgeMarried: formObject.manAgeMarried,
+      womanEducationLevel: formObject.womanEducationLevel,
+      manEducationLevel: formObject.manEducationLevel,
+      womanOccupation: formObject.womanOccupation,
+      manOccupation: formObject.manOccupation,
+      womanWeight: formObject.womanWeight,
+      manWeight: formObject.manWeight,
+      womanHeight: formObject.womanHeight,
+      manHeight: formObject.manHeight,
+      womanBmi: formObject.womanBmi,
+      manBmi: formObject.manBmi,
+      womanBloodType: formObject.womanBloodType,
+      manBloodType: formObject.manBloodType,
+      womanHemoglobin: formObject.womanHemoglobin,
+      manHemoglobin: formObject.manHemoglobin,
+      children: formObject.children,
+      special: formObject.special,
+      session: formObject.session,
+      pastPregnancies: pastPregnancies, // Array of past pregnancy objects
+      familyPlanningMethods: familyPlanningMethods, // Array of family planning method objects}
+    };
+  }
+
+  // By midwife
+  static async createEligibleInfo(formData) {
+    try {
+      const response = await axiosInstance.post(`/eligible/midwife/add`, {
+        ...formData,
+      });
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  // For midwife
+  static async getEligibleInfoForMidwife(email) {
+    try {
+      const response = await axiosInstance.get(
+        `/eligible/midwife/get/${email}`
+      );
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  // For midwife
+  static async getEligibleListForMidwife() {
+    try {
+      const response = await axiosInstance.get(`/eligible/midwife/get`);
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  }
+}
 export default EligibleService;

@@ -26,13 +26,28 @@ import { mohData } from "@/data/mohData";
 import { FormHelperText } from "@mui/material";
 import UserService from "@/service/userService";
 import { errorType, Toast } from "@/components/toast";
+import { useTitle } from "@/hooks/useTitle";
 
 const formatDisplayName = (value) => {
   return value
-    .split("_") // Split by underscore
-    .map((word) => word.toLowerCase()) // Convert each word to lowercase
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1)) // Capitalize first letter
-    .join(" "); // Join words with space
+    .split("_")
+    .map((word) => word.toLowerCase())
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+};
+
+const formatPhoneNumber = (phone) => {
+  if (!phone) return "";
+
+  phone = phone.replace(/\D/g, "");
+
+  if (phone.startsWith("0")) {
+    phone = "+94" + phone.slice(1);
+  } else if (!phone.startsWith("+94")) {
+    phone = "+94" + phone;
+  }
+
+  return phone;
 };
 
 const userCards = [
@@ -64,6 +79,7 @@ const parentCards = [
 ];
 
 const Dashboard = () => {
+  useTitle("Dashboard");
   const [province, setProvince] = useState("");
   const [district, setDistrict] = useState("");
   const [area, setArea] = useState("");
@@ -76,13 +92,13 @@ const Dashboard = () => {
 
   const handleProvinceChange = (event) => {
     setProvince(event.target.value);
-    setDistrict(""); // Reset district when province changes
-    setArea(""); // Reset area when province changes
+    setDistrict("");
+    setArea("");
   };
 
   const handleDistrictChange = (event) => {
     setDistrict(event.target.value);
-    setArea(""); // Reset area when district changes
+    setArea("");
   };
 
   const handleAreaChange = (event) => {
@@ -407,16 +423,20 @@ const Dashboard = () => {
               <div className="sm:w-1/2 m-8">
                 <h2 className="text-xl font-medium">{t("contact")}</h2>
 
-                <Button className="bg-primary-purple sm:mx-8 mt-5">
-                  <HiChatBubbleLeftRight size={25} color="white" />
-                  <p className="text-white ps-2 pe-3">{t("message")}</p>
-                </Button>
+                <a href={`sms:${formatPhoneNumber(midwife.phone)}`}>
+                  <Button className="bg-primary-purple sm:mx-8 mt-5">
+                    <HiChatBubbleLeftRight size={25} color="white" />
+                    <p className="text-white ps-2 pe-3">{t("message")}</p>
+                  </Button>
+                </a>
                 <br />
 
-                <Button className="bg-primary-purple sm:mx-8 mt-4">
-                  <LuPhoneCall size={25} color="white" />
-                  <p className="text-white ps-2 pe-3">{t("call")}</p>
-                </Button>
+                <a href={`tel:${formatPhoneNumber(midwife.phone)}`}>
+                  <Button className="bg-primary-purple sm:mx-8 mt-4">
+                    <LuPhoneCall size={25} color="white" />
+                    <p className="text-white ps-2 pe-3">{t("call")}</p>
+                  </Button>
+                </a>
               </div>
             </div>
           </div>

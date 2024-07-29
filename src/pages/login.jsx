@@ -4,7 +4,6 @@ import { HiOutlineArrowRight } from "react-icons/hi";
 import { Link, useNavigate } from "react-router-dom";
 import loginImg from "../assets/loginImg.png";
 import { useTranslation } from "react-i18next";
-import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import {
   FormControl,
@@ -20,8 +19,10 @@ import { Button } from "@/components/ui/button";
 import UserService from "@/service/userService";
 import { errorType, Toast } from "@/components/toast";
 import { userData } from "@/context/userAuth";
+import { useTitle } from "@/hooks/useTitle";
 
 const Login = () => {
+  useTitle("Log In");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
@@ -95,7 +96,6 @@ const Login = () => {
       }
     } catch (error) {
       console.log(error.message);
-      Toast(error.message, errorType.ERROR);
 
       const data = error.response.data;
       if (data) {
@@ -215,7 +215,6 @@ const Login = () => {
           </p>
         </div>
       </div>
-      <ToastContainer />
     </div>
   );
 };

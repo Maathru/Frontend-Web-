@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import React from "react";
+import { useEffect, useState } from "react";
 import {
   HiOutlinePencilAlt,
   HiOutlinePlusSm,
@@ -11,10 +11,28 @@ import {
   GridToolbarQuickFilter,
   gridClasses,
 } from "@mui/x-data-grid";
-import { Box, Chip, IconButton } from "@mui/material";
+import { Box, IconButton } from "@mui/material";
 import { useTranslation } from "react-i18next";
-import { Link } from "react-router-dom";
-import PageHeading from "@/components/ui/pageHeading";
+import Heading from "@/components/ui/heading";
+import { useTitle } from "@/hooks/useTitle";
+import UserService from "@/service/userService";
+import { errorType, Toast } from "@/components/toast";
+import { format } from "date-fns";
+
+const Capitalize = (str) => {
+  return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+};
+
+const FormattedDateTime = (params) => {
+  if (!params) return "";
+
+  const date = new Date(params);
+
+  const readableDate = format(date, "MMMM do, yyyy"); // "July 26th, 2024"
+  const readableTime = format(date, "hh:mm:ss a"); // "06:39:04 PM"
+
+  return `${readableTime} at ${readableDate}`;
+};
 
 const StripedDataGrid = styled(DataGrid)(({ theme }) => ({
   [`& .${gridClasses.row}.even`]: {
@@ -72,9 +90,19 @@ const columns = [
   { field: "id", headerName: "User ID", width: 70 },
   { field: "name", headerName: "User Name", width: 130 },
   { field: "email", headerName: "User Email", flex: 1 },
-  { field: "role", headerName: "User Role", flex: 1 },
-  { field: "last_login", headerName: "Last Login", flex: 1 },
-  
+  {
+    field: "role",
+    headerName: "User Role",
+    flex: 1,
+    valueGetter: Capitalize,
+  },
+  {
+    field: "lastLogin",
+    headerName: "Last Login",
+    flex: 1,
+    valueGetter: FormattedDateTime,
+  },
+
   {
     field: "edit",
     headerName: "",
@@ -111,37 +139,32 @@ const columns = [
   },
 ];
 
-const rows = [
-  {
-    id: 1,
-    name: "User1",
-    email: "Piliyandala",
-    role: "25/04/2024",
-    last_login: "8am-5pm",
-  },
-  {
-    id: 2,
-    name: "User1",
-    email: "Piliyandala",
-    role: "25/04/2024",
-    last_login: "10am-5pm",
-  },
-  {
-    id: 2,
-    name: "User1",
-    email: "Piliyandala",
-    role: "25/04/2024",
-    last_login: "10am-5pm",
-  },
-];
-
-const Manageusers = () => {
+const ManageUsers = () => {
+  useTitle("Users");
+  const [rows, setRows] = useState([]);
   const { t } = useTranslation("Manageusers");
   const title = t("Manage Users");
 
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const response = await UserService.getAllUsers();
+        setRows(response);
+      } catch (error) {
+        console.log(error.message);
+
+        const data = error.response.data;
+        console.log(data);
+        Toast(data, errorType.ERROR);
+      }
+    };
+
+    fetchUsers();
+  }, []);
+
   return (
     <div className="content-container">
-      <PageHeading title={title} />
+      <Heading title={title} />
 
       <div style={{ height: "100%", width: "100%", marginTop: "20px" }}>
         <StripedDataGrid
@@ -164,4 +187,4 @@ const Manageusers = () => {
   );
 };
 
-export default Manageusers;
+export default ManageUsers;
