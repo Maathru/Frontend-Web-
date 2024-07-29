@@ -124,8 +124,7 @@ const Answer = () => {
                 />
                 <div className="pb-5 my-5">
                   <div className="flex gap-2 justify-between items-center">
-                    {question.keywords &&
-                      question.keywords.map((keyword, index) => (
+                    {question.keywords?.map((keyword, index) => (
                         <Badge
                           key={index} // Ensure unique key for each Badge
                           variant="secondary"
