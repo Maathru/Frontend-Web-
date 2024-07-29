@@ -36,6 +36,7 @@ import { userData } from "./context/userAuth";
 import ScrollToTop from "./components/ScrollToTop";
 import Loader from "./components/loader";
 import ManageUsers from "./pages/manageusers";
+import Memories from "./pages/memories";
 
 function App() {
   const darkQuery = window.matchMedia("(prefers-color-scheme: dark)");
@@ -132,7 +133,8 @@ function App() {
 
             <Route path="/midwife/parents" element={<Parents />} />
             <Route path="/manageusers" element={<ManageUsers />} />
-        
+            <Route path="/memories" element={<Memories />} />
+
           </>
         )}
       </Routes>
