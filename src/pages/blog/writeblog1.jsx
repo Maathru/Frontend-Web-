@@ -1,13 +1,47 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Input } from "@/components/ui/input";
 import { IoImageOutline } from "react-icons/io5";
 import Heading from "@/components/ui/heading";
 import BlogHeading from "@/components/blogComponents/blogHeading";
 import BlogProgress from "@/components/blogComponents/BlogProgress";
+import { useState } from "react";
 
 const accentColor = "bg-[#9c3cc1]";
 
 const WriteBlog1 = () => {
+  const navigate = useNavigate();
+  const [formData, setFormData] = useState({
+    stage: 1,
+    title: "",
+    category: "",
+  });
+
+  const setData = (name, value) => {
+    const newObject = {};
+    newObject[name] = value || "";
+    setFormData({ ...formData, ...newObject });
+  };
+
+  const handleNext = () => {
+    formData.stage = Math.max(formData.stage, 2);
+    localStorage.setItem("blog", JSON.stringify(formData));
+    navigate("/blogs/write/2");
+  };
+
+  useState(() => {
+    const fetchBlog = () => {
+      const blog = JSON.parse(localStorage.getItem("blog"));
+
+      if (blog) {
+        setFormData({ ...formData, ...blog });
+      }
+    };
+
+    fetchBlog();
+  }, []);
+
+  console.log(formData);
+
   return (
     <div className="content-container">
       <Heading />
@@ -33,6 +67,8 @@ const WriteBlog1 = () => {
               type="text"
               className="w-full md:h-12 h-10 mt-4 px-3 py-2 border-2 border-[#e0e0e0] rounded-full text-lg focus:outline-none focus:border-[#9c3cc1] dark:bg-neutral-800"
               placeholder="Enter the blog title"
+              value={formData.title || ""}
+              onChange={(e) => setData("title", e.target.value)}
             />
 
             <div className="md:mt-12 mt-8 md:text-lg text-base font-medium text-black dark:text-neutral-300">
@@ -41,6 +77,8 @@ const WriteBlog1 = () => {
             <select
               className="w-full md:h-12 h-10 mt-4 px-3 py-2 border-2 border-[#e0e0e0] rounded-full text-lg text-gray-400 focus:outline-none focus:border-[#9c3cc1] bg-white dark:bg-neutral-800"
               placeholder="Select the area of the blog post"
+              value={formData.category || ""}
+              onChange={(e) => setData("category", e.target.value)}
             >
               <option value="" hidden>
                 Select the area of the blog post
@@ -82,13 +120,12 @@ const WriteBlog1 = () => {
       </div>
 
       <div className="flex justify-center">
-        <Link to="/blogs/write/2">
-          <button
-            className={`${accentColor} px-8 md:px-16 py-3 mt-8 md:mt-12 mb-4 rounded-lg text-xl font-semibold hover:bg-neutral-100 text-white dark:hover:bg-neutral-900 hover:text-fuchsia-700 hover:ring-fuchsia-700 hover:ring-inset hover:ring-2`}
-          >
-            Next
-          </button>
-        </Link>
+        <button
+          className={`${accentColor} px-8 md:px-16 py-3 mt-8 md:mt-12 mb-4 rounded-lg text-xl font-semibold hover:bg-neutral-100 text-white dark:hover:bg-neutral-900 hover:text-fuchsia-700 hover:ring-fuchsia-700 hover:ring-inset hover:ring-2`}
+          onClick={handleNext}
+        >
+          Next
+        </button>
       </div>
     </div>
   );

@@ -2,10 +2,41 @@ import { Link } from "react-router-dom";
 import Heading from "@/components/ui/heading";
 import BlogHeading from "@/components/blogComponents/blogHeading";
 import BlogProgress from "@/components/blogComponents/BlogProgress";
+import { errorType, Toast } from "@/components/toast";
+import BlogService from "@/service/blogService";
 
 const accentColor = "bg-[#9c3cc1]";
 
 const WriteBlog4 = () => {
+  const [formData, setFormData] = useState({});
+
+  const handleSubmit = async () => {
+    try {
+      const response = await BlogService.addBlog(formData);
+      Toast(response, errorType.SUCCESS);
+
+      localStorage.removeItem("blog");
+    } catch (error) {
+      console.log(error.message);
+
+      const data = error.response.data;
+      if (data) {
+        if (Array.isArray(data)) {
+          const newErrors = {};
+          data.map((msg) => {
+            Toast(msg.message, errorType.ERROR);
+            newErrors[msg.field] = msg.message;
+          });
+
+          console.log(newErrors);
+        } else {
+          console.log(data);
+          Toast(data, errorType.ERROR);
+        }
+      }
+    }
+  };
+
   return (
     <div className="content-container">
       <Heading />
@@ -35,6 +66,7 @@ const WriteBlog4 = () => {
               <Link to="/blogs">
                 <button
                   className={`${accentColor} px-8 md:px-16 py-3 mt-8 md:mt-12 mb-4 rounded-lg text-xl font-semibold hover:bg-neutral-100 text-white dark:hover:bg-neutral-900 hover:text-fuchsia-700 hover:ring-fuchsia-700 hover:ring-inset hover:ring-2`}
+                  onSubmit={handleSubmit}
                 >
                   Post
                 </button>

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import Heading from "@/components/ui/heading";
@@ -9,7 +9,40 @@ import BlogHeading from "@/components/blogComponents/blogHeading";
 const accentColor = "bg-[#9c3cc1]";
 
 function WriteBlog2() {
-  const [description, setDescription] = useState("");
+  const [formData, setFormData] = useState({
+    description: "",
+  });
+  const [isLoading, setIsLoading] = useState(true);
+  const navigate = useNavigate();
+
+  const handleNext = () => {
+    formData.stage = Math.max(formData.stage, 3);
+    localStorage.setItem("blog", JSON.stringify(formData));
+    navigate("/blogs/write/3");
+  };
+
+  useState(() => {
+    const fetchBlog = () => {
+      const blog = JSON.parse(localStorage.getItem("blog"));
+
+      if (blog) {
+        setFormData({ ...formData, ...blog });
+      } else {
+        setFormData({ stage: 1 });
+      }
+    };
+
+    fetchBlog();
+    setIsLoading(false);
+  }, []);
+
+  if (!isLoading && (!formData || !formData.stage)) {
+    return <Navigate to={"/blogs/write/1"} />;
+  }
+
+  if (!isLoading && formData.stage < 2) {
+    return <Navigate to={"/blogs/write/1"} />;
+  }
 
   return (
     <div className="content-container">
@@ -27,7 +60,9 @@ function WriteBlog2() {
           <div className="mt-6 md:ml-6 mb-8">
             <ReactQuill
               value={description}
-              onChange={setDescription}
+              onChange={(e) =>
+                setFormData({ ...formData, description: e.target.value })
+              }
               className="bg-white dark:bg-neutral-900 text-neutral-800 dark:text-neutral-100 h-[400px]"
             />
           </div>
@@ -45,6 +80,7 @@ function WriteBlog2() {
         <Link to="/blogs/write/3">
           <button
             className={`${accentColor} px-8 md:px-16 py-3 mt-8 md:mt-12 mb-4 rounded-lg text-xl font-semibold hover:bg-neutral-100 text-white dark:hover:bg-neutral-900 hover:text-fuchsia-700 hover:ring-fuchsia-700 hover:ring-inset hover:ring-2`}
+            onClick={handleNext}
           >
             Next
           </button>
