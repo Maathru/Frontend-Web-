@@ -45,9 +45,11 @@ const AddClinic = () => {
         break;
       case "date":
         if (!value) return "Date is required";
-        const clinicDate = new Date(value);
-        if (clinicDate < new Date())
-          return "Date must be in the today or future";
+        {
+          const clinicDate = new Date(value);
+          if (clinicDate < new Date())
+            return "Date must be in the today or future";
+        }
         break;
       case "startTime":
         if (!value) return "Start time is required";
