@@ -35,6 +35,7 @@ import NotFound from "./pages/notFound";
 import { userData } from "./context/userAuth";
 import ScrollToTop from "./components/ScrollToTop";
 import ManageUsers from "./pages/manageusers";
+import Memories from "./pages/memories";
 import { ToastContainer } from "react-toastify";
 import { role } from "./data/roleData";
 
@@ -146,6 +147,7 @@ function App() {
             {userDetails.role === role.PARENT && (
               <>
                 <Route path="/growth" element={<Growth />} />
+                <Route path="/memories" element={<Memories />} />
               </>
             )}
 
