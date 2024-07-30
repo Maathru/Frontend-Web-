@@ -35,8 +35,9 @@ import Parents from "./pages/midwife/parents/viewAll";
 import NotFound from "./pages/notFound";
 import { userData } from "./context/userAuth";
 import ScrollToTop from "./components/ScrollToTop";
-import ManageUsers from "./pages/manageusers";
-import ManageClinics from "./pages/manageClinics";
+import ManageUsers from "./pages/admin/manageusers";
+import ManageClinics from "./pages/admin/manageClinics";
+import ManageDivisions from "./pages/admin/manageDivisions";
 import Memories from "./pages/memories";
 import Healthstatics from "./pages/healthstatics";
 import { ToastContainer } from "react-toastify";
@@ -123,6 +124,7 @@ function App() {
                   <Route path="/users" element={<ManageUsers />} />
                   <Route path="/clinics" element={<ManageClinics />} />
                   <Route path="/healthstatics" element={<Healthstatics />} />
+                  <Route path="/divisions" element={<ManageDivisions />} />
                 </>
               )}
 

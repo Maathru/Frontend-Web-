@@ -1,5 +1,5 @@
-import { gridClasses, styled } from "@mui/material";
-import { DataGrid } from "@mui/x-data-grid";
+import { styled } from "@mui/material";
+import { DataGrid, gridClasses } from "@mui/x-data-grid";
 
 export const StripedDataGrid = styled(DataGrid)(({ theme }) => {
   return {
@@ -22,6 +22,9 @@ export const StripedDataGrid = styled(DataGrid)(({ theme }) => {
     },
     [`& .${gridClasses.row}`]: {
       cursor: "pointer",
+    },
+    "& .MuiDataGrid-columnHeaderTitle": {
+      fontWeight: "bold",
     },
   };
 });
