@@ -7,7 +7,7 @@ const Footer = () => {
   const { userDetails } = useContext(userData);
 
   return (
-<div className="mx-auto w-[100%] px-5 text-sm my-3 mt-auto mb-0 relative bottom-0 bg-[#6F0096] text-white dark:bg-[#6F0096] dark:text-white">
+<div className="mx-auto w-[100%] px-5 text-sm my-3 mt-auto mb-0 relative bottom-0 bg-footer-purple text-white dark:bg-footer-purple dark:text-white">
 <div className="flex justify-around md:justify-between py-5">
         <div>
           <p>&copy; {new Date().getFullYear()} Maathru Inc.</p>

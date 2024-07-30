@@ -19,10 +19,9 @@ import {
 } from "@/components/ui/card";
 import { useTitle } from "@/hooks/useTitle";
 
-const cardColor = "bg-[#F9F3FC] dark:bg-[#251F28] hover:dark:bg-[#1D1A1F]";
-const badgeColor =
-  "bg-fuchsia-200 dark:bg-fuchsia-300 hover:dark:bg-fuchsia-100 dark:text-neutral-800";
-const readMoreColor = "text-[#9c3cc1] dark:text-neutral-300 font-semibold hover:text-[#9c3cc1] hover:dark:text-[#9c3cc1]";
+const cardColor = "bg-light-blogcard dark:bg-dark-primary hover:dark:bg-dark-blogcard";
+const badgeColor = "bg-fuchsia-200 dark:bg-fuchsia-300 hover:dark:bg-fuchsia-100 dark:text-neutral-800";
+const readMoreColor = "text-primary-purple dark:text-dark-primary font-semibold hover:text-primary-purple hover:dark:text-dark-primary";
 
 const blog = () => {
   useTitle("Blogs");
@@ -189,8 +188,8 @@ const blog = () => {
         </CardContent>
         <CardFooter className="flex justify-center">
           <Link to={"/blogs/write/1"}>
-            <Button className="bg-[#9C33C1] dark:bg-[#ff8de7] text-lg hover:dark:bg-neutral-100 hover:dark:text-[#9C33C1] duration-200">
-              <MdCreate className="mr-2 h-4 w-4" /> Let's Write A Blog Article
+          <Button className="bg-primary-purple dark:bg-dark-primary text-lg hover:bg-neutral-100 hover:text-primary-purple duration-200">
+          <MdCreate className="mr-2 h-4 w-4" /> Let's Write A Blog Article
             </Button>
           </Link>
         </CardFooter>
