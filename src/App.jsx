@@ -16,6 +16,7 @@ import ClinicDates from "./pages/doctor/clinicDates";
 import ClinicReports from "./pages/doctor/clinicReports";
 import Forum from "./pages/forum";
 import Answer from "./pages/answer";
+import EditQuestion from "./pages/editQuestion";
 import Dashboard from "./pages/user/dashboard";
 import { Route, Routes } from "react-router-dom";
 import { useTranslation } from "react-i18next";
@@ -114,6 +115,8 @@ function App() {
           <Route path="/blogs/article" element={<Article />} />
           <Route path="/forum" element={<Forum />} />
           <Route path="/forum/answer/:questionId" element={<Answer />} />
+          <Route path="/forum/edit/:questionId" element={<EditQuestion />} />
+          <Route path="/forum/ask" element={<AskQuestion />} />
 
           {userDetails.authenticated && (
             <>
@@ -192,7 +195,6 @@ function App() {
               <Route path="/blogs/write/1" element={<WriteBlog1 />} />
               <Route path="/blogs/write/2" element={<WriteBlog2 />} />
 
-              <Route path="/forum/ask" element={<AskQuestion />} />
             </>
           )}
           <Route path="*" element={<NotFound />} />

@@ -50,6 +50,26 @@ class ForumService {
       throw error;
     }
   }
+
+  static async editQuestion(id, formData) {
+    try {
+      const response = await axiosInstance.put(`/question/${id}`, {
+        ...formData,
+      });
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  static async deleteQuestion(id) {
+    try {
+      const response = await axiosInstance.delete(`/question/${id}`);
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  }
 }
 
 export default ForumService;
