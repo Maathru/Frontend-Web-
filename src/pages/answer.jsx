@@ -21,7 +21,7 @@ const Answer = () => {
   const [answers, setAnswers] = useState([]);
   const [yourAnswer, setYourAnswer] = useState("");
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false); // State to control delete confirmation dialog
-  const [deleteId, setDeleteId] = useState(null); 
+  const [deleteId, setDeleteId] = useState(null);
   const navigate = useNavigate();
   const { userDetails } = useContext(userData);
 
