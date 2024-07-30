@@ -44,8 +44,8 @@ const scenarios = [
 const Memories = () => {
   return (
     <Container>
-      <Heading title="Memories with your Child" />{" "}
-      {/* Use the PageHeading component */}
+      <Heading title="Memories with your Child" />
+
       <Box display="flex" alignItems="center" mb={2}>
         <Select defaultValue="account1" variant="outlined" sx={{ mr: 2 }}>
           <MenuItem value="account1">Child Account 1</MenuItem>

@@ -38,6 +38,7 @@ import ScrollToTop from "./components/ScrollToTop";
 import ManageUsers from "./pages/manageusers";
 import ManageClinics from "./pages/manageClinics";
 import Memories from "./pages/memories";
+import Healthstatics from "./pages/healthstatics";
 import { ToastContainer } from "react-toastify";
 import { role } from "./data/roleData";
 import { ThemeProvider } from "@mui/material/styles";
@@ -121,6 +122,7 @@ function App() {
                 <>
                   <Route path="/users" element={<ManageUsers />} />
                   <Route path="/clinics" element={<ManageClinics />} />
+                  <Route path="/healthstatics" element={<Healthstatics />} />
                 </>
               )}
 
