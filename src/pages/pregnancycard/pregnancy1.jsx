@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
@@ -7,16 +7,24 @@ import BoolTextInput from "@/components/userComponents/boolTextInput";
 import BasicInfoInput from "@/components/userComponents/basicInfoInput";
 import { Button } from "@/components/ui/button";
 import dayjs from "dayjs";
-import EligiblePagination from "@/components/userComponents/eligiblePagination";
+import CustomPagination from "@/components/userComponents/customPagination";
 import { conditions1, familyDisease, basicInfo } from "@/data/pregnancyData";
 import { errorType, Toast } from "@/components/toast";
 import EligibleService from "@/service/eligibleService";
-import PageHeading from "@/components/ui/pageHeading";
+import Heading from "@/components/ui/heading";
 import { useTranslation } from "react-i18next";
+import { TextField } from "@mui/material";
+import { useTitle } from "@/hooks/useTitle";
 
 const Pregnancy1 = () => {
+  useTitle("Recovery Checklist - Page 1");
   const [formObject, setFormObject] = useState({ stage: 1 });
+  const location = useLocation();
   const navigate = useNavigate();
+
+  const editMode =
+    location.pathname.split("/")[2] === "add" ||
+    location.pathname.split("/")[2] === "edit";
 
   useEffect(() => {
     const fetchEligibleInfo = async () => {
@@ -34,7 +42,7 @@ const Pregnancy1 = () => {
       }
     };
 
-    fetchEligibleInfo();
+    // fetchEligibleInfo();
   }, []);
 
   const initiateFields = () => {
@@ -44,15 +52,16 @@ const Pregnancy1 = () => {
       initialData[info.name + "_man"] = "";
       initialData[info.name + "_woman"] = "";
     });
+
     conditions1.forEach((condition) => {
-      // initialData[condition.name + "_man"] = "";
       initialData[condition.name + "_woman"] = "";
       initialData[condition.name + "_other"] = "";
     });
-    initialData.marriage = null;
-    initialData.dob_woman = null;
-    initialData.dob_man = null;
-    console.log(initialData);
+
+    familyDisease.forEach((disease) => {
+      initialData[disease.name + "_woman"] = "";
+      initialData[disease.name + "_other"] = "";
+    });
 
     return initialData;
   };
@@ -69,33 +78,35 @@ const Pregnancy1 = () => {
     // Create a shallow copy of formObject to avoid any circular references
     const shallowFormObject = { ...formObject };
 
-    localStorage.setItem("formObject", JSON.stringify(shallowFormObject));
-    console.log(shallowFormObject);
+    localStorage.setItem("pregnancy", JSON.stringify(shallowFormObject));
     navigate("/pregnancy/2");
   };
 
   useEffect(() => {
     const getFromLocalStorage = () => {
-      const jsonString = localStorage.getItem("formObject");
+      const jsonString = localStorage.getItem("pregnancy");
       if (jsonString) {
         return JSON.parse(jsonString);
       }
       return {};
     };
 
-    const obj2 = initiateFields();
-    const obj1 = getFromLocalStorage();
-    setFormObject((prevFormObject) => ({ ...prevFormObject, ...obj2, ...obj1 }));
+    const obj1 = initiateFields();
+    const obj2 = getFromLocalStorage();
+    setFormObject((prevFormObject) => ({
+      ...prevFormObject,
+      ...obj1,
+      ...obj2,
+    }));
   }, []);
 
   const { t } = useTranslation("pregnancy1");
-  const title = t("title");
 
   return (
     <div className="container my-10 font-poppins">
       {/* Hero section */}
       <div>
-        <PageHeading title={title} />
+        <Heading title={t("title")} />
 
         <p className="text-xl font-bold mt-8">
           Mother&apos;s Name : A.P. Gamage
@@ -154,41 +165,62 @@ const Pregnancy1 = () => {
 
           {/* Input box */}
           <div>
-            {basicInfo.map((detail, index) => (
-              <BasicInfoInput
-                key={index}
-                index={index}
-                title={detail.title}
-                value1={formObject[detail.name + "_woman"] || ""}
-                value2={formObject[detail.name + "_man"] || ""}
-                placeholder1={detail.placeholder1}
-                placeholder2={detail.placeholder2}
-                onChange={(filed, e) => {
-                  setData(filed, detail.name, e.target.value);
-                }}
-              />
-            ))}
-            {/* <BasicInfoInput
-              key={8}
-              index={8}
-              title={"Duration for the office"}
-              value1={formObject.duration_woman || ""}
-              value2={formObject.duration_man || ""}
-              placeholder1={"Woman's duration"}
-              placeholder2={"Man's duration"}
-              onChange={
-                (e) => {
-                  formObject.duration_woman = e.target.value;
-                }
-              } 
-            /> */}
             <div className="grid grid-cols-3 gap-4 items-center mt-4 mx-14">
-              <p>9. Date of Birth</p>
+              <p>1. Name</p>
+              <TextField
+                value={formObject.name_woman || ""}
+                label="Enter woman's name"
+                variant="outlined"
+                className="w-96"
+                onChange={(e) => setData("woman", "name", e.target.value)}
+              />
+              <TextField
+                value={formObject.name_man || ""}
+                label="Enter man's name"
+                variant="outlined"
+                className="w-96"
+                onChange={(e) => setData("man", "name", e.target.value)}
+              />
+            </div>
+
+            <div className="grid grid-cols-3 gap-4 items-center mt-4 mx-14">
+              <p>2. Address</p>
+              <TextField
+                value={formObject.address || ""}
+                label="Enter Address"
+                variant="outlined"
+                className="w-96"
+                onChange={(e) =>
+                  setFormObject({ ...formObject, address: e.target.value })
+                }
+              />
+            </div>
+
+            <div className="grid grid-cols-3 gap-4 items-center mt-4 mx-14">
+              <p>3. Telephone Number</p>
+              <TextField
+                value={formObject.phone_woman || ""}
+                label="Enter woman's telephone number"
+                variant="outlined"
+                className="w-96"
+                onChange={(e) => setData("woman", "phone", e.target.value)}
+              />
+              <TextField
+                value={formObject.phone_man || ""}
+                label="Enter man's telephone number"
+                variant="outlined"
+                className="w-96"
+                onChange={(e) => setData("man", "phone", e.target.value)}
+              />
+            </div>
+
+            <div className="grid grid-cols-3 gap-4 items-center mt-4 mx-14">
+              <p>4. Date of Birth</p>
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DatePicker
                   label="Woman's Date of Birth"
                   className="w-96"
-                  value={formObject.dob_woman ? dayjs(formObject.dob_woman) : null}
+                  value={dayjs(formObject.dob_woman)}
                   onChange={(newValue) => {
                     const isoDate = newValue ? newValue.toISOString() : null;
                     setFormObject((prevFormObject) => ({
@@ -202,7 +234,7 @@ const Pregnancy1 = () => {
                 <DatePicker
                   label="Man's Date of Birth"
                   className="w-96"
-                  value={formObject.dob_man ? dayjs(formObject.dob_man) : null}
+                  value={dayjs(formObject.dob_man)}
                   onChange={(newValue) => {
                     const isoDate = newValue ? newValue.toISOString() : null;
                     setFormObject((prevFormObject) => ({
@@ -213,22 +245,34 @@ const Pregnancy1 = () => {
                 />
               </LocalizationProvider>
             </div>
+
+            {basicInfo.map((detail, index) => (
+              <BasicInfoInput
+                key={index}
+                index={index + 4}
+                type={detail.type && detail.type}
+                title={detail.title}
+                value1={formObject[detail.name + "_woman"] || ""}
+                value2={formObject[detail.name + "_man"] || ""}
+                placeholder1={detail.placeholder1}
+                placeholder2={detail.placeholder2}
+                onChange={(filed, e) => {
+                  setData(filed, detail.name, e.target.value);
+                }}
+              />
+            ))}
+
             <div className="grid grid-cols-3 gap-4 items-center mt-4 mx-14">
-              <p>10. Marriage Date</p>
-              <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <DatePicker
-                  label="Marriage Date"
-                  className="w-96 col-span-2"
-                  value={formObject.marriage ? dayjs(formObject.marriage) : null}
-                  onChange={(newValue) => {
-                    const isoDate = newValue ? newValue.toISOString() : null;
-                    setFormObject((prevFormObject) => ({
-                      ...prevFormObject,
-                      marriage: isoDate,
-                    }));
-                  }}
-                />
-              </LocalizationProvider>
+              <p>8. Duration for the office </p>
+              <TextField
+                value={formObject.duration || ""}
+                label="Enter duration"
+                variant="outlined"
+                className="w-96"
+                onChange={(e) =>
+                  setFormObject({ ...formObject, duration: e.target.value })
+                }
+              />
             </div>
           </div>
 
@@ -237,11 +281,15 @@ const Pregnancy1 = () => {
             Pre-Existing Medical Conditions
           </h3>
 
+          <div className="grid grid-cols-3 gap-4 items-center mt-5 mb-6">
+            <div className="w-fit"></div>
+            <div>Woman</div>
+          </div>
+
           <div className="mt-4">
             {conditions1.map((condition, index) => (
               <BoolTextInput
                 key={index}
-                index={index}
                 title={condition.title}
                 value1={formObject[condition.name + "_woman"] || ""}
                 value2={formObject[condition.name + "_other"] || ""}
@@ -254,15 +302,19 @@ const Pregnancy1 = () => {
           </div>
 
           {/* Family health conditions */}
-          <h3 className="text-xl font-bold mt-10">
+          <h3 className="text-xl font-bold mt-16">
             Family History of Diseases/Other Health Conditions
           </h3>
+
+          <div className="grid grid-cols-3 gap-4 items-center mt-10 mb-6">
+            <div className="w-fit"></div>
+            <div>Woman</div>
+          </div>
 
           <div className="mt-4">
             {familyDisease.map((condition, index) => (
               <BoolTextInput
                 key={index}
-                index={index}
                 title={condition.title}
                 value1={formObject[condition.name + "_woman"] || ""}
                 value2={formObject[condition.name + "_other"] || ""}
@@ -273,18 +325,13 @@ const Pregnancy1 = () => {
               />
             ))}
           </div>
-
-          
         </div>
       </div>
 
       <Button onClick={handleSave}>Save and Next</Button>
 
-      <div className="container flex items-center mt-10 mb-5 gap-4">
-        <Button type="button" variant="contained" color="primary" onClick={handleSave}>
-          Next
-        </Button>
-        <EligiblePagination stage={1} />
+      <div className="flex w-full mt-24">
+        <CustomPagination path={"/pregnancy/"} total={4} current={1} />
       </div>
     </div>
   );

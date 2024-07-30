@@ -3,7 +3,7 @@ import { IoIosArrowBack } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
 import MinHeightTextarea from "../../components/userComponents/minHeightTextarea";
 import { TextField } from "@mui/material";
-import EligiblePagination from "@/components/userComponents/eligiblePagination";
+import CustomPagination from "@/components/userComponents/customPagination";
 import { useEffect, useState } from "react";
 import { useTitle } from "@/hooks/useTitle";
 import { sections } from "@/data/eligibleData";
@@ -129,7 +129,7 @@ const Eligible5 = () => {
       <MinHeightTextarea cols={2} />
 
       <div className="flex w-full mt-24">
-        <EligiblePagination total={5} current={5} />
+        <CustomPagination path={"/eligible/"} total={5} current={5} />
       </div>
     </div>
   );
