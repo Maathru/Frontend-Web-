@@ -92,6 +92,17 @@ const Answer = () => {
     setDeleteId(null);
   };
 
+  const confirmDeleteAnswer = async (id) => {
+    try {
+      const response = await ForumService.deleteAnswer(id);
+      Toast(response, errorType.SUCCESS);
+      setPageLoader((pre) => !pre);
+    } catch (error) {
+      const data = error.response.data;
+      Toast(data || "Error occurred", errorType.ERROR);
+    }
+  };
+
   return (
     <div className="">
       <div className="grid grid-cols-1">
@@ -187,21 +198,25 @@ const Answer = () => {
                 />
               </div>
             </CardContent>
-            <CardFooter className="text-sm flex justify-end text-[#9c3cc1]">
-              {userDetails.userId === answer.authorId && (
-                <Link className="ml-auto mr-auto">Edit</Link>
-              )}
-              <div className="flex ml-auto items-center gap-1">
-                <Avatar
-                  alt="Remy Sharp"
-                  src="src/assets/nav/sample-profile.png"
-                />
-                <div className="flex flex-col">
-                  <Link>
-                    {answer.authorName ? `${answer.authorName}` : "Unknown"}
-                  </Link>
-                  <div className="text-sm text-gray-500">
-                    {answer.updatedAt ? `Modified at ${answer.updatedAt}` : `Answered at ${answer.createdAt}`}
+            <CardFooter className="flex justify-end text-[#9c3cc1]">
+              <div className="flex gap-5 items-center">
+                {userDetails.userId == answer.authorId && (
+                  <div onClick={() => confirmDeleteAnswer(answer.id)} className="flex font-medium text-base text-red-600 cursor-pointer">
+                    Delete Answer
+                  </div>
+                )}
+                <div className="flex ml-auto items-center gap-1">
+                  <Avatar
+                    alt="Remy Sharp"
+                    src="src/assets/nav/sample-profile.png"
+                  />
+                  <div className="flex flex-col">
+                    <Link>
+                      {answer.authorName ? `${answer.authorName}` : "Unknown"}
+                    </Link>
+                    <div className="text-sm text-gray-500">
+                      {answer.updatedAt ? `Modified at ${answer.updatedAt}` : `Answered at ${answer.createdAt}`}
+                    </div>
                   </div>
                 </div>
               </div>
