@@ -19,6 +19,7 @@ import { SearchIcon } from "lucide-react";
 import React from "react";
 import ClinicAddPopup from "@/components/ClinicAddPopup";
 import Calendar from "@/components/Calendar";
+import Search from "@/components/Search";
 
 const columns = [
   { field: "id", width: 20 },
@@ -105,26 +106,7 @@ const manageClinics = () => {
     <div className="content-container">
       <Heading title={"Clinic Schedules"} />
 
-      <div>
-        <Paper
-          component="form"
-          sx={{
-            p: "2px 4px",
-            display: "flex",
-            alignItems: "center",
-            width: 600,
-          }}
-        >
-          <InputBase
-            sx={{ ml: 1, flex: 1 }}
-            placeholder="Search for clinics"
-            inputProps={{ "aria-label": "search ..." }}
-          />
-          <IconButton type="button" sx={{ p: "10px" }} aria-label="search">
-            <SearchIcon />
-          </IconButton>
-        </Paper>
-      </div>
+      <Search placeholder={"Search for clinics"}/>
       <div className="mt-12">
         <Typography variant="h4">Clinic Days</Typography>
         <div className="flex">
