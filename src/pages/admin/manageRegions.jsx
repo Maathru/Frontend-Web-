@@ -5,6 +5,7 @@ import map from "../../assets/mapMOH.png";
 import TableSearch from "@/components/TableSearch";
 import { Button } from "@/components/ui/button";
 import { HiOutlinePlusSm } from "react-icons/hi";
+import RegionAddPopup from "@/components/DivisionAddPopup";
 
 const columns = [
   {
@@ -57,11 +58,8 @@ const manageDivisions = () => {
     <div className="content-container">
       <Heading title={"Manage Divisions"} />
 
+      <RegionAddPopup/>
       <div className="flex flex-col items-end">
-        <Button className="bg-[#6F0096] h-10 flexbox items-center ">
-          Add New
-          <HiOutlinePlusSm className="ml-2 h-5 w-5" />
-        </Button>
         <div className="w-full f-full mb-12">
           <StripedDataGrid
             columns={columns}
