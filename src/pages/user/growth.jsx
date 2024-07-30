@@ -16,7 +16,6 @@ import meal2 from "../../assets/user/tofu.png";
 import walking from "../../assets/user/walking.png";
 import { useTitle } from "@/hooks/useTitle";
 import Heading from "@/components/ui/heading";
-import { Player } from "video-react";
 
 const video1 =
   "https://s3-figma-videos-production-sig.figma.com/video/1331174703014716309/TEAM/b24c/4ba4/-bdc0-4212-a2d5-50aa6a709148?Expires=1723420800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=ci8yxNhFAVrtsax9QPjO0C33VEYTh6YCLjGi5-1507Lc4gVrc--mm8fi4GO7zFwFdo2E2HAGZpPicE-NfoFJ5-5EVLvbtmd5t9PsN2ID-6jLwHj59CRlTVEK8mSvT2rTgG2pLQm17cO2peqYXC8WwhWPCAANOwHafIMmqIhfIgGFhQKH~n4N6T8xQaC7YyIx7PtpYhIhWmrN-3okj0gXhZwKnTDJ-IxXcYR2RULVxn29y4PGAffqlL4oqzPUPDkLvEXl57-Vjs7A0fMgVqzabmmkoyBeZgT08A5TD6E7nza-g3E1LJw1p798lOMCRA120niqOoUEDUSZyDnTY1ZO~g__";
@@ -78,7 +77,6 @@ const growth = () => {
               controls="controls"
               autoplay="true"
             />
-            
           </div>
         </div>
         <div className="flex justify-between mt-6">
@@ -108,9 +106,7 @@ const growth = () => {
           fatigue in your second month.
         </p>
 
-        <p className="text-2xl">
-          Food to eat during pregnancy—Month 3
-        </p>
+        <p className="text-2xl">Food to eat during pregnancy—Month 3</p>
 
         {/*food cards container starts */}
         <div className="grid grid-cols-1 xl:grid-cols-2 gap-10 mt-10">

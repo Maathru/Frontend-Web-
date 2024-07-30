@@ -21,6 +21,7 @@ import LogoutDialog from "@/components/logoutDialog";
 import AuthService from "@/service/authService";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { navConfig } from "@/data/navConfig";
+import { role } from "@/data/roleData";
 
 const Nav = ({ themeFunction, mode }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -103,13 +104,13 @@ const Nav = ({ themeFunction, mode }) => {
   }, []);
 
   const isActiveLink = (linkPath) => {
-    const baseLinkPath = linkPath.split("/")[1]; // Get the base path after the first slash
-    const basePathname = pathname.split("/")[1]; // Get the base path of the current pathname
+    const baseLinkPath = linkPath.split("/")[1];
+    const basePathname = pathname.split("/")[1];
     return baseLinkPath === basePathname;
   };
 
   const renderNavLinks = () => {
-    const roleNavConfig = navConfig[userDetails.role] || navConfig[USER];
+    const roleNavConfig = navConfig[userDetails.role] || navConfig[role.USER];
     return roleNavConfig.map((item, index) => {
       if (item.links) {
         const isActiveDropdown = item.links.some((link) =>
