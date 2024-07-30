@@ -44,7 +44,7 @@ const scenarios = [
 const Memories = () => {
   return (
     <Container>
-      <PageHeading title="Memories with your Child" />
+      <Heading title="Memories with your Child" />
 
       <Box display="flex" alignItems="center" mb={2}>
         <Select defaultValue="account1" variant="outlined" sx={{ mr: 2 }}>
