@@ -4,6 +4,7 @@ import React from "react";
 import map from "../../assets/mapMOH.png";
 import TableSearch from "@/components/TableSearch";
 import RegionAddPopup from "@/components/RegionsAddPopup";
+import { useTranslation } from "react-i18next";
 
 const columns = [
   {
@@ -52,11 +53,13 @@ const rows = [
 ];
 
 const manageDivisions = () => {
+  const { t } = useTranslation("manageRegions");
+
   return (
     <div className="content-container">
-      <Heading title={"Manage Divisions"} />
+      <Heading title={t("title")} />
 
-      <RegionAddPopup />
+      <RegionAddPopup addButton={t("add")}/>
       <div className="flex flex-col items-end">
         <div className="w-full f-full mb-12">
           <StripedDataGrid

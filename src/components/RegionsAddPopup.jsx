@@ -5,7 +5,7 @@ import { useState } from "react";
 import { IoIosCloseCircleOutline } from "react-icons/io";
 import { FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material";
 
-const RegionAddPopup = () => {
+const RegionAddPopup = ({addButton}) => {
   const [isOpen, setIsOpen] = useState(false);
   const [errors, setErrors] = useState({});
 
@@ -42,8 +42,8 @@ const RegionAddPopup = () => {
         }}
         trigger={
           <Button className="bg-[#6F0096] h-10 flexbox items-center ">
-            Add New
-            <HiOutlinePlusSm className="ml-2 h-5 w-5" />
+          {addButton}
+          <HiOutlinePlusSm className="ml-2 h-5 w-5" />
           </Button>
         }
         modal
