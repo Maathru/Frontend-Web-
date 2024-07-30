@@ -35,6 +35,7 @@ class AuthService {
     localStorage.removeItem("refresh");
     localStorage.removeItem("role");
     localStorage.removeItem("name");
+    localStorage.removeItem("userId");
   }
 
   static isAuthenticated() {
