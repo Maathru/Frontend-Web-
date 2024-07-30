@@ -5,11 +5,15 @@ import DoubleInput from "@/components/userComponents/doubleInput";
 import BasicInfoInput from "@/components/userComponents/basicInfoInput";
 import DateInput from "@/components/userComponents/dateInput";
 import { Button } from "@/components/ui/button";
-import EligiblePagination from "@/components/userComponents/eligiblePagination";
-import { presentObstetricDates, currentPregnancyStatus, otherSituations } from "@/data/pregnancyData";
+import CustomPagination from "@/components/userComponents/customPagination";
+import {
+  presentObstetricDates,
+  currentPregnancyStatus,
+  otherSituations,
+} from "@/data/pregnancyData";
 import { errorType, Toast } from "@/components/toast";
 import EligibleService from "@/service/eligibleService";
-import PageHeading from "@/components/ui/pageHeading";
+import Heading from "@/components/ui/heading";
 import { useTranslation } from "react-i18next";
 import SingleInput from "@/components/userComponents/singleInput";
 
@@ -94,7 +98,7 @@ const Pregnancy2 = () => {
     <div className="container my-10 font-poppins">
       {/* Hero section */}
       <div>
-        <PageHeading title={title} />
+        <Heading title={title} />
 
         <p className="text-xl font-bold mt-8">
           Mother&apos;s Name : A.P. Gamage
@@ -117,9 +121,9 @@ const Pregnancy2 = () => {
               placeholder1="P"
               placeholder2="G"
               onChange={(field, value) => {
-                setFormObject(prevState => ({
+                setFormObject((prevState) => ({
                   ...prevState,
-                  [field]: value
+                  [field]: value,
                 }));
               }}
             />
@@ -198,7 +202,7 @@ const Pregnancy2 = () => {
           <Button onClick={handleSave}>Save & Continue</Button>
         </div>
       </div>
-      <EligiblePagination stage={2} />
+      <CustomPagination path={"/eligible/"} stage={2} />
     </div>
   );
 };

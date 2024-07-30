@@ -7,13 +7,13 @@ import {
   PaginationPrevious,
 } from "@/components/ui/pagination";
 
-const EligiblePagination = ({ current, total }) => {
+const CustomPagination = ({ current, total, path }) => {
   return (
     <Pagination>
       <PaginationContent>
         <PaginationItem>
           <PaginationPrevious
-            to={current === 1 ? "#" : `/eligible/${current - 1}`}
+            to={current === 1 ? "#" : `${path}${current - 1}`}
           />
         </PaginationItem>
         {[...Array(total).keys()].map((_, index) => {
@@ -21,7 +21,7 @@ const EligiblePagination = ({ current, total }) => {
           return (
             <PaginationItem key={page}>
               <PaginationLink
-                to={`/eligible/${page}`}
+                to={`${path}${page}`}
                 isActive={current === page}
                 disabled={1}
               >
@@ -32,7 +32,7 @@ const EligiblePagination = ({ current, total }) => {
         })}
         <PaginationItem>
           <PaginationNext
-            to={current === total ? "#" : `/eligible/${current + 1}`}
+            to={current === total ? "#" : `${path}${current + 1}`}
           />
         </PaginationItem>
       </PaginationContent>
@@ -40,4 +40,4 @@ const EligiblePagination = ({ current, total }) => {
   );
 };
 
-export default EligiblePagination;
+export default CustomPagination;
