@@ -20,7 +20,6 @@ import ForumService from "@/service/forumService";
 import AnswerService from "@/service/answerService";
 
 import { userData } from "@/context/userAuth";
-import { use } from "i18next";
 
 // const cardColor = "bg-pink-100 dark:bg-[#251F28] hover:dark:bg-[#1D1A1F]";
 const badgeColor =
