@@ -3,9 +3,7 @@ import Heading from "@/components/ui/heading";
 import React from "react";
 import map from "../../assets/mapMOH.png";
 import TableSearch from "@/components/TableSearch";
-import { Button } from "@/components/ui/button";
-import { HiOutlinePlusSm } from "react-icons/hi";
-import RegionAddPopup from "@/components/DivisionAddPopup";
+import RegionAddPopup from "@/components/RegionsAddPopup";
 
 const columns = [
   {
@@ -58,7 +56,7 @@ const manageDivisions = () => {
     <div className="content-container">
       <Heading title={"Manage Divisions"} />
 
-      <RegionAddPopup/>
+      <RegionAddPopup />
       <div className="flex flex-col items-end">
         <div className="w-full f-full mb-12">
           <StripedDataGrid
