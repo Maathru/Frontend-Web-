@@ -40,7 +40,7 @@ const WriteBlog1 = () => {
     fetchBlog();
   }, []);
 
-  console.log(formData);
+  // console.log(formData);
 
   return (
     <div className="content-container">

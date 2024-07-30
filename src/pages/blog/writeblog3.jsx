@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { TextField } from "@mui/material";
 import FormGroup from "@mui/material/FormGroup";
 import { FormControlLabel } from "@mui/material";
@@ -8,6 +8,7 @@ import { Button } from "flowbite-react";
 import Heading from "@/components/ui/heading";
 import BlogHeading from "@/components/blogComponents/blogHeading";
 import BlogProgress from "@/components/blogComponents/BlogProgress";
+import { set } from "date-fns";
 
 const accentColor = "bg-[#9c3cc1]";
 
@@ -15,6 +16,12 @@ function WriteBlog3() {
   const [selectedKeywords, setSelectedKeywords] = useState([]);
   const [customKeywords, setCustomKeywords] = useState([]);
   const [newKeyword, setNewKeyword] = useState("");
+
+  const navigate = useNavigate();
+  const [formData, setFormData] = useState({
+    keywords: [],
+    additionalNotes: "",
+  });
 
   const keywords = [
     "Prenatal Care",
@@ -26,20 +33,52 @@ function WriteBlog3() {
     "Maternal Health",
     "Baby Vaccinations",
   ];
+  
+  useEffect(() => {
+    // Retrieve keywords from the 'blog' key in local storage
+    const storedBlog = JSON.parse(localStorage.getItem('blog')) || {};
+    const storedKeywords = storedBlog.keywords || [];
+    setSelectedKeywords(storedKeywords);
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      keywords: storedKeywords,
+    }));
+
+    // Set custom keywords that are not in predefined keywords
+    const customKeywordsFromStorage = storedKeywords.filter(
+      (keyword) => !keywords.includes(keyword)
+    );
+    setCustomKeywords(customKeywordsFromStorage);
+  }, []);
 
   const handleKeywordChange = (keyword) => {
-    setSelectedKeywords((prevSelectedKeywords) =>
-      prevSelectedKeywords.includes(keyword)
+    setSelectedKeywords((prevSelectedKeywords) => {
+      const newSelectedKeywords = prevSelectedKeywords.includes(keyword)
         ? prevSelectedKeywords.filter((k) => k !== keyword)
-        : [...prevSelectedKeywords, keyword]
-    );
+        : [...prevSelectedKeywords, keyword];
+
+      // Update the formData with the new keywords array
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        keywords: newSelectedKeywords,
+      }));
+
+      // Update local storage
+      const updatedBlog = {
+        ...JSON.parse(localStorage.getItem('blog') || '{}'),
+        keywords: newSelectedKeywords,
+      };
+      localStorage.setItem('blog', JSON.stringify(updatedBlog));
+
+      return newSelectedKeywords;
+    });
   };
 
   const handleAddKeyword = () => {
     if (
       newKeyword &&
       !customKeywords.includes(newKeyword) &&
-      !keywords.includes(newKeyword)
+      !selectedKeywords.includes(newKeyword)
     ) {
       setCustomKeywords((prevCustomKeywords) => [
         ...prevCustomKeywords,
@@ -49,9 +88,56 @@ function WriteBlog3() {
         ...prevSelectedKeywords,
         newKeyword,
       ]);
-      setNewKeyword("");
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        keywords: [...prevFormData.keywords, newKeyword],
+      }));
+      
+      // Update local storage
+      const updatedBlog = {
+        ...JSON.parse(localStorage.getItem('blog') || '{}'),
+        keywords: [...selectedKeywords, newKeyword],
+      };
+      localStorage.setItem('blog', JSON.stringify(updatedBlog));
+
+      setNewKeyword('');
     }
   };
+
+  const setData = (field, value) => {
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [field]: value,
+    }));
+  };
+
+  const handleNext = () => {
+    formData.stage = Math.max(formData.stage, 4);
+    localStorage.setItem("blog", JSON.stringify(formData));
+    navigate("/blogs/write/4");
+  };
+
+  const handlePrevious = () => {
+    formData.stage = Math.max(formData.stage, 2);
+    localStorage.setItem("blog", JSON.stringify(formData));
+    navigate("/blogs/write/2");
+  };
+
+  useState(() => {
+    const fetchBlog = () => {
+      const blog = JSON.parse(localStorage.getItem("blog"));
+
+      if (blog) {
+        setFormData({ ...formData, ...blog });
+      } else {
+        setFormData({ stage: 1 });
+      }
+    };
+
+    fetchBlog();
+  }, []);
+
+  // console.log(formData);
 
   return (
     <div className="content-container">
@@ -81,6 +167,10 @@ function WriteBlog3() {
                       <Checkbox
                         checked={selectedKeywords.includes(keyword)}
                         onChange={() => handleKeywordChange(keyword)}
+                        sx={{
+                          color: "#9c3cc1",
+                          "&.Mui-checked": { color: "#9c3cc1" },
+                        }}
                       />
                     }
                     label={keyword}
@@ -93,6 +183,10 @@ function WriteBlog3() {
                       <Checkbox
                         checked={selectedKeywords.includes(keyword)}
                         onChange={() => handleKeywordChange(keyword)}
+                        sx={{
+                          color: "#9c3cc1",
+                          "&.Mui-checked": { color: "#9c3cc1" },
+                        }}
                       />
                     }
                     label={keyword}
@@ -109,6 +203,17 @@ function WriteBlog3() {
                 onChange={(e) => setNewKeyword(e.target.value)}
                 className="mr-2"
                 InputLabelProps={{ className: "text-gray-600" }}
+                sx={{
+                  "& .MuiOutlinedInput-root": {
+                    borderRadius: "9999px",
+                    "&.Mui-focused fieldset": {
+                      borderColor: "#9c3cc1",
+                    },
+                  },
+                  "& label.Mui-focused": {
+                    color: "#9c3cc1",
+                  },
+                }}
               />
 
               <Button
@@ -126,26 +231,26 @@ function WriteBlog3() {
               type="text"
               className="w-full md:h-12 h-10 mt-4 px-3 py-2 border-2 border-[#e0e0e0] rounded-full text-lg focus:outline-none focus:border-[#9c3cc1] dark:bg-neutral-800"
               placeholder="Additional Notes for Reviewer"
+              value={formData.additionalNotes || ""}
+              onChange={(e) => setData("additionalNotes", e.target.value)}
             />
           </div>
         </div>
       </div>
 
       <div className="md:w-[90%] w-[95%] mx-auto flex justify-between">
-        <Link to="/blogs/write/2">
-          <button
-            className={`${accentColor} px-8 md:px-16 py-3 mt-8 md:mt-12 mb-4 rounded-lg text-xl font-semibold hover:bg-neutral-100 text-white dark:hover:bg-neutral-900 hover:text-fuchsia-700 hover:ring-fuchsia-700 hover:ring-inset hover:ring-2`}
-          >
-            Previous
-          </button>
-        </Link>
-        <Link to="/blogs/write/4">
-          <button
-            className={`${accentColor} px-8 md:px-16 py-3 mt-8 md:mt-12 mb-4 rounded-lg text-xl font-semibold hover:bg-neutral-100 text-white dark:hover:bg-neutral-900 hover:text-fuchsia-700 hover:ring-fuchsia-700 hover:ring-inset hover:ring-2`}
-          >
-            Next
-          </button>
-        </Link>
+        <button
+          className={`${accentColor} px-8 md:px-16 py-3 mt-8 md:mt-12 mb-4 rounded-lg text-xl font-semibold hover:bg-neutral-100 text-white dark:hover:bg-neutral-900 hover:text-fuchsia-700 hover:ring-fuchsia-700 hover:ring-inset hover:ring-2`}
+          onClick={handlePrevious}
+        >
+          Previous
+        </button>
+        <button
+          className={`${accentColor} px-8 md:px-16 py-3 mt-8 md:mt-12 mb-4 rounded-lg text-xl font-semibold hover:bg-neutral-100 text-white dark:hover:bg-neutral-900 hover:text-fuchsia-700 hover:ring-fuchsia-700 hover:ring-inset hover:ring-2`}
+          onClick={handleNext}
+        >
+          Next
+        </button>
       </div>
     </div>
   );

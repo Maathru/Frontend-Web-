@@ -1,4 +1,5 @@
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, Navigate } from "react-router-dom";
 import Heading from "@/components/ui/heading";
 import BlogHeading from "@/components/blogComponents/blogHeading";
 import BlogProgress from "@/components/blogComponents/BlogProgress";
@@ -14,6 +15,7 @@ const WriteBlog4 = () => {
     try {
       const response = await BlogService.addBlog(formData);
       Toast(response, errorType.SUCCESS);
+      Navigate("/blogs");
 
       localStorage.removeItem("blog");
     } catch (error) {
@@ -63,14 +65,12 @@ const WriteBlog4 = () => {
                   Preview
                 </button>
               </Link>
-              <Link to="/blogs">
                 <button
                   className={`${accentColor} px-8 md:px-16 py-3 mt-8 md:mt-12 mb-4 rounded-lg text-xl font-semibold hover:bg-neutral-100 text-white dark:hover:bg-neutral-900 hover:text-fuchsia-700 hover:ring-fuchsia-700 hover:ring-inset hover:ring-2`}
-                  onSubmit={handleSubmit}
+                  onClick={handleSubmit}
                 >
                   Post
                 </button>
-              </Link>
             </div>
           </div>
 
