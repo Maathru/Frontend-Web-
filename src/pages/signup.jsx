@@ -148,7 +148,7 @@ const Signup = () => {
         <img
           src={signupImg}
           alt=""
-          className="absolute xl:w-5/12 lg:w-4/12 xl:left-56 xl:top-36 lg:left-48 lg:top-64 hidden lg:block"
+          className="absolute xl:w-5/12 lg:w-4/12 xl:left-56 xl:top-44 lg:left-48 lg:top-64 hidden lg:block"
         />
         <div className="bg-[#620084] rounded-l-2xl w-4/12 shadow-sm hidden lg:block ">
           <p className="w-56 text-lg font-semibold text-center m-8 text-white">

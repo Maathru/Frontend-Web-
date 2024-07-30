@@ -6,13 +6,16 @@ import "./index.css";
 import "./i18n.js";
 import UserAuth from "./context/userAuth.jsx";
 import Loader from "./components/loader.jsx";
+import { DarkModeProvider } from "./context/darkModeContext.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <React.Suspense fallback={<Loader />}>
       <Router>
         <UserAuth>
-          <App />
+          <DarkModeProvider>
+            <App />
+          </DarkModeProvider>
         </UserAuth>
       </Router>
     </React.Suspense>

@@ -274,7 +274,9 @@ const Eligible2 = () => {
         />
       </div>
 
-      <Button onClick={handleSave}>Save and Next</Button>
+      <Button className="float-right mt-10" onClick={handleSave}>
+        Save and Next
+      </Button>
 
       <div className="flex w-full mt-24">
         <CustomPagination path={"/eligible/"} total={5} current={2} />

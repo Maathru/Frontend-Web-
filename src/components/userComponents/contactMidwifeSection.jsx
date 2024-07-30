@@ -70,18 +70,22 @@ const ContactMidwifeSection = () => {
         </div>
         <h2 className="text-2xl font-medium mt-8">{t("description4")}</h2>
 
-        <GetRegion
-          district={district}
-          setDistrict={setDistrict}
-          area={area}
-          setArea={setArea}
-          region={region}
-          setRegion={setRegion}
-          regions={regions}
-          setRegions={setRegions}
-          variant="outlined"
-        />
-        {region && <Button onClick={handleGetMidwife}>Get Midwife Data</Button>}
+        <div className="flex flex-col items-center gap-8">
+          <GetRegion
+            district={district}
+            setDistrict={setDistrict}
+            area={area}
+            setArea={setArea}
+            region={region}
+            setRegion={setRegion}
+            regions={regions}
+            setRegions={setRegions}
+            variant="outlined"
+          />
+          {region && (
+            <Button className="px-12 mb-8" onClick={handleGetMidwife}>Get Midwife Data</Button>
+          )}
+        </div>
 
         {midwife.name && (
           // Midwife Section

@@ -35,6 +35,7 @@ class AuthService {
     localStorage.removeItem("refresh");
     localStorage.removeItem("role");
     localStorage.removeItem("name");
+    localStorage.removeItem("userId");
   }
 
   static isAuthenticated() {
@@ -62,6 +63,10 @@ class AuthService {
 
   static getName() {
     return localStorage.getItem("name");
+  }
+
+  static getUserId() {
+    return localStorage.getItem("userId");
   }
 
   static getAccessToken() {

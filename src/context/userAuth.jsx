@@ -8,6 +8,7 @@ const UserAuth = ({ children }) => {
     authenticated: AuthService.isAuthenticated(),
     name: AuthService.getName(),
     role: AuthService.getRole(),
+    userId: AuthService.getUserId(),
     accessToken: AuthService.getAccessToken(),
     refreshToken: AuthService.getRefreshToken(),
   });
