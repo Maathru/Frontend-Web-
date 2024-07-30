@@ -10,7 +10,7 @@ import {
 } from '@mui/material';
 import ApexCharts from 'react-apexcharts';
 import { Search as SearchIcon } from '@mui/icons-material';
-import PageHeading from "@/components/ui/pageHeading";
+import Heading from "@/components/ui/heading";
 import { useTranslation } from 'react-i18next';
 import { styled } from '@mui/material/styles';
 
@@ -86,7 +86,7 @@ const HealthStatistics = () => {
 
   return (
     <Container>
-      <PageHeading title={t("Health Statistics")} />
+      <Heading title={t("Health Statistics")} />
       
       <Box display="flex" alignItems="center" mb={2}>
         <StyledTextField
