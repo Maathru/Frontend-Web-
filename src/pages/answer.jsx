@@ -151,6 +151,7 @@ const Answer = () => {
                     </div>
 
                     {/* Author details */}
+
                     <div className="flex ml-auto items-center gap-1">
                       <Avatar
                         alt="Remy Sharp"

@@ -276,6 +276,17 @@ const Navbar = ({ themeFunction, mode }) => {
                 >
                   Growth
                 </NavLink>
+                <NavLink
+                  to="/pregnancy/1"
+                  className={({ isActive }) =>
+                    /^\/pregnancy(\/.*)?$/.test(pathname)
+                      ? "text-[#9C33C1]"
+                      : "hover:text-gray-500 text-black dark:text-gray-100"
+                  }
+                  onClick={handleLinkClick}
+                >
+                  Pregnancy
+                </NavLink>
               </>
             )}
 

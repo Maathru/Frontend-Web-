@@ -1,4 +1,3 @@
-import DateCalendarServerRequest from "@/components/DateCalendarServerRequest";
 import { StripedDataGrid } from "@/components/StripedDataGrid";
 import { Button } from "@/components/ui/button";
 import Heading from "@/components/ui/heading";
@@ -18,6 +17,9 @@ import {
 import { DataGrid, GridToolbarQuickFilter } from "@mui/x-data-grid";
 import { SearchIcon } from "lucide-react";
 import React from "react";
+import ClinicAddPopup from "@/components/ClinicAddPopup";
+import Calendar from "@/components/Calendar";
+import Search from "@/components/Search";
 
 const columns = [
   { field: "id", width: 20 },
@@ -69,7 +71,6 @@ const columns2 = [
 const rows2 = [
   { id: 1, patient: "saumya", doctor: "saumya" },
   { id: 2, patient: "saumya", doctor: "saumya" },
-
 ];
 
 function QuickSearchToolbar() {
@@ -105,34 +106,13 @@ const manageClinics = () => {
     <div className="content-container">
       <Heading title={"Clinic Schedules"} />
 
-      <div>
-        <Paper
-          component="form"
-          sx={{
-            p: "2px 4px",
-            display: "flex",
-            alignItems: "center",
-            width: 600,
-          }}
-        >
-          <InputBase
-            sx={{ ml: 1, flex: 1 }}
-            placeholder="Search for clinics"
-            inputProps={{ "aria-label": "search ..." }}
-          />
-          <IconButton type="button" sx={{ p: "10px" }} aria-label="search">
-            <SearchIcon />
-          </IconButton>
-        </Paper>
-      </div>
+      <Search placeholder={"Search for clinics"}/>
       <div className="mt-12">
         <Typography variant="h4">Clinic Days</Typography>
         <div className="flex">
           <div className="w-6/12">
-            <DateCalendarServerRequest />
-            <p className="text-sm text-footer-purple">
-              Add New Clinic Schedule
-            </p>
+            <Calendar />
+            <ClinicAddPopup />
           </div>
           <div className="shadow-md p-5 w-6/12 h-fit">
             <div className="flex justify-between">

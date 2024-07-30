@@ -15,8 +15,10 @@ class UserService {
 
   // By user
   static async getMidwife(region) {
+    console.log(region);
     try {
       const response = await axiosInstance.get(`/user/midwife/${region}`);
+      console.log(response);
       return response.data;
     } catch (error) {
       throw error;

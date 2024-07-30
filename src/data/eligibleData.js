@@ -6,7 +6,7 @@ export const basicInfo = [
     name: "age",
   },
   {
-    title: "Educational level",
+    title: "Higher Educational level",
     placeholder1: "Select the level of education - woman",
     placeholder2: "Select the level of education - man",
     name: "education",

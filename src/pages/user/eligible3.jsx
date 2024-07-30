@@ -2,7 +2,7 @@ import EligibleCardBoolInput from "@/components/userComponents/eligibleCardBoolI
 import YesNoButton from "@/components/userComponents/yesNoButton";
 import { TextField } from "@mui/material";
 import { Navigate, useNavigate } from "react-router-dom";
-import EligiblePagination from "@/components/userComponents/eligiblePagination";
+import CustomPagination from "@/components/userComponents/customPagination";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { conditions2, meals, nutrition } from "@/data/eligibleData";
@@ -197,7 +197,7 @@ const Eligible3 = () => {
       <Button onClick={handleSave}>Save and Next</Button>
 
       <div className="flex w-full mt-24">
-        <EligiblePagination total={5} current={3} />
+        <CustomPagination path={"/eligible/"} total={5} current={3} />
       </div>
     </div>
   );

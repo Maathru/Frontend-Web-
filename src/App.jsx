@@ -26,6 +26,9 @@ import Eligible2 from "./pages/user/eligible2";
 import Eligible3 from "./pages/user/eligible3";
 import Eligible4 from "./pages/user/eligible4";
 import Eligible5 from "./pages/user/eligible5";
+import Pregnancy1 from "./pages/pregnancycard/pregnancy1";
+import Pregnancy2 from "./pages/pregnancycard/pregnancy2";
+import Pregnancy3 from "./pages/pregnancycard/pregnancy3";
 import Growth from "./pages/user/growth";
 import AskQuestion from "./pages/question";
 import MidwifeDashboard from "./pages/midwife/dashboard";
@@ -35,12 +38,16 @@ import Parents from "./pages/midwife/parents/viewAll";
 import NotFound from "./pages/notFound";
 import { userData } from "./context/userAuth";
 import ScrollToTop from "./components/ScrollToTop";
-import ManageUsers from "./pages/manageusers";
-import ManageClinics from "./pages/manageClinics";
+import ManageUsers from "./pages/admin/manageusers";
+import ManageClinics from "./pages/admin/manageClinics";
+import ManageRegions from "./pages/admin/manageRegions";
+import Memories from "./pages/memories";
+import Healthstatics from "./pages/healthstatics";
 import { ToastContainer } from "react-toastify";
 import { role } from "./data/roleData";
 import { ThemeProvider } from "@mui/material/styles";
 import getTheme from "./theme.js";
+import AddClinic from "./pages/doctor/addClinic";
 
 function App() {
   const darkQuery = window.matchMedia("(prefers-color-scheme: dark)");
@@ -118,6 +125,8 @@ function App() {
                 <>
                   <Route path="/users" element={<ManageUsers />} />
                   <Route path="/clinics" element={<ManageClinics />} />
+                  <Route path="/statics/health" element={<Healthstatics />} />
+                  <Route path="/regions" element={<ManageRegions />} />
                 </>
               )}
 
@@ -128,6 +137,7 @@ function App() {
                   <Route path="/drugs/add" element={<DrugAdd />} />
 
                   <Route path="/clinics" element={<Clinic />} />
+                  <Route path="/clinics/add" element={<AddClinic />} />
                   <Route path="/clinics/view" element={<ViewClinics />} />
                   <Route path="/clinics/dates" element={<ClinicDates />} />
                   <Route path="/clinics/reports" element={<ClinicReports />} />
@@ -137,7 +147,7 @@ function App() {
               {/* Midwife routes */}
               {userDetails.role === role.MIDWIFE && (
                 <>
-                  <Route path="/midwife" element={<MidwifeDashboard />} />
+                  <Route path="/" element={<MidwifeDashboard />} />
                   <Route path="/eligible" element={<EligibleCouples />} />
                   <Route
                     path="/eligible/add/:userId"
@@ -159,6 +169,11 @@ function App() {
               {userDetails.role === role.PARENT && (
                 <>
                   <Route path="/growth" element={<Growth />} />
+                  <Route path="/memories" element={<Memories />} />
+
+                  <Route path="/pregnancy/1" element={<Pregnancy1 />} />
+                  <Route path="/pregnancy/2" element={<Pregnancy2 />} />
+                  <Route path="/pregnancy/3" element={<Pregnancy3 />} />
                 </>
               )}
 

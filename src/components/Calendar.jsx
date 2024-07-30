@@ -52,7 +52,7 @@ function ServerDay(props) {
   );
 }
 
-export default function DateCalendarServerRequest() {
+export default function Calendar() {
   const [selectedDate, setSelectedDate] = React.useState(dayjs(new Date()));
   const exampleHighlightedDays = [
     "2024-07-02",
