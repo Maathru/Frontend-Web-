@@ -36,10 +36,10 @@ const ClinicAddPopup = () => {
         if (!value) return "Clinic name is required";
         break;
       case "startTime":
-        if (!value) return "Start time name is required";
+        if (!value) return "Start time is required";
         break;
       case "endTIime":
-        if (!value) return "End time name is required";
+        if (!value) return "End time is required";
         break;
 
       default:
