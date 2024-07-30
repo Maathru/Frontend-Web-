@@ -38,6 +38,7 @@ import Parents from "./pages/midwife/parents/viewAll";
 import NotFound from "./pages/notFound";
 import { userData } from "./context/userAuth";
 import ScrollToTop from "./components/ScrollToTop";
+import AdminDashboard from "./pages/admin/adminDashboard";
 import ManageUsers from "./pages/admin/manageusers";
 import ManageClinics from "./pages/admin/manageClinics";
 import ManageRegions from "./pages/admin/manageRegions";
@@ -123,6 +124,7 @@ function App() {
               {/* Admin routes */}
               {userDetails.role === role.ADMIN && (
                 <>
+                  <Route path="/" element={<AdminDashboard />} />
                   <Route path="/users" element={<ManageUsers />} />
                   <Route path="/clinics" element={<ManageClinics />} />
                   <Route path="/statics/health" element={<Healthstatics />} />
