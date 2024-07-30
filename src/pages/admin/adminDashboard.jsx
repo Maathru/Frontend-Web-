@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
-import { IoPeopleCircle } from "react-icons/io5";
-import { MdOutlinePregnantWoman } from "react-icons/md";
+import { IoPeopleCircle, IoDocumentTextOutline, IoBusiness } from "react-icons/io5";
+import { MdOutlinePregnantWoman, MdPersonOutline, MdEventNote } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { Typography, Card, CardContent, CardActions, Button } from "@mui/material";
 import { FaCircle } from "react-icons/fa";
@@ -293,19 +293,19 @@ const AdminDashboard = () => {
       <h1 className="text-3xl mb-5">Welcome {userDetails.name}</h1>
       <div className="flex gap-3 justify-around mb-12">
         <Widget
-          icon={IoPeopleCircle}
+          icon={IoDocumentTextOutline}
           count={10}
           label1="Blogs to Confirm"
           label2="Manage Blogs"
         />
         <Widget
-          icon={MdOutlinePregnantWoman}
+          icon={IoBusiness}
           count={8}
           label1="Divisions in the Area"
           label2="Manage Divisions"
         />
         <Widget
-          icon={MdOutlinePregnantWoman}
+          icon={IoPeopleCircle}
           count={100}
           label1="Registerd Users"
           label2="Manage Users"
