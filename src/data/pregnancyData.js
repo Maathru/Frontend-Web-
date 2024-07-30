@@ -73,11 +73,6 @@ export const familyDisease = [
 
 export const presentObstetricDates = [
   {
-    title: "Birthday of the youngest child?",
-    placeholder: "",
-    name: "youngest_child_dob",
-  },
-  {
     title: "Date of last menstrual period",
     placeholder: "",
     name: "last_menstrual_period",
@@ -160,22 +155,22 @@ export const otherSituations = [
   },
   {
     title: "Diabetes",
-    placeholder: "",
+    placeholder: "Other details",
     name: "diabetes",
   },
   {
     title: "Malaria",
-    placeholder: "",
+    placeholder: "Other details",
     name: "malaria",
   },
   {
     title: "Heart Diseaeses",
-    placeholder: "",
+    placeholder: "Other details",
     name: "heart_diseases",
   },
   {
     title: "Kidney Diseases",
-    placeholder: "",
+    placeholder: "Other details",
     name: "kidney_diseases",
   },
 ];

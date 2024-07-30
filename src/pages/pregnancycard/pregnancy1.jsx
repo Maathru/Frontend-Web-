@@ -17,7 +17,7 @@ import { TextField } from "@mui/material";
 import { useTitle } from "@/hooks/useTitle";
 
 const Pregnancy1 = () => {
-  useTitle("Recovery Checklist - Page 1");
+  useTitle("Pregnancy Card - Page 1");
   const [formObject, setFormObject] = useState({ stage: 1 });
   const location = useLocation();
   const navigate = useNavigate();
@@ -31,7 +31,7 @@ const Pregnancy1 = () => {
       try {
         const response = await EligibleService.getEligibleInfo();
         const existing = EligibleService.mapDtoToFormObject(response);
-        localStorage.setItem("formObject", JSON.stringify(existing));
+        localStorage.setItem("pregnancy", JSON.stringify(existing));
       } catch (error) {
         console.log(error.message);
         Toast(error.message, errorType.ERROR);
@@ -48,10 +48,20 @@ const Pregnancy1 = () => {
   const initiateFields = () => {
     const initialData = {};
 
+    initialData.name_woman = "";
+    initialData.name_man = "";
+    initialData.address = "";
+    initialData.phone_woman = "";
+    initialData.phone_man = "";
+    initialData.dob_woman = "";
+    initialData.dob_man = "";
+
     basicInfo.forEach((info) => {
       initialData[info.name + "_man"] = "";
       initialData[info.name + "_woman"] = "";
     });
+
+    initialData.duration = "";
 
     conditions1.forEach((condition) => {
       initialData[condition.name + "_woman"] = "";
