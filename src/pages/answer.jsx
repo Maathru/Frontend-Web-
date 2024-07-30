@@ -1,44 +1,28 @@
 import { useEffect, useState, useContext } from "react";
-import { NavLink , Link, useNavigate, useParams } from "react-router-dom";
+import { NavLink, Link, useNavigate, useParams } from "react-router-dom";
 import { IoIosArrowBack } from "react-icons/io";
 import Pagination from "../components/pagination";
 import { Button } from "flowbite-react";
-
 import { Badge } from "@/components/ui/badge";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, TextField } from "@mui/material";
-
 import { errorType, Toast } from "@/components/toast";
 import ForumService from "@/service/forumService";
 import AnswerService from "@/service/answerService";
-
 import { userData } from "@/context/userAuth";
-import { use } from "i18next";
+import DeleteConfirmationDialog from "@/components/deleteConfirmationDialog";
 
-// const cardColor = "bg-pink-100 dark:bg-[#251F28] hover:dark:bg-[#1D1A1F]";
-const badgeColor =
-  "bg-fuchsia-200 dark:bg-fuchsia-300 hover:dark:bg-fuchsia-100 dark:text-neutral-800";
-// const readMoreColor = "text-[#9c3cc1] dark:text-neutral-300";
+const badgeColor = "bg-fuchsia-200 dark:bg-fuchsia-300 hover:dark:bg-fuchsia-100 dark:text-neutral-800";
 
 const Answer = () => {
   const { questionId } = useParams();
   const [pageLoader, setPageLoader] = useState(true);
-
-  // Mock data for demonstration
   const [question, setQuestion] = useState({});
   const [answers, setAnswers] = useState([]);
-
   const [yourAnswer, setYourAnswer] = useState("");
-
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false); // State to control delete confirmation dialog
+  const [deleteId, setDeleteId] = useState(null); 
   const navigate = useNavigate();
-
   const { userDetails } = useContext(userData);
 
   useEffect(() => {
@@ -46,13 +30,8 @@ const Answer = () => {
       try {
         const response = await ForumService.getQuestion(questionId);
         setQuestion(response);
-        console.log(userDetails);
-        console.log(response);
       } catch (error) {
-        console.log(error.message);
-
         const data = error.response.data;
-        console.log(data);
         Toast(data || "Error occurred", errorType.ERROR);
       }
     };
@@ -63,16 +42,10 @@ const Answer = () => {
   useEffect(() => {
     const fetchAnswersByQuestion = async () => {
       try {
-        console.log(question);
-        console.log(userDetails);
         const response = await AnswerService.getAnswersByQuestion(questionId);
         setAnswers(response);
-        console.log(response);
       } catch (error) {
-        console.log(error.message);
-
         const data = error.response.data;
-        console.log(data);
         Toast(data || "Error occurred", errorType.ERROR);
       }
     };
@@ -91,13 +64,9 @@ const Answer = () => {
       const response = await AnswerService.addAnswer(data);
       Toast(response, errorType.SUCCESS);
       setPageLoader((pre) => !pre);
-
       setYourAnswer("");
     } catch (error) {
-      console.log(error.message);
-
       const data = error.response.data;
-      console.log(data);
       Toast(data || "Error occurred", errorType.ERROR);
     }
   };
@@ -106,14 +75,21 @@ const Answer = () => {
     try {
       const response = await ForumService.deleteQuestion(id);
       Toast(response, errorType.SUCCESS);
-      console.log("Deleted");
       navigate("/forum");
     } catch (error) {
-      console.log(error.message);
       const data = error.response.data;
-      console.log(data);
       Toast(data || "Error occurred", errorType.ERROR);
     }
+  };
+
+  const confirmDelete = (id) => {
+    setDeleteId(id);
+    setIsDeleteDialogOpen(true);
+  };
+
+  const closeDeleteDialog = () => {
+    setIsDeleteDialogOpen(false);
+    setDeleteId(null);
   };
 
   return (
@@ -142,27 +118,39 @@ const Answer = () => {
                   dangerouslySetInnerHTML={{ __html: question.description }}
                 />
                 <div className="pb-5 my-5">
-                  <div className="flex gap-2 justify-between items-center">
-                    {question.keywords &&
-                      question.keywords.map((keyword, index) => (
-                        <Badge
-                          key={index} // Ensure unique key for each Badge
-                          variant="secondary"
-                          className={badgeColor}
-                        >
-                          {keyword}
-                        </Badge>
-                      ))}
-                    {userDetails.userId == question.authorId && (
-                      <div className="flex gap-5 ml-44">
-                        <NavLink to={`/forum/edit/` + question.id} className="mx-auto">
-                          Edit question
-                        </NavLink>
-                        <NavLink onClick={() => handleDelete(questionId)} className="mx-auto">
-                          Delete question
-                        </NavLink>
-                      </div>
-                    )}
+                  <div className="flex justify-between">
+
+                    {/* Keywords */}
+                    <div>
+
+                      {question.keywords &&
+                        question.keywords.map((keyword, index) => (
+                          <Badge
+                            key={index}
+                            variant="secondary"
+                            className={badgeColor}
+                          >
+                            {keyword}
+                          </Badge>
+                        ))}
+                    </div>
+
+                    {/* Edit delete actions */}
+                    <div>
+
+                      {userDetails.userId == question.authorId && (
+                        <div className="flex gap-5 items-center">
+                          <Link to={`/forum/edit/` + question.id} className="mx-auto font-medium text-base text-[#9C33C1]">
+                            Edit question
+                          </Link>
+                          <div onClick={() => confirmDelete(questionId)}  className="mx-auto font-medium text-base text-red-600 cursor-pointer">
+                            Delete question
+                          </div>
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Author details */}
                     <div className="flex ml-auto items-center gap-1">
                       <Avatar
                         alt="Remy Sharp"
@@ -227,26 +215,37 @@ const Answer = () => {
           </div>
         ))}
 
-        {userDetails ?
+        {userDetails ? (
           <div className="flex mt-5 gap-5">
-          <TextField
-            value={yourAnswer}
-            onChange={(e) => setYourAnswer(e.target.value)}
-            id="outlined-basic"
-            label="Add Your Answer"
-            variant="outlined"
-            className="w-[80%]"
-          />
-          <Button
-            onClick={handleAnswerSubmit}
-            type="submit"
-            className="bg-blue-600 text-white px-4 py-2 rounded-md"
-          >
-            Submit
-          </Button>
-        </div> : `<div className="text-center mt-5">Please login to answer the question</div>`}
+            <TextField
+              value={yourAnswer}
+              onChange={(e) => setYourAnswer(e.target.value)}
+              id="outlined-basic"
+              label="Add Your Answer"
+              variant="outlined"
+              className="w-[80%]"
+            />
+            <Button
+              onClick={handleAnswerSubmit}
+              type="submit"
+              className="bg-blue-600 text-white px-4 py-2 rounded-md"
+            >
+              Submit
+            </Button>
+          </div>
+        ) : (
+          <div className="text-center mt-5">Please login to answer the question</div>
+        )}
       </div>
+      
       <Pagination />
+
+      <DeleteConfirmationDialog
+        isOpen={isDeleteDialogOpen}
+        onClose={closeDeleteDialog}
+        handleDelete={() => handleDelete(deleteId)}
+      />
+
     </div>
   );
 };
