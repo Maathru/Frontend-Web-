@@ -81,7 +81,6 @@ const columns = [
     flex: 1,
     editable: true,
     renderCell: (params) => {
-      const isAvailable = params.value > 0;
       return (
         <Chip
           label={isAvailable ? "Available" : "Out of Stock"}

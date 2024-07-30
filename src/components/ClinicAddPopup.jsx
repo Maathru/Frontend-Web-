@@ -12,19 +12,15 @@ import Popup from "reactjs-popup";
 import { Button } from "./ui/button";
 
 const ClinicAddPopup = () => {
+  // const [title, setTitle] = useState("Existing User or new couple?");
   const [errors, setErrors] = useState({});
-  const [isOpen, setIsOpen] = useState(false);
-  const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-  });
+  const [isOpen, setIsOpen] = useState(false);  
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    // setFormData({ ...formData, [name]: value });
     setErrors({ ...errors, [name]: validateField(name, value) });
-    setBackendError("");
+    // setBackendError("");
   };
 
   const validateField = (name, value) => {
@@ -36,28 +32,33 @@ const ClinicAddPopup = () => {
         if (!value) return "Clinic name is required";
         break;
       case "startTime":
-        if (!value) return "Start time is required";
+        if (!value) return "Start time name is required";
         break;
       case "endTIime":
-        if (!value) return "End time is required";
+        if (!value) return "End time name is required";
         break;
-
+      case "region":
+        if (!value) return "Region is required";
+        break;
+      case "doctor":
+        if (!value) return "Doctor is required";
+        break;
       default:
         break;
     }
     return "";
   };
 
-  const validate = () => {
-    const newErrors = {};
+  // const validate = () => {
+  //   const newErrors = {};
 
-    Object.keys(formData).forEach((key) => {
-      const error = validateField(key, formData[key]);
-      if (error) newErrors[key] = error;
-    });
+  //   Object.keys(formData).forEach((key) => {
+  //     const error = validateField(key, formData[key]);
+  //     if (error) newErrors[key] = error;
+  //   });
 
-    return newErrors;
-  };
+  //   return newErrors;
+  // };
 
   return (
     <Popup
@@ -100,8 +101,6 @@ const ClinicAddPopup = () => {
               label="Clinic Name"
               InputLabelProps={{ shrink: true }}
               onChange={handleInputChange}
-              error={!!errors.name}
-              helperText={errors.name || ""}
             ></TextField>
             <TextField
               required
@@ -111,8 +110,6 @@ const ClinicAddPopup = () => {
               label="Choose Date"
               InputLabelProps={{ shrink: true }}
               onChange={handleInputChange}
-              error={!!errors.date}
-              helperText={errors.date || ""}
             ></TextField>
 
             <TextField
@@ -123,8 +120,6 @@ const ClinicAddPopup = () => {
               label="Start Time"
               InputLabelProps={{ shrink: true }}
               onChange={handleInputChange}
-              error={!!errors.startTime}
-              helperText={errors.startTime || ""}
             ></TextField>
             <TextField
               type="time"
@@ -134,8 +129,6 @@ const ClinicAddPopup = () => {
               label="End Time"
               InputLabelProps={{ shrink: true }}
               onChange={handleInputChange}
-              error={!!errors.endTime}
-              helperText={errors.endTime || ""}
             ></TextField>
 
             <FormControl size="small">
@@ -143,8 +136,9 @@ const ClinicAddPopup = () => {
 
               <Select
                 label="Select the Clinic"
-                name="region"
+                name="clinic"
                 notched
+                required
                 onChange={handleInputChange}
               >
                 <MenuItem>Region 01</MenuItem>
@@ -154,12 +148,13 @@ const ClinicAddPopup = () => {
             </FormControl>
 
             <FormControl size="small">
-              <InputLabel shrink="true">Select the Doctor</InputLabel>
+              <InputLabel shrink>Select the Doctor</InputLabel>
 
               <Select
                 notched
                 name="doctor"
                 label="Select the Clinic"
+                required
                 onChange={handleInputChange}
               >
                 <MenuItem>Dr Saman</MenuItem>
@@ -167,8 +162,11 @@ const ClinicAddPopup = () => {
                 <MenuItem>Dr Kamal</MenuItem>
               </Select>
             </FormControl>
-            <Button className="px-10">Submit</Button>
           </div>
+
+          <Button className="px-10">
+                  Submit
+                </Button>
         </div>
       )}
     </Popup>

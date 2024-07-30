@@ -22,6 +22,7 @@ import Calendar from "@/components/Calendar";
 import Search from "@/components/Search";
 import { t } from "i18next";
 import { useTranslation } from "react-i18next";
+import TableSearch from "@/components/TableSearch";
 
 const columns = [
   { field: "id", width: 20 },
@@ -58,51 +59,44 @@ const rows = [
 
 const columns2 = [
   { field: "id", headerName: "Patient ID", width: 90 },
-  { field: "patient", headerName: "Patient Name", flex: 1 },
+  { field: "female", headerName: "Female", flex: 1 },
+  { field: "male", headerName: "Male", flex: 1 },
+  { field: "phone", headerName: "Phone Number", flex: 1 },
   {
-    field: "action",
-    headerName: "Is Present",
+    field: "status",
+    headerName: "Status",
     flex: 1,
-    renderCell: () => {
+    renderCell: (params) => {
       return (
-        <Chip/>
+        <Chip
+          label={params.value}
+          size={"small"}
+          sx={{
+            backgroundColor: params.value === "parent" ? "#EBF9F1" : "#ebebf9", // Custom colors
+            color: params.value === "parent" ? "#1F9254" : "#2d3bfa",
+          }}
+        />
       );
     },
   },
 ];
 
 const rows2 = [
-  { id: 1, patient: "saumya", doctor: "saumya" },
-  { id: 2, patient: "saumya", doctor: "saumya" },
+  {
+    id: 1,
+    female: "saumya sewwandi",
+    male: "saumya sewwandi",
+    phone: "0703012928",
+    status: "parent",
+  },
+  {
+    id: 2,
+    female: "saumya sewwandi",
+    male: "saumya sewwandi",
+    phone: "0703012928",
+    status: "eligible",
+  },
 ];
-
-function QuickSearchToolbar() {
-  return (
-    <Box
-      sx={{
-        p: 0.5,
-        pb: 0,
-        m: 2,
-        display: "flex",
-        justifyContent: "flex-end",
-      }}
-    >
-      <GridToolbarQuickFilter
-        sx={{
-          width: 400,
-          "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline":
-            {
-              border: "none",
-            },
-          "& .MuiOutlinedInput-root:focus-within": {
-            outline: "none",
-            boxShadow: "none",
-          },
-        }}
-      />
-    </Box>
-  );
-}
 
 const manageClinics = () => {
   const { t } = useTranslation("manageClinics");
@@ -110,16 +104,13 @@ const manageClinics = () => {
     <div className="content-container">
       <Heading title={t("title")} />
 
-      <Search placeholder={t("search")} />
       <div className="mt-12">
-        <Typography variant="h4">{t("subtitle1")}</Typography>
-        <ClinicAddPopup />
-
         <div className="flex">
-          <div className="w-6/12">
+          <div className="w-3/12 mr-10 flex flex-col items-end">
             <Calendar />
+            <ClinicAddPopup />
           </div>
-          <div className="shadow-md p-5 w-6/12 h-fit">
+          <div className="shadow-md rounded-md p-5 w-9/12 h-fit">
             <div className="flex justify-between">
               <Typography variant="h6">{t("subtitle1.1")}</Typography>
               <Button>{t("viewBtn")}</Button>
@@ -136,6 +127,7 @@ const manageClinics = () => {
                   },
                 }}
                 pageSizeOptions={[5]}
+                slots={{ toolbar: TableSearch }}
               ></DataGrid>
             </div>
           </div>
@@ -174,7 +166,7 @@ const manageClinics = () => {
               params.indexRelativeToCurrentPage % 2 === 0 ? "even" : "odd"
             }
             disableRowSelectionOnClick
-            slots={{ toolbar: QuickSearchToolbar }}
+            slots={{ toolbar: TableSearch }}
           ></StripedDataGrid>
         </div>
       </div>
