@@ -85,8 +85,8 @@ function EditQuestion() {
       Toast(response, errorType.SUCCESS);
       navigate(`/forum/answer/${questionId}`);
     } catch (error) {
-      console.log(error.message);
-      const data = error.response.data;
+      console.log(error);
+      const data = error.response.data.message;
       console.log(data);
       Toast(data || "Error occurred", errorType.ERROR);
     }

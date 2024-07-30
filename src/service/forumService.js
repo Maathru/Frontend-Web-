@@ -70,6 +70,15 @@ class ForumService {
       throw error;
     }
   }
+
+  static async deleteAnswer(id) {
+    try {
+      const response = await axiosInstance.delete(`/answer/${id}`);
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  }
 }
 
 export default ForumService;

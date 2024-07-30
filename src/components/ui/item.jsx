@@ -22,10 +22,10 @@ export default function Item({ question }) {
       <Card className="my-3">
         <CardActionArea>
           <CardContent>
-            <ListItem key={question.id} alignItems="flex-start" className="gap-4">
-              <ListItemAvatar className="text-center">
+            <ListItem key={question.id} className="gap-4">
+              <ListItemAvatar className="text-center mr-3">
                 <Badge className="bg-[#6F0096] h-10 flexbox items-center mx-auto">
-                  <TiTick size="1.5rem" /> 38 Answers
+                  <TiTick size="1.5rem" /> {question.noOfAnswers} Answers
                 </Badge>
                 {/* <span className="text-sm text-gray-500">128 votes</span>
                 <span className="flex">
@@ -66,9 +66,10 @@ export default function Item({ question }) {
                                 : "Unknown"}
                             </span>
                             <p className="text-sm text-gray-500">
+                              Modified at
                               {question.updatedAt
-                                ? `Modified at ${question.updatedAt}`
-                                : `Asked at ${question.createdAt}`}
+                                ? ` ${question.updatedAt}`
+                                : ` ${question.createdAt}`}
                             </p>
                           </div>
                         </div>
