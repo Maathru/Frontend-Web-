@@ -10,6 +10,7 @@ import Navbar from "./components/navbar";
 import Landing from "./pages/landing";
 import Drug from "./pages/drug";
 import DrugAdd from "./pages/drugAdd";
+import DoctorDashboard from "./pages/doctor/dashboard";
 import Clinic from "./pages/doctor/clinic";
 import ViewClinics from "./pages/doctor/viewClinics";
 import ClinicDates from "./pages/doctor/clinicDates";
@@ -49,10 +50,11 @@ import { role } from "./data/roleData";
 import { ThemeProvider } from "@mui/material/styles";
 import getTheme from "./theme.js";
 import AddClinic from "./pages/doctor/addClinic";
+import { useDarkMode } from "./context/darkModeContext";
 
 function App() {
+  const { toggleDarkMode } = useDarkMode();
   const darkQuery = window.matchMedia("(prefers-color-scheme: dark)");
-
   darkQuery.addEventListener("change", (e) => {
     if (e.matches) {
       document.documentElement.classList.add("dark");
@@ -92,6 +94,7 @@ function App() {
   }, [theme]);
 
   const handleThemeSwitch = () => {
+    toggleDarkMode();
     setTheme(theme === "dark" ? "light" : "dark");
   };
 
@@ -135,6 +138,7 @@ function App() {
               {/* Doctor routes */}
               {userDetails.role === role.DOCTOR && (
                 <>
+                  <Route path="/doctor" element={<DoctorDashboard />} />
                   <Route path="/drugs" element={<Drug />} />
                   <Route path="/drugs/add" element={<DrugAdd />} />
 

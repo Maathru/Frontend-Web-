@@ -6,11 +6,13 @@ import { Typography } from "@mui/material";
 import { FaCircle } from "react-icons/fa";
 import { Button } from "flowbite-react";
 import ReactApexChart from "react-apexcharts";
-import Calendar from "@/components/Calendar";
 import { userData } from "@/context/userAuth";
+import { Calendar } from "@/components/ui/calendar";
+import { HiCalendar } from "react-icons/hi";
+import { useDarkMode } from "@/context/darkModeContext";
 
 const Widget = ({ icon: Icon, count, label1, label2 }) => (
-  <div className="card w-3/12 shadow-md rounded-lg ">
+  <div className="card w-3/12 shadow-md rounded-lg dark:bg-dark-background">
     <div className="flex gap-5 items-center px-8 py-5">
       <div className="bg-primary-purple w-10 h-10 rounded-lg flex justify-center items-center">
         <Icon className="text-white text-2xl" />
@@ -32,9 +34,10 @@ const Widget = ({ icon: Icon, count, label1, label2 }) => (
 );
 
 const dashboard = () => {
+  const { isDarkMode } = useDarkMode();
   const { userDetails } = useContext(userData);
   // pregnancy visits line chart data starts
-  const [options1, setObject1] = useState({
+  const options1 = {
     chart: {
       type: "line",
       zoom: {
@@ -56,7 +59,7 @@ const dashboard = () => {
       style: {
         fontSize: "18px",
         fontWeight: "semiBold",
-        color: "#263238",
+        color: isDarkMode ? "#ffffff" : "#263238",
         padding: "20px",
       },
     },
@@ -91,7 +94,8 @@ const dashboard = () => {
         "Dec",
       ],
     },
-  });
+  };
+  console.log(options1.title.style);
 
   const [series1, setSeries1] = useState([
     {
@@ -101,7 +105,7 @@ const dashboard = () => {
   ]);
 
   // Average Child Growth Rate line chart data starts
-  const [options2, setObject2] = useState({
+  const options2 = {
     chart: {
       type: "line",
       zoom: {
@@ -122,7 +126,7 @@ const dashboard = () => {
       style: {
         fontSize: "18px",
         fontWeight: "semiBold",
-        color: "#263238",
+        color: isDarkMode ? "#ffffff" : "#263238",
         padding: "20px",
       },
     },
@@ -131,7 +135,7 @@ const dashboard = () => {
     },
     stroke: {
       curve: "smooth",
-      colors: "#721D90",
+      colors: isDarkMode ? "#ffffff" : "#721D90",
       width: 4,
     },
 
@@ -157,7 +161,7 @@ const dashboard = () => {
         "Dec",
       ],
     },
-  });
+  };
 
   const [series2, setSeries2] = useState([
     {
@@ -165,6 +169,11 @@ const dashboard = () => {
       data: [10, 41, 35, 51, 49, 62, 69, 91, 115, 98, 100, 110],
     },
   ]);
+
+  const handleDayClick = (day, { selected }) => {
+    console.log("Day clicked:", day, selected);
+    // You can handle the day click event here
+  };
 
   return (
     <div className="container content-container">
@@ -182,14 +191,28 @@ const dashboard = () => {
           label1="Registered Parents"
           label2="Manage Parents Records"
         />
+        <Widget
+          icon={HiCalendar}
+          count={25}
+          label1="Clinics this month"
+          label2="View Clinic Records"
+        />
       </div>
       <div>
         <Typography variant="h4">Upcoming Clinics & Home Visits</Typography>
         <div className="flex">
-          <div className="w-7/12">
-            <Calendar />
+          <div className="w-5/12">
+            <Calendar
+              highlightDates={[
+                new Date(2024, 6, 20),
+                new Date(2024, 7, 5),
+                new Date(2024, 7, 8),
+              ]}
+              highlightColor="#ffcc00"
+              onDayClick={handleDayClick}
+            />
           </div>
-          <div className="w-5/12 flex flex-col gap-9">
+          <div className="w-7/12 flex flex-col gap-9">
             <div className="flex gap-10">
               <p className="text-lg">
                 <FaCircle className="text-light-clinics inline" /> Clinics
@@ -199,13 +222,13 @@ const dashboard = () => {
                 Visits
               </p>
             </div>
-            <div className="bg-[#6e00961c] w-full p-5 rounded-md flex justify-between items-center">
+            <div className="bg-[#6e00961c] dark:bg-dark-background w-full p-5 rounded-md flex justify-between items-center">
               <p className="text-lg">
                 Your Next Home Visits on: <span>28/08/2024</span>
               </p>
               <Button className="bg-footer-purple">View Home Visits</Button>
             </div>
-            <div className="bg-[#6e00961c] w-full p-5 rounded-md flex justify-between items-center">
+            <div className="bg-[#6e00961c] dark:bg-dark-background w-full p-5 rounded-md flex justify-between items-center">
               <p className="text-lg">
                 Next MOH Clinic on: <span>28/08/2024</span>
               </p>
