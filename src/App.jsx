@@ -138,7 +138,7 @@ function App() {
               {/* Doctor routes */}
               {userDetails.role === role.DOCTOR && (
                 <>
-                  <Route path="/doctor" element={<DoctorDashboard />} />
+                  <Route path="/" element={<DoctorDashboard />} />
                   <Route path="/drugs" element={<Drug />} />
                   <Route path="/drugs/add" element={<DrugAdd />} />
 
