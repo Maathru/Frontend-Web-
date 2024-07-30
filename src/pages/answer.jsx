@@ -20,6 +20,7 @@ import ForumService from "@/service/forumService";
 import AnswerService from "@/service/answerService";
 
 import { userData } from "@/context/userAuth";
+import { use } from "i18next";
 
 // const cardColor = "bg-pink-100 dark:bg-[#251F28] hover:dark:bg-[#1D1A1F]";
 const badgeColor =
@@ -62,6 +63,8 @@ const Answer = () => {
   useEffect(() => {
     const fetchAnswersByQuestion = async () => {
       try {
+        console.log(question);
+        console.log(userDetails);
         const response = await AnswerService.getAnswersByQuestion(questionId);
         setAnswers(response);
         console.log(response);
@@ -103,6 +106,7 @@ const Answer = () => {
     try {
       const response = await ForumService.deleteQuestion(id);
       Toast(response, errorType.SUCCESS);
+      console.log("Deleted");
       navigate("/forum");
     } catch (error) {
       console.log(error.message);
@@ -154,7 +158,7 @@ const Answer = () => {
                         <NavLink to={`/forum/edit/` + question.id} className="mx-auto">
                           Edit question
                         </NavLink>
-                        <NavLink onClick={handleDelete(questionId)} className="mx-auto">
+                        <NavLink onClick={() => handleDelete(questionId)} className="mx-auto">
                           Delete question
                         </NavLink>
                       </div>
