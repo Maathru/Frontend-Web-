@@ -20,7 +20,7 @@ const Answer = () => {
   const [question, setQuestion] = useState({});
   const [answers, setAnswers] = useState([]);
   const [yourAnswer, setYourAnswer] = useState("");
-  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false); // State to control delete confirmation dialog
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [deleteId, setDeleteId] = useState(null);
   const navigate = useNavigate();
   const { userDetails } = useContext(userData);
@@ -96,7 +96,7 @@ const Answer = () => {
     <div className="">
       <div className="grid grid-cols-1">
         <div className="row-span-2">
-          <div className={`flex flex-col justify-between h-[100%]`}>
+          <div className="flex flex-col justify-between h-[100%]">
             <Card>
               <CardHeader>
                 <CardTitle className="flex md:mt-10 mt-5 md:ml-10 ml-3 text-3xl font-semibold items-center text-neutral-800 dark:text-neutral-100">
@@ -118,11 +118,10 @@ const Answer = () => {
                   dangerouslySetInnerHTML={{ __html: question.description }}
                 />
                 <div className="pb-5 my-5">
-                  <div className="flex justify-between">
+                  <div className="flex justify-between items-center">
 
                     {/* Keywords */}
                     <div>
-
                       {question.keywords &&
                         question.keywords.map((keyword, index) => (
                           <Badge
@@ -136,14 +135,14 @@ const Answer = () => {
                     </div>
 
                     {/* Edit delete actions */}
-                    <div>
+                    <div className="flex gap-5 items-center">
 
                       {userDetails.userId == question.authorId && (
                         <div className="flex gap-5 items-center">
-                          <Link to={`/forum/edit/` + question.id} className="mx-auto font-medium text-base text-[#9C33C1]">
+                          <Link to={`/forum/edit/` + question.id} className="font-medium text-base text-[#9C33C1]">
                             Edit question
                           </Link>
-                          <div onClick={() => confirmDelete(questionId)}  className="mx-auto font-medium text-base text-red-600 cursor-pointer">
+                          <div onClick={() => confirmDelete(questionId)} className="font-medium text-base text-red-600 cursor-pointer">
                             Delete question
                           </div>
                         </div>
@@ -151,22 +150,18 @@ const Answer = () => {
                     </div>
 
                     {/* Author details */}
-
-                    <div className="flex ml-auto items-center gap-1">
+                    <div className="flex items-center gap-1">
                       <Avatar
                         alt="Remy Sharp"
                         src="src/assets/nav/sample-profile.png"
                       />
-                      <div className="ml-auto items-center">
+                      <div className="flex flex-col">
                         <Link>
-                          {question.authorName
-                            ? `${question.authorName}`
-                            : "Unknown"}
+                          {question.authorName ? `${question.authorName}` : "Unknown"}
                         </Link>
                         <p className="text-sm text-gray-500">
-                          {question.updatedAt
-                            ? `Modified at ${question.updatedAt}`
-                            : `Asked at ${question.createdAt}`}
+                          Modified at
+                          {question.updatedAt ? ` ${question.updatedAt}` : ` ${question.createdAt}`}
                         </p>
                       </div>
                     </div>
@@ -201,14 +196,12 @@ const Answer = () => {
                   alt="Remy Sharp"
                   src="src/assets/nav/sample-profile.png"
                 />
-                <div className="ml-auto items-center">
+                <div className="flex flex-col">
                   <Link>
                     {answer.authorName ? `${answer.authorName}` : "Unknown"}
                   </Link>
                   <div className="text-sm text-gray-500">
-                    {answer.updatedAt
-                      ? `Modified at ${answer.updatedAt}`
-                      : `Answered at ${answer.createdAt}`}
+                    {answer.updatedAt ? `Modified at ${answer.updatedAt}` : `Answered at ${answer.createdAt}`}
                   </div>
                 </div>
               </div>
