@@ -20,6 +20,8 @@ import React from "react";
 import ClinicAddPopup from "@/components/ClinicAddPopup";
 import Calendar from "@/components/Calendar";
 import Search from "@/components/Search";
+import { t } from "i18next";
+import { useTranslation } from "react-i18next";
 
 const columns = [
   { field: "id", width: 20 },
@@ -57,13 +59,14 @@ const rows = [
 const columns2 = [
   { field: "id", headerName: "Patient ID", width: 90 },
   { field: "patient", headerName: "Patient Name", flex: 1 },
-  { field: "doctor", headerName: "Doctor Name", flex: 1 },
   {
     field: "action",
     headerName: "Is Present",
     flex: 1,
     renderCell: () => {
-      return <Switch defaultChecked />;
+      return (
+        <Chip/>
+      );
     },
   },
 ];
@@ -102,22 +105,24 @@ function QuickSearchToolbar() {
 }
 
 const manageClinics = () => {
+  const { t } = useTranslation("manageClinics");
   return (
     <div className="content-container">
-      <Heading title={"Clinic Schedules"} />
+      <Heading title={t("title")} />
 
-      <Search placeholder={"Search for clinics"}/>
+      <Search placeholder={t("search")} />
       <div className="mt-12">
-        <Typography variant="h4">Clinic Days</Typography>
+        <Typography variant="h4">{t("subtitle1")}</Typography>
+        <ClinicAddPopup />
+
         <div className="flex">
           <div className="w-6/12">
             <Calendar />
-            <ClinicAddPopup />
           </div>
           <div className="shadow-md p-5 w-6/12 h-fit">
             <div className="flex justify-between">
-              <Typography variant="h6">Today's Clinic Details</Typography>
-              <Button>View All Clinic Details</Button>
+              <Typography variant="h6">{t("subtitle1.1")}</Typography>
+              <Button>{t("viewBtn")}</Button>
             </div>
             <div style={{ height: "100%", width: "100%" }}>
               <DataGrid
@@ -137,7 +142,7 @@ const manageClinics = () => {
         </div>
       </div>
       <div>
-        <Typography variant="h4">Clinic Patient List</Typography>
+        <Typography variant="h4">{t("subtitle2")}</Typography>
 
         <Select
           defaultValue={1}
