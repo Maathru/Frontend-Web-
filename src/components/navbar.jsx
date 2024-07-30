@@ -341,7 +341,7 @@ const Navbar = ({ themeFunction, mode }) => {
                   className="bg-[#9C33C1] dark:text-white text-gray-100"
                   onClick={handleLinkClick}
                 >
-                  Log In
+                  Sign In
                 </Button>
               </Link>
             </>
