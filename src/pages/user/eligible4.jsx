@@ -2,7 +2,7 @@ import { errorType, Toast } from "@/components/toast";
 import { Button } from "@/components/ui/button";
 import Heading from "@/components/ui/heading";
 import EligibleCardBoolInput from "@/components/userComponents/eligibleCardBoolInput";
-import EligiblePagination from "@/components/userComponents/eligiblePagination";
+import CustomPagination from "@/components/userComponents/customPagination";
 import YesNoButton from "@/components/userComponents/yesNoButton";
 import {
   facilities1,
@@ -304,7 +304,7 @@ const Eligible4 = () => {
       <Button onClick={handleSave}>Save and Submit</Button>
 
       <div className="flex w-full mt-24">
-        <EligiblePagination total={5} current={4} />
+        <CustomPagination path={"/eligible/"} total={5} current={4} />
       </div>
     </div>
   );
