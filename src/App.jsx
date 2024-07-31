@@ -16,6 +16,7 @@ import Clinic from "./pages/doctor/clinic";
 import ViewClinics from "./pages/doctor/viewClinics";
 import ClinicDates from "./pages/doctor/clinicDates";
 import ClinicReports from "./pages/doctor/clinicReports";
+import Midwife from "./pages/doctor/midwife";
 import Forum from "./pages/forum";
 import Answer from "./pages/answer";
 import EditQuestion from "./pages/editQuestion";
@@ -147,6 +148,8 @@ function App() {
                   <Route path="/" element={<DoctorDashboard />} />
                   <Route path="/drugs" element={<Drug />} />
                   <Route path="/drugs/add" element={<DrugAdd />} />
+
+                  <Route path="/midwife" element={<Midwife />} />
 
                   <Route path="/clinics" element={<Clinic />} />
                   <Route path="/clinics/view" element={<ViewClinics />} />
