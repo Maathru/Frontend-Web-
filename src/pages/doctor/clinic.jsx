@@ -1,67 +1,20 @@
 import { Button } from "@/components/ui/button";
 import React from "react";
 import {
-  HiChevronLeft,
   HiOutlinePencilAlt,
   HiOutlinePlusSm,
   HiOutlineTrash,
 } from "react-icons/hi";
-import { styled } from "@mui/material/styles";
-import {
-  DataGrid,
-  GridToolbarQuickFilter,
-  gridClasses,
-} from "@mui/x-data-grid";
-import { Box, Chip, IconButton } from "@mui/material";
+import { Chip, IconButton } from "@mui/material";
 import { useTranslation } from "react-i18next";
-
-const StripedDataGrid = styled(DataGrid)(({ theme }) => ({
-  [`& .${gridClasses.row}.even`]: {
-    backgroundColor: "#FAEDFF",
-  },
-  [`& .${gridClasses.row}.odd`]: {
-    backgroundColor: "#ffffff",
-  },
-  border: "none",
-
-  "& .MuiDataGrid-cell:focus": {
-    outline: "none",
-  },
-  "& .MuiDataGrid-cell:focus-within": {
-    outline: "none",
-  },
-}));
-
-function QuickSearchToolbar() {
-  return (
-    <Box
-      sx={{
-        p: 0.5,
-        pb: 0,
-        m: 2,
-        display: "flex",
-        justifyContent: "flex-end",
-      }}
-    >
-      <GridToolbarQuickFilter
-        sx={{
-          width: 400,
-          "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline":
-            {
-              border: "none",
-            },
-          "& .MuiOutlinedInput-root:focus-within": {
-            outline: "none",
-            boxShadow: "none",
-          },
-        }}
-      />
-    </Box>
-  );
-}
+import { Link } from "react-router-dom";
+import Heading from "@/components/ui/heading";
+import { useTitle } from "@/hooks/useTitle";
+import { StripedDataGrid } from "@/components/StripedDataGrid";
+import TableSearch from "@/components/TableSearch";
 
 const columns = [
-  {field: "id", headerName: "Clinic ID", width: 70,},
+  { field: "id", headerName: "Clinic ID", width: 70 },
   { field: "name", headerName: "Clinic Name", width: 130 },
   { field: "devision", headerName: "Devision", flex: 1 },
   { field: "date", headerName: "Date", flex: 1 },
@@ -155,24 +108,28 @@ const rows = [
 ];
 
 const Clinic = () => {
+  useTitle("Clinics");
   const { t } = useTranslation("clinic");
+  const title = t("title");
 
   return (
-    <div className="p-12 pt-8">
-      <div className="">
-        <div className="text-3xl text-[#5B5B5B] font-semibold mb-8">
-          <HiChevronLeft className="text-5xl inline" />
-          {t("title")}
-        </div>
-      </div>
+    <div className="content-container">
+      <Heading title={title} />
 
       <div className="flex gap-36 justify-around px-24">
-        <Button className="flex-1 text-md">{t("past")}</Button>
-        <Button className="flex-1 text-md">{t("clinics")}</Button>
-        <Button className="flex-1 text-md">{t("dates")}</Button>
-        <Button className="flex-1 text-md">{t("reports")}</Button>
-      </div>
+        <Link to={"/clinics/view"}>
+          {/* <Button className="flex-1 text-md">{t("past")}</Button> */}
+          <Button className="flex-1 text-md">{t("clinics")}</Button>
+        </Link>
 
+        <Link to={"/clinics/dates"}>
+          <Button className="flex-1 text-md">{t("dates")}</Button>
+        </Link>
+
+        <Link to={"/clinics/reports"}>
+          <Button className="flex-1 text-md">{t("reports")}</Button>
+        </Link>
+      </div>
       <div className="flex flex-col items-end mt-10">
         <Button className="bg-[#6F0096] h-10 flexbox items-center ">
           {t("add")}
@@ -194,7 +151,7 @@ const Clinic = () => {
               params.indexRelativeToCurrentPage % 2 === 0 ? "even" : "odd"
             }
             disableRowSelectionOnClick
-            slots={{ toolbar: QuickSearchToolbar }}
+            slots={{ toolbar: TableSearch }}
           />
         </div>
       </div>

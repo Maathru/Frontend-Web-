@@ -4,9 +4,7 @@ import { HiOutlineArrowRight } from "react-icons/hi";
 import { Link, useNavigate } from "react-router-dom";
 import loginImg from "../assets/loginImg.png";
 import { useTranslation } from "react-i18next";
-import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
 import {
   FormControl,
   IconButton,
@@ -18,24 +16,51 @@ import {
 import { MdVisibility, MdVisibilityOff } from "react-icons/md";
 import { useContext, useState } from "react";
 import { Button } from "@/components/ui/button";
-import UserService from "@/service/userService";
 import { errorType, Toast } from "@/components/toast";
 import { userData } from "@/context/userAuth";
+import { useTitle } from "@/hooks/useTitle";
+import AuthService from "@/service/authService";
 
 const Login = () => {
-  const [username, setUsername] = useState("");
+  useTitle("Log In");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [errors, setErrors] = useState({});
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
   const { setUserDetails } = useContext(userData);
-  const [errors, setErrors] = useState({});
+  const { t } = useTranslation("login");
+
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
+
+  const validateField = (name, value) => {
+    switch (name) {
+      case "email":
+        if (!value) return "Username is required";
+        break;
+      case "password":
+        if (!value) return "Password is required";
+        break;
+      default:
+        break;
+    }
+    return "";
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    if (name === "email") setEmail(value);
+    if (name === "password") setPassword(value);
+    setErrors({ ...errors, [name]: validateField(name, value) });
+  };
 
   const validate = () => {
     const newErrors = {};
-
-    // Check if all fields are filled
-    if (!username) newErrors.email = "Username is required";
+    if (!email) newErrors.email = "Username is required";
     if (!password) newErrors.password = "Password is required";
-
     return newErrors;
   };
 
@@ -43,24 +68,25 @@ const Login = () => {
     e.preventDefault();
 
     const validationErrors = validate();
-
     if (Object.keys(validationErrors).length !== 0) {
       setErrors(validationErrors);
       return;
     }
 
     try {
-      const response = await UserService.login(username, password);
+      const response = await AuthService.login(email, password);
       if (response.status === 200) {
         localStorage.setItem("jwt", response.data.access_token);
         localStorage.setItem("refresh", response.data.refresh_token);
         localStorage.setItem("role", response.data.role);
         localStorage.setItem("name", response.data.name);
+        localStorage.setItem("userId" , response.data.id);
 
         setUserDetails({
           authenticated: true,
           name: response.data.name,
           role: response.data.role,
+          userId: response.data.id,
           accessToken: response.data.access_token,
           refreshToken: response.data.refresh_token,
         });
@@ -72,7 +98,6 @@ const Login = () => {
       }
     } catch (error) {
       console.log(error.message);
-      Toast(error.message, errorType.ERROR);
 
       const data = error.response.data;
       if (data) {
@@ -86,19 +111,11 @@ const Login = () => {
           setErrors(newErrors);
         } else {
           console.log(data);
-          Toast(data, errorType.ERROR);
+          Toast(data || "Error occurred", errorType.ERROR);
         }
       }
     }
   };
-
-  const [showPassword, setShowPassword] = useState(false);
-  const handleClickShowPassword = () => setShowPassword((show) => !show);
-  const handleMouseDownPassword = (event) => {
-    event.preventDefault();
-  };
-
-  const { t } = useTranslation("login");
 
   return (
     <div className="h- w-screen">
@@ -115,26 +132,34 @@ const Login = () => {
         </div>
 
         <div className="flex flex-col items-center w-full md:w-8/12 justify-center shadow-md rounded-r-2xl py-16">
-          <p className="text-[#202244] font-bold text-2xl mb-8">{t("title")}</p>
+          <p className="text-[#202244] dark:text-[#eae0f4] font-bold text-2xl mb-8">
+            {t("title")}
+          </p>
 
-          {errors.email && <p>{errors.email}</p>}
-          {errors.password && <p>{errors.password}</p>}
-
-          <TextField
-            label={t("username")}
-            variant="outlined"
-            InputProps={{ sx: { borderRadius: 8, width: "30vw" } }}
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-          />
+          <div className="sm:w-6/12 w-9/12">
+            <TextField
+              label={t("username")}
+              name="email"
+              variant="outlined"
+              InputProps={{
+                sx: { borderRadius: 8},
+                className: "dark:bg-dark-background",
+              }}
+              value={email}
+              onChange={handleInputChange}
+              fullWidth
+            />
+            {errors.email && <p className="error">{errors.email}</p>}
+          </div>
           <br />
-          <div className="flex flex-col">
-            <FormControl sx={{ m: 1, width: "30vw" }} variant="outlined">
+          <div className="flex flex-col sm:w-6/12 w-9/12">
+            <FormControl sx={{ m: 1 }} variant="outlined" fullWidth>
               <InputLabel htmlFor="outlined-adornment-password">
                 {t("password")}
               </InputLabel>
               <OutlinedInput
                 id="outlined-adornment-password"
+                name="password"
                 type={showPassword ? "text" : "password"}
                 sx={{ borderRadius: 8 }}
                 endAdornment={
@@ -151,8 +176,9 @@ const Login = () => {
                 }
                 label="Password"
                 value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                onChange={handleInputChange}
               />
+              {errors.password && <p className="error">{errors.password}</p>}
             </FormControl>
 
             <Link>
@@ -195,7 +221,6 @@ const Login = () => {
           </p>
         </div>
       </div>
-      <ToastContainer />
     </div>
   );
 };

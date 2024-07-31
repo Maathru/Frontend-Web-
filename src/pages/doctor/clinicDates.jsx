@@ -1,6 +1,4 @@
 import { Calendar } from "@/components/ui/calendar";
-import * as React from "react";
-import { HiChevronLeft } from "react-icons/hi";
 import { useTranslation } from "react-i18next";
 import {
   DataGrid,
@@ -9,6 +7,8 @@ import {
 } from "@mui/x-data-grid";
 import styled from "@emotion/styled";
 import { Box } from "@mui/material";
+import { useState } from "react";
+import Heading from "@/components/ui/heading";
 
 const StripedDataGrid = styled(DataGrid)(({ theme }) => ({
   [`& .${gridClasses.row}.even`]: {
@@ -70,18 +70,15 @@ const rows = [
 ];
 
 const clinicDates = () => {
-  const [date, setDate] = React.useState("");
+  const [date, setDate] = useState(new Date());
 
-  const { t } = useTranslation("clinic");
+  const { t } = useTranslation("clinicDates");
+  const title = t("title");
 
   return (
-    <div className="p-12 pt-8">
-      <div className="">
-        <div className="text-3xl text-[#5B5B5B] font-semibold mb-8">
-          <HiChevronLeft className="text-5xl inline" />
-          {t("title")}
-        </div>
-      </div>
+    <div className="content-container">
+      <Heading title={title} />
+
       <div className="flex gap-36">
         <div>
           <div className="mx-12">

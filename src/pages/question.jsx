@@ -1,69 +1,94 @@
-import React, { useState } from 'react';
-import { TextField, Typography, Paper} from '@mui/material';
-import FormGroup from '@mui/material/FormGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import { Button } from 'flowbite-react';
-import ReactQuill from 'react-quill';
-import Footer from "../components/footer";
-import 'react-quill/dist/quill.snow.css'; 
-import { Card } from '@/components/ui/card';
-
-import axios from "axios";
+import { useState } from "react";
+import { TextField, Typography } from "@mui/material";
+import FormGroup from "@mui/material/FormGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Checkbox from "@mui/material/Checkbox";
+import { Button } from "flowbite-react";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
+import { Card } from "@/components/ui/card";
+import { errorType, Toast } from "@/components/toast";
+import ForumService from "@/service/forumService";
+import { useNavigate } from "react-router-dom";
 
 function AskQuestion() {
-  const [description, setDescription] = useState('');
-  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState("");
+  const [title, setTitle] = useState("");
   const [selectedKeywords, setSelectedKeywords] = useState([]);
   const [customKeywords, setCustomKeywords] = useState([]);
-  const [newKeyword, setNewKeyword] = useState('');
+  const [newKeyword, setNewKeyword] = useState("");
+  const navigate = useNavigate();
   const keywords = [
-    "Prenatal Care", "Pregnancy", "Pregnant Mother", "Nutrition", 
-    "Health", "Parenting", "Maternal Health", "Baby Vaccinations"
+    "Prenatal Care",
+    "Pregnancy",
+    "Pregnant Mother",
+    "Nutrition",
+    "Health",
+    "Parenting",
+    "Maternal Health",
+    "Baby Vaccinations",
   ];
-
-  const handleTitleChange = (e) => {
-    setTitle(e.target.value);
-  }
+  const [errors, setErrors] = useState({});
 
   const handleKeywordChange = (keyword) => {
-    setSelectedKeywords(prevSelectedKeywords => 
+    setSelectedKeywords((prevSelectedKeywords) =>
       prevSelectedKeywords.includes(keyword)
-        ? prevSelectedKeywords.filter(k => k !== keyword)
+        ? prevSelectedKeywords.filter((k) => k !== keyword)
         : [...prevSelectedKeywords, keyword]
     );
-  }
-
-  const handleNewKeywordChange = (e) => {
-    setNewKeyword(e.target.value);
-  }
+  };
 
   const handleAddKeyword = () => {
-    if (newKeyword && !customKeywords.includes(newKeyword) && !keywords.includes(newKeyword)) {
-      setCustomKeywords(prevCustomKeywords => [...prevCustomKeywords, newKeyword]);
-      setSelectedKeywords(prevSelectedKeywords => [...prevSelectedKeywords, newKeyword]);
-      setNewKeyword('');
+    if (
+      newKeyword &&
+      !customKeywords.includes(newKeyword) &&
+      !keywords.includes(newKeyword)
+    ) {
+      setCustomKeywords((prevCustomKeywords) => [
+        ...prevCustomKeywords,
+        newKeyword,
+      ]);
+      setSelectedKeywords((prevSelectedKeywords) => [
+        ...prevSelectedKeywords,
+        newKeyword,
+      ]);
+      setNewKeyword("");
     }
-  }
+  };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const url = process.env.BACKEND_API_URL;
     const data = {
       title,
       description,
       keywords: selectedKeywords,
-      author: 1
     };
-
-    axios.post(url + '/question', data)
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  }
+  
+    try {
+      const response = await ForumService.addQuestion(data);
+      Toast(response, errorType.SUCCESS);
+      navigate("/forum");
+    } catch (error) {
+      const data = error.response?.data;
+      console.log(data);
+  
+      if (data) {
+        if (Array.isArray(data)) {
+          const newErrors = {};
+          data.forEach((msg) => {
+            Toast(msg.message, errorType.ERROR);
+            newErrors[msg.field] = msg.message;
+          });
+          setErrors(newErrors);
+        } else {
+          Toast(data.message || "Error occurred", errorType.ERROR);
+        }
+      } else {
+        Toast("Error occurred", errorType.ERROR);
+      }
+    }
+  };
+  
 
   return (
     <>
@@ -80,7 +105,7 @@ function AskQuestion() {
           </Typography>
           <TextField
             value={title}
-            onChange={handleTitleChange}
+            onChange={(e) => setTitle(e.target.value)}
             variant="outlined"
             fullWidth
             className="mb-4 rounded-lg"
@@ -101,7 +126,7 @@ function AskQuestion() {
                 <FormControlLabel
                   key={keyword}
                   control={
-                    <Checkbox 
+                    <Checkbox
                       checked={selectedKeywords.includes(keyword)}
                       onChange={() => handleKeywordChange(keyword)}
                     />
@@ -113,7 +138,7 @@ function AskQuestion() {
                 <FormControlLabel
                   key={keyword}
                   control={
-                    <Checkbox 
+                    <Checkbox
                       checked={selectedKeywords.includes(keyword)}
                       onChange={() => handleKeywordChange(keyword)}
                     />
@@ -129,24 +154,27 @@ function AskQuestion() {
               variant="outlined"
               fullWidth
               value={newKeyword}
-              onChange={handleNewKeywordChange}
+              onChange={(e) => setNewKeyword(e.target.value)}
               className="mr-2"
-              InputLabelProps={{ className: 'text-gray-600' }}
+              InputLabelProps={{ className: "text-gray-600" }}
             />
-            <Button onClick={handleAddKeyword} className="bg-blue-600 text-white px-4 py-2 rounded-md">
+            <Button
+              onClick={handleAddKeyword}
+              className="bg-blue-600 text-white px-4 py-2 rounded-md"
+            >
               Add
             </Button>
           </div>
           <div className="text-center mt-5">
-            <Button type="submit" className="bg-blue-600 text-white px-4 py-2 rounded-md">
+            <Button
+              type="submit"
+              className="bg-blue-600 text-white px-4 py-2 rounded-md"
+            >
               Submit
             </Button>
           </div>
         </form>
       </Card>
-      <div>
-        <Footer />
-      </div>
     </>
   );
 }

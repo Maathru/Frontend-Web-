@@ -1,52 +1,11 @@
-import axios from "axios";
+import axiosInstance from "./axiosInstance";
 
 class UserService {
-  static BASE_URL = "http://localhost:8081/api/v1";
-
-  static async login(email, password) {
+  // by user
+  static async getRegions(province, district, area) {
     try {
-      const response = await axios.post(`${this.BASE_URL}/auth/signin`, {
-        email,
-        password,
-      });
-      return response;
-    } catch (error) {
-      throw error;
-    }
-  }
-
-  static async register(formData) {
-    try {
-      const response = await axios.post(`${this.BASE_URL}/auth/signup`, {
-        firstName: formData.firstName,
-        lastName: formData.lastName,
-        email: formData.email,
-        password: formData.password,
-      });
-      return response.data;
-    } catch (error) {
-      throw error;
-    }
-  }
-
-  static async getAllUsers(token) {
-    try {
-      const response = await axios.get(`${this.BASE_URL}/admin/get-all-users`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      return response.data;
-    } catch (error) {
-      throw error;
-    }
-  }
-
-  static async getProfile(token) {
-    try {
-      const response = await axios.get(
-        `${this.BASE_URL}/adminuser/get-profile`,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
+      const response = await axiosInstance.get(
+        `/user/${province}/${district}/${area}`
       );
       return response.data;
     } catch (error) {
@@ -54,97 +13,35 @@ class UserService {
     }
   }
 
-  static async getUserById(userId, token) {
+  // By user
+  static async getMidwife(region) {
     try {
-      const response = await axios.get(
-        `${this.BASE_URL}/admin/get-users/${userId}`,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
+      const response = await axiosInstance.get(`/user/midwife/${region}`);
+      console.log(response);
       return response.data;
     } catch (error) {
       throw error;
     }
   }
 
-  static async deleteUser(userId, token) {
+  // By admin
+  static async getAllUsers() {
     try {
-      const response = await axios.delete(
-        `${this.BASE_URL}/admin/delete/${userId}`,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
+      const response = await axiosInstance.get(`/user/getAll`);
       return response.data;
     } catch (error) {
       throw error;
     }
   }
 
-  static async updateUser(userId, userData, token) {
+  // By midwife
+  static async getUserIdByEmail(email) {
     try {
-      const response = await axios.put(
-        `${this.BASE_URL}/admin/update/${userId}`,
-        userData,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
+      const response = await axiosInstance.get(`/user/midwife/get/${email}`);
       return response.data;
     } catch (error) {
       throw error;
     }
-  }
-
-  static async logout(token) {
-    try {
-      const response = await axios.get(`${this.BASE_URL}/logout`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-    } catch (error) {
-      console.log(error);
-    }
-
-    localStorage.removeItem("jwt");
-    localStorage.removeItem("refresh");
-    localStorage.removeItem("role");
-    localStorage.removeItem("name");
-  }
-
-  static isAuthenticated() {
-    const token = localStorage.getItem("jwt");
-    return !!token;
-  }
-
-  static isAdmin() {
-    const role = localStorage.getItem("role");
-    return role === "ADMIN";
-  }
-
-  static isUser() {
-    const role = localStorage.getItem("role");
-    return role === "USER";
-  }
-
-  static adminOnly() {
-    return this.isAuthenticated() && this.isAdmin();
-  }
-
-  static getRole() {
-    return localStorage.getItem("role");
-  }
-
-  static getName() {
-    return localStorage.getItem("name");
-  }
-
-  static getAccessToken() {
-    return localStorage.getItem("jwt");
-  }
-
-  static getRefreshToken() {
-    return localStorage.getItem("refresh");
   }
 }
 

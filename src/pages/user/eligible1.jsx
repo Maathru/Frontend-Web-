@@ -4,78 +4,93 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import EligibleCardBoolInput from "@/components/userComponents/eligibleCardBoolInput";
-import MainDetailsInput from "@/components/userComponents/mainDetailsInput";
-import { useState } from "react";
-import {
-  Pagination,
-  PaginationContent,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-} from "@/components/ui/pagination";
-
-const conditions = [
-  { title: "Low Red Blood cells (Anemia)", placeholder: "Other Details" },
-  {
-    title: "Heart disease or rheumatism from birth",
-    placeholder: "Other Details",
-  },
-  { title: "Diabetics", placeholder: "Other Details" },
-  { title: "High Blood Pressure", placeholder: "Other Details" },
-  { title: "High Blood Cholesterol level", placeholder: "Other Details" },
-  { title: "Chest Tightness Wheezing", placeholder: "Other Details" },
-  { title: "Thyroid related Diseases", placeholder: "Other Details" },
-  { title: "Dental problems", placeholder: "Other Details" },
-  { title: "Mental illness", placeholder: "Other Details" },
-  {
-    title: "Diseases with Long-term complication",
-    placeholder: "Other Details",
-  },
-  { title: "Food poisoning", placeholder: "Other Details" },
-  { title: "Use of long term medication", placeholder: "Other Details" },
-  { title: "Any other Major surgeries", placeholder: "Other Details" },
-];
-
-const details = [
-  {
-    title: "Age",
-    placeholder1: "Enter woman's age",
-    placeholder2: "Enter man's age",
-  },
-  {
-    title: "Educational level",
-    placeholder1: "Select the level of education - woman",
-    placeholder2: "Select the level of education - man",
-  },
-  {
-    title: "Occupation",
-    placeholder1: "Enter woman's occupation",
-    placeholder2: "Enter man's occupation",
-  },
-];
+import { useEffect, useState } from "react";
+import BasicInfoInput from "@/components/userComponents/basicInfoInput";
+import { Button } from "@/components/ui/button";
+import dayjs from "dayjs";
+import CustomPagination from "@/components/userComponents/customPagination";
+import { basicInfo, conditions1 } from "@/data/eligibleData";
+import { errorType, Toast } from "@/components/toast";
+import EligibleService from "@/service/eligibleService";
+import Heading from "@/components/ui/heading";
+import { useTranslation } from "react-i18next";
+import { useTitle } from "@/hooks/useTitle";
 
 const Eligible = () => {
+  useTitle("Recovery Checklist - Page 1");
+  const [formObject, setFormObject] = useState({ stage: 1 });
   const navigate = useNavigate();
 
-  const [page, setPage] = useState(1);
-  const handleChange = (event, value) => {
-    setPage(value);
-    console.log(event.target);
+  const initiateFields = () => {
+    const initialData = {};
+
+    basicInfo.forEach((info) => {
+      initialData[info.name + "_man"] = "";
+      initialData[info.name + "_woman"] = "";
+    });
+    conditions1.forEach((condition) => {
+      initialData[condition.name + "_man"] = "";
+      initialData[condition.name + "_woman"] = "";
+      initialData[condition.name + "_other"] = "";
+    });
+    initialData.marriage = null;
+    initialData.area = "";
+    initialData.district = "";
+    initialData.region = "";
+
+    return initialData;
   };
+
+  const setData = (field, name, value) => {
+    const newObject = {};
+    newObject[name + "_" + field] = value || "";
+    setFormObject({ ...formObject, ...newObject });
+  };
+
+  const handleSave = () => {
+    formObject.stage = Math.max(formObject.stage, 2);
+    localStorage.setItem("formObject", JSON.stringify(formObject));
+    navigate("/eligible/2");
+  };
+
+  useEffect(() => {
+    const getFromLocalStorage = () => {
+      const jsonString = localStorage.getItem("formObject");
+      if (jsonString) {
+        return JSON.parse(jsonString);
+      }
+      return {};
+    };
+
+    const fetchEligibleInfo = async () => {
+      try {
+        const response = await EligibleService.getEligibleInfo();
+        const existing = EligibleService.mapDtoToFormObject(response);
+        setFormObject({ ...formObject, ...existing });
+      } catch (error) {
+        console.log(error.message);
+
+        console.log(error);
+        const data = error.response.data;
+        console.log(data);
+        Toast(data, errorType.ERROR);
+      }
+    };
+
+    const obj1 = initiateFields();
+    const obj2 = getFromLocalStorage();
+    fetchEligibleInfo();
+    setFormObject({ ...formObject, ...obj1, ...obj2 });
+  }, []);
+
+  const { t } = useTranslation("eligible1");
 
   return (
     <div className="container my-10 font-poppins">
       {/* Hero section */}
       <div>
-        <div className="flex gap-2 items-center">
-          <IoIosArrowBack
-            size={45}
-            className="cursor-pointer"
-            onClick={() => navigate(-1)}
-          />
-          <h1 className="text-3xl">New Life Recovery Checklist</h1>
-        </div>
+        <Heading title={t("title")} />
+
         <p className="text-xl mt-8">
           With the arrival of a new baby, you are stepping into a beautiful and
           joyous journey. Every mother wants to bring her baby into this world
@@ -86,35 +101,35 @@ const Eligible = () => {
           <div className="mx-8 mt-5 text-sm md:text-base p-4">
             <div className="flex my-4 gap-2">
               <p>Regional Health Service Unit:</p>
-              <p>Kotte</p>
+              <p>{formObject.district || ""}</p>
             </div>
             <div className="flex my-4 gap-2">
               <p>Medical Officer in Health:</p>
-              <p>Udahamulla</p>
+              <p>{formObject.area || ""}</p>
             </div>
             <div className="flex my-4 gap-2">
-              <p>Family Health Service unit:</p>
-              <p>Nugegoda</p>
+              <p>Family Health Service Unit:</p>
+              <p>{formObject.region || ""}</p>
             </div>
             <div className="flex my-4 gap-2">
               <p>User ID:</p>
-              <p>2024/Nu/32</p>
+              <p>{formObject.userId || ""}</p>
             </div>
             <div className="flex my-4 gap-2">
               <p>Wife's Name:</p>
-              <p>Mia kalifa</p>
+              <p>{formObject.womanName || ""}</p>
             </div>
             <div className="flex my-4 gap-2">
               <p>Husband's Name:</p>
-              <p>Buddhika Senanayake</p>
+              <p>{formObject.manName || ""}</p>
             </div>
             <div className="flex my-4 gap-2">
               <p>Address:</p>
-              <p>48/16, Udahamulla, Nugegoda</p>
+              <p>{formObject.address || ""}</p>
             </div>
             <div className="flex my-4 gap-2">
               <p>Date:</p>
-              <p>2024/06/24</p>
+              <p>{formObject.createdDate || ""}</p>
             </div>
           </div>
         </div>
@@ -137,26 +152,40 @@ const Eligible = () => {
 
           <div className="grid grid-cols-3 gap-4 items-center mx-14">
             <p></p>
-            <p className="text-center">Male</p>
-            <p className="text-center">Female</p>
+            <p className="text-center">Wife</p>
+            <p className="text-center">Husband</p>
           </div>
 
           {/* Input box */}
 
           <div>
-            {details.map((detail, index) => (
-              <MainDetailsInput
-                title={detail.title}
+            {basicInfo.map((detail, index) => (
+              <BasicInfoInput
+                key={index}
                 index={index}
+                title={detail.title}
+                value1={formObject[detail.name + "_woman"] || ""}
+                value2={formObject[detail.name + "_man"] || ""}
                 placeholder1={detail.placeholder1}
                 placeholder2={detail.placeholder2}
-                key={index}
+                onChange={(filed, e) => {
+                  setData(filed, detail.name, e.target.value);
+                }}
               />
             ))}
             <div className="grid grid-cols-3 gap-4 items-center mt-4 mx-14">
               <p>4. Date of marriage</p>
               <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <DatePicker className="w-96" />
+                <DatePicker
+                  label="Date of marriage"
+                  className="w-96"
+                  value={
+                    formObject.marriage ? dayjs(formObject.marriage) : null
+                  }
+                  onChange={(e) => {
+                    formObject.marriage = e;
+                  }}
+                />
               </LocalizationProvider>
               <p></p>
             </div>
@@ -174,47 +203,34 @@ const Eligible = () => {
         <div className="m-12">
           <div className="grid grid-cols-4 gap-4 items-center mt-4">
             <p></p>
-            <p className="text-center">Woman</p>
-            <p className="text-center">Men</p>
+            <p className="text-center">Wife</p>
+            <p className="text-center">Husband</p>
             <p></p>
           </div>
 
-          {conditions.map((condition, index) => (
+          {conditions1.map((condition, index) => (
             <EligibleCardBoolInput
+              key={index}
+              index={index}
               title={condition.title}
               placeholder={condition.placeholder}
-              index={index}
-              key={index}
+              value1={formObject[condition.name + "_woman"] || false}
+              value2={formObject[condition.name + "_man"] || false}
+              value3={formObject[condition.name + "_other"] || ""}
+              onChange={(filed, e) => {
+                setData(filed, condition.name, e);
+              }}
             />
           ))}
         </div>
       </div>
 
+      <Button className="float-right" onClick={handleSave}>
+        Save and Next
+      </Button>
+
       <div className="flex w-full mt-24">
-        <Pagination>
-          <PaginationContent>
-            <PaginationItem>
-              <PaginationPrevious to="#" />
-            </PaginationItem>
-            <PaginationItem>
-              <PaginationLink to="#" isActive>
-                1
-              </PaginationLink>
-            </PaginationItem>
-            <PaginationItem>
-              <PaginationLink to="/eligible/2">2</PaginationLink>
-            </PaginationItem>
-            <PaginationItem>
-              <PaginationLink to="/eligible/3">3</PaginationLink>
-            </PaginationItem>
-            <PaginationItem>
-              <PaginationLink to="/eligible/4">4</PaginationLink>
-            </PaginationItem>
-            <PaginationItem>
-              <PaginationNext to="/eligible/2" />
-            </PaginationItem>
-          </PaginationContent>
-        </Pagination>
+        <CustomPagination path={"/eligible/"} total={5} current={1} />
       </div>
     </div>
   );
