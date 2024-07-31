@@ -14,6 +14,7 @@ import { Badge } from "@/components/ui/badge";
 import meal1 from "../../assets/user/salmon-eggs.png";
 import meal2 from "../../assets/user/tofu.png";
 import walking from "../../assets/user/walking.png";
+import yoga from "../../assets/user/yoga.png";
 import { useTitle } from "@/hooks/useTitle";
 import Heading from "@/components/ui/heading";
 
@@ -257,19 +258,21 @@ const growth = () => {
           <div>
             <Card className={`${cardColor} flex flex-col items-center`}>
               <CardHeader className={`${cardheader}`}>
-                <CardTitle className="text-lg">Walking</CardTitle>
+                <CardTitle className="text-lg">Prenatal Yoga</CardTitle>
               </CardHeader>
               <img
-                src={walking}
+                src={yoga}
                 alt="Blog Image"
                 className="rounded-md hidden md:block m-2 object-fit px-4"
               />
               <div className="flex flex-col">
                 <CardContent className={`${cardcontent}`}>
                   <p>
-                    great source of iron. It's important to get enough iron
-                    throughout your pregnancy, since it's needed to support your
-                    baby's developing brain.
+                    Gentle stretching and breathing exercises tailored for
+                    pregnant women. Join a prenatal yoga class or follow a
+                    certified instructor online.
+                    <br /> Enhances flexibility, reduces stress, and improves
+                    sleep quality.
                   </p>
                 </CardContent>
               </div>

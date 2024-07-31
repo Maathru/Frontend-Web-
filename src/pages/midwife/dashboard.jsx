@@ -2,7 +2,7 @@ import { IoPeopleCircle } from "react-icons/io5";
 import React, { useContext, useState } from "react";
 import { MdOutlinePregnantWoman } from "react-icons/md";
 import { Link } from "react-router-dom";
-import { Typography } from "@mui/material";
+import { Box, Grid, Paper, Typography } from "@mui/material";
 import { FaCircle } from "react-icons/fa";
 import { Button } from "flowbite-react";
 import ReactApexChart from "react-apexcharts";
@@ -10,6 +10,7 @@ import { userData } from "@/context/userAuth";
 import { Calendar } from "@/components/ui/calendar";
 import { HiCalendar } from "react-icons/hi";
 import { useDarkMode } from "@/context/darkModeContext";
+// import { title } from "process";
 
 const Widget = ({ icon: Icon, count, label1, label2 }) => (
   <div className="card w-3/12 shadow-md rounded-lg dark:bg-dark-background">
@@ -37,7 +38,8 @@ const dashboard = () => {
   const { isDarkMode } = useDarkMode();
   const { userDetails } = useContext(userData);
   // pregnancy visits line chart data starts
-  const options1 = {
+  const pregnancyVisitsOptions = {
+    // options: {
     chart: {
       type: "line",
       zoom: {
@@ -95,22 +97,17 @@ const dashboard = () => {
       ],
     },
   };
-  console.log(options1.title.style);
-
-  const [series1, setSeries1] = useState([
+  const pregnancyVisitsSeries = [
     {
-      name: "Desktops",
-      data: [10, 41, 35, 51, 49, 62, 69, 91, 115, 98, 100, 110],
+      data: [10, 41, 35, 51, 30, 62, 40, 80, 70, 98, 80, 110],
     },
-  ]);
+  ];
 
   // Average Child Growth Rate line chart data starts
-  const options2 = {
+  const AverageChildGrowthOptions = {
     chart: {
       type: "line",
-      zoom: {
-        enabled: false,
-      },
+
       dropShadow: {
         enabled: true,
         enabledOnSeries: undefined,
@@ -130,9 +127,7 @@ const dashboard = () => {
         padding: "20px",
       },
     },
-    dataLabels: {
-      enabled: false,
-    },
+
     stroke: {
       curve: "smooth",
       colors: isDarkMode ? "#ffffff" : "#721D90",
@@ -163,12 +158,71 @@ const dashboard = () => {
     },
   };
 
-  const [series2, setSeries2] = useState([
+  const AverageChildGrowthSeries = [
     {
       name: "Desktops",
-      data: [10, 41, 35, 51, 49, 62, 69, 91, 115, 98, 100, 110],
+      data: [10, 30, 20, 51, 49, 96, 60, 75, 64, 70, 40, 50],
     },
-  ]);
+  ];
+
+  const PregnantStatOptions = {
+    chart: {
+      type: "donut",
+    },
+    title: {
+      text: "Health statistics on pregnant women",
+      style: {
+        fontSize: "18px",
+        fontWeight: "semiBold",
+        color: isDarkMode ? "#ffffff" : "#263238",
+        padding: "20px",
+      },
+    },
+    labels: [
+      "Condition 1",
+      "Condition 2",
+      "Condition 3",
+      "Condition 4",
+      "Condition 5",
+    ],
+    colors: ["#620084", "#8a3dff", "#9C33C1", "#6a1bff", "#A8B8D8"],
+  };
+
+  const PregnantStatSeries = [25, 13, 12, 37, 13];
+
+  const ChildBirthRateOptions = {
+    chart: { type: "bar" },
+    title: {
+      text: "Child birth Rate in your area",
+      style: {
+        fontSize: "18px",
+        fontWeight: "semiBold",
+        color: isDarkMode ? "#ffffff" : "#263238",
+        padding: "20px",
+      },
+    },
+    plotOptions: {
+      bar: {
+        horizontal: false,
+        columnWidth: "55%",
+        endingShape: "rounded",
+      },
+    },
+    colors: ["#620084"],
+    xaxis: {
+      categories: ["Region 1", "Region 2", "Region 3", "Region 4", "Region 5"],
+    },
+    fill: {
+      opacity: 1,
+    },
+  };
+
+  const ChildBirthRateSeries = [
+    {
+      name: "birthrate",
+      data: [10, 20, 30, 40, 50, 60],
+    },
+  ];
 
   const handleDayClick = (day, { selected }) => {
     console.log("Day clicked:", day, selected);
@@ -244,44 +298,59 @@ const dashboard = () => {
           </Typography>
           <Button>View All</Button>
         </div>
-        <div className="grid gap-12 grid-cols-2">
-          <div id="" className="shadow-md rounded-sm p-5">
-            <ReactApexChart
-              options={options1}
-              series={series1}
-              type="line"
-              height={350}
-              width={"100%"}
-            />
-          </div>
-          <div id="" className="shadow-md rounded-sm p-5">
-            <ReactApexChart
-              options={options2}
-              series={series2}
-              type="line"
-              height={350}
-              width={"100%"}
-            />
-          </div>
-          <div id="" className="shadow-md rounded-sm p-5">
-            <ReactApexChart
-              options={options2}
-              series={series2}
-              type="line"
-              height={350}
-              width={"100%"}
-            />
-          </div>
-          <div id="" className="shadow-md rounded-sm p-5">
-            <ReactApexChart
-              options={options2}
-              series={series2}
-              type="line"
-              height={350}
-              width={"100%"}
-            />
-          </div>
-        </div>
+
+        <Grid container spacing={4}>
+          <Grid item xs={6}>
+            <Paper elevation={3}>
+              <Box sx={{ p: 2 }}>
+                <ReactApexChart
+                  options={pregnancyVisitsOptions}
+                  series={pregnancyVisitsSeries}
+                  type="line"
+                  height={350}
+                  width={"100%"}
+                />
+              </Box>
+            </Paper>
+          </Grid>
+          <Grid item xs={6}>
+            <Paper elevation={3}>
+              <Box sx={{ p: 2 }}>
+                <ReactApexChart
+                  options={AverageChildGrowthOptions}
+                  series={AverageChildGrowthSeries}
+                  type="line"
+                  height={350}
+                  width={"100%"}
+                />
+              </Box>
+            </Paper>
+          </Grid>
+          <Grid item xs={6}>
+            <Paper elevation={3}>
+              <Box sx={{ p: 2 }}>
+                <ReactApexChart
+                  options={PregnantStatOptions}
+                  series={PregnantStatSeries}
+                  type="donut"
+                  height={350}
+                />
+              </Box>
+            </Paper>
+          </Grid>
+          <Grid item xs={6}>
+            <Paper elevation={3}>
+              <Box sx={{ p: 2 }}>
+                <ReactApexChart
+                  options={ChildBirthRateOptions}
+                  series={ChildBirthRateSeries}
+                  type="bar"
+                  height={350}
+                />
+              </Box>
+            </Paper>
+          </Grid>
+        </Grid>
       </div>
     </div>
   );
