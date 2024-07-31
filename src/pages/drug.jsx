@@ -18,23 +18,7 @@ import { errorType, Toast } from "@/components/toast";
 import Heading from "@/components/ui/heading";
 import { Button } from "@/components/ui/button";
 import { useTitle } from "@/hooks/useTitle";
-
-const StripedDataGrid = styled(DataGrid)(({ theme }) => ({
-  [`& .${gridClasses.row}.even`]: {
-    backgroundColor: "#FAEDFF",
-  },
-  [`& .${gridClasses.row}.odd`]: {
-    backgroundColor: "#ffffff",
-  },
-  border: "none",
-
-  "& .MuiDataGrid-cell:focus": {
-    outline: "none",
-  },
-  "& .MuiDataGrid-cell:focus-within": {
-    outline: "none",
-  },
-}));
+import { StripedDataGrid } from "@/components/StripedDataGrid";
 
 const transformDate = (params) => {
   const originalDate = new Date(params.value);
@@ -162,7 +146,7 @@ const Drug = () => {
 
         const data = error.response.data;
         console.log(data);
-        Toast(data, errorType.ERROR);
+        Toast(data || "Error occurred", errorType.ERROR);
       }
     };
 

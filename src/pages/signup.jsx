@@ -4,7 +4,6 @@ import {
   HiOutlineCheckCircle,
 } from "react-icons/hi";
 import { Link, useNavigate } from "react-router-dom";
-import React, { useEffect, useState } from "react";
 import google from "../assets/google.png";
 import fb from "../assets/facebook.png";
 import signupImg from "../assets/signupImg.png";
@@ -21,8 +20,9 @@ import {
 import { MdVisibility, MdVisibilityOff } from "react-icons/md";
 import { Button } from "@/components/ui/button";
 import { errorType, Toast } from "@/components/toast";
-import UserService from "@/service/userService";
 import { useTitle } from "@/hooks/useTitle";
+import AuthService from "@/service/authService";
+import { useState } from "react";
 
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
@@ -110,7 +110,7 @@ const Signup = () => {
     }
 
     try {
-      const response = await UserService.register(formData);
+      const response = await AuthService.register(formData);
 
       setFormData({
         firstName: "",
@@ -119,8 +119,8 @@ const Signup = () => {
         password: "",
         confirmPassword: "",
       });
-      Toast(response.message, errorType.SUCCESS);
-      navigate("/login?login=true");
+      Toast(response.message.split("/")[1], errorType.SUCCESS);
+      navigate("/login");
     } catch (error) {
       console.log(error.message);
 
@@ -136,7 +136,7 @@ const Signup = () => {
           setErrors(newErrors);
         } else {
           console.log(data);
-          Toast(data, errorType.ERROR);
+          Toast(data || "Error occurred", errorType.ERROR);
         }
       }
     }
@@ -148,7 +148,7 @@ const Signup = () => {
         <img
           src={signupImg}
           alt=""
-          className="absolute xl:w-5/12 lg:w-4/12 xl:left-56 xl:top-36 lg:left-48 lg:top-64 hidden lg:block"
+          className="absolute xl:w-5/12 lg:w-4/12 xl:left-56 xl:top-44 lg:left-48 lg:top-64 hidden lg:block"
         />
         <div className="bg-[#620084] rounded-l-2xl w-4/12 shadow-sm hidden lg:block ">
           <p className="w-56 text-lg font-semibold text-center m-8 text-white">
@@ -156,105 +156,112 @@ const Signup = () => {
           </p>
         </div>
 
-        <div className="md:w-8/12 shadow-md rounded-2xl pb-10">
+        <div className="md:w-8/12 w-full shadow-md rounded-2xl pb-10">
           <div className="flex flex-col items-center lg:ml-36">
-            <p className="text-[#202244] font-bold text-2xl my-8">
+            <p className="text-[#202244] dark:text-[#eae0f4] font-bold text-2xl my-8">
               {t("title")}
             </p>
 
-            <div>
+            <div className="sm:w-7/12 w-9/12">
               <TextField
                 label={t("firstName")}
                 name="firstName"
                 value={formData.firstName}
                 onChange={handleInputChange}
                 variant="outlined"
-                InputProps={{ sx: { borderRadius: 8, width: "30vw", mb: 1 } }}
+                InputProps={{ sx: { borderRadius: 8, mb: 1 } }}
+                fullWidth
               />
               {errors.firstName && <p className="error">{errors.firstName}</p>}
             </div>
 
-            <div>
+            <div className="sm:w-7/12 w-9/12">
               <TextField
                 label={t("lastName")}
                 name="lastName"
                 value={formData.lastName}
                 onChange={handleInputChange}
                 variant="outlined"
-                InputProps={{ sx: { borderRadius: 8, width: "30vw", mb: 1 } }}
+                InputProps={{ sx: { borderRadius: 8, mb: 1 } }}
+                fullWidth
               />
               {errors.lastName && <p className="error">{errors.lastName}</p>}
             </div>
 
-            <div>
+            <div className="sm:w-7/12 w-9/12">
               <TextField
                 label={t("email")}
                 name="email"
                 value={formData.email}
                 onChange={handleInputChange}
                 variant="outlined"
-                InputProps={{ sx: { borderRadius: 8, width: "30vw", mb: 1 } }}
+                InputProps={{ sx: { borderRadius: 8, mb: 1 } }}
+                fullWidth
               />
               {errors.email && <p className="error">{errors.email}</p>}
             </div>
 
-            <FormControl sx={{ width: "30vw" }} variant="outlined">
-              <InputLabel htmlFor="outlined-adornment-password">
-                {t("password")}
-              </InputLabel>
-              <OutlinedInput
-                id="outlined-adornment-password"
-                type={showPassword ? "text" : "password"}
-                sx={{ borderRadius: 8, mb: 1 }}
-                endAdornment={
-                  <InputAdornment position="end">
-                    <IconButton
-                      aria-label="toggle password visibility"
-                      onClick={handleClickShowPassword}
-                      onMouseDown={handleMouseDownPassword}
-                      edge="end"
-                    >
-                      {showPassword ? <MdVisibilityOff /> : <MdVisibility />}
-                    </IconButton>
-                  </InputAdornment>
-                }
-                label="Password"
-                name="password"
-                value={formData.password}
-                onChange={handleInputChange}
-              />
-              {errors.password && <p className="error">{errors.password}</p>}
-            </FormControl>
+            <div className="sm:w-7/12 w-9/12">
+              <FormControl variant="outlined" fullWidth>
+                <InputLabel htmlFor="outlined-adornment-password">
+                  {t("password")}
+                </InputLabel>
+                <OutlinedInput
+                  id="outlined-adornment-password"
+                  type={showPassword ? "text" : "password"}
+                  sx={{ borderRadius: 8, mb: 1 }}
+                  endAdornment={
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={handleClickShowPassword}
+                        onMouseDown={handleMouseDownPassword}
+                        edge="end"
+                      >
+                        {showPassword ? <MdVisibilityOff /> : <MdVisibility />}
+                      </IconButton>
+                    </InputAdornment>
+                  }
+                  label="Password"
+                  name="password"
+                  value={formData.password}
+                  onChange={handleInputChange}
+                />
+                {errors.password && <p className="error">{errors.password}</p>}
+              </FormControl>
+            </div>
 
-            <FormControl sx={{ width: "30vw" }} variant="outlined">
-              <InputLabel htmlFor="outlined-adornment-password-confirm">
-                {t("cPassword")}
-              </InputLabel>
-              <OutlinedInput
-                id="outlined-adornment-password-confirm"
-                type={showPassword ? "text" : "password"}
-                sx={{ borderRadius: 8, mb: 1 }}
-                endAdornment={
-                  <InputAdornment position="end">
-                    <IconButton
-                      aria-label="toggle password visibility"
-                      onClick={handleClickShowPassword}
-                      onMouseDown={handleMouseDownPassword}
-                      edge="end"
-                    >
-                      {showPassword ? <MdVisibilityOff /> : <MdVisibility />}
-                    </IconButton>
-                  </InputAdornment>
-                }
-                label="Confirm Password"
-                name="confirmPassword"
-                value={formData.confirmPassword}
-                onChange={handleInputChange}
-              />
-              {errors.confirmPassword && (
-                <p className="error">{errors.confirmPassword}</p>
-              )}
-            </FormControl>
+            <div className="sm:w-7/12 w-9/12">
+              <FormControl variant="outlined" fullWidth>
+                <InputLabel htmlFor="outlined-adornment-password-confirm">
+                  {t("cPassword")}
+                </InputLabel>
+                <OutlinedInput
+                  id="outlined-adornment-password-confirm"
+                  type={showPassword ? "text" : "password"}
+                  sx={{ borderRadius: 8, mb: 1 }}
+                  endAdornment={
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={handleClickShowPassword}
+                        onMouseDown={handleMouseDownPassword}
+                        edge="end"
+                      >
+                        {showPassword ? <MdVisibilityOff /> : <MdVisibility />}
+                      </IconButton>
+                    </InputAdornment>
+                  }
+                  label="Confirm Password"
+                  name="confirmPassword"
+                  value={formData.confirmPassword}
+                  onChange={handleInputChange}
+                />
+                {errors.confirmPassword && (
+                  <p className="error">{errors.confirmPassword}</p>
+                )}
+              </FormControl>
+            </div>
 
             <p className="mt-3">
               <Checkbox

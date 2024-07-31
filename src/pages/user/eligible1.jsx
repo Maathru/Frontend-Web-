@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 import BasicInfoInput from "@/components/userComponents/basicInfoInput";
 import { Button } from "@/components/ui/button";
 import dayjs from "dayjs";
-import EligiblePagination from "@/components/userComponents/eligiblePagination";
+import CustomPagination from "@/components/userComponents/customPagination";
 import { basicInfo, conditions1 } from "@/data/eligibleData";
 import { errorType, Toast } from "@/components/toast";
 import EligibleService from "@/service/eligibleService";
@@ -84,13 +84,12 @@ const Eligible = () => {
   }, []);
 
   const { t } = useTranslation("eligible1");
-  const title = t("title");
 
   return (
     <div className="container my-10 font-poppins">
       {/* Hero section */}
       <div>
-        <Heading title={title} />
+        <Heading title={t("title")} />
 
         <p className="text-xl mt-8">
           With the arrival of a new baby, you are stepping into a beautiful and
@@ -224,10 +223,12 @@ const Eligible = () => {
         </div>
       </div>
 
-      <Button onClick={handleSave}>Save and Next</Button>
+      <Button className="float-right" onClick={handleSave}>
+        Save and Next
+      </Button>
 
       <div className="flex w-full mt-24">
-        <EligiblePagination total={5} current={1} />
+        <CustomPagination path={"/eligible/"} total={5} current={1} />
       </div>
     </div>
   );

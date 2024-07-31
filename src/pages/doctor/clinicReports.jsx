@@ -8,7 +8,7 @@ import Heading from "@/components/ui/heading";
 const clinicReports = () => {
   const { t } = useTranslation("clinicReports");
 
-  // patient visit line chat chart data starts
+  // patient visit line chart data starts
   const [options1, setObject1] = useState({
     chart: {
       type: "line",

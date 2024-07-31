@@ -24,10 +24,9 @@ import {
 import { useTitle } from "@/hooks/useTitle";
 import Heading from "@/components/ui/heading";
 
-const cardColor = "bg-pink-100 dark:bg-[#251F28] hover:dark:bg-[#1D1A1F]";
-const badgeColor =
-  "bg-fuchsia-200 dark:bg-fuchsia-300 hover:dark:bg-fuchsia-100 dark:text-neutral-800";
-const readMoreColor = "text-[#9c3cc1] dark:text-neutral-300";
+const cardColor = "bg-light-blogcard dark:bg-dark-primary hover:dark:bg-dark-blogcard";
+const badgeColor = "bg-fuchsia-200 dark:bg-fuchsia-300 hover:dark:bg-fuchsia-100 dark:text-neutral-800";
+const readMoreColor = "text-primary-purple dark:text-dark-primary font-semibold hover:text-primary-purple hover:dark:text-dark-primary";
 
 const blog = () => {
   useTitle("Blogs");
@@ -58,7 +57,7 @@ const blog = () => {
     <div className="content-container">
       <Heading title={"Blogs"} />
 
-      <p className="md:mt-12 mt-8 ml-6 text-3xl font-semibold text-neutral-800 dark:text-neutral-100">
+      <p className="md:mt-12 mt-8 ml-6 text-2xl text-neutral-800 dark:text-neutral-100">
         Recent Blogs
       </p>
 
@@ -197,10 +196,10 @@ const blog = () => {
         </Card>
       </div>
 
-      <Card className="mt-8 md:mt:12 shadow-fuchsia-100 dark:shadow-fuchsia-900 shadow-lg mx-4 md:mx-8">
-        <CardHeader>
+      <Card className="mt-8 md:mt:12 shadow-sm shadow-gray-100 dark:shadow-gray-900 mx-1 md:mx-8">
+      <CardHeader>
           <CardTitle className="font-semibold text-3xl ml-4">
-            Time To Write A Blog
+          Time to Write a Blog
           </CardTitle>
           {/* <CardDescription>Card Description</CardDescription> */}
         </CardHeader>
@@ -212,8 +211,8 @@ const blog = () => {
         </CardContent>
         <CardFooter className="flex justify-center">
           <Link to={"/blogs/write/1"}>
-            <Button className="bg-fuchsia-600 dark:bg-[#ff8de7] text-lg hover:dark:bg-neutral-100 hover:dark:text-[#9C33C1] duration-200">
-              <MdCreate className="mr-2 h-4 w-4" /> Let's Write A Blog Article
+          <Button className="bg-primary-purple dark:bg-dark-primary text-lg hover:bg-neutral-100 hover:text-primary-purple duration-200">
+          <MdCreate className="mr-2 h-4 w-4" /> Let's Write A Blog Article
             </Button>
           </Link>
         </CardFooter>

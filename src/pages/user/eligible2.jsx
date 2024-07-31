@@ -8,7 +8,7 @@ import FormControl from "@mui/material/FormControl";
 import { useEffect, useState } from "react";
 import EligibleCardBoolInput from "@/components/userComponents/eligibleCardBoolInput";
 import { Navigate, useNavigate } from "react-router-dom";
-import EligiblePagination from "@/components/userComponents/eligiblePagination";
+import CustomPagination from "@/components/userComponents/customPagination";
 import { Button } from "@/components/ui/button";
 import {
   specials1,
@@ -274,10 +274,12 @@ const Eligible2 = () => {
         />
       </div>
 
-      <Button onClick={handleSave}>Save and Next</Button>
+      <Button className="float-right mt-10" onClick={handleSave}>
+        Save and Next
+      </Button>
 
       <div className="flex w-full mt-24">
-        <EligiblePagination total={5} current={2} />
+        <CustomPagination path={"/eligible/"} total={5} current={2} />
       </div>
     </div>
   );

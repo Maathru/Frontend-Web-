@@ -5,62 +5,13 @@ import {
   HiOutlinePlusSm,
   HiOutlineTrash,
 } from "react-icons/hi";
-import { styled } from "@mui/material/styles";
-import {
-  DataGrid,
-  GridToolbarQuickFilter,
-  gridClasses,
-} from "@mui/x-data-grid";
-import { Box, Chip, IconButton } from "@mui/material";
+import { Chip, IconButton } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import Heading from "@/components/ui/heading";
 import { useTitle } from "@/hooks/useTitle";
-
-const StripedDataGrid = styled(DataGrid)(({ theme }) => ({
-  [`& .${gridClasses.row}.even`]: {
-    backgroundColor: "#FAEDFF",
-  },
-  [`& .${gridClasses.row}.odd`]: {
-    backgroundColor: "#ffffff",
-  },
-  border: "none",
-
-  "& .MuiDataGrid-cell:focus": {
-    outline: "none",
-  },
-  "& .MuiDataGrid-cell:focus-within": {
-    outline: "none",
-  },
-}));
-
-function QuickSearchToolbar() {
-  return (
-    <Box
-      sx={{
-        p: 0.5,
-        pb: 0,
-        m: 2,
-        display: "flex",
-        justifyContent: "flex-end",
-      }}
-    >
-      <GridToolbarQuickFilter
-        sx={{
-          width: 400,
-          "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline":
-            {
-              border: "none",
-            },
-          "& .MuiOutlinedInput-root:focus-within": {
-            outline: "none",
-            boxShadow: "none",
-          },
-        }}
-      />
-    </Box>
-  );
-}
+import { StripedDataGrid } from "@/components/StripedDataGrid";
+import TableSearch from "@/components/TableSearch";
 
 const columns = [
   { field: "id", headerName: "Clinic ID", width: 70 },
@@ -200,7 +151,7 @@ const Clinic = () => {
               params.indexRelativeToCurrentPage % 2 === 0 ? "even" : "odd"
             }
             disableRowSelectionOnClick
-            slots={{ toolbar: QuickSearchToolbar }}
+            slots={{ toolbar: TableSearch }}
           />
         </div>
       </div>

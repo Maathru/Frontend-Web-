@@ -40,6 +40,56 @@ class ForumService {
       throw error;
     }
   }
+  
+  static async searchQuestionsByKeyword(keyword){
+    try{
+      const response = await axiosInstance.get(`/question/search/keyword/${keyword}`);
+      return response.data;
+    }
+    catch(error){
+      throw error;
+    }
+  }
+
+  static async editQuestion(id, formData) {
+    try {
+      const response = await axiosInstance.put(`/question/${id}`, {
+        ...formData,
+      });
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  static async deleteQuestion(id) {
+    try {
+      const response = await axiosInstance.delete(`/question/${id}`);
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  static async deleteAnswer(id) {
+    try {
+      const response = await axiosInstance.delete(`/answer/${id}`);
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  static async editAnswer(id , formData){
+    try {
+      const response = await axiosInstance.put(`/answer/${id}` , {
+        ...formData,
+      });
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  }
 }
 
 export default ForumService;
