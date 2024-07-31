@@ -16,10 +16,12 @@ import EligibleService from "@/service/eligibleService";
 import { errorType, Toast } from "@/components/toast";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import Heading from "@/components/ui/heading";
+import CustomDialog from "@/components/customDialog";
 
 const addCouples = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const [updateParent, setUpdateParent] = useState(false);
   const { userId, eligibleId } = useParams();
   const [formData, setFormData] = useState({
     womanName: "",
@@ -251,6 +253,7 @@ const addCouples = () => {
       setErrors(validationErrors);
       return;
     }
+    console.log("Helooo");
 
     const formObject = EligibleService.createMidwifeEligibleObject(
       userId,
@@ -287,6 +290,17 @@ const addCouples = () => {
     }
   };
 
+  const handleStatusChange = async () => {
+    try {
+      const response = await EligibleService.updateToParent(userId, eligibleId);
+      Toast(response, errorType.SUCCESS);
+      navigate("/parents");
+    } catch (error) {
+      Toast(error.response.data || "Unauthorized", errorType.ERROR);
+      console.log(error.response.data);
+    }
+  };
+
   const title =
     location.pathname.split("/")[2] === "view"
       ? `View Eligible Couple - ID ${eligibleId}`
@@ -306,11 +320,15 @@ const addCouples = () => {
           <div>
             {/* If view page move to edit page */}
             {!editMode && (
-              <Link to={`/eligibles/edit/${userId}/${eligibleId}`}>
-                <Button className="px-10">Edit</Button>
-              </Link>
+              <>
+                <Link to={`/eligibles/edit/${userId}/${eligibleId}`}>
+                  <Button className="px-10">Edit</Button>
+                </Link>
+                <Button onClick={() => setUpdateParent(true)} className="ml-10">
+                  Change status to parent
+                </Button>
+              </>
             )}
-            <Button className="ml-10">Change status to parent</Button>
           </div>
         </div>
         <div className="">
@@ -805,6 +823,17 @@ const addCouples = () => {
             {t("submit")}
           </Button>
         </div>
+      )}
+
+      {updateParent && (
+        <>
+          <CustomDialog
+            isOpen={updateParent}
+            onClose={() => setUpdateParent(false)}
+            handleFunction={handleStatusChange}
+            text1="Are you sure update this Eligible User to Parent User?"
+          />
+        </>
       )}
     </div>
   );
