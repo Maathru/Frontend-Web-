@@ -79,6 +79,17 @@ class ForumService {
       throw error;
     }
   }
+
+  static async editAnswer(id , formData){
+    try {
+      const response = await axiosInstance.put(`/answer/${id}` , {
+        ...formData,
+      });
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  }
 }
 
 export default ForumService;

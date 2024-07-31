@@ -20,6 +20,8 @@ const Answer = () => {
   const [question, setQuestion] = useState({});
   const [answers, setAnswers] = useState([]);
   const [yourAnswer, setYourAnswer] = useState("");
+  const [editAnswerId, setEditAnswerId] = useState(null);
+  const [editAnswerText, setEditAnswerText] = useState("");
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [deleteId, setDeleteId] = useState(null);
   const navigate = useNavigate();
@@ -65,6 +67,24 @@ const Answer = () => {
       Toast(response, errorType.SUCCESS);
       setPageLoader((pre) => !pre);
       setYourAnswer("");
+    } catch (error) {
+      const data = error.response.data;
+      Toast(data || "Error occurred", errorType.ERROR);
+    }
+  };
+
+  const handleEditAnswerSubmit = async (e) => {
+    e.preventDefault();
+    const data = {
+      answer: editAnswerText,
+    };
+
+    try {
+      const response = await ForumService.editAnswer(editAnswerId, data);
+      Toast(response, errorType.SUCCESS);
+      setPageLoader((pre) => !pre);
+      setEditAnswerId(null);
+      setEditAnswerText("");
     } catch (error) {
       const data = error.response.data;
       Toast(data || "Error occurred", errorType.ERROR);
@@ -130,7 +150,6 @@ const Answer = () => {
                 />
                 <div className="pb-5 my-5">
                   <div className="flex justify-between items-center">
-
                     {/* Keywords */}
                     <div>
                       {question.keywords &&
@@ -144,10 +163,8 @@ const Answer = () => {
                           </Badge>
                         ))}
                     </div>
-
                     {/* Edit delete actions */}
                     <div className="flex gap-5 items-center">
-
                       {userDetails.userId == question.authorId && (
                         <div className="flex gap-5 items-center">
                           <Link to={`/forum/edit/` + question.id} className="font-medium text-base text-[#9C33C1]">
@@ -159,7 +176,6 @@ const Answer = () => {
                         </div>
                       )}
                     </div>
-
                     {/* Author details */}
                     <div className="flex items-center gap-1">
                       <Avatar
@@ -190,37 +206,77 @@ const Answer = () => {
 
         {answers.map((answer) => (
           <div key={answer.id} className="my-3">
-            <CardContent>
-              <div className="flex gap-3">
-                <div
-                  className="question-description"
-                  dangerouslySetInnerHTML={{ __html: answer.answer }}
+            {editAnswerId === answer.id ? (
+              <form onSubmit={handleEditAnswerSubmit}>
+                <TextField
+                  value={editAnswerText}
+                  onChange={(e) => setEditAnswerText(e.target.value)}
+                  id="outlined-basic"
+                  label="Edit Your Answer"
+                  variant="outlined"
+                  className="w-[80%]"
                 />
-              </div>
-            </CardContent>
-            <CardFooter className="flex justify-end text-[#9c3cc1]">
-              <div className="flex gap-5 items-center">
-                {userDetails.userId == answer.authorId && (
-                  <div onClick={() => confirmDeleteAnswer(answer.id)} className="flex font-medium text-base text-red-600 cursor-pointer">
-                    Delete Answer
+                <div className="flex gap-2 my-5 mx-5">
+                  <Button
+                    type="submit"
+                    className="bg-blue-600 text-white px-4 py-0 rounded-md"
+                  >
+                    Save
+                  </Button>
+                  <Button
+                    onClick={() => setEditAnswerId(null)}
+                    className="bg-red-600 text-white px-4 py-0 rounded-md"
+                  >
+                    Cancel
+                  </Button>
+                </div>
+              </form>
+            ) : (
+              <>
+                <CardContent>
+                  <div className="flex gap-3">
+                    <div
+                      className="question-description"
+                      dangerouslySetInnerHTML={{ __html: answer.answer }}
+                    />
                   </div>
-                )}
-                <div className="flex ml-auto items-center gap-1">
-                  <Avatar
-                    alt="Remy Sharp"
-                    src="src/assets/nav/sample-profile.png"
-                  />
-                  <div className="flex flex-col">
-                    <Link>
-                      {answer.authorName ? `${answer.authorName}` : "Unknown"}
-                    </Link>
-                    <div className="text-sm text-gray-500">
-                      {answer.updatedAt ? `Modified at ${answer.updatedAt}` : `Answered at ${answer.createdAt}`}
+                </CardContent>
+                <CardFooter className="flex justify-end text-[#9c3cc1]">
+                  <div className="flex gap-5 items-center">
+                    {userDetails.userId == answer.authorId && (
+                      <div className="flex gap-2">
+                        <div
+                          onClick={() => {
+                            setEditAnswerId(answer.id);
+                            setEditAnswerText(answer.answer);
+                          }}
+                          className="flex font-medium text-base text-blue-600 cursor-pointer"
+                        >
+                          Edit Answer
+                        </div>
+                      <div onClick={() => confirmDeleteAnswer(answer.id)} className="flex font-medium text-base text-red-600 cursor-pointer">
+                        Delete Answer
+                      </div>
+                    </div>
+                    )}
+                    <div className="flex ml-auto items-center gap-1">
+                      <Avatar
+                        alt="Remy Sharp"
+                        src="src/assets/nav/sample-profile.png"
+                      />
+                      <div className="flex flex-col">
+                        <Link>
+                          {answer.authorName ? `${answer.authorName}` : "Unknown"}
+                        </Link>
+                        <div className="text-sm text-gray-500">
+                          {answer.updatedAt ? `Modified at ${answer.updatedAt}` : `Answered at ${answer.createdAt}`}
+                        </div>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </div>
-            </CardFooter>
+                </CardFooter>
+              </>
+            )}
           </div>
         ))}
 
