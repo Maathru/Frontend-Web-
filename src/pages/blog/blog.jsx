@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { errorType, Toast } from "@/components/toast";
 import BlogImage from "../../assets/blog/blog-image.png";
+import ArticleImage from "../../assets/blog/article-image.png";
 import RecentBlogImage1 from "../../assets/blog/recent-blog-image-1.png";
 import RecentBlogImage2 from "../../assets/blog/recent-blog-image-2.png";
 import BlogService from "../../service/blogService";
@@ -24,7 +25,7 @@ import {
 import { useTitle } from "@/hooks/useTitle";
 import Heading from "@/components/ui/heading";
 
-const cardColor = "bg-light-blogcard dark:bg-dark-primary hover:dark:bg-dark-blogcard";
+const cardColor = "bg-light-blogcard dark:bg-dark-card hover:dark:bg-dark-blogcard";
 const badgeColor = "bg-fuchsia-200 dark:bg-fuchsia-300 hover:dark:bg-fuchsia-100 dark:text-neutral-800";
 const readMoreColor = "text-primary-purple dark:text-dark-primary font-semibold hover:text-primary-purple hover:dark:text-dark-primary";
 
@@ -69,7 +70,7 @@ const blog = () => {
             >
               <CardHeader>
                 <img
-                  src={BlogImage}
+                  src={ArticleImage}
                   alt="Blog Image"
                   className="rounded-md mb-2"
                 />
