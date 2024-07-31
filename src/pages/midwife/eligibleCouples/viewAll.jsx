@@ -11,34 +11,7 @@ import { useNavigate } from "react-router-dom";
 import { useTitle } from "@/hooks/useTitle";
 import EligiblePopup from "@/components/eligiblePopup";
 import { StripedDataGrid } from "@/components/StripedDataGrid";
-
-function QuickSearchToolbar() {
-  return (
-    <Box
-      sx={{
-        p: 0.5,
-        pb: 0,
-        mb: 2,
-        display: "flex",
-        justifyContent: "flex-start",
-      }}
-    >
-      <GridToolbarQuickFilter
-        sx={{
-          width: 400,
-          "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline":
-            {
-              border: "none",
-            },
-          "& .MuiOutlinedInput-root:focus-within": {
-            outline: "none",
-            boxShadow: "none",
-          },
-        }}
-      />
-    </Box>
-  );
-}
+import TableSearch from "@/components/TableSearch";
 
 const columns = [
   { field: "id", headerName: "E. Couple ID", width: 100 },
@@ -178,7 +151,7 @@ const eligibleCouples = () => {
               params.indexRelativeToCurrentPage % 2 === 0 ? "even" : "odd"
             }
             disableRowSelectionOnClick
-            slots={{ toolbar: QuickSearchToolbar }}
+            slots={{ toolbar: TableSearch }}
             onRowClick={handleRowClick}
           />
         </div>
