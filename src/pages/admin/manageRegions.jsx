@@ -5,7 +5,7 @@ import map from "../../assets/mapMOH.png";
 import TableSearch from "@/components/TableSearch";
 import { Button } from "@/components/ui/button";
 import { HiOutlinePlusSm } from "react-icons/hi";
-import RegionAddPopup from "@/components/DivisionAddPopup";
+import RegionAddPopup from "@/components/RegionsAddPopup";
 
 const columns = [
   {
