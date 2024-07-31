@@ -53,6 +53,15 @@ class ClinicService {
       throw error;
     }
   }
+
+  static async getClinicsByMonth(date) {
+    try {
+      const response = await axiosInstance.get(`/clinic/month/${date}`);
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  }
 }
 
 export default ClinicService;

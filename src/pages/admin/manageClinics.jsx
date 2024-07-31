@@ -92,17 +92,34 @@ function QuickSearchToolbar() {
 }
 
 const manageClinics = () => {
+  const [isOpen, setIsOpen] = useState(false);
   const [date, setDate] = useState(new Date());
+  const [month, setMonth] = useState(new Date());
+  const [dates, setDates] = useState([]);
   const [rows, setRows] = useState([]);
   const { t } = useTranslation("manageClinics");
+
+  const onMonthChange = (day) => {
+    const newDate = new Date(day);
+    newDate.setMonth(newDate.getMonth() + 1);
+    setMonth(newDate);
+  };
+
+  const onDayClick = (day) => {
+    const newDate = new Date(day);
+    newDate.setDate(newDate.getDate() + 1);
+    setDate(newDate);
+  };
+
+  const stringArrayToDateArray = (array) => {
+    return array.map((dateString) => new Date(dateString));
+  };
 
   useEffect(() => {
     const fetchClinicsByDate = async () => {
       setRows([]);
 
-      const newDate = new Date(date);
-      newDate.setDate(date.getDate() + 1);
-      const isoDateString = newDate.toISOString().split("T")[0];
+      const isoDateString = date.toISOString().split("T")[0];
 
       try {
         const response = await ClinicService.getClinicsByDate(isoDateString);
@@ -114,7 +131,26 @@ const manageClinics = () => {
     };
 
     fetchClinicsByDate();
-  }, [date]);
+  }, [date, isOpen]);
+
+  useEffect(() => {
+    const fetchClinicsForGivenMonth = async () => {
+      const isoDateString = month.toISOString().split("T")[0];
+
+      try {
+        const response = await ClinicService.getClinicsByMonth(isoDateString);
+
+        const dateObjects = stringArrayToDateArray(response);
+        setDates(dateObjects);
+        console.log(response, isoDateString);
+      } catch (error) {
+        Toast(error.response.data || "Unauthorized", errorType.ERROR);
+        console.log(error.response.data);
+      }
+    };
+
+    fetchClinicsForGivenMonth();
+  }, [month, isOpen]);
 
   return (
     <div className="content-container">
@@ -123,18 +159,15 @@ const manageClinics = () => {
       <Search placeholder={t("search")} />
       <div className="mt-12">
         <Typography variant="h4">{t("subtitle1")}</Typography>
-        <ClinicAddPopup />
+        <ClinicAddPopup isOpen={isOpen} setIsOpen={setIsOpen} />
 
         <div className="flex">
           <div className="w-6/12">
             <Calendar
-              highlightDates={[
-                new Date(2024, 6, 20),
-                new Date(2024, 7, 5),
-                new Date(2024, 7, 8),
-              ]}
+              highlightDates={dates}
               highlightColor="#ffcc00"
-              onDayClick={(day) => setDate(day)}
+              onDayClick={onDayClick}
+              onMonthChange={onMonthChange}
             />
           </div>
           <div className="shadow-md p-5 w-6/12 h-fit">
