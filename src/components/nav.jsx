@@ -20,8 +20,8 @@ import { userData } from "@/context/userAuth";
 import LogoutDialog from "@/components/logoutDialog";
 import AuthService from "@/service/authService";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
-import { navConfig } from "@/data/navConfig";
 import { role } from "@/data/roleData";
+import { navConfig } from "@/config/navConfig";
 
 const Nav = ({ themeFunction, mode }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -129,11 +129,11 @@ const Nav = ({ themeFunction, mode }) => {
             </div>
             {isDropdownOpen[index] && (
               <div className="absolute w-48 mt-2 origin-top-right bg-white dark:bg-dark-background divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                <div className="px-1 py-1">
+                <div className="px-2 py-2">
                   {item.links.map((link, subIndex) => (
                     <button
                       key={subIndex}
-                      className={`text-gray-900 dark:text-white group flex rounded-md items-center w-full px-2 py-2 text-sm ${
+                      className={`text-gray-900 dark:text-white group flex rounded-md items-center w-full pe-2 ps-3 py-2 my-1 text-sm ${
                         pathname.includes(link.path)
                           ? "bg-primary-purple text-white"
                           : "hover:bg-primary-purple hover:text-white"
