@@ -48,6 +48,7 @@ import { ToastContainer } from "react-toastify";
 import { role } from "./data/roleData";
 import { ThemeProvider } from "@mui/material/styles";
 import getTheme from "./theme.js";
+import VaccineCard from "./pages/vaccinecard/vaccinecard";
 import AddClinic from "./pages/admin/addClinic";
 import Nav from "./components/nav";
 import { useDarkMode } from "./context/darkModeContext";
@@ -179,6 +180,8 @@ function App() {
                   <Route path="/pregnancy/1" element={<Pregnancy1 />} />
                   <Route path="/pregnancy/2" element={<Pregnancy2 />} />
                   <Route path="/pregnancy/3" element={<Pregnancy3 />} />
+
+                  <Route path="/vaccinecard" element={<VaccineCard />} />
                 </>
               )}
 
