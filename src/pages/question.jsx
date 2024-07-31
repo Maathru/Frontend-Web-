@@ -28,6 +28,7 @@ function AskQuestion() {
     "Maternal Health",
     "Baby Vaccinations",
   ];
+  const [errors, setErrors] = useState({});
 
   const handleKeywordChange = (keyword) => {
     setSelectedKeywords((prevSelectedKeywords) =>
@@ -62,19 +63,32 @@ function AskQuestion() {
       description,
       keywords: selectedKeywords,
     };
-
+  
     try {
       const response = await ForumService.addQuestion(data);
       Toast(response, errorType.SUCCESS);
       navigate("/forum");
     } catch (error) {
-      console.log(error.message);
-      
-      const data = error.response.data;
+      const data = error.response?.data;
       console.log(data);
-      Toast(data || "Error occurred", errorType.ERROR);
+  
+      if (data) {
+        if (Array.isArray(data)) {
+          const newErrors = {};
+          data.forEach((msg) => {
+            Toast(msg.message, errorType.ERROR);
+            newErrors[msg.field] = msg.message;
+          });
+          setErrors(newErrors);
+        } else {
+          Toast(data.message || "Error occurred", errorType.ERROR);
+        }
+      } else {
+        Toast("Error occurred", errorType.ERROR);
+      }
     }
   };
+  
 
   return (
     <>

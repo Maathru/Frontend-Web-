@@ -42,6 +42,7 @@ import AdminDashboard from "./pages/admin/adminDashboard";
 import ManageUsers from "./pages/admin/manageusers";
 import ManageClinics from "./pages/admin/manageClinics";
 import ManageRegions from "./pages/admin/manageRegions";
+import ManageBlogs from "./pages/admin/manageBlogs";
 import Memories from "./pages/memories";
 import Healthstatics from "./pages/healthstatics";
 import { ToastContainer } from "react-toastify";
@@ -126,9 +127,10 @@ function App() {
               {userDetails.role === role.ADMIN && (
                 <>
                   <Route path="/" element={<AdminDashboard />} />
+                  <Route path="/manage/blogs" element={<ManageBlogs />} />
                   <Route path="/users" element={<ManageUsers />} />
                   <Route path="/clinics" element={<ManageClinics />} />
-                  <Route path="/statics/health" element={<Healthstatics />} />
+                  <Route path="/statistics" element={<Healthstatics />} />
                   <Route path="/regions" element={<ManageRegions />} />
                   <Route path="/clinics/add" element={<AddClinic />} />
                 </>
