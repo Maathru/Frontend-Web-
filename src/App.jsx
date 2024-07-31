@@ -8,7 +8,6 @@ import WriteBlog1 from "./pages/blog/writeblog1";
 import WriteBlog2 from "./pages/blog/writeblog2";
 import WriteBlog3 from "./pages/blog/writeblog3";
 import WriteBlog4 from "./pages/blog/writeblog4";
-import ManageBlog from "./pages/blog/manageblog";
 import Landing from "./pages/landing";
 import Drug from "./pages/drug";
 import DrugAdd from "./pages/drugAdd";

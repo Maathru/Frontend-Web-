@@ -302,12 +302,15 @@ const addCouples = () => {
         <div className="flex justify-between">
           <Typography variant="h5">{t("subtitle1")}</Typography>
 
-          {/* If view page move to edit page */}
-          {!editMode && (
-            <Link to={`/eligibles/edit/${userId}/${eligibleId}`}>
-              <Button className="px-10">Edit</Button>
-            </Link>
-          )}
+          <div>
+            {/* If view page move to edit page */}
+            {!editMode && (
+              <Link to={`/eligibles/edit/${userId}/${eligibleId}`}>
+                <Button className="px-10">Edit</Button>
+              </Link>
+            )}
+            <Button className="ml-10">Change status to parent</Button>
+          </div>
         </div>
         <div className="">
           <Typography variant="h6">{t("subtitle1.1")}</Typography>
