@@ -62,10 +62,10 @@ export const navConfig = {
     {
       name: "Services",
       links: [
-        { name: "Manage Blogs", path: "/manage/blogs" },
+        { name: "Manage Blogs", path: "/blogs" },
         { name: "Manage Users", path: "/users" },
         { name: "Clinic Schedules", path: "/clinics" },
-        { name: "Health Statistics", path: "/statistics" },
+        { name: "Health Statistics", path: "/statics/health" },
         { name: "Manage Regions", path: "/regions" },
       ],
     },
