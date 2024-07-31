@@ -119,8 +119,6 @@ function App() {
           <Route path="/blogs/article" element={<Article />} />
           <Route path="/forum" element={<Forum />} />
           <Route path="/forum/answer/:questionId" element={<Answer />} />
-          <Route path="/forum/edit/:questionId" element={<EditQuestion />} />
-          <Route path="/forum/ask" element={<AskQuestion />} />
 
           {userDetails.authenticated && (
             <>
@@ -203,13 +201,14 @@ function App() {
               <Route path="/blogs/write/1" element={<WriteBlog1 />} />
               <Route path="/blogs/write/2" element={<WriteBlog2 />} />
 
-              <Route path="/forum/edit/:questionId" element={<EditQuestion />} />
+              <Route
+                path="/forum/edit/:questionId"
+                element={<EditQuestion />}
+              />
               <Route path="/forum/ask" element={<AskQuestion />} />
             </>
           )}
           <Route path="*" element={<NotFound />} />
-
-          
         </Routes>
         <ToastContainer />
         <Footer />
