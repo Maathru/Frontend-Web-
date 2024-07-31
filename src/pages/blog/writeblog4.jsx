@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Link, Navigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import Heading from "@/components/ui/heading";
 import BlogHeading from "@/components/blogComponents/blogHeading";
 import BlogProgress from "@/components/blogComponents/BlogProgress";
@@ -10,17 +10,16 @@ const accentColor = "bg-[#9c3cc1]";
 
 const WriteBlog4 = () => {
   const [formData, setFormData] = useState({});
+  const navigate = useNavigate();
 
   const handleSubmit = async () => {
     try {
       const response = await BlogService.addBlog(formData);
       Toast(response, errorType.SUCCESS);
-      Navigate("/blogs");
+      navigate("/blogs");
 
       localStorage.removeItem("blog");
     } catch (error) {
-      console.log(error.message);
-
       const data = error.response.data;
       if (data) {
         if (Array.isArray(data)) {
@@ -39,6 +38,20 @@ const WriteBlog4 = () => {
     }
   };
 
+  useEffect(() => {
+    const fetchBlog = () => {
+      const blog = JSON.parse(localStorage.getItem("blog"));
+
+      if (blog) {
+        setFormData({ ...formData, ...blog });
+      } else {
+        setFormData({ stage: 1 });
+      }
+    };
+
+    fetchBlog();
+  }, []);
+
   return (
     <div className="content-container">
       <Heading />
@@ -55,6 +68,10 @@ const WriteBlog4 = () => {
           <div className="mt-2 md:ml-6 md:text-lg text-base font-medium text-[#6f6c90] dark:text-neutral-400">
             Confirm that you want to publish the article.
           </div>
+          {/* print formData */}
+          <div className="mt-6 md:ml-6 md:text-lg text-base font-medium text-[#6f6c90] dark:text-neutral-400">
+            {JSON.stringify(formData)}
+          </div>
 
           <div className="md:w-[90%] mx-auto">
             <div className="flex justify-around">
@@ -65,12 +82,12 @@ const WriteBlog4 = () => {
                   Preview
                 </button>
               </Link>
-                <button
-                  className={`${accentColor} px-8 md:px-16 py-3 mt-8 md:mt-12 mb-4 rounded-lg text-xl font-semibold hover:bg-neutral-100 text-white dark:hover:bg-neutral-900 hover:text-fuchsia-700 hover:ring-fuchsia-700 hover:ring-inset hover:ring-2`}
-                  onClick={handleSubmit}
-                >
-                  Post
-                </button>
+              <button
+                className={`${accentColor} px-8 md:px-16 py-3 mt-8 md:mt-12 mb-4 rounded-lg text-xl font-semibold hover:bg-neutral-100 text-white dark:hover:bg-neutral-900 hover:text-fuchsia-700 hover:ring-fuchsia-700 hover:ring-inset hover:ring-2`}
+                onClick={handleSubmit}
+              >
+                Post
+              </button>
             </div>
           </div>
 

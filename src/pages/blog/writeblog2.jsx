@@ -12,7 +12,7 @@ const accentColor = "bg-[#9c3cc1]";
 function WriteBlog2() {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    description: "",
+    content: "",
   });
   const [isLoading, setIsLoading] = useState(true);
 
@@ -26,7 +26,7 @@ function WriteBlog2() {
   const quillRef = useRef(null);
 
   const handleChange = (value) => {
-    setData("description", value);
+    setData("content", value);
   };
 
   const handleNext = () => {
@@ -81,7 +81,7 @@ function WriteBlog2() {
           <div className="mt-6 md:ml-6 mb-8">
             <ReactQuill
               ref={quillRef}
-              value={formData.description || ""}
+              value={formData.content || ""}
               onChange={handleChange}
               className="bg-white dark:bg-neutral-900 text-neutral-800 dark:text-neutral-100 h-[400px]"
             />

@@ -41,10 +41,14 @@ const blog = () => {
         console.log(response);
         setBlogs(response);
       } catch (error) {
-        console.log(error.message);
-        const data = error.response.data;
-        console.log(data);
-        Toast(data, errorType.ERROR);
+        // console.log(error);
+        if (error.response) {
+          const data = error.response.data;
+          console.log(data);
+          Toast(data, errorType.ERROR);
+        } else {
+          Toast("An unexpected error occurred", errorType.ERROR);
+        }
       }
     };
     fetchBlogs();
@@ -228,7 +232,7 @@ const blog = () => {
             <CardHeader>
               <img
                 src={blog.image}
-                alt="Blog Image"
+                // alt="Blog Image"
                 className="rounded-md mb-2"
               />
               <CardTitle>{blog.title}</CardTitle>
