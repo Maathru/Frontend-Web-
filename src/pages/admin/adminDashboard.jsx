@@ -1,9 +1,8 @@
 import React, { useContext, useState } from "react";
 import { IoPeopleCircle, IoDocumentTextOutline, IoBusiness } from "react-icons/io5";
-import { MdOutlinePregnantWoman, MdPersonOutline, MdEventNote } from "react-icons/md";
+import { MdOutlinePregnantWoman } from "react-icons/md";
 import { Link } from "react-router-dom";
-import { Typography, Card, CardContent, CardActions, Button } from "@mui/material";
-import { FaCircle } from "react-icons/fa";
+import { Typography, Card, CardContent, Button } from "@mui/material";
 import ReactApexChart from "react-apexcharts";
 import { userData } from "@/context/userAuth";
 import ApexCharts from 'react-apexcharts';
@@ -159,7 +158,7 @@ const AdminDashboard = () => {
           count={10}
           label1="Blogs to Confirm"
           label2="Manage Blogs"
-          link="/blogs"
+          link="/manage/blogs"
         />
         <Widget
           icon={IoBusiness}
@@ -180,7 +179,7 @@ const AdminDashboard = () => {
           count={20}
           label1="Clinics this month"
           label2="Manage Clinic Schedules"
-          link="clinics"
+          link="/clinics"
         />
       </div>
       <div>
