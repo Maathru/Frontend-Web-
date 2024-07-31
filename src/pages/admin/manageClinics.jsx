@@ -142,7 +142,6 @@ const manageClinics = () => {
 
         const dateObjects = stringArrayToDateArray(response);
         setDates(dateObjects);
-        console.log(response, isoDateString);
       } catch (error) {
         Toast(error.response.data || "Unauthorized", errorType.ERROR);
         console.log(error.response.data);
