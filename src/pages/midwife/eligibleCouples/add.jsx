@@ -263,7 +263,7 @@ const addCouples = () => {
       Toast(response.split("/")[1], errorType.SUCCESS);
       console.log(response.split("/")[0], response.split("/")[1]);
       navigate(
-        `/eligible/view/${userId}/${eligibleId || response.split("/")[0]}`
+        `/eligibles/view/${userId}/${eligibleId || response.split("/")[0]}`
       );
     } catch (error) {
       console.log(error.message);
@@ -304,7 +304,7 @@ const addCouples = () => {
 
           {/* If view page move to edit page */}
           {!editMode && (
-            <Link to={`/eligible/edit/${userId}/${eligibleId}`}>
+            <Link to={`/eligibles/edit/${userId}/${eligibleId}`}>
               <Button className="px-10">Edit</Button>
             </Link>
           )}

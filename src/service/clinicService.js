@@ -24,6 +24,26 @@ class ClinicService {
       throw error;
     }
   }
+
+  // By Admin
+  static async getRegions() {
+    try {
+      const response = await axiosInstance.get("/clinic/regions");
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  // By Admin
+  static async getDoctors() {
+    try {
+      const response = await axiosInstance.get("/clinic/doctors");
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  }
 }
 
 export default ClinicService;

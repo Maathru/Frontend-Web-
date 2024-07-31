@@ -153,7 +153,7 @@ const eligibleCouples = () => {
   }, []);
 
   const handleRowClick = (params) => {
-    navigate(`/eligible/view/${params.row.userId}/${params.row.id}`);
+    navigate(`/eligibles/view/${params.row.userId}/${params.row.id}`);
   };
 
   return (
