@@ -1,7 +1,9 @@
 import { StripedDataGrid } from "@/components/StripedDataGrid";
 import TableSearch from "@/components/TableSearch";
+import { errorType, Toast } from "@/components/toast";
 import Heading from "@/components/ui/heading";
-import React from "react";
+import EmployeeService from "@/service/employeeService";
+import { useEffect, useState } from "react";
 
 const columns = [
   {
@@ -20,34 +22,31 @@ const columns = [
     headerName: "Phone Number",
     flex: 1,
   },
+  {
+    field: "email",
+    headerName: "Email",
+    flex: 1,
+  },
   { field: "address", headerName: "Address", flex: 1 },
 ];
 
-const rows = [
-  {
-    id: "MD05",
-    name: "Saumya Sewwandi",
-    region: "kolamunna",
-    phone: "0703012938",
-    address: "22/96, Artigala Road, Piliyandala",
-  },
-  {
-    id: "MD06",
-    name: "Ruchika Layani",
-    region: "piliyandala",
-    phone: "0778394538",
-    address: "2/45, Temple Road, Kahathuduwa",
-  },
-  {
-    id: "MD07",
-    name: "Thushari Hapuarachchi",
-    region: "miriswaththa",
-    phone: "0712963947",
-    address: "5/35, School Lane, Horana",
-  },
-];
-
 const midwife = () => {
+  const [rows, setRows] = useState([]);
+
+  useEffect(() => {
+    const fetchMidwives = async () => {
+      try {
+        const response = await EmployeeService.getMidwives();
+        setRows(response);
+      } catch (error) {
+        Toast(error.response.data || "Unauthorized", errorType.ERROR);
+        console.log(error.response.data);
+      }
+    };
+
+    fetchMidwives();
+  }, []);
+
   return (
     <div className="content-container">
       <Heading title={"Midwife Details"} />
