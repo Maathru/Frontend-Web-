@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { TextField, Typography } from "@mui/material";
 import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
@@ -9,9 +9,10 @@ import "react-quill/dist/quill.snow.css";
 import { Card } from "@/components/ui/card";
 import { errorType, Toast } from "@/components/toast";
 import ForumService from "@/service/forumService";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
-function AskQuestion() {
+function EditQuestion() {
+  const { questionId } = useParams();
   const [description, setDescription] = useState("");
   const [title, setTitle] = useState("");
   const [selectedKeywords, setSelectedKeywords] = useState([]);
@@ -28,6 +29,22 @@ function AskQuestion() {
     "Maternal Health",
     "Baby Vaccinations",
   ];
+
+  useEffect(() => {
+    const fetchQuestion = async () => {
+      try {
+        const question = await ForumService.getQuestion(questionId);
+        setTitle(question.title);
+        setDescription(question.description);
+        setSelectedKeywords(question.keywords);
+      } catch (error) {
+        console.log(error);
+        Toast("Error fetching question", errorType.ERROR);
+      }
+    };
+
+    fetchQuestion();
+  }, [questionId]);
 
   const handleKeywordChange = (keyword) => {
     setSelectedKeywords((prevSelectedKeywords) =>
@@ -64,13 +81,12 @@ function AskQuestion() {
     };
 
     try {
-      const response = await ForumService.addQuestion(data);
+      const response = await ForumService.editQuestion(questionId, data);
       Toast(response, errorType.SUCCESS);
-      navigate("/forum");
+      navigate(`/forum/answer/${questionId}`);
     } catch (error) {
-      console.log(error.message);
-      
-      const data = error.response.data;
+      console.log(error);
+      const data = error.response.data.message;
       console.log(data);
       Toast(data || "Error occurred", errorType.ERROR);
     }
@@ -79,10 +95,10 @@ function AskQuestion() {
   return (
     <>
       <div className="text-3xl text-[#5B5B5B] font-semibold text-center">
-        Ask a Question
+        Edit Question
       </div>
       <Typography variant="subtitle1" className="text-center mb-8">
-        Ask questions and get answers from our community of experts
+        Modify your question and update the details
       </Typography>
       <Card className="p-6 h-full max-w-4xl mx-auto my-8 rounded-3xl shadow-md">
         <form noValidate autoComplete="off" onSubmit={handleSubmit}>
@@ -156,7 +172,7 @@ function AskQuestion() {
               type="submit"
               className="bg-blue-600 text-white px-4 py-2 rounded-md"
             >
-              Submit
+              Update
             </Button>
           </div>
         </form>
@@ -165,4 +181,4 @@ function AskQuestion() {
   );
 }
 
-export default AskQuestion;
+export default EditQuestion;

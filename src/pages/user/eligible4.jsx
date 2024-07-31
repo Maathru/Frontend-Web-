@@ -301,7 +301,9 @@ const Eligible4 = () => {
         </div>
       </div>
 
-      <Button onClick={handleSave}>Save and Submit</Button>
+      <Button className="float-right" onClick={handleSave}>
+        Save and Submit
+      </Button>
 
       <div className="flex w-full mt-24">
         <CustomPagination path={"/eligible/"} total={5} current={4} />

@@ -17,6 +17,8 @@ import walking from "../../assets/user/walking.png";
 import { useTitle } from "@/hooks/useTitle";
 import Heading from "@/components/ui/heading";
 
+const video1 =
+  "https://s3-figma-videos-production-sig.figma.com/video/1331174703014716309/TEAM/b24c/4ba4/-bdc0-4212-a2d5-50aa6a709148?Expires=1723420800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=ci8yxNhFAVrtsax9QPjO0C33VEYTh6YCLjGi5-1507Lc4gVrc--mm8fi4GO7zFwFdo2E2HAGZpPicE-NfoFJ5-5EVLvbtmd5t9PsN2ID-6jLwHj59CRlTVEK8mSvT2rTgG2pLQm17cO2peqYXC8WwhWPCAANOwHafIMmqIhfIgGFhQKH~n4N6T8xQaC7YyIx7PtpYhIhWmrN-3okj0gXhZwKnTDJ-IxXcYR2RULVxn29y4PGAffqlL4oqzPUPDkLvEXl57-Vjs7A0fMgVqzabmmkoyBeZgT08A5TD6E7nza-g3E1LJw1p798lOMCRA120niqOoUEDUSZyDnTY1ZO~g__";
 const cardColor = "bg-white dark:bg-dark-card";
 const badgeColor = "bg-light-badge-green text-light-success-green";
 ("bg-fuchsia-200 dark:bg-fuchsia-300 hover:dark:bg-fuchsia-100 dark:text-neutral-800");
@@ -41,8 +43,8 @@ const growth = () => {
       </div>
 
       <div className="mx-12">
-        <div className="rounded-sm shadow-md px-8 py-4">
-          <div className="flex justify-between">
+        <div className="rounded-sm shadow-md px-8 py-4 flex flex-col items-end">
+          <div className="flex w-full justify-between">
             <div className="">
               <FormControl style={{ minWidth: 300 }}>
                 <InputLabel id="label">{t("dropdown")}</InputLabel>
@@ -63,11 +65,19 @@ const growth = () => {
             </div>
 
             <p className="text-right font-semibold">
-              Current Stage: <span>2</span> Months Pregnant
+              Current Stage: 3 Months Pregnant
             </p>
           </div>
 
-          <div className="text-right">video</div>
+          <div className="text-right">
+            <video
+              src={video1}
+              width="800"
+              // height="300"
+              controls="controls"
+              autoplay="true"
+            />
+          </div>
         </div>
         <div className="flex justify-between mt-6">
           <Button className="w-24">{t("previous")}</Button>
@@ -81,7 +91,7 @@ const growth = () => {
           <span className="font-normal">3 months</span>
         </p>
         <p className="text-lg mb-10 text-justify">
-          It's month 2, and your baby is still very small. They're about an inch
+          It's month 3, and your baby is still very small. They're about an inch
           long, with tiny bud-like arms and legs. Their digestive tract, eyes,
           ears, nose, tongue, and skin are developing. Your baby's facial
           features continue to develop. Each ear begins as a little fold of skin
@@ -96,9 +106,7 @@ const growth = () => {
           fatigue in your second month.
         </p>
 
-        <p className="text-2xl">
-          Food to eat during pregnancy—Month <span>2</span>
-        </p>
+        <p className="text-2xl">Food to eat during pregnancy—Month 3</p>
 
         {/*food cards container starts */}
         <div className="grid grid-cols-1 xl:grid-cols-2 gap-10 mt-10">

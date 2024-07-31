@@ -80,11 +80,13 @@ const Login = () => {
         localStorage.setItem("refresh", response.data.refresh_token);
         localStorage.setItem("role", response.data.role);
         localStorage.setItem("name", response.data.name);
+        localStorage.setItem("userId" , response.data.id);
 
         setUserDetails({
           authenticated: true,
           name: response.data.name,
           role: response.data.role,
+          userId: response.data.id,
           accessToken: response.data.access_token,
           refreshToken: response.data.refresh_token,
         });

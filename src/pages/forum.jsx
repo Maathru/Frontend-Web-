@@ -1,11 +1,9 @@
 import { useContext, useEffect, useState } from "react";
-import { HiChevronLeft } from "react-icons/hi";
 import { List } from "@mui/material";
 import Item from "@/components/ui/item";
 import Pagination from "@/components/pagination";
 import { Button } from "flowbite-react";
 import SearchBar from "@mkyy/mui-search-bar";
-import { NavLink } from "react-router-dom";
 import ForumService from "@/service/forumService";
 import { errorType, Toast } from "@/components/toast";
 import { Link, useNavigate } from "react-router-dom";

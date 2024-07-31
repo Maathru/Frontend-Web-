@@ -6,16 +6,17 @@ import Blog from "./pages/blog/blog";
 import Article from "./pages/blog/article";
 import WriteBlog1 from "./pages/blog/writeblog1";
 import WriteBlog2 from "./pages/blog/writeblog2";
-import Navbar from "./components/navbar";
 import Landing from "./pages/landing";
 import Drug from "./pages/drug";
 import DrugAdd from "./pages/drugAdd";
+import DoctorDashboard from "./pages/doctor/dashboard";
 import Clinic from "./pages/doctor/clinic";
 import ViewClinics from "./pages/doctor/viewClinics";
 import ClinicDates from "./pages/doctor/clinicDates";
 import ClinicReports from "./pages/doctor/clinicReports";
 import Forum from "./pages/forum";
 import Answer from "./pages/answer";
+import EditQuestion from "./pages/editQuestion";
 import Dashboard from "./pages/user/dashboard";
 import { Route, Routes } from "react-router-dom";
 import { useTranslation } from "react-i18next";
@@ -37,6 +38,7 @@ import Parents from "./pages/midwife/parents/viewAll";
 import NotFound from "./pages/notFound";
 import { userData } from "./context/userAuth";
 import ScrollToTop from "./components/ScrollToTop";
+import AdminDashboard from "./pages/admin/adminDashboard";
 import ManageUsers from "./pages/admin/manageusers";
 import ManageClinics from "./pages/admin/manageClinics";
 import ManageRegions from "./pages/admin/manageRegions";
@@ -46,12 +48,14 @@ import { ToastContainer } from "react-toastify";
 import { role } from "./data/roleData";
 import { ThemeProvider } from "@mui/material/styles";
 import getTheme from "./theme.js";
-import AddClinic from "./pages/doctor/addClinic";
 import VaccineCard from "./pages/vaccinecard/vaccinecard";
+import AddClinic from "./pages/admin/addClinic";
+import Nav from "./components/nav";
+import { useDarkMode } from "./context/darkModeContext";
 
 function App() {
+  const { toggleDarkMode } = useDarkMode();
   const darkQuery = window.matchMedia("(prefers-color-scheme: dark)");
-
   darkQuery.addEventListener("change", (e) => {
     if (e.matches) {
       document.documentElement.classList.add("dark");
@@ -91,6 +95,7 @@ function App() {
   }, [theme]);
 
   const handleThemeSwitch = () => {
+    toggleDarkMode();
     setTheme(theme === "dark" ? "light" : "dark");
   };
 
@@ -99,9 +104,8 @@ function App() {
   return (
     <ThemeProvider theme={getTheme(theme)}>
       <main className=" bg-white text-neutral-800 dark:bg-neutral-900 dark:text-neutral-100 duration-100 scroll-smooth focus:scroll-auto">
-        <Navbar themeFunction={handleThemeSwitch} mode={theme} />
+        <Nav themeFunction={handleThemeSwitch} mode={theme} />
         <ScrollToTop />
-
         <Routes>
           {!userDetails.authenticated && (
             <>
@@ -115,27 +119,31 @@ function App() {
           <Route path="/blogs/article" element={<Article />} />
           <Route path="/forum" element={<Forum />} />
           <Route path="/forum/answer/:questionId" element={<Answer />} />
+          <Route path="/forum/edit/:questionId" element={<EditQuestion />} />
+          <Route path="/forum/ask" element={<AskQuestion />} />
 
           {userDetails.authenticated && (
             <>
               {/* Admin routes */}
               {userDetails.role === role.ADMIN && (
                 <>
+                  <Route path="/" element={<AdminDashboard />} />
                   <Route path="/users" element={<ManageUsers />} />
                   <Route path="/clinics" element={<ManageClinics />} />
                   <Route path="/statics/health" element={<Healthstatics />} />
                   <Route path="/regions" element={<ManageRegions />} />
+                  <Route path="/clinics/add" element={<AddClinic />} />
                 </>
               )}
 
               {/* Doctor routes */}
               {userDetails.role === role.DOCTOR && (
                 <>
+                  <Route path="/" element={<DoctorDashboard />} />
                   <Route path="/drugs" element={<Drug />} />
                   <Route path="/drugs/add" element={<DrugAdd />} />
 
                   <Route path="/clinics" element={<Clinic />} />
-                  <Route path="/clinics/add" element={<AddClinic />} />
                   <Route path="/clinics/view" element={<ViewClinics />} />
                   <Route path="/clinics/dates" element={<ClinicDates />} />
                   <Route path="/clinics/reports" element={<ClinicReports />} />
@@ -146,17 +154,17 @@ function App() {
               {userDetails.role === role.MIDWIFE && (
                 <>
                   <Route path="/" element={<MidwifeDashboard />} />
-                  <Route path="/eligible" element={<EligibleCouples />} />
+                  <Route path="/eligibles" element={<EligibleCouples />} />
                   <Route
-                    path="/eligible/add/:userId"
+                    path="/eligibles/add/:userId"
                     element={<EligibleCouplesAdd />}
                   />
                   <Route
-                    path="/eligible/edit/:userId/:eligibleId"
+                    path="/eligibles/edit/:userId/:eligibleId"
                     element={<EligibleCouplesAdd />}
                   />
                   <Route
-                    path="/eligible/view/:userId/:eligibleId"
+                    path="/eligibles/view/:userId/:eligibleId"
                     element={<EligibleCouplesAdd />}
                   />
                   <Route path="/parents" element={<Parents />} />
@@ -194,8 +202,6 @@ function App() {
 
               <Route path="/blogs/write/1" element={<WriteBlog1 />} />
               <Route path="/blogs/write/2" element={<WriteBlog2 />} />
-
-              <Route path="/forum/ask" element={<AskQuestion />} />
             </>
           )}
           <Route path="*" element={<NotFound />} />
