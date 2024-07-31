@@ -41,8 +41,8 @@ const Eligible5 = () => {
         <div className="grid grid-cols-4 gap-4 items-center mt-4">
           <p></p>
           <p></p>
-          <p className="text-center">Woman</p>
-          <p className="text-center">Man</p>
+          <p className="text-center">Wife</p>
+          <p className="text-center">Husband</p>
         </div>
 
         {sections.map((section, index) => (
@@ -73,8 +73,8 @@ const Eligible5 = () => {
       <div className="grid grid-cols-4 gap-4 items-center mt-4">
         <p></p>
         <p></p>
-        <p className="text-center">Woman</p>
-        <p className="text-center">Man</p>
+        <p className="text-center">Wife</p>
+        <p className="text-center">Husband</p>
       </div>
       <div className="grid grid-cols-4 gap-4 items-center mt-4">
         <p>1. General Examination</p>

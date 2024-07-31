@@ -4,7 +4,14 @@ import { IoIosArrowBack } from "react-icons/io";
 import Pagination from "../components/pagination";
 import { Button } from "flowbite-react";
 import { Badge } from "@/components/ui/badge";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Avatar, TextField } from "@mui/material";
 import { errorType, Toast } from "@/components/toast";
 import ForumService from "@/service/forumService";
@@ -12,7 +19,8 @@ import AnswerService from "@/service/answerService";
 import { userData } from "@/context/userAuth";
 import DeleteConfirmationDialog from "@/components/deleteConfirmationDialog";
 
-const badgeColor = "bg-fuchsia-200 dark:bg-fuchsia-300 hover:dark:bg-fuchsia-100 dark:text-neutral-800";
+const badgeColor =
+  "bg-fuchsia-200 dark:bg-fuchsia-300 hover:dark:bg-fuchsia-100 dark:text-neutral-800";
 
 const Answer = () => {
   const { questionId } = useParams();
@@ -157,24 +165,30 @@ const Answer = () => {
                           <Badge
                             key={index}
                             variant="secondary"
-                            className={badgeColor}
+                            className={`${badgeColor} mx-1`}
                           >
                             {keyword}
                           </Badge>
                         ))}
                     </div>
-                      {/* Edit delete actions */}
-                      <div className="flex gap-5 items-center">
-                        {userDetails.userId == question.authorId && (
-                          <div className="flex gap-5 items-center">
-                            <Link to={`/forum/edit/` + question.id} className="font-medium text-base text-[#9C33C1]">
-                              Edit question
-                            </Link>
-                            <div onClick={() => confirmDelete(questionId)} className="font-medium text-base text-red-600 cursor-pointer">
-                              Delete question
-                            </div>
+                    {/* Edit delete actions */}
+                    <div className="flex gap-5 items-center">
+                      {userDetails.userId == question.authorId && (
+                        <div className="flex gap-5 items-center">
+                          <Link
+                            to={`/forum/edit/` + question.id}
+                            className="font-medium text-base text-[#9C33C1]"
+                          >
+                            Edit question
+                          </Link>
+                          <div
+                            onClick={() => confirmDelete(questionId)}
+                            className="font-medium text-base text-red-600 cursor-pointer"
+                          >
+                            Delete question
                           </div>
-                        )}
+                        </div>
+                      )}
                       {/* Author details */}
                       <div className="flex items-center gap-1">
                         <Avatar
@@ -183,15 +197,19 @@ const Answer = () => {
                         />
                         <div className="flex flex-col">
                           <Link>
-                            {question.authorName ? `${question.authorName}` : "Unknown"}
+                            {question.authorName
+                              ? `${question.authorName}`
+                              : "Unknown"}
                           </Link>
                           <p className="text-sm text-gray-500">
                             Modified at
-                            {question.updatedAt ? ` ${question.updatedAt}` : ` ${question.createdAt}`}
+                            {question.updatedAt
+                              ? ` ${question.updatedAt}`
+                              : ` ${question.createdAt}`}
                           </p>
                         </div>
                       </div>
-                      </div>
+                    </div>
                   </div>
                 </div>
               </CardContent>
@@ -254,10 +272,13 @@ const Answer = () => {
                         >
                           Edit Answer
                         </div>
-                      <div onClick={() => confirmDeleteAnswer(answer.id)} className="flex font-medium text-base text-red-600 cursor-pointer">
-                        Delete Answer
+                        <div
+                          onClick={() => confirmDeleteAnswer(answer.id)}
+                          className="flex font-medium text-base text-red-600 cursor-pointer"
+                        >
+                          Delete Answer
+                        </div>
                       </div>
-                    </div>
                     )}
                     <div className="flex ml-auto items-center gap-1">
                       <Avatar
@@ -266,10 +287,14 @@ const Answer = () => {
                       />
                       <div className="flex flex-col">
                         <Link>
-                          {answer.authorName ? `${answer.authorName}` : "Unknown"}
+                          {answer.authorName
+                            ? `${answer.authorName}`
+                            : "Unknown"}
                         </Link>
                         <div className="text-sm text-gray-500">
-                          {answer.updatedAt ? `Modified at ${answer.updatedAt}` : `Answered at ${answer.createdAt}`}
+                          {answer.updatedAt
+                            ? `Modified at ${answer.updatedAt}`
+                            : `Answered at ${answer.createdAt}`}
                         </div>
                       </div>
                     </div>
@@ -299,10 +324,12 @@ const Answer = () => {
             </Button>
           </div>
         ) : (
-          <div className="text-center mt-5">Please login to answer the question</div>
+          <div className="text-center mt-5">
+            Please login to answer the question
+          </div>
         )}
       </div>
-      
+
       <Pagination />
 
       <DeleteConfirmationDialog
@@ -310,7 +337,6 @@ const Answer = () => {
         onClose={closeDeleteDialog}
         handleDelete={() => handleDelete(deleteId)}
       />
-
     </div>
   );
 };

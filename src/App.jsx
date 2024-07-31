@@ -131,9 +131,14 @@ function App() {
                   <Route path="/manage/blogs" element={<ManageBlogs />} />
                   <Route path="/users" element={<ManageUsers />} />
                   <Route path="/clinics" element={<ManageClinics />} />
-                  <Route path="/statistics" element={<Healthstatics />} />
                   <Route path="/regions" element={<ManageRegions />} />
                 </>
+              )}
+
+              {/* Admin and Doctor routes */}
+              {(userDetails.role === role.ADMIN ||
+                userDetails.role === role.DOCTOR) && (
+                <Route path="/statistics" element={<Healthstatics />} />
               )}
 
               {/* Doctor routes */}
@@ -148,6 +153,12 @@ function App() {
                   <Route path="/clinics/dates" element={<ClinicDates />} />
                   <Route path="/clinics/reports" element={<ClinicReports />} />
                 </>
+              )}
+
+              {/* Admin and Doctor routes */}
+              {(userDetails.role === role.ADMIN ||
+                userDetails.role === role.DOCTOR) && (
+                <Route path="/pregnancy/3" element={<Pregnancy3 />} />
               )}
 
               {/* Midwife routes */}
@@ -171,6 +182,12 @@ function App() {
                 </>
               )}
 
+              {/* Midwife and Parent routes */}
+              {(userDetails.role === role.MIDWIFE ||
+                userDetails.role === role.PARENT) && (
+                <Route path="/pregnancy/3" element={<Pregnancy3 />} />
+              )}
+
               {/* Parent routes */}
               {userDetails.role === role.PARENT && (
                 <>
@@ -179,7 +196,6 @@ function App() {
 
                   <Route path="/pregnancy/1" element={<Pregnancy1 />} />
                   <Route path="/pregnancy/2" element={<Pregnancy2 />} />
-                  <Route path="/pregnancy/3" element={<Pregnancy3 />} />
 
                   <Route path="/vaccinecard" element={<VaccineCard />} />
                 </>

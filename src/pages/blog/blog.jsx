@@ -25,9 +25,12 @@ import {
 import { useTitle } from "@/hooks/useTitle";
 import Heading from "@/components/ui/heading";
 
-const cardColor = "bg-light-blogcard dark:bg-dark-card hover:dark:bg-dark-blogcard";
-const badgeColor = "bg-fuchsia-200 dark:bg-fuchsia-300 hover:dark:bg-fuchsia-100 dark:text-neutral-800";
-const readMoreColor = "text-primary-purple dark:text-dark-primary font-semibold hover:text-primary-purple hover:dark:text-dark-primary";
+const cardColor =
+  "bg-light-blogcard dark:bg-dark-card hover:dark:bg-dark-blogcard";
+const badgeColor =
+  "bg-fuchsia-200 dark:bg-fuchsia-300 hover:dark:bg-fuchsia-100 dark:text-neutral-800";
+const readMoreColor =
+  "text-primary-purple dark:text-dark-primary font-semibold hover:text-primary-purple hover:dark:text-dark-primary";
 
 const blog = () => {
   useTitle("Blogs");
@@ -45,7 +48,7 @@ const blog = () => {
         if (error.response) {
           const data = error.response.data;
           console.log(data);
-          Toast(data, errorType.ERROR);
+          // Toast(data, errorType.ERROR);
         } else {
           Toast("An unexpected error occurred", errorType.ERROR);
         }
@@ -198,9 +201,9 @@ const blog = () => {
       </div>
 
       <Card className="mt-8 md:mt:12 shadow-sm shadow-gray-100 dark:shadow-gray-900 mx-1 md:mx-8">
-      <CardHeader>
+        <CardHeader>
           <CardTitle className="font-semibold text-3xl ml-4">
-          Time to Write a Blog
+            Time to Write a Blog
           </CardTitle>
           {/* <CardDescription>Card Description</CardDescription> */}
         </CardHeader>
@@ -212,8 +215,8 @@ const blog = () => {
         </CardContent>
         <CardFooter className="flex justify-center">
           <Link to={"/blogs/write/1"}>
-          <Button className="bg-primary-purple dark:bg-dark-primary text-lg hover:bg-neutral-100 hover:text-primary-purple duration-200">
-          <MdCreate className="mr-2 h-4 w-4" /> Let's Write A Blog Article
+            <Button className="bg-primary-purple dark:bg-dark-primary text-lg hover:bg-neutral-100 hover:text-primary-purple duration-200">
+              <MdCreate className="mr-2 h-4 w-4" /> Let's Write A Blog Article
             </Button>
           </Link>
         </CardFooter>

@@ -59,14 +59,13 @@ const Forum = () => {
   }, []);
 
   const handleAsk = (e) => {
-    if(userDetails){
+    if (userDetails) {
       navigate("/forum/ask");
-    }
-    else{
+    } else {
       Toast("Log in to ask question");
       navigate("/login");
     }
-  }
+  };
 
   return (
     <div className="p-12 grid content-start min-h-screen">
@@ -84,13 +83,16 @@ const Forum = () => {
             </div>
           </div>
         </div>
-        <Button className="bg-[#6F0096] h-10 min-w-max flexbox items-center" onClick={(e) =>handleAsk(e)}>
+        <Button
+          className="bg-[#6F0096] h-10 min-w-max flexbox items-center"
+          onClick={(e) => handleAsk(e)}
+        >
           Ask a Question
         </Button>
       </div>
       <SearchBar
         value={textFieldValue}
-        onChange={newValue => setTextFieldValue(newValue)}
+        onChange={(newValue) => setTextFieldValue(newValue)}
         onSearch={handleSearch}
         width="80%"
         className="border-black"

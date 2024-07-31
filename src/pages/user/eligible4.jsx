@@ -145,8 +145,8 @@ const Eligible4 = () => {
       <div className="m-12">
         <div className="grid grid-cols-4 gap-4 items-center mt-4">
           <p></p>
-          <p className="text-center">Woman</p>
-          <p className="text-center">Man</p>
+          <p className="text-center">Wife</p>
+          <p className="text-center">Husband</p>
           <p></p>
         </div>
 
@@ -196,8 +196,8 @@ const Eligible4 = () => {
       <div className="m-12">
         <div className="grid grid-cols-4 gap-4 items-center mt-4">
           <p></p>
-          <p className="text-center">Woman</p>
-          <p className="text-center">Man</p>
+          <p className="text-center">Wife</p>
+          <p className="text-center">Husband</p>
           <p></p>
         </div>
 

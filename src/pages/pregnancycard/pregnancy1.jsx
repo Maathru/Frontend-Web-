@@ -169,8 +169,8 @@ const Pregnancy1 = () => {
 
           <div className="grid grid-cols-3 gap-4 items-center mx-14">
             <p></p>
-            <p className="text-center">Woman</p>
-            <p className="text-center">Man</p>
+            <p className="text-center">Wife</p>
+            <p className="text-center">Husband</p>
           </div>
 
           {/* Input box */}
@@ -228,7 +228,7 @@ const Pregnancy1 = () => {
               <p>4. Date of Birth</p>
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DatePicker
-                  label="Woman's Date of Birth"
+                  label="Wife's Date of Birth"
                   className="w-96"
                   value={dayjs(formObject.dob_woman)}
                   onChange={(newValue) => {
@@ -242,7 +242,7 @@ const Pregnancy1 = () => {
               </LocalizationProvider>
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DatePicker
-                  label="Man's Date of Birth"
+                  label="Husband's Date of Birth"
                   className="w-96"
                   value={dayjs(formObject.dob_man)}
                   onChange={(newValue) => {
@@ -273,10 +273,10 @@ const Pregnancy1 = () => {
             ))}
 
             <div className="grid grid-cols-3 gap-4 items-center mt-4 mx-14">
-              <p>8. Duration for the office </p>
+              <p>8. Distance for the office </p>
               <TextField
                 value={formObject.duration || ""}
-                label="Enter duration"
+                label="Enter distance"
                 variant="outlined"
                 className="w-96"
                 onChange={(e) =>
@@ -293,7 +293,7 @@ const Pregnancy1 = () => {
 
           <div className="grid grid-cols-3 gap-4 items-center mt-5 mb-6">
             <div className="w-fit"></div>
-            <div>Woman</div>
+            <div>Wife</div>
           </div>
 
           <div className="mt-4">
@@ -318,7 +318,7 @@ const Pregnancy1 = () => {
 
           <div className="grid grid-cols-3 gap-4 items-center mt-10 mb-6">
             <div className="w-fit"></div>
-            <div>Woman</div>
+            <div>Wife</div>
           </div>
 
           <div className="mt-4">

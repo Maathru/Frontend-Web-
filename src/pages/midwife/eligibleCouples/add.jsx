@@ -115,65 +115,66 @@ const addCouples = () => {
   const validateField = (name, value) => {
     switch (name) {
       case "womanName":
-        if (!value) return "Woman's name is required";
+        if (!value) return "Wife's name is required";
         break;
       case "address":
         if (!value) return "Address is required";
         break;
       case "womanPhone":
-        if (!value) return "Woman's telephone is required";
+        if (!value) return "Wife's telephone is required";
         break;
       case "womanDob":
-        if (!value) return "Woman's date of birth is required";
+        if (!value) return "Wife's date of birth is required";
         const womanDob = new Date(value);
         if (womanDob >= new Date())
-          return "Woman's date of birth must be in the past";
+          return "Wife's date of birth must be in the past";
         break;
       case "manDob":
         const manDob = new Date(value);
         if (manDob >= new Date())
-          return "Man's date of birth must be in the past";
+          return "Husband's date of birth must be in the past";
         break;
       case "womanEducationLevel":
-        if (!value) return "Woman's education cannot be empty";
+        if (!value) return "Wife's education cannot be empty";
         break;
       case "womanOccupation":
-        if (!value) return "Woman's occupation cannot be empty";
+        if (!value) return "Wife's occupation cannot be empty";
         break;
       case "children":
         if (!value) return "Number of children is required";
         break;
       case "womanWeight":
-        if (!value || value == 0) return "Woman's weight cannot be empty";
-        if (value < 0) return "Woman's weight cannot be less than 0";
+        if (!value || value == 0) return "Wife's weight cannot be empty";
+        if (value < 0) return "Wife's weight cannot be less than 0";
         break;
       case "manWeight":
-        if (value < 0) return "Man's weight cannot be less than 0";
+        if (value < 0) return "Husband's weight cannot be less than 0";
         break;
       case "womanHeight":
-        if (!value || value == 0) return "Woman's height cannot be empty";
-        if (value < 0) return "Woman's height cannot be less than 0";
+        if (!value || value == 0) return "Wife's height cannot be empty";
+        if (value < 0) return "Wife's height cannot be less than 0";
         break;
       case "manHeight":
-        if (value < 0) return "Man's height cannot be less than 0";
+        if (value < 0) return "Husband's height cannot be less than 0";
         break;
       case "womanBmi":
-        if (!value || value == 0) return "Woman's BMI cannot be empty";
-        if (value < 0) return "Woman's BMI cannot be less than 0";
+        if (!value || value == 0) return "Wife's BMI cannot be empty";
+        if (value < 0) return "Wife's BMI cannot be less than 0";
         break;
       case "manBmi":
-        if (value < 0) return "Man's BMI cannot be less than 0";
+        if (value < 0) return "Husband's BMI cannot be less than 0";
         break;
       case "womanBloodType":
-        if (!value) return "Woman's Blood Type cannot be empty";
+        if (!value) return "Wife's Blood Type cannot be empty";
         break;
       case "womanHemoglobin":
         if (!value || value == 0)
-          return "Woman's hemoglobin level cannot be empty";
-        if (value < 0) return "Woman's hemoglobin level cannot be less than 0";
+          return "Wife's hemoglobin level cannot be empty";
+        if (value < 0) return "Wife's hemoglobin level cannot be less than 0";
         break;
       case "manHemoglobin":
-        if (value < 0) return "Man's hemoglobin level cannot be less than 0";
+        if (value < 0)
+          return "Husband's hemoglobin level cannot be less than 0";
         break;
       default:
         break;
@@ -315,8 +316,8 @@ const addCouples = () => {
         <div className="">
           <Typography variant="h6">{t("subtitle1.1")}</Typography>
           <div className="grid eligible-form grid-rows-9 gap-x-20 gap-y-5">
-            <Typography className="col-start-2 text-center">Woman</Typography>
-            <Typography className="text-center">Man</Typography>
+            <Typography className="col-start-2 text-center">Wife</Typography>
+            <Typography className="text-center">Husband</Typography>
 
             <Typography variant="body1">1. Name</Typography>
             <TextField
@@ -646,8 +647,8 @@ const addCouples = () => {
         <div>
           <Typography variant="h6">{t("subtitle2.1")}</Typography>
           <div className="grid eligible-form grid-rows-5 gap-x-20 gap-y-5">
-            <Typography className="col-start-2 text-center">Woman</Typography>
-            <Typography className="text-center">Man</Typography>
+            <Typography className="col-start-2 text-center">Wife</Typography>
+            <Typography className="text-center">Husband</Typography>
 
             <Typography variant="body1">1. Weight (kg)</Typography>
             <TextField

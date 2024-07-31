@@ -25,14 +25,14 @@ const DoubleInput = ({
         label={placeholder1}
         variant="outlined"
         className="w-96"
-        onChange={(e) => onChange("no_of_pregnancies_g", e.target.value)}
+        onChange={(e) => onChange("pregnancies_g", e.target.value)}
       />
       <TextField
         value={value2}
         label={placeholder2}
         variant="outlined"
         className="w-96"
-        onChange={(e) => onChange("no_of_pregnancies_p", e.target.value)}
+        onChange={(e) => onChange("pregnancies_p", e.target.value)}
       />
     </div>
   );
