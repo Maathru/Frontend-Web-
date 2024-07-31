@@ -29,6 +29,7 @@ function EditQuestion() {
     "Maternal Health",
     "Baby Vaccinations",
   ];
+  const [errors, setErrors] = useState({});
 
   useEffect(() => {
     const fetchQuestion = async () => {
@@ -85,10 +86,23 @@ function EditQuestion() {
       Toast(response, errorType.SUCCESS);
       navigate(`/forum/answer/${questionId}`);
     } catch (error) {
-      console.log(error);
-      const data = error.response.data.message;
+      const data = error.response?.data;
       console.log(data);
-      Toast(data || "Error occurred", errorType.ERROR);
+  
+      if (data) {
+        if (Array.isArray(data)) {
+          const newErrors = {};
+          data.forEach((msg) => {
+            Toast(msg.message, errorType.ERROR);
+            newErrors[msg.field] = msg.message;
+          });
+          setErrors(newErrors);
+        } else {
+          Toast(data.message || "Error occurred", errorType.ERROR);
+        }
+      } else {
+        Toast("Error occurred", errorType.ERROR);
+      }
     }
   };
 
