@@ -142,7 +142,7 @@ const Login = () => {
               name="email"
               variant="outlined"
               InputProps={{
-                sx: { borderRadius: 8, width: "30vw" },
+                sx: { borderRadius: 8},
                 className: "dark:bg-dark-background",
               }}
               value={email}
