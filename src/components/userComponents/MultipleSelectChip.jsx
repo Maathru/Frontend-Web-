@@ -6,7 +6,7 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import Chip from "@mui/material/Chip";
 import { useState } from "react";
-import { Input } from "@mui/material";
+import { Input, OutlinedInput } from "@mui/material";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -47,7 +47,7 @@ export default function MultipleSelectChip({
 
   return (
     <div>
-      <FormControl sx={{ width: 300 }}>
+      <FormControl sx={{ width: 300 }}  size="small" >
         <InputLabel id="demo-multiple-chip-label">Select Doctors</InputLabel>
         <Select
           labelId="demo-multiple-chip-label"
@@ -56,10 +56,9 @@ export default function MultipleSelectChip({
           value={personName}
           onChange={handleChange}
           input={
-            <Input
-              //   variant="outlined"
+            <OutlinedInput
               id="select-multiple-chip"
-              label="Assign user"
+              label="Select Doctors"
             />
           }
           renderValue={(selected) => (

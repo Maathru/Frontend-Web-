@@ -208,7 +208,6 @@ const ClinicAddPopup = () => {
               size="small"
               name="name"
               label="Clinic Name"
-              InputLabelProps={{ shrink: true }}
               value={formData.name}
               onChange={handleInputChange}
               error={!!errors.name}
@@ -226,6 +225,8 @@ const ClinicAddPopup = () => {
                 onChange={(e) => {
                   formData.date = e;
                 }}
+                slotProps={{ textField: { size: 'small' } }}
+
               />
             </LocalizationProvider>
 
@@ -239,6 +240,8 @@ const ClinicAddPopup = () => {
                   formData.startTime = e;
                 }}
                 variant="standard"
+                slotProps={{ textField: { size: 'small' } }}
+
               />
             </LocalizationProvider>
             <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -251,13 +254,15 @@ const ClinicAddPopup = () => {
                   formData.endTime = e;
                 }}
                 variant="standard"
+                slotProps={{ textField: { size: 'small' } }}
+
               />
             </LocalizationProvider>
 
             <FormControl size="small">
-              <InputLabel shrink={true}>Select the Region</InputLabel>
+              <InputLabel>Select the Region</InputLabel>
 
-              <Select notched={true} name="region" onChange={handleInputChange}>
+              <Select name="region" onChange={handleInputChange}>
                 {regions.length > 0 ? (
                   regions.map((r) => (
                     <MenuItem key={r.regionId} value={r.regionId || ""}>
@@ -282,7 +287,6 @@ const ClinicAddPopup = () => {
               required
               size="small"
               label="Other"
-              InputLabelProps={{ shrink: true }}
               onChange={handleInputChange}
               error={!!errors.other}
               helperText={errors.other || ""}
