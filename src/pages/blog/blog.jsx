@@ -1,13 +1,17 @@
 import React from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Pagination from "../../components/pagination";
 import { MdOutlineArrowBackIosNew } from "react-icons/md";
 import { MdCreate } from "react-icons/md";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { errorType, Toast } from "@/components/toast";
 import BlogImage from "../../assets/blog/blog-image.png";
 import RecentBlogImage1 from "../../assets/blog/recent-blog-image-1.png";
 import RecentBlogImage2 from "../../assets/blog/recent-blog-image-2.png";
+import BlogService from "../../service/blogService";
+import DOMPurify from "dompurify";
 
 import {
   Card,
@@ -18,6 +22,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { useTitle } from "@/hooks/useTitle";
+import Heading from "@/components/ui/heading";
 
 const cardColor = "bg-light-blogcard dark:bg-dark-primary hover:dark:bg-dark-blogcard";
 const badgeColor = "bg-fuchsia-200 dark:bg-fuchsia-300 hover:dark:bg-fuchsia-100 dark:text-neutral-800";
@@ -25,14 +30,32 @@ const readMoreColor = "text-primary-purple dark:text-dark-primary font-semibold 
 
 const blog = () => {
   useTitle("Blogs");
+
+  const [blogs, setBlogs] = useState([]);
+
+  useEffect(() => {
+    const fetchBlogs = async () => {
+      try {
+        const response = await BlogService.getBlogs();
+        console.log(response);
+        setBlogs(response);
+      } catch (error) {
+        // console.log(error);
+        if (error.response) {
+          const data = error.response.data;
+          console.log(data);
+          Toast(data, errorType.ERROR);
+        } else {
+          Toast("An unexpected error occurred", errorType.ERROR);
+        }
+      }
+    };
+    fetchBlogs();
+  }, []);
+
   return (
-    <div className="">
-      <div>
-        <div className="md:mt-10 mt-5 md:ml-10 ml-3 text-3xl font-semibold flex items-center text-neutral-800 dark:text-neutral-100">
-          <MdOutlineArrowBackIosNew />
-          <p className="ml-3 text-4xl"> Blogs</p>
-        </div>
-      </div>
+    <div className="content-container">
+      <Heading title={"Blogs"} />
 
       <p className="md:mt-12 mt-8 ml-6 text-2xl text-neutral-800 dark:text-neutral-100">
         Recent Blogs
@@ -199,7 +222,42 @@ const blog = () => {
         All Blogs
       </p>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 md:gap-8 gap-4 md:mt-8 mt-4 mx-4">
+      <div className="grid grid-cols-1 md:grid-cols-3 md:gap-8 gap-4 md:mt-8 mt-4 mx-4">
+        {blogs.map((blog) => (
+          <Card
+            className={`${cardColor} flex flex-col justify-between`}
+            key={blog.blogId}
+          >
+            <CardHeader>
+              <img
+                src={blog.image}
+                // alt="Blog Image"
+                className="rounded-md mb-2"
+              />
+              <CardTitle>{blog.title}</CardTitle>
+              <CardDescription>{blog.category}</CardDescription>
+            </CardHeader>
+            <CardContent className="text-sm">
+              <div
+                dangerouslySetInnerHTML={{
+                  __html: DOMPurify.sanitize(blog.content),
+                }}
+              />
+            </CardContent>
+            <CardFooter className="pb-0">
+              <div className="flex flex-wrap gap-2">
+                {blog.keywords.map((keyword, index) => (
+                  <Badge key={index} variant="secondary" className={badgeColor}>
+                    {keyword}
+                  </Badge>
+                ))}
+              </div>
+            </CardFooter>
+            <CardFooter className={`text-sm flex justify-end ${readMoreColor}`}>
+              <p>Read More</p>
+            </CardFooter>
+          </Card>
+        ))}
         <Card className={`${cardColor} flex flex-col justify-between`}>
           <CardHeader>
             <img src={BlogImage} alt="Blog Image" className="rounded-md mb-2" />
