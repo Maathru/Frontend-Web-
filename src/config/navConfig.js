@@ -15,13 +15,13 @@ export const navConfig = {
     { name: "Home", path: "/" },
     { name: "Child Growth", path: "/growth" },
     { name: "Pregnancy Card", path: "/pregnancy/1" },
-    { name: "Midwife", path: "/midwife" },
     { name: "Memories", path: "/memories" },
     {
       name: "More",
       links: [
         { name: "Blogs", path: "/blogs" },
         { name: "Discussion Forum", path: "/forum" },
+        { name: "Recovery Checklist", path: "/eligible/1" },
       ],
     },
   ],
@@ -48,7 +48,7 @@ export const navConfig = {
     { name: "Home", path: "/" },
     { name: "Clinics", path: "/clinics" },
     { name: "Midwife", path: "/midwife" },
-    { name: "Analytics", path: "/analytics" },
+    { name: "Statistics", path: "/statistics" },
     {
       name: "More",
       links: [

@@ -107,13 +107,13 @@ const Eligible2 = () => {
           the following medical conditions? )
         </h2>
         <h3 className="text-xl mt-8">
-          SPECIALLY FOR <span className="font-bold">WOMEN</span>
+          SPECIALLY FOR <span className="font-bold">FEMALES</span>
         </h3>
 
         <div>
           <div className="grid grid-cols-4 gap-4 items-center mt-4">
             <p></p>
-            <p className="text-center">Woman</p>
+            <p className="text-center">Wife</p>
             <p></p>
           </div>
 
@@ -158,12 +158,12 @@ const Eligible2 = () => {
 
       {/* main details */}
       <h3 className="text-xl mt-12">
-        SPECIALLY FOR <span className="font-bold">WOMEN</span>
+        SPECIALLY FOR <span className="font-bold">FEMALES</span>
       </h3>
 
       <div className="grid grid-cols-4 gap-4 items-center mt-4">
         <p></p>
-        <p className="text-center">Woman</p>
+        <p className="text-center">Wife</p>
         <p></p>
       </div>
 
@@ -239,8 +239,8 @@ const Eligible2 = () => {
 
       <div className="grid grid-cols-4 gap-4 items-center mt-4 mb-8">
         <p></p>
-        <p className="text-center">Woman</p>
-        <p className="text-center">Man</p>
+        <p className="text-center">Wife</p>
+        <p className="text-center">Husband</p>
       </div>
 
       {specials3.map((special, index) => (

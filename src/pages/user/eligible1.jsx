@@ -152,8 +152,8 @@ const Eligible = () => {
 
           <div className="grid grid-cols-3 gap-4 items-center mx-14">
             <p></p>
-            <p className="text-center">Woman</p>
-            <p className="text-center">Man</p>
+            <p className="text-center">Wife</p>
+            <p className="text-center">Husband</p>
           </div>
 
           {/* Input box */}
@@ -179,7 +179,9 @@ const Eligible = () => {
                 <DatePicker
                   label="Date of marriage"
                   className="w-96"
-                  value={dayjs(formObject.marriage || null)}
+                  value={
+                    formObject.marriage ? dayjs(formObject.marriage) : null
+                  }
                   onChange={(e) => {
                     formObject.marriage = e;
                   }}
@@ -201,8 +203,8 @@ const Eligible = () => {
         <div className="m-12">
           <div className="grid grid-cols-4 gap-4 items-center mt-4">
             <p></p>
-            <p className="text-center">Woman</p>
-            <p className="text-center">Man</p>
+            <p className="text-center">Wife</p>
+            <p className="text-center">Husband</p>
             <p></p>
           </div>
 

@@ -40,7 +40,6 @@ const ContactMidwifeSection = () => {
     try {
       const response = await UserService.getMidwife(region);
       setMidwife(response);
-      console.log(response);
       localStorage.setItem("midwife", JSON.stringify(response));
     } catch (error) {
       Toast(error.response.data || "Unauthorized", errorType.ERROR);
@@ -83,7 +82,9 @@ const ContactMidwifeSection = () => {
             variant="outlined"
           />
           {region && (
-            <Button className="px-12 mb-8" onClick={handleGetMidwife}>Get Midwife Data</Button>
+            <Button className="px-12 mb-8" onClick={handleGetMidwife}>
+              Get Midwife Data
+            </Button>
           )}
         </div>
 

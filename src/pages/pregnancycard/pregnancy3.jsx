@@ -32,7 +32,7 @@ const Pregnancy3 = () => {
       }
     };
 
-    fetchEligibleInfo();
+    // fetchEligibleInfo();
   }, []);
 
   const initiateFields = () => {

@@ -225,8 +225,7 @@ const ClinicAddPopup = () => {
                 onChange={(e) => {
                   formData.date = e;
                 }}
-                slotProps={{ textField: { size: 'small' } }}
-
+                slotProps={{ textField: { size: "small" } }}
               />
             </LocalizationProvider>
 
@@ -240,8 +239,7 @@ const ClinicAddPopup = () => {
                   formData.startTime = e;
                 }}
                 variant="standard"
-                slotProps={{ textField: { size: 'small' } }}
-
+                slotProps={{ textField: { size: "small" } }}
               />
             </LocalizationProvider>
             <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -254,8 +252,7 @@ const ClinicAddPopup = () => {
                   formData.endTime = e;
                 }}
                 variant="standard"
-                slotProps={{ textField: { size: 'small' } }}
-
+                slotProps={{ textField: { size: "small" } }}
               />
             </LocalizationProvider>
 
@@ -284,7 +281,6 @@ const ClinicAddPopup = () => {
             <TextField
               type="text"
               name="other"
-              required
               size="small"
               label="Other"
               onChange={handleInputChange}

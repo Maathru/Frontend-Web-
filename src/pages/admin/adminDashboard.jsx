@@ -1,14 +1,18 @@
 import React, { useContext, useState } from "react";
-import { IoPeopleCircle, IoDocumentTextOutline, IoBusiness } from "react-icons/io5";
+import {
+  IoPeopleCircle,
+  IoDocumentTextOutline,
+  IoBusiness,
+} from "react-icons/io5";
 import { MdOutlinePregnantWoman } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { Typography, Card, CardContent, Button } from "@mui/material";
 import ReactApexChart from "react-apexcharts";
 import { userData } from "@/context/userAuth";
-import ApexCharts from 'react-apexcharts';
-import { useTranslation } from 'react-i18next';
+import ApexCharts from "react-apexcharts";
+import { useTranslation } from "react-i18next";
 
-const Widget = ({ icon: Icon, count, label1, label2 , link }) => (
+const Widget = ({ icon: Icon, count, label1, label2, link }) => (
   <div className="card w-3/12 shadow-md rounded-lg ">
     <div className="flex gap-5 items-center px-8 py-5">
       <div className="bg-primary-purple w-10 h-10 rounded-lg flex justify-center items-center">
@@ -32,19 +36,24 @@ const Widget = ({ icon: Icon, count, label1, label2 , link }) => (
 
 const AdminDashboard = () => {
   const { userDetails } = useContext(userData);
-  const { t } = useTranslation('HealthStatistics');
+  const { t } = useTranslation("HealthStatistics");
 
   const data = {
     crucialStats: {
       series: [
-        { name: 'Rate of maternal health complications', data: [5, 10, 15, 10, 15, 20, 25] },
-        { name: 'Rate of preterm births', data: [5, 7, 9, 8, 7, 10, 12] },
+        {
+          name: "Rate of maternal health complications",
+          data: [5, 10, 15, 10, 15, 20, 25],
+        },
+        { name: "Rate of preterm births", data: [5, 7, 9, 8, 7, 10, 12] },
       ],
       options: {
-        chart: { type: 'line' },
-        xaxis: { categories: ['Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct'] },
-        colors: ['#620084', '#8a3dff'],
-        stroke: { curve: 'smooth' },
+        chart: { type: "line" },
+        xaxis: {
+          categories: ["Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct"],
+        },
+        colors: ["#620084", "#8a3dff"],
+        stroke: { curve: "smooth" },
       },
     },
   };
@@ -120,13 +129,11 @@ const AdminDashboard = () => {
       },
     },
     xaxis: {
-      categories: [
-        "last month" , "this month"
-      ],
+      categories: ["last month", "this month"],
     },
     yaxis: {
       title: {
-        text: 'Uptime (%)'
+        text: "Uptime (%)",
       },
       min: 99,
       max: 100,
@@ -134,20 +141,17 @@ const AdminDashboard = () => {
     },
     tooltip: {
       y: {
-        formatter: (val) => `${val}%`
-      }
-    }
+        formatter: (val) => `${val}%`,
+      },
+    },
   });
 
   const [series3, setSeries3] = useState([
     {
       name: "Uptime",
-      data: [
-        99.5, 99.8
-      ],
+      data: [99.5, 99.8],
     },
   ]);
-
 
   return (
     <div className="container content-container">
@@ -197,9 +201,7 @@ const AdminDashboard = () => {
       <div>
         <div className="mb-10">
           <div className="flex justify-between">
-            <Typography variant="h4">
-              System Analytics
-            </Typography>
+            <Typography variant="h4">System Analytics</Typography>
             <Button>View All</Button>
           </div>
           <Typography className="mr-4 mb-10" variant="h6">
@@ -211,60 +213,81 @@ const AdminDashboard = () => {
             <Card>
               <CardContent>
                 <Typography>
-                  Uptime: <p className="text-purple-800 inline font-large">99.9%</p>
+                  Uptime:{" "}
+                  <span className="text-purple-800 inline font-large">
+                    99.9%
+                  </span>
                 </Typography>
                 <Typography>
-                  Downtime events: <p className="text-purple-800 inline font-large">99.9%</p>
+                  Downtime events:{" "}
+                  <span className="text-purple-800 inline font-large">
+                    99.9%
+                  </span>
                 </Typography>
               </CardContent>
             </Card>
             <Card>
               <CardContent>
                 <Typography>
-                  Current Error Rate: <p className="text-purple-800 inline font-large">0.5%</p>
+                  Current Error Rate:{" "}
+                  <span className="text-purple-800 inline font-large">
+                    0.5%
+                  </span>
                 </Typography>
                 <Typography>
-                  Current Active Users: <p className="text-purple-800 inline font-large">250</p>
+                  Current Active Users:{" "}
+                  <span className="text-purple-800 inline font-large">250</span>
                 </Typography>
               </CardContent>
             </Card>
             <Card>
               <CardContent>
                 <Typography>
-                  Avg. Response Time: <p className="text-purple-800 inline font-large">200ms</p>
+                  Avg. Response Time:{" "}
+                  <span className="text-purple-800 inline font-large">
+                    200ms
+                  </span>
                 </Typography>
                 <Typography>
-                  Peak Response Time: <p className="text-purple-800 inline font-large">1.5 sec</p>
+                  Peak Response Time:{" "}
+                  <span className="text-purple-800 inline font-large">
+                    1.5 sec
+                  </span>
                 </Typography>
               </CardContent>
             </Card>
             <Card>
               <CardContent>
                 <Typography>
-                  Most Recent Errors: <p className="text-purple-800 inline font-large">20/06/2024, 10:15 AM</p>
+                  Most Recent Errors:{" "}
+                  <span className="text-purple-800 inline font-large">
+                    20/06/2024, 10:15 AM
+                  </span>
                 </Typography>
                 <Typography>
-                  <p className="text-purple-800 inline font-large">18/06/2024, 06:15 AM</p>
+                  <span className="text-purple-800 inline font-large">
+                    18/06/2024, 06:15 AM
+                  </span>
                 </Typography>
               </CardContent>
             </Card>
-          </div>
-          <div id="" className="shadow-md rounded-sm p-5">
-          <ReactApexChart
-            options={options}
-            series={series3}
-            type="line"
-            height={350}
-            width={"100%"}
-          />
           </div>
           <div id="" className="shadow-md rounded-sm p-5">
             <ReactApexChart
-                options={optionsPie}
-                series={seriesPie}
-                type="donut"
-                height={350}
-                width={"100%"}
+              options={options}
+              series={series3}
+              type="line"
+              height={350}
+              width={"100%"}
+            />
+          </div>
+          <div id="" className="shadow-md rounded-sm p-5">
+            <ReactApexChart
+              options={optionsPie}
+              series={seriesPie}
+              type="donut"
+              height={350}
+              width={"100%"}
             />
           </div>
         </div>

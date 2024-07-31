@@ -60,7 +60,7 @@ const Pregnancy2 = () => {
   const handleSave = async () => {
     formObject.stage = Math.max(formObject.stage, 3);
     localStorage.setItem("pregnancy", JSON.stringify(formObject));
-    navigate("/parents");
+    navigate("/pregnancy/3");
 
     await handleSubmit();
   };
@@ -152,10 +152,10 @@ const Pregnancy2 = () => {
                 </li>
               </ul>
             </div>
-            <div>Need to implement</div>
+            {/* <div>Need to implement</div> */}
           </div>
 
-          <div className="mt-10 bg-purple-100 py-5 rounded-lg">
+          <div className="mt-10 bg-purple-100 dark:bg-dark-card py-5 rounded-lg">
             {presentObstetricDates.map((input, index) => (
               <DateInput
                 key={index}

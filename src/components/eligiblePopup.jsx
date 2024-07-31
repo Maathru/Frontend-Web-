@@ -91,7 +91,7 @@ const EligiblePopup = ({ addButton }) => {
       });
       setIsLoading(false);
       setBackendError({ ...backendError, msg: "" });
-      navigate(`/eligible/add/${response}`);
+      navigate(`/eligibles/add/${response}`);
     } catch (error) {
       console.log(error);
       console.log(error.message);
@@ -129,7 +129,7 @@ const EligiblePopup = ({ addButton }) => {
       setIsLoading(false);
       setBackendError({ ...backendError, msg: "" });
       Toast(response.message.split("/")[1], errorType.SUCCESS);
-      navigate(`/eligible/add/${response.message.split("/")[0]}`);
+      navigate(`/eligibles/add/${response.message.split("/")[0]}`);
     } catch (error) {
       console.log(error);
       console.log(error.message);

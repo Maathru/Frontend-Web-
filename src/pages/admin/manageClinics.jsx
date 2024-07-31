@@ -16,26 +16,24 @@ import {
 } from "@mui/material";
 import { DataGrid, GridToolbarQuickFilter } from "@mui/x-data-grid";
 import { SearchIcon } from "lucide-react";
-import React from "react";
+import { useEffect, useState } from "react";
 import ClinicAddPopup from "@/components/ClinicAddPopup";
-import Calendar from "@/components/Calendar";
 import Search from "@/components/Search";
 import { t } from "i18next";
 import { useTranslation } from "react-i18next";
+import ClinicService from "@/service/clinicService";
+import { errorType, Toast } from "@/components/toast";
+import { Calendar } from "@/components/ui/calendar";
 
 const columns = [
   { field: "id", width: 20 },
-  { field: "devision", flex: 1 },
+  { field: "name", flex: 1 },
   {
-    field: "patients",
+    field: "region",
     flex: 1,
-    renderCell: (params) => {
-      return params.value + " patients";
-    },
   },
   {
     field: "view",
-    // headerName: "View Appoinments",
     flex: 1,
     renderCell: () => {
       return (
@@ -47,15 +45,6 @@ const columns = [
   },
 ];
 
-const rows = [
-  { id: 1, devision: "Piliyandala", patients: 30, view: "View Details" },
-  { id: 2, devision: "Piliyandala", patients: 30, view: "View Details" },
-  { id: 3, devision: "Piliyandala", patients: 30, view: "View Details" },
-  { id: 4, devision: "Piliyandala", patients: 30, view: "View Details" },
-  { id: 5, devision: "Piliyandala", patients: 30, view: "View Details" },
-  { id: 6, devision: "Piliyandala", patients: 30, view: "View Details" },
-];
-
 const columns2 = [
   { field: "id", headerName: "Patient ID", width: 90 },
   { field: "patient", headerName: "Patient Name", flex: 1 },
@@ -64,9 +53,7 @@ const columns2 = [
     headerName: "Is Present",
     flex: 1,
     renderCell: () => {
-      return (
-        <Chip/>
-      );
+      return <Chip />;
     },
   },
 ];
@@ -105,7 +92,30 @@ function QuickSearchToolbar() {
 }
 
 const manageClinics = () => {
+  const [date, setDate] = useState(new Date());
+  const [rows, setRows] = useState([]);
   const { t } = useTranslation("manageClinics");
+
+  useEffect(() => {
+    const fetchClinicsByDate = async () => {
+      setRows([]);
+
+      const newDate = new Date(date);
+      newDate.setDate(date.getDate() + 1);
+      const isoDateString = newDate.toISOString().split("T")[0];
+
+      try {
+        const response = await ClinicService.getClinicsByDate(isoDateString);
+        setRows(response);
+      } catch (error) {
+        Toast(error.response.data || "Unauthorized", errorType.ERROR);
+        console.log(error.response.data);
+      }
+    };
+
+    fetchClinicsByDate();
+  }, [date]);
+
   return (
     <div className="content-container">
       <Heading title={t("title")} />
@@ -117,7 +127,15 @@ const manageClinics = () => {
 
         <div className="flex">
           <div className="w-6/12">
-            <Calendar />
+            <Calendar
+              highlightDates={[
+                new Date(2024, 6, 20),
+                new Date(2024, 7, 5),
+                new Date(2024, 7, 8),
+              ]}
+              highlightColor="#ffcc00"
+              onDayClick={(day) => setDate(day)}
+            />
           </div>
           <div className="shadow-md p-5 w-6/12 h-fit">
             <div className="flex justify-between">

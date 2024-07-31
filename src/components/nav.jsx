@@ -128,12 +128,12 @@ const Nav = ({ themeFunction, mode }) => {
               {isDropdownOpen[index] ? <IoIosArrowUp /> : <IoIosArrowDown />}
             </div>
             {isDropdownOpen[index] && (
-              <div className="absolute w-48 mt-2 origin-top-right bg-white dark:bg-dark-background divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+              <div className="absolute min-w-56 w-fit text-wrap mt-2 origin-top-right bg-white dark:bg-dark-background divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none z-50">
                 <div className="px-2 py-2">
                   {item.links.map((link, subIndex) => (
                     <button
                       key={subIndex}
-                      className={`text-gray-900 dark:text-white group flex rounded-md items-center w-full pe-2 ps-3 py-2 my-1 text-sm ${
+                      className={`text-gray-900 dark:text-white group flex rounded-md items-center text-left  w-full pe-2 ps-3 py-2 my-1 text-sm ${
                         pathname.includes(link.path)
                           ? "bg-primary-purple text-white"
                           : "hover:bg-primary-purple hover:text-white"
@@ -247,7 +247,7 @@ const Nav = ({ themeFunction, mode }) => {
                   />
                 </button>
                 {isDropdownOpen["profile"] && (
-                  <div className="absolute right-0 w-48 mt-2 origin-top-right bg-white dark:bg-dark-background divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                  <div className="absolute right-0 w-48 mt-2 origin-top-right bg-white dark:bg-dark-background divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none z-50">
                     <div className="px-1 py-1">
                       <button
                         className="text-gray-900 dark:text-white group flex rounded-md items-center w-full px-2 py-2 text-sm hover:bg-primary-purple hover:text-white"
