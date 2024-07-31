@@ -163,35 +163,35 @@ const Answer = () => {
                           </Badge>
                         ))}
                     </div>
-                    {/* Edit delete actions */}
-                    <div className="flex gap-5 items-center">
-                      {userDetails.userId == question.authorId && (
-                        <div className="flex gap-5 items-center">
-                          <Link to={`/forum/edit/` + question.id} className="font-medium text-base text-[#9C33C1]">
-                            Edit question
-                          </Link>
-                          <div onClick={() => confirmDelete(questionId)} className="font-medium text-base text-red-600 cursor-pointer">
-                            Delete question
+                      {/* Edit delete actions */}
+                      <div className="flex gap-5 items-center">
+                        {userDetails.userId == question.authorId && (
+                          <div className="flex gap-5 items-center">
+                            <Link to={`/forum/edit/` + question.id} className="font-medium text-base text-[#9C33C1]">
+                              Edit question
+                            </Link>
+                            <div onClick={() => confirmDelete(questionId)} className="font-medium text-base text-red-600 cursor-pointer">
+                              Delete question
+                            </div>
                           </div>
+                        )}
+                      {/* Author details */}
+                      <div className="flex items-center gap-1">
+                        <Avatar
+                          alt="Remy Sharp"
+                          src="src/assets/nav/sample-profile.png"
+                        />
+                        <div className="flex flex-col">
+                          <Link>
+                            {question.authorName ? `${question.authorName}` : "Unknown"}
+                          </Link>
+                          <p className="text-sm text-gray-500">
+                            Modified at
+                            {question.updatedAt ? ` ${question.updatedAt}` : ` ${question.createdAt}`}
+                          </p>
                         </div>
-                      )}
-                    </div>
-                    {/* Author details */}
-                    <div className="flex items-center gap-1">
-                      <Avatar
-                        alt="Remy Sharp"
-                        src="src/assets/nav/sample-profile.png"
-                      />
-                      <div className="flex flex-col">
-                        <Link>
-                          {question.authorName ? `${question.authorName}` : "Unknown"}
-                        </Link>
-                        <p className="text-sm text-gray-500">
-                          Modified at
-                          {question.updatedAt ? ` ${question.updatedAt}` : ` ${question.createdAt}`}
-                        </p>
                       </div>
-                    </div>
+                      </div>
                   </div>
                 </div>
               </CardContent>
@@ -244,13 +244,13 @@ const Answer = () => {
                 <CardFooter className="flex justify-end text-[#9c3cc1]">
                   <div className="flex gap-5 items-center">
                     {userDetails.userId == answer.authorId && (
-                      <div className="flex gap-2">
+                      <div className="flex gap-6">
                         <div
                           onClick={() => {
                             setEditAnswerId(answer.id);
                             setEditAnswerText(answer.answer);
                           }}
-                          className="flex font-medium text-base text-blue-600 cursor-pointer"
+                          className="flex font-medium text-base text-[#9C33C1] cursor-pointer"
                         >
                           Edit Answer
                         </div>
