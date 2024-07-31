@@ -3,10 +3,18 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import { DayPicker } from "react-day-picker";
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
-import 'react-day-picker/dist/style.css';  // Ensure to import the default styles
+import "react-day-picker/dist/style.css"; // Ensure to import the default styles
 
-function Calendar({ className, classNames, showOutsideDays = true, highlightDates = [], highlightColor = "#ffcc00", onDayClick, ...props }) {
-
+function Calendar({
+  className,
+  classNames,
+  showOutsideDays = true,
+  highlightDates = [],
+  highlightColor = "#ffcc00",
+  onDayClick,
+  onMonthChange,
+  ...props
+}) {
   // Create a custom style for the highlighted dates and weekends
   const customStyles = `
     .highlighted-date {
@@ -21,7 +29,7 @@ function Calendar({ className, classNames, showOutsideDays = true, highlightDate
   // Create a modifier for the highlighted dates and weekends
   const modifiers = {
     highlighted: highlightDates,
-    weekend: { daysOfWeek: [0, 6] } // 0 for Sunday and 6 for Saturday
+    weekend: { daysOfWeek: [0, 6] }, // 0 for Sunday and 6 for Saturday
   };
 
   return (
@@ -32,7 +40,8 @@ function Calendar({ className, classNames, showOutsideDays = true, highlightDate
         weekStartsOn={1} // Start the week on Monday
         className={cn("p-3", className)}
         classNames={{
-          months: "flex flex-col sm:flex-row space-y-4 sm:space-x-4 sm:space-y-0",
+          months:
+            "flex flex-col sm:flex-row space-y-4 sm:space-x-4 sm:space-y-0",
           month: "space-y-4",
           caption: "flex justify-center pt-1 relative items-center",
           caption_label: "text-lg font-medium",
@@ -68,9 +77,10 @@ function Calendar({ className, classNames, showOutsideDays = true, highlightDate
         modifiers={modifiers}
         modifiersClassNames={{
           highlighted: "highlighted-date",
-          weekend: "weekend-date"
+          weekend: "weekend-date",
         }}
         onDayClick={onDayClick}
+        onMonthChange={onMonthChange}
         components={{
           IconLeft: ({ ...props }) => <ChevronLeft className="h-4 w-4" />,
           IconRight: ({ ...props }) => <ChevronRight className="h-4 w-4" />,

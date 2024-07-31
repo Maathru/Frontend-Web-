@@ -26,9 +26,8 @@ const formatDisplayName = (value) => {
     .join(" ");
 };
 
-const ClinicAddPopup = () => {
+const ClinicAddPopup = ({ isOpen, setIsOpen }) => {
   const [errors, setErrors] = useState({});
-  const [isOpen, setIsOpen] = useState(false);
   const [regions, setRegions] = useState([]);
   const [doctors, setDoctors] = useState([]);
   const [assignedDoctors, setAssignedDoctors] = useState([]);
