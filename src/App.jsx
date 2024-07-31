@@ -49,7 +49,6 @@ import { role } from "./data/roleData";
 import { ThemeProvider } from "@mui/material/styles";
 import getTheme from "./theme.js";
 import VaccineCard from "./pages/vaccinecard/vaccinecard";
-import AddClinic from "./pages/admin/addClinic";
 import Nav from "./components/nav";
 import { useDarkMode } from "./context/darkModeContext";
 
@@ -130,7 +129,6 @@ function App() {
                   <Route path="/clinics" element={<ManageClinics />} />
                   <Route path="/statics/health" element={<Healthstatics />} />
                   <Route path="/regions" element={<ManageRegions />} />
-                  <Route path="/clinics/add" element={<AddClinic />} />
                 </>
               )}
 

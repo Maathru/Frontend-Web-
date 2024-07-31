@@ -4,23 +4,27 @@ import {
   MenuItem,
   Select,
   TextField,
-  Typography,
 } from "@mui/material";
 import { IoIosCloseCircleOutline } from "react-icons/io";
 import Popup from "reactjs-popup";
 import { Button } from "./ui/button";
 import { errorType, Toast } from "@/components/toast";
-import Heading from "@/components/ui/heading";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { TimePicker } from "@mui/x-date-pickers/TimePicker";
 import dayjs from "dayjs";
-import GetRegion from "@/components/userComponents/getRegion";
 import MultipleSelectChip from "@/components/userComponents/MultipleSelectChip";
 import ClinicService from "@/service/clinicService";
+
+const formatDisplayName = (value) => {
+  return value
+    .split("_")
+    .map((word) => word.toLowerCase())
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+};
 
 const ClinicAddPopup = () => {
   const [errors, setErrors] = useState({});
@@ -28,9 +32,6 @@ const ClinicAddPopup = () => {
   const [regions, setRegions] = useState([]);
   const [doctors, setDoctors] = useState([]);
   const [assignedDoctors, setAssignedDoctors] = useState([]);
-  const [district, setDistrict] = useState("");
-  const [area, setArea] = useState("");
-  const [region, setRegion] = useState("");
   const [formData, setFormData] = useState({
     name: "",
     region: "",
@@ -66,9 +67,6 @@ const ClinicAddPopup = () => {
       case "endTime":
         if (!value) return "End time is required";
         break;
-      case "doctors":
-        if (value.length < 1) return "Doctors are required";
-        break;
       default:
         break;
     }
@@ -91,8 +89,7 @@ const ClinicAddPopup = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(region);
-    setFormData({ ...formData, region: region, doctors: assignedDoctors });
+    setFormData({ ...formData, doctors: assignedDoctors });
 
     const validationErrors = validate();
 
@@ -101,7 +98,12 @@ const ClinicAddPopup = () => {
       return;
     }
 
-    if (!region) {
+    if (!assignedDoctors) {
+      Toast("Please select doctors", errorType.ERROR);
+      return;
+    }
+
+    if (!formData.region) {
       Toast("Please select a region", errorType.ERROR);
       return;
     }
@@ -119,6 +121,7 @@ const ClinicAddPopup = () => {
         other: "",
       });
       Toast(response, errorType.SUCCESS);
+      setIsOpen(false);
     } catch (error) {
       console.log(error.message);
 
@@ -145,7 +148,6 @@ const ClinicAddPopup = () => {
       try {
         const response = await ClinicService.getRegions();
         setRegions(response);
-        console.log(response);
       } catch (error) {
         Toast(error.response.data || "Unauthorized", errorType.ERROR);
         console.log(error.response.data);
@@ -156,7 +158,6 @@ const ClinicAddPopup = () => {
       try {
         const response = await ClinicService.getDoctors();
         setDoctors(response);
-        console.log(response);
       } catch (error) {
         Toast(error.response.data || "Unauthorized", errorType.ERROR);
         console.log(error.response.data);
@@ -167,8 +168,6 @@ const ClinicAddPopup = () => {
       fetchRegions();
       fetchDoctors();
     }
-
-    setDoctors([]);
   }, [isOpen]);
 
   return (
@@ -177,7 +176,6 @@ const ClinicAddPopup = () => {
       onOpen={() => setIsOpen(true)}
       onClose={() => {
         setIsOpen(false);
-        setBackendError("");
       }}
       trigger={
         <p className="text-sm text-footer-purple hover:cursor-pointer">
@@ -211,75 +209,87 @@ const ClinicAddPopup = () => {
               name="name"
               label="Clinic Name"
               InputLabelProps={{ shrink: true }}
+              value={formData.name}
               onChange={handleInputChange}
               error={!!errors.name}
               helperText={errors.name || ""}
-            ></TextField>
-            <TextField
-              required
-              size="small"
-              type="date"
-              name="date"
-              label="Choose Date"
-              InputLabelProps={{ shrink: true }}
-              onChange={handleInputChange}
-              error={!!errors.date}
-              helperText={errors.date || ""}
-            ></TextField>
+            />
 
-            <TextField
-              type="time"
-              name="startTime"
-              required
-              size="small"
-              label="Start Time"
-              InputLabelProps={{ shrink: true }}
-              onChange={handleInputChange}
-              error={!!errors.startTime}
-              helperText={errors.startTime || ""}
-            ></TextField>
-            <TextField
-              type="time"
-              name="endTime"
-              required
-              size="small"
-              label="End Time"
-              InputLabelProps={{ shrink: true }}
-              onChange={handleInputChange}
-              error={!!errors.endTime}
-              helperText={errors.endTime || ""}
-            ></TextField>
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <DatePicker
+                required
+                size="small"
+                name="date"
+                label="Choose Date"
+                InputLabelProps={{ shrink: true }}
+                value={formData.date ? dayjs(formData.date) : null}
+                onChange={(e) => {
+                  formData.date = e;
+                }}
+              />
+            </LocalizationProvider>
+
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <TimePicker
+                required
+                label="Start Time"
+                name="startTime"
+                value={formData.startTime ? dayjs(formData.startTime) : null}
+                onChange={(e) => {
+                  formData.startTime = e;
+                }}
+                variant="standard"
+              />
+            </LocalizationProvider>
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <TimePicker
+                required
+                label="End Time"
+                name="endTime"
+                value={formData.endTime ? dayjs(formData.endTime) : null}
+                onChange={(e) => {
+                  formData.endTime = e;
+                }}
+                variant="standard"
+              />
+            </LocalizationProvider>
 
             <FormControl size="small">
-              <InputLabel shrink>Select the Region</InputLabel>
+              <InputLabel shrink={true}>Select the Region</InputLabel>
 
-              <Select
-                label="Select the Clinic"
-                name="region"
-                notched
-                onChange={handleInputChange}
-              >
-                <MenuItem>Region 01</MenuItem>
-                <MenuItem>Region 02</MenuItem>
-                <MenuItem>Region 03</MenuItem>
+              <Select notched={true} name="region" onChange={handleInputChange}>
+                {regions.length > 0 ? (
+                  regions.map((r) => (
+                    <MenuItem key={r.regionId} value={r.regionId || ""}>
+                      {formatDisplayName(r.regionName)}
+                    </MenuItem>
+                  ))
+                ) : (
+                  <MenuItem disabled>No regions available</MenuItem>
+                )}
               </Select>
             </FormControl>
 
-            <FormControl size="small">
-              <InputLabel shrink="true">Select the Doctor</InputLabel>
+            <MultipleSelectChip
+              users={doctors}
+              personName={assignedDoctors}
+              setPersonName={setAssignedDoctors}
+            />
 
-              <Select
-                notched
-                name="doctor"
-                label="Select the Clinic"
-                onChange={handleInputChange}
-              >
-                <MenuItem>Dr Saman</MenuItem>
-                <MenuItem>Dr Ajith</MenuItem>
-                <MenuItem>Dr Kamal</MenuItem>
-              </Select>
-            </FormControl>
-            <Button className="px-10">Submit</Button>
+            <TextField
+              type="text"
+              name="other"
+              required
+              size="small"
+              label="Other"
+              InputLabelProps={{ shrink: true }}
+              onChange={handleInputChange}
+              error={!!errors.other}
+              helperText={errors.other || ""}
+            ></TextField>
+            <Button onClick={handleSubmit} className="px-10">
+              Submit
+            </Button>
           </div>
         </div>
       )}
