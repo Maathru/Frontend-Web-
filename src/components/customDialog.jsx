@@ -9,21 +9,25 @@ import {
   AlertDialogAction,
 } from "./ui/alert-dialog";
 
-const LogoutDialog = ({ isOpen, onClose, handleLogout }) => {
+const CustomDialog = ({
+  isOpen,
+  onClose,
+  text1,
+  text2 = "This action cannot be undone.",
+  handleFunction,
+}) => {
   return (
     <AlertDialog open={isOpen} onOpenChange={onClose}>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Are you sure you need to logout?</AlertDialogTitle>
-          <AlertDialogDescription>
-            This action cannot be undone.
-          </AlertDialogDescription>
+          <AlertDialogTitle>{text1}</AlertDialogTitle>
+          <AlertDialogDescription>{text2}</AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel onClick={onClose}>Cancel</AlertDialogCancel>
           <AlertDialogAction
             onClick={() => {
-              handleLogout();
+              handleFunction();
               onClose();
             }}
           >
@@ -35,4 +39,4 @@ const LogoutDialog = ({ isOpen, onClose, handleLogout }) => {
   );
 };
 
-export default LogoutDialog;
+export default CustomDialog;

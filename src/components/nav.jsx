@@ -17,7 +17,7 @@ import sinLight from "../assets/nav/sin-light.png";
 import { Button } from "./ui/button";
 import { errorType, Toast } from "./toast";
 import { userData } from "@/context/userAuth";
-import LogoutDialog from "@/components/logoutDialog";
+import CustomDialog from "@/components/customDialog";
 import AuthService from "@/service/authService";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { role } from "@/data/roleData";
@@ -274,10 +274,11 @@ const Nav = ({ themeFunction, mode }) => {
       </div>
       {isLogoutDialogOpen && (
         <>
-          <LogoutDialog
+          <CustomDialog
             isOpen={isLogoutDialogOpen}
             onClose={() => setIsLogoutDialogOpen(false)}
-            handleLogout={handleLogout}
+            handleFunction={handleLogout}
+            text1="Are you sure you need to logout?"
           />
         </>
       )}

@@ -567,5 +567,25 @@ class EligibleService {
       throw error;
     }
   }
+
+  static async getParentListForMidwife() {
+    try {
+      const response = await axiosInstance.get(`/eligible/midwife/parent/get`);
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  static async updateToParent(userId, eligibleId) {
+    try {
+      const response = await axiosInstance.get(
+        `/eligible/midwife/update/${userId}/${eligibleId}`
+      );
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  }
 }
 export default EligibleService;

@@ -5,6 +5,11 @@ import { IconButton, Typography } from "@mui/material";
 import { HiOutlineTrash } from "react-icons/hi";
 import ParentPopup from "@/components/parentPopup";
 import { useTranslation } from "react-i18next";
+import { useTitle } from "@/hooks/useTitle";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import EligibleService from "@/service/eligibleService";
+import { errorType, Toast } from "@/components/toast";
 
 const columns = [
   { field: "id", headerName: "P. Couple ID", width: 100 },
@@ -62,27 +67,42 @@ const columns = [
   },
 ];
 
-const rows = [
-  {
-    id: "EC001",
-    name: { womanName: "S. B. C. Jayara", manName: "K.K.P. Herrath" },
-    address: "154/A, Kaleniya",
-    phone: { womanPhone: "0714578650", manPhone: "0714578650" },
-    dob: { womanDob: "14/05/1989", manDob: "14/05/1989" },
-    children: 2,
-  },
-  {
-    id: "EC002",
-    name: { womanName: "S. B. C. Sumana", manName: "K.K.P. Saman" },
-    address: "15/W, Kadawatha",
-    phone: { womanPhone: "0714578650", manPhone: "0714578650" },
-    dob: { womanDob: "14/05/1989", manDob: "14/05/1989" },
-    children: 2,
-  },
-];
-
 const viewAllParents = () => {
+  useTitle("Parents");
+  const [rows, setRows] = useState([]);
+  const navigate = useNavigate();
   const { t } = useTranslation("viewAllParents");
+
+  useEffect(() => {
+    const fetchParentListForMidwife = async () => {
+      try {
+        const response = await EligibleService.getParentListForMidwife();
+        const updatedRows = response.map((r) => ({
+          id: r.id,
+          name: { womanName: r.womanName, manName: r.manName },
+          address: r.address,
+          phone: {
+            womanPhone: r.womanPhone,
+            manPhone: r.manPhone,
+          },
+          dob: { womanDob: r.womanDob, manDob: r.manDob },
+          children: r.children,
+          userId: r.userId,
+        }));
+
+        setRows(updatedRows);
+      } catch (error) {
+        console.log(error.message);
+
+        const data = error.response.data;
+        console.log(data);
+        Toast(data || "Error occurred", errorType.ERROR);
+      }
+    };
+
+    fetchParentListForMidwife();
+  }, []);
+
   return (
     <div className="content-container">
       <Heading title={"Parent Details"} />
