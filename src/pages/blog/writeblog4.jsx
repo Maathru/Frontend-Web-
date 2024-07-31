@@ -68,10 +68,11 @@ const WriteBlog4 = () => {
           <div className="mt-2 md:ml-6 md:text-lg text-base font-medium text-[#6f6c90] dark:text-neutral-400">
             Confirm that you want to publish the article.
           </div>
+          
           {/* print formData */}
-          <div className="mt-6 md:ml-6 md:text-lg text-base font-medium text-[#6f6c90] dark:text-neutral-400">
+          {/* <div className="mt-6 md:ml-6 md:text-lg text-base font-medium text-[#6f6c90] dark:text-neutral-400">
             {JSON.stringify(formData)}
-          </div>
+          </div> */}
 
           <div className="md:w-[90%] mx-auto">
             <div className="flex justify-around">
