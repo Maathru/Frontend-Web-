@@ -253,7 +253,6 @@ const addCouples = () => {
       setErrors(validationErrors);
       return;
     }
-    console.log("Helooo");
 
     const formObject = EligibleService.createMidwifeEligibleObject(
       userId,

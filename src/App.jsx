@@ -134,7 +134,7 @@ function App() {
                   <Route path="/users" element={<ManageUsers />} />
                   <Route path="/clinics" element={<ManageClinics />} />
                   <Route path="/regions" element={<ManageRegions />} />
-                  <Route path="/systemAnalytics" element={<SystemAnalytics />} />
+                  <Route path="/analytics" element={<SystemAnalytics />} />
                 </>
               )}
 
@@ -190,7 +190,11 @@ function App() {
               {/* Midwife and Parent routes */}
               {(userDetails.role === role.MIDWIFE ||
                 userDetails.role === role.PARENT) && (
-                <Route path="/pregnancy/3" element={<Pregnancy3 />} />
+                <>
+                  <Route path="/pregnancy/1" element={<Pregnancy1 />} />
+                  <Route path="/pregnancy/2" element={<Pregnancy2 />} />
+                  <Route path="/pregnancy/3" element={<Pregnancy3 />} />
+                </>
               )}
 
               {/* Parent routes */}
@@ -198,9 +202,6 @@ function App() {
                 <>
                   <Route path="/growth" element={<Growth />} />
                   <Route path="/memories" element={<Memories />} />
-
-                  <Route path="/pregnancy/1" element={<Pregnancy1 />} />
-                  <Route path="/pregnancy/2" element={<Pregnancy2 />} />
 
                   <Route path="/vaccinecard" element={<VaccineCard />} />
                 </>

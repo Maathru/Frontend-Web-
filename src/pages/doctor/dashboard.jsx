@@ -32,7 +32,7 @@ const doctorCards = [
 
 const NextClinic = ({ clinicId, clinicName, date, startTime, endTime }) => {
   return (
-    <div className="mb-5 w-full h-24 px-5 rounded-lg bg-light-blogcard dark:dark-blogcard flex items-center justify-between">
+    <div className="mb-5 w-full h-24 px-5 rounded-lg bg-light-blogcard dark:bg-dark-blogcard flex items-center justify-between">
       <p className="text-lg">
         {`Clinic ${clinicId}: ${clinicName} on `}
         <b>{date}</b> {`at `}
@@ -115,25 +115,25 @@ const doctorDashboard = () => {
           {/* display next 3 clinics */}
           <div className="w-8/12">
             <NextClinic
-              clinicId={"CL04"}
-              clinicName={"bla bla"}
-              date={"05/08/2024"}
-              startTime={"9.00AM"}
-              endTime={"12.00PM"}
+              clinicId={"C/04/Nu"}
+              clinicName={"Growth Check"}
+              date={"01/08/2024"}
+              startTime={"10:00 AM"}
+              endTime={"12:00 PM"}
             />
             <NextClinic
-              clinicId={"CL04"}
-              clinicName={"bla bla"}
-              date={"05/08/2024"}
-              startTime={"9.00AM"}
-              endTime={"12.00PM"}
+              clinicId={"C/24/A"}
+              clinicName={"Dental Clinic"}
+              date={"01/08/2024"}
+              startTime={"01:00 PM"}
+              endTime={"02:00 PM"}
             />
             <NextClinic
-              clinicId={"CL04"}
-              clinicName={"bla bla"}
-              date={"05/08/2024"}
-              startTime={"9.00AM"}
-              endTime={"12.00PM"}
+              clinicId={"C/45/P"}
+              clinicName={"Diabetics Clinic"}
+              date={"01/08/2024"}
+              startTime={"02:00 PM"}
+              endTime={"04:00 PM"}
             />
           </div>
         </div>
