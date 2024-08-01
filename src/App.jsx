@@ -55,6 +55,7 @@ import getTheme from "./theme.js";
 import VaccineCard from "./pages/vaccinecard/vaccinecard";
 import Nav from "./components/nav";
 import { useDarkMode } from "./context/darkModeContext";
+import SystemAnalytics from "./pages/admin/systemAnalytics.jsx";
 
 function App() {
   const { toggleDarkMode } = useDarkMode();
@@ -133,6 +134,7 @@ function App() {
                   <Route path="/users" element={<ManageUsers />} />
                   <Route path="/clinics" element={<ManageClinics />} />
                   <Route path="/regions" element={<ManageRegions />} />
+                  <Route path="/systemAnalytics" element={<SystemAnalytics />} />
                 </>
               )}
 
