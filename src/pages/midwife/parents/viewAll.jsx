@@ -103,6 +103,10 @@ const viewAllParents = () => {
     fetchParentListForMidwife();
   }, []);
 
+  const handleRowClick = (params) => {
+    navigate(`/pregnancy/1`);
+  };
+
   return (
     <div className="content-container">
       <Heading title={"Parent Details"} />
@@ -125,6 +129,7 @@ const viewAllParents = () => {
             }
             disableRowSelectionOnClick
             slots={{ toolbar: TableSearch }}
+            onRowClick={handleRowClick}
           />
         </div>
       </div>

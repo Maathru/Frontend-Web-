@@ -155,7 +155,7 @@ const manageClinics = () => {
     <div className="content-container">
       <Heading title={t("title")} />
 
-      <Search placeholder={t("search")} />
+      {/* <Search placeholder={t("search")} /> */}
       <div className="mt-12">
         <Typography variant="h4">{t("subtitle1")}</Typography>
         <ClinicAddPopup isOpen={isOpen} setIsOpen={setIsOpen} />
@@ -164,7 +164,7 @@ const manageClinics = () => {
           <div className="w-6/12">
             <Calendar
               highlightDates={dates}
-              highlightColor="#ffcc00"
+              highlightColor="#45075c"
               onDayClick={onDayClick}
               onMonthChange={onMonthChange}
             />
@@ -172,7 +172,7 @@ const manageClinics = () => {
           <div className="shadow-md p-5 w-6/12 h-fit">
             <div className="flex justify-between">
               <Typography variant="h6">{t("subtitle1.1")}</Typography>
-              <Button>{t("viewBtn")}</Button>
+              {/* <Button>{t("viewBtn")}</Button> */}
             </div>
             <div style={{ height: "100%", width: "100%" }}>
               <DataGrid

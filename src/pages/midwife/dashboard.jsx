@@ -262,7 +262,7 @@ const dashboard = () => {
                 new Date(2024, 7, 5),
                 new Date(2024, 7, 8),
               ]}
-              highlightColor="#ffcc00"
+              highlightColor="#45075c"
               onDayClick={handleDayClick}
             />
           </div>
@@ -278,13 +278,13 @@ const dashboard = () => {
             </div>
             <div className="bg-[#6e00961c] dark:bg-dark-background w-full p-5 rounded-md flex justify-between items-center">
               <p className="text-lg">
-                Your Next Home Visits on: <span>28/08/2024</span>
+                Your Next Home Visits on: <span>05/08/2024</span>
               </p>
               <Button className="bg-footer-purple">View Home Visits</Button>
             </div>
             <div className="bg-[#6e00961c] dark:bg-dark-background w-full p-5 rounded-md flex justify-between items-center">
               <p className="text-lg">
-                Next MOH Clinic on: <span>28/08/2024</span>
+                Your Next Home Visits on: <span>08/08/2024</span>
               </p>
               <Button className="bg-footer-purple">View MOH Clinics</Button>
             </div>
