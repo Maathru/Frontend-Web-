@@ -88,7 +88,6 @@ const ClinicAddPopup = ({ isOpen, setIsOpen }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setFormData({ ...formData, doctors: assignedDoctors });
 
     const validationErrors = validate();
 
@@ -97,7 +96,7 @@ const ClinicAddPopup = ({ isOpen, setIsOpen }) => {
       return;
     }
 
-    if (!assignedDoctors) {
+    if (!formData.doctors.length) {
       Toast("Please select doctors", errorType.ERROR);
       return;
     }
@@ -258,7 +257,11 @@ const ClinicAddPopup = ({ isOpen, setIsOpen }) => {
             <FormControl size="small">
               <InputLabel>Select the Region</InputLabel>
 
-              <Select name="region" onChange={handleInputChange}>
+              <Select
+                name="region"
+                value={formData.region || ""}
+                onChange={handleInputChange}
+              >
                 {regions.length > 0 ? (
                   regions.map((r) => (
                     <MenuItem key={r.regionId} value={r.regionId || ""}>
@@ -273,8 +276,10 @@ const ClinicAddPopup = ({ isOpen, setIsOpen }) => {
 
             <MultipleSelectChip
               users={doctors}
-              personName={assignedDoctors}
-              setPersonName={setAssignedDoctors}
+              personName={formData.doctors}
+              setPersonName={(val) =>
+                setFormData({ ...formData, doctors: val })
+              }
             />
 
             <TextField
@@ -282,6 +287,7 @@ const ClinicAddPopup = ({ isOpen, setIsOpen }) => {
               name="other"
               size="small"
               label="Other"
+              value={formData.other}
               onChange={handleInputChange}
               error={!!errors.other}
               helperText={errors.other || ""}
