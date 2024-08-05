@@ -1,13 +1,9 @@
 FROM node:20-alpine
-
 WORKDIR /app
-
-COPY package*.json .
-
-RUN yarn install
-
+COPY package.json .
+RUN npm install
+RUN npm i -g serve
 COPY . .
-
-EXPOSE 5173
-
-CMD [ "yarn" , "dev" ]
+RUN npm run build
+EXPOSE 3000
+CMD [ "serve", "-s", "dist" ]
