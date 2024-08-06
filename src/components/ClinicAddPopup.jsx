@@ -26,20 +26,18 @@ const formatDisplayName = (value) => {
     .join(" ");
 };
 
-const ClinicAddPopup = ({ isOpen, setIsOpen }) => {
+const ClinicAddPopup = ({
+  isOpen,
+  setIsOpen,
+  setIsFetch,
+  isDisabled,
+  formData,
+  setFormData,
+  setIsDisabled,
+}) => {
   const [errors, setErrors] = useState({});
   const [regions, setRegions] = useState([]);
   const [doctors, setDoctors] = useState([]);
-  const [assignedDoctors, setAssignedDoctors] = useState([]);
-  const [formData, setFormData] = useState({
-    name: "",
-    region: "",
-    date: "",
-    startTime: "",
-    endTime: "",
-    doctors: [],
-    other: "",
-  });
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -120,6 +118,7 @@ const ClinicAddPopup = ({ isOpen, setIsOpen }) => {
       });
       Toast(response, errorType.SUCCESS);
       setIsOpen(false);
+      setIsFetch((prev) => !prev);
     } catch (error) {
       console.log(error.message);
 
@@ -174,6 +173,16 @@ const ClinicAddPopup = ({ isOpen, setIsOpen }) => {
       onOpen={() => setIsOpen(true)}
       onClose={() => {
         setIsOpen(false);
+        setFormData({
+          name: "",
+          region: "",
+          date: "",
+          startTime: "",
+          endTime: "",
+          doctors: [],
+          other: "",
+        });
+        setIsDisabled(false);
       }}
       trigger={
         <p className="text-sm text-footer-purple hover:cursor-pointer">
@@ -197,11 +206,16 @@ const ClinicAddPopup = ({ isOpen, setIsOpen }) => {
           </div>
           <div>
             <p className="text-lg font-semibold text-center pb-5">
-              Add New Clinic
+              {formData.clinicId
+                ? isDisabled
+                  ? `Clinic Id-${formData.clinicId}`
+                  : `Edit Clinic Id-${formData.clinicId}`
+                : "Add New Clinic Schedule"}
             </p>
           </div>
           <div className="px-10 flex flex-col gap-6 pb-6">
             <TextField
+              disabled={isDisabled}
               required
               size="small"
               name="name"
@@ -214,6 +228,7 @@ const ClinicAddPopup = ({ isOpen, setIsOpen }) => {
 
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DatePicker
+                disabled={isDisabled}
                 required
                 size="small"
                 name="date"
@@ -221,7 +236,8 @@ const ClinicAddPopup = ({ isOpen, setIsOpen }) => {
                 InputLabelProps={{ shrink: true }}
                 value={formData.date ? dayjs(formData.date) : null}
                 onChange={(e) => {
-                  formData.date = e;
+                  const selectedDate = dayjs(e);
+                  formData.date = selectedDate.add(1, "day").toDate();
                 }}
                 slotProps={{ textField: { size: "small" } }}
               />
@@ -229,6 +245,7 @@ const ClinicAddPopup = ({ isOpen, setIsOpen }) => {
 
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <TimePicker
+                disabled={isDisabled}
                 required
                 label="Start Time"
                 name="startTime"
@@ -242,6 +259,7 @@ const ClinicAddPopup = ({ isOpen, setIsOpen }) => {
             </LocalizationProvider>
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <TimePicker
+                disabled={isDisabled}
                 required
                 label="End Time"
                 name="endTime"
@@ -258,13 +276,14 @@ const ClinicAddPopup = ({ isOpen, setIsOpen }) => {
               <InputLabel>Select the Region</InputLabel>
 
               <Select
+                disabled={isDisabled}
                 name="region"
                 value={formData.region || ""}
                 onChange={handleInputChange}
               >
                 {regions.length > 0 ? (
-                  regions.map((r) => (
-                    <MenuItem key={r.regionId} value={r.regionId || ""}>
+                  regions.map((r, index) => (
+                    <MenuItem key={index} value={r.regionId || ""}>
                       {formatDisplayName(r.regionName)}
                     </MenuItem>
                   ))
@@ -275,6 +294,7 @@ const ClinicAddPopup = ({ isOpen, setIsOpen }) => {
             </FormControl>
 
             <MultipleSelectChip
+              isDisabled={isDisabled}
               users={doctors}
               personName={formData.doctors}
               setPersonName={(val) =>
@@ -283,6 +303,7 @@ const ClinicAddPopup = ({ isOpen, setIsOpen }) => {
             />
 
             <TextField
+              disabled={isDisabled}
               type="text"
               name="other"
               size="small"
@@ -292,9 +313,16 @@ const ClinicAddPopup = ({ isOpen, setIsOpen }) => {
               error={!!errors.other}
               helperText={errors.other || ""}
             ></TextField>
-            <Button onClick={handleSubmit} className="px-10">
-              Submit
-            </Button>
+
+            {isDisabled ? (
+              <Button onClick={() => setIsDisabled(false)} className="px-10">
+                Edit
+              </Button>
+            ) : (
+              <Button onClick={handleSubmit} className="px-10">
+                Submit
+              </Button>
+            )}
           </div>
         </div>
       )}

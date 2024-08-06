@@ -93,10 +93,21 @@ function QuickSearchToolbar() {
 
 const manageClinics = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isFetch, setIsFetch] = useState(false);
+  const [isDisabled, setIsDisabled] = useState(false);
   const [date, setDate] = useState(new Date());
   const [month, setMonth] = useState(new Date());
   const [dates, setDates] = useState([]);
   const [rows, setRows] = useState([]);
+  const [formData, setFormData] = useState({
+    name: "",
+    region: "",
+    date: "",
+    startTime: "",
+    endTime: "",
+    doctors: [],
+    other: "",
+  });
   const { t } = useTranslation("manageClinics");
 
   const onMonthChange = (day) => {
@@ -131,7 +142,7 @@ const manageClinics = () => {
     };
 
     fetchClinicsByDate();
-  }, [date, isOpen]);
+  }, [date, isFetch]);
 
   useEffect(() => {
     const fetchClinicsForGivenMonth = async () => {
@@ -149,13 +160,19 @@ const manageClinics = () => {
     };
 
     fetchClinicsForGivenMonth();
-  }, [month, isOpen]);
+  }, [month, isFetch]);
 
   const fetchClinicData = async (clinicId) => {
     try {
       const response = await ClinicService.getClinic(clinicId);
 
-      console.log(response);
+      setFormData({
+        ...response,
+        startTime: new Date(`${response.date} ${response.startTime}`),
+        endTime: new Date(`${response.date} ${response.endTime}`),
+      });
+      setIsOpen(true);
+      setIsDisabled(true);
     } catch (error) {
       Toast(error.response.data || "Unauthorized", errorType.ERROR);
       console.log(error.response.data);
@@ -172,7 +189,15 @@ const manageClinics = () => {
 
       <div className="mt-12">
         <Typography variant="h4">{t("subtitle1")}</Typography>
-        <ClinicAddPopup isOpen={isOpen} setIsOpen={setIsOpen} />
+        <ClinicAddPopup
+          isOpen={isOpen}
+          setIsOpen={setIsOpen}
+          setIsFetch={setIsFetch}
+          isDisabled={isDisabled}
+          setIsDisabled={setIsDisabled}
+          formData={formData}
+          setFormData={setFormData}
+        />
 
         <div className="flex">
           <div className="w-6/12">
