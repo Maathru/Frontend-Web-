@@ -67,6 +67,7 @@ export const navConfig = {
         { name: "Clinic Schedules", path: "/clinics" },
         { name: "Health Statistics", path: "/statistics" },
         { name: "Manage Regions", path: "/regions" },
+        { name: "Manage Drugs", path: "/drugs" },
       ],
     },
     { name: "System Analytics", path: "/analytics" },
