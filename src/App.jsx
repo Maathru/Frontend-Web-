@@ -9,8 +9,7 @@ import WriteBlog2 from "./pages/blog/writeblog2";
 import WriteBlog3 from "./pages/blog/writeblog3";
 import WriteBlog4 from "./pages/blog/writeblog4";
 import Landing from "./pages/landing";
-import Drug from "./pages/drug";
-import DrugAdd from "./pages/drugAdd";
+import Drug from "./pages/admin/manageDrugs";
 import DoctorDashboard from "./pages/doctor/dashboard";
 import Clinic from "./pages/doctor/clinic";
 import ViewClinics from "./pages/doctor/viewClinics";
@@ -135,6 +134,7 @@ function App() {
                   <Route path="/clinics" element={<ManageClinics />} />
                   <Route path="/regions" element={<ManageRegions />} />
                   <Route path="/analytics" element={<SystemAnalytics />} />
+                  <Route path="/drugs" element={<Drug />} />
                 </>
               )}
 
@@ -148,8 +148,7 @@ function App() {
               {userDetails.role === role.DOCTOR && (
                 <>
                   <Route path="/" element={<DoctorDashboard />} />
-                  <Route path="/drugs" element={<Drug />} />
-                  <Route path="/drugs/add" element={<DrugAdd />} />
+                  
 
                   <Route path="/midwife" element={<Midwife />} />
 

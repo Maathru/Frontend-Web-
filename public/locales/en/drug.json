@@ -1,4 +1,13 @@
 {
-   "title": "Drug Management",
-   "add": "Add New"
+  "title": "Drug Management",
+  "add": "Add New",
+  "submit": "Submit Details",
+  "brand": "Brand Name",
+  "batch": "Batch Number",
+  "strength": "Strength",
+  "manufactured": "Manufactured Date",
+  "expired": "Expiration Date",
+  "quantity": "Quantity",
+  "composition": "Composition",
+  "dose": "Recommended Dose"
 }
