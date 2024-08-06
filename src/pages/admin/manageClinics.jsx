@@ -93,10 +93,21 @@ function QuickSearchToolbar() {
 
 const manageClinics = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isFetch, setIsFetch] = useState(false);
+  const [isDisabled, setIsDisabled] = useState(false);
   const [date, setDate] = useState(new Date());
   const [month, setMonth] = useState(new Date());
   const [dates, setDates] = useState([]);
   const [rows, setRows] = useState([]);
+  const [formData, setFormData] = useState({
+    name: "",
+    region: "",
+    date: "",
+    startTime: "",
+    endTime: "",
+    doctors: [],
+    other: "",
+  });
   const { t } = useTranslation("manageClinics");
 
   const onMonthChange = (day) => {
@@ -131,7 +142,7 @@ const manageClinics = () => {
     };
 
     fetchClinicsByDate();
-  }, [date, isOpen]);
+  }, [date, isFetch]);
 
   useEffect(() => {
     const fetchClinicsForGivenMonth = async () => {
@@ -149,16 +160,44 @@ const manageClinics = () => {
     };
 
     fetchClinicsForGivenMonth();
-  }, [month, isOpen]);
+  }, [month, isFetch]);
+
+  const fetchClinicData = async (clinicId) => {
+    try {
+      const response = await ClinicService.getClinic(clinicId);
+
+      setFormData({
+        ...response,
+        startTime: new Date(`${response.date} ${response.startTime}`),
+        endTime: new Date(`${response.date} ${response.endTime}`),
+      });
+      setIsOpen(true);
+      setIsDisabled(true);
+    } catch (error) {
+      Toast(error.response.data || "Unauthorized", errorType.ERROR);
+      console.log(error.response.data);
+    }
+  };
+
+  const handleRowClick = async (params) => {
+    await fetchClinicData(params.row.id);
+  };
 
   return (
     <div className="content-container">
       <Heading title={t("title")} />
 
-      {/* <Search placeholder={t("search")} /> */}
       <div className="mt-12">
         <Typography variant="h4">{t("subtitle1")}</Typography>
-        <ClinicAddPopup isOpen={isOpen} setIsOpen={setIsOpen} />
+        <ClinicAddPopup
+          isOpen={isOpen}
+          setIsOpen={setIsOpen}
+          setIsFetch={setIsFetch}
+          isDisabled={isDisabled}
+          setIsDisabled={setIsDisabled}
+          formData={formData}
+          setFormData={setFormData}
+        />
 
         <div className="flex">
           <div className="w-6/12">
@@ -172,7 +211,6 @@ const manageClinics = () => {
           <div className="shadow-md p-5 w-6/12 h-fit">
             <div className="flex justify-between">
               <Typography variant="h6">{t("subtitle1.1")}</Typography>
-              {/* <Button>{t("viewBtn")}</Button> */}
             </div>
             <div style={{ height: "100%", width: "100%" }}>
               <DataGrid
@@ -186,6 +224,7 @@ const manageClinics = () => {
                   },
                 }}
                 pageSizeOptions={[5]}
+                onRowClick={handleRowClick}
               ></DataGrid>
             </div>
           </div>
