@@ -41,7 +41,7 @@ import NotFound from "./pages/notFound";
 import { userData } from "./context/userAuth";
 import ScrollToTop from "./components/ScrollToTop";
 import AdminDashboard from "./pages/admin/adminDashboard";
-import ManageUsers from "./pages/admin/manageusers";
+import ManageUsers from "./pages/admin/manageUsers";
 import ManageClinics from "./pages/admin/manageClinics";
 import ManageRegions from "./pages/admin/manageRegions";
 import ManageBlogs from "./pages/admin/manageBlogs";

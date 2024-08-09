@@ -1,8 +1,7 @@
 import Popup from "reactjs-popup";
 import { Button } from "./ui/button";
 import { HiOutlinePlusSm } from "react-icons/hi";
-import { TextField } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { TextField, Typography } from "@mui/material";
 import { useState } from "react";
 import { IoIosCloseCircleOutline } from "react-icons/io";
 import { errorType, Toast } from "./toast";
@@ -167,7 +166,10 @@ const DrugAddPopup = ({
               onClick={close}
             />
           </div>
-          <div className="px-10 flex flex-col gap-6 pb-6">
+          <Typography variant="h5" align="center">
+            Add New Drug
+          </Typography>
+          <div className="px-10 flex flex-col gap-6 pb-6 h-[500px] overflow-y-scroll">
             <TextField
               required
               label={brandLabel}
@@ -260,7 +262,7 @@ const DrugAddPopup = ({
             />
 
             <Button
-              className="w-1/2 self-center bg-[#620084] mt-5"
+              className="w-1/2 self-center bg-footer-purple mt-5"
               onClick={handleSubmit}
             >
               {submitButton}
