@@ -112,7 +112,7 @@ const UserAddPopup = ({
                 variant="standard"
                 //   value={formData.firstName}
                 onChange={handleInputChange}
-                error={errors.firstName ? true : false}
+                error={!!errors.firstName}
                 helperText={errors.firstName ? errors.firstName : ""}
               />
               <TextField
@@ -123,7 +123,7 @@ const UserAddPopup = ({
                 variant="standard"
                 //   value={formData.lastName}
                 onChange={handleInputChange}
-                error={errors.lastName ? true : false}
+                error={!!errors.lastName}
                 helperText={errors.lastName ? errors.lastName : ""}
               />
             </div>
@@ -136,7 +136,7 @@ const UserAddPopup = ({
               variant="standard"
               //   value={formData.email}
               onChange={handleInputChange}
-              error={errors.email ? true : false}
+              error={!!errors.email}
               helperText={errors.email ? errors.email : ""}
             />
             <TextField
@@ -147,7 +147,7 @@ const UserAddPopup = ({
               variant="standard"
               //   value={formData.phone}
               onChange={handleInputChange}
-              error={errors.phone ? true : false}
+              error={!!errors.phone}
               helperText={errors.phone ? errors.phone : ""}
             />
             <TextField
@@ -158,7 +158,7 @@ const UserAddPopup = ({
               variant="standard"
               //   value={formData.nic}
               onChange={handleInputChange}
-              error={errors.nic ? true : false}
+              error={!!errors.nic}
               helperText={errors.nic ? errors.nic : ""}
             />
             <FormControl required>
@@ -178,7 +178,7 @@ const UserAddPopup = ({
               fullWidth
               //   value={formData.address1}
               onChange={handleInputChange}
-              error={errors.address1 ? true : false}
+              error={!!errors.address1}
               helperText={errors.address1 ? errors.address1 : ""}
             />
             <div className="flex gap-8">
@@ -190,7 +190,7 @@ const UserAddPopup = ({
                 fullWidth
                 //   value={formData.street}
                 onChange={handleInputChange}
-                error={errors.street ? true : false}
+                error={!!errors.street}
                 helperText={errors.street ? errors.street : ""}
               />
 
@@ -202,7 +202,7 @@ const UserAddPopup = ({
                 fullWidth
                 //   value={formData.city}
                 onChange={handleInputChange}
-                error={errors.city ? true : false}
+                error={!!errors.city}
                 helperText={errors.city ? errors.city : ""}
               />
             </div>
