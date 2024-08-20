@@ -21,14 +21,16 @@ class RegionService {
     }
   }
 
-//   static async getMidwives() {
-//     try {
-//       const response = await axiosInstance.get("/employee");
-//       return response.data;
-//     } catch (error) {
-//       throw error;
-//     }
-//   }
+  static async deleteRegion(id) {
+    try {
+      const response = await axiosInstance.delete(`/region/${id}`);
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  
 }
 
 export default RegionService;
