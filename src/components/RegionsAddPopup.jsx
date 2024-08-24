@@ -15,14 +15,6 @@ import { errorType, Toast } from "./toast";
 import RegionService from "@/service/regionService";
 import EmployeeService from "@/service/employeeService";
 
-// const formatDisplayName = (value) => {
-//   return value
-//     .split("_")
-//     .map((word) => word.toLowerCase())
-//     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-//     .join(" ");
-// };
-
 const RegionAddPopup = ({
   isOpen,
   setIsOpen,
@@ -30,15 +22,15 @@ const RegionAddPopup = ({
   regionName,
   population,
   midwife,
+  setIsSaved,
+  formData,
+  setFormData,
+  isDisabled,
+  setIsDisabled,
 }) => {
   useTitle("Add Region");
   const [errors, setErrors] = useState({});
   const [midwives, setMidwives] = useState([]);
-  const [formData, setFormData] = useState({
-    regionName: "",
-    midwife: "",
-    population: "",
-  });
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -90,6 +82,7 @@ const RegionAddPopup = ({
       });
       Toast(response, errorType.SUCCESS);
       setIsOpen(false);
+      setIsSaved((pre) => !pre);
     } catch (error) {
       console.log(error.message);
 
@@ -114,8 +107,7 @@ const RegionAddPopup = ({
   useEffect(() => {
     const fetchMidwives = async () => {
       try {
-        const response = await EmployeeService.getMidwives();
-        console.log(response);
+        const response = await RegionService.getMidwives();
         setMidwives(response);
       } catch (error) {
         Toast(error.response.data || "Unauthorized", errorType.ERROR);
@@ -140,7 +132,7 @@ const RegionAddPopup = ({
             population: "",
             midwife: "",
           });
-          // setBackendError("");
+          setIsDisabled(false);
         }}
         trigger={
           <Button className="bg-[#6F0096] h-10 flexbox items-center ">
@@ -165,12 +157,17 @@ const RegionAddPopup = ({
             </div>
             <div>
               <p className="text-lg font-semibold text-center pb-5">
-                Add New Region
+                {formData.regionId
+                  ? isDisabled
+                    ? `Region Id-${formData.regionId}`
+                    : `Edit Region Id-${formData.regionId}`
+                  : "Add New Region"}
               </p>
             </div>
 
             <div className="px-10 flex flex-col gap-6 pb-6">
               <TextField
+                disabled={isDisabled}
                 required
                 size="small"
                 name="regionName"
@@ -181,6 +178,7 @@ const RegionAddPopup = ({
                 helperText={errors.regionName || ""}
               ></TextField>
               <TextField
+                disabled={isDisabled}
                 required
                 size="small"
                 name="population"
@@ -195,6 +193,7 @@ const RegionAddPopup = ({
                 <InputLabel id="select-label">{midwife}</InputLabel>
 
                 <Select
+                  disabled={isDisabled}
                   id="select-label"
                   label={midwife}
                   name="midwife"
@@ -213,9 +212,15 @@ const RegionAddPopup = ({
                 </Select>
               </FormControl>
 
-              <Button className="px-10" onClick={handleSubmit}>
-                Submit
-              </Button>
+              {isDisabled ? (
+                <Button onClick={() => setIsDisabled(false)} className="px-10">
+                  Edit
+                </Button>
+              ) : (
+                <Button onClick={handleSubmit} className="px-10">
+                  Submit
+                </Button>
+              )}
             </div>
           </div>
         )}

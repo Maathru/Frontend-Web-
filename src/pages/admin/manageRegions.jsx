@@ -9,12 +9,22 @@ import RegionService from "@/service/regionService";
 import { errorType, Toast } from "@/components/toast";
 import { IconButton } from "@mui/material";
 import { HiOutlinePencilAlt, HiOutlineTrash } from "react-icons/hi";
+import DeleteConfirmationDialog from "@/components/deleteConfirmationDialog";
 
 const manageRegions = () => {
   useTitle("Regions");
-  const [rows, setRows] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
+  const [isSaved, setIsSaved] = useState(false);
   const [isDeleted, setIsDeleted] = useState(false);
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+  const [deleteId, setDeleteId] = useState(null);
+  const [isDisabled, setIsDisabled] = useState(false);
+  const [rows, setRows] = useState([]);
+  const [formData, setFormData] = useState({
+    regionName: "",
+    midwife: "",
+    population: "",
+  });
 
   useEffect(() => {
     const fetchRegions = async () => {
@@ -31,8 +41,10 @@ const manageRegions = () => {
       }
     };
 
-    fetchRegions();
-  }, [isOpen, isDeleted]);
+    return () => {
+      fetchRegions();
+    };
+  }, [isSaved, isDeleted]);
 
   const handleDelete = async (id) => {
     try {
@@ -44,6 +56,33 @@ const manageRegions = () => {
       const data = error.response.data;
       console.log(data);
       Toast(data || "Error occurred", errorType.ERROR);
+    }
+  };
+
+  const confirmDelete = (id) => {
+    setDeleteId(id);
+    setIsDeleteDialogOpen(true);
+  };
+
+  const closeDeleteDialog = () => {
+    setIsDeleteDialogOpen(false);
+    setDeleteId(null);
+  };
+
+  const handleRowClick = async (params) => {
+    await fetchRegionData(params.row.regionId);
+  };
+
+  const fetchRegionData = async (regionId) => {
+    try {
+      const response = await RegionService.getRegion(regionId);
+
+      setFormData(response);
+      setIsOpen(true);
+      setIsDisabled(true);
+    } catch (error) {
+      Toast(error.response.data || "Unauthorized", errorType.ERROR);
+      console.log(error.response.data);
     }
   };
 
@@ -97,7 +136,7 @@ const manageRegions = () => {
 
       renderCell: (params) => (
         <IconButton
-          onClick={() => handleDelete(params.row.regionId)}
+          onClick={() => confirmDelete(params.row.regionId)}
           aria-label="delete"
           size="small"
           sx={{
@@ -121,6 +160,11 @@ const manageRegions = () => {
         midwife={"Assign Midwife"}
         isOpen={isOpen}
         setIsOpen={setIsOpen}
+        setIsSaved={setIsSaved}
+        isDisabled={isDisabled}
+        setIsDisabled={setIsDisabled}
+        formData={formData}
+        setFormData={setFormData}
       />
       <div className="flex flex-col items-end">
         <div className="w-full f-full mb-12">
@@ -139,12 +183,19 @@ const manageRegions = () => {
             }
             disableRowSelectionOnClick
             slots={{ toolbar: TableSearch }}
+            onRowClick={handleRowClick}
           ></StripedDataGrid>
         </div>
       </div>
       <div>
         <img src={map} alt="" />
       </div>
+
+      <DeleteConfirmationDialog
+        isOpen={isDeleteDialogOpen}
+        onClose={closeDeleteDialog}
+        handleDelete={() => handleDelete(deleteId)}
+      />
     </div>
   );
 };

@@ -10,6 +10,15 @@ class RegionService {
     }
   }
 
+  static async getRegion(id) {
+    try {
+      const response = await axiosInstance.get(`/region/${id}`);
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  }
+
   static async addRegion(formData) {
     try {
       const response = await axiosInstance.post(`/region`, {
@@ -30,7 +39,14 @@ class RegionService {
     }
   }
 
-  
+  static async getMidwives() {
+    try {
+      const response = await axiosInstance.get(`/region/midwife`);
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  }
 }
 
 export default RegionService;
