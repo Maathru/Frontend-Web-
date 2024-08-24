@@ -141,7 +141,9 @@ const manageClinics = () => {
       }
     };
 
-    fetchClinicsByDate();
+    return () => {
+      fetchClinicsByDate();
+    };
   }, [date, isFetch]);
 
   useEffect(() => {
@@ -159,7 +161,9 @@ const manageClinics = () => {
       }
     };
 
-    fetchClinicsForGivenMonth();
+    return () => {
+      fetchClinicsForGivenMonth();
+    };
   }, [month, isFetch]);
 
   const fetchClinicData = async (clinicId) => {

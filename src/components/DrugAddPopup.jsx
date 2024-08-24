@@ -35,7 +35,6 @@ const DrugAddPopup = ({
     composition: "",
   });
   const [errors, setErrors] = useState({});
-  //   const [isOpen, setIsOpen] = useState(false);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;

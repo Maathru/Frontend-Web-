@@ -44,7 +44,9 @@ function EditQuestion() {
       }
     };
 
-    fetchQuestion();
+    return () => {
+      fetchQuestion();
+    };
   }, [questionId]);
 
   const handleKeywordChange = (keyword) => {
@@ -88,7 +90,7 @@ function EditQuestion() {
     } catch (error) {
       const data = error.response?.data;
       console.log(data);
-  
+
       if (data) {
         if (Array.isArray(data)) {
           const newErrors = {};

@@ -77,10 +77,12 @@ const Eligible = () => {
       }
     };
 
-    const obj1 = initiateFields();
-    const obj2 = getFromLocalStorage();
-    fetchEligibleInfo();
-    setFormObject({ ...formObject, ...obj1, ...obj2 });
+    return () => {
+      const obj1 = initiateFields();
+      const obj2 = getFromLocalStorage();
+      fetchEligibleInfo();
+      setFormObject({ ...formObject, ...obj1, ...obj2 });
+    };
   }, []);
 
   const { t } = useTranslation("eligible1");
