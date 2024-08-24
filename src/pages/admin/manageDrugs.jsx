@@ -1,7 +1,4 @@
-import {
-  HiOutlinePencilAlt,
-  HiOutlineTrash,
-} from "react-icons/hi";
+import { HiOutlinePencilAlt, HiOutlineTrash } from "react-icons/hi";
 import { Chip, IconButton } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { useEffect, useState } from "react";
@@ -21,7 +18,6 @@ const transformDate = (params) => {
   targetDate.setDate(31);
   return targetDate.toISOString().split("T")[0];
 };
-
 
 const columns = [
   {
@@ -103,7 +99,6 @@ const Drug = () => {
   const { t } = useTranslation("drug");
   const [isOpen, setIsOpen] = useState(false);
 
-
   useEffect(() => {
     const fetchDrugs = async () => {
       try {
@@ -118,14 +113,16 @@ const Drug = () => {
       }
     };
 
-    fetchDrugs();
+    return () => {
+      fetchDrugs();
+    };
   }, [isOpen]);
 
   return (
     <div className="p-12 pt-8 content-container">
       <div className="flex justify-between mb-8">
         <Heading title={t("title")} />
-        
+
         <DrugAddPopup
           addButton={t("add")}
           brandLabel={t("brand")}
@@ -137,7 +134,7 @@ const Drug = () => {
           manufactureLabel={t("manufactured")}
           expiryLabel={t("expired")}
           submitButton={t("submit")}
-          isOpen={isOpen} 
+          isOpen={isOpen}
           setIsOpen={setIsOpen}
         />
       </div>

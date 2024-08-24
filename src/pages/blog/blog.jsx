@@ -54,7 +54,10 @@ const blog = () => {
         }
       }
     };
-    fetchBlogs();
+
+    return () => {
+      fetchBlogs();
+    };
   }, []);
 
   return (

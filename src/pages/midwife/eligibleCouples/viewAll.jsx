@@ -122,7 +122,9 @@ const eligibleCouples = () => {
       }
     };
 
-    fetchEligibleListForMidwife();
+    return () => {
+      fetchEligibleListForMidwife();
+    };
   }, []);
 
   const handleRowClick = (params) => {

@@ -161,10 +161,12 @@ const ClinicAddPopup = ({
       }
     };
 
-    if (isOpen) {
-      fetchRegions();
-      fetchDoctors();
-    }
+    return () => {
+      if (isOpen) {
+        fetchRegions();
+        fetchDoctors();
+      }
+    };
   }, [isOpen]);
 
   return (

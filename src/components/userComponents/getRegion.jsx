@@ -68,10 +68,11 @@ const GetRegion = ({
         console.log(error.response.data);
       }
     };
-
-    if (province && district && area) {
-      fetchRegions();
-    }
+    return () => {
+      if (province && district && area) {
+        fetchRegions();
+      }
+    };
   }, [province, district, area]);
 
   const availableDistricts = province ? mohData.districts[province] || [] : [];

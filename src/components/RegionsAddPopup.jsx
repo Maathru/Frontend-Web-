@@ -115,9 +115,11 @@ const RegionAddPopup = ({
       }
     };
 
-    if (isOpen) {
-      fetchMidwives();
-    }
+    return () => {
+      if (isOpen) {
+        fetchMidwives();
+      }
+    };
   }, [isOpen]);
 
   return (

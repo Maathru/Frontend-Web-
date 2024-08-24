@@ -239,7 +239,9 @@ const addCouples = () => {
       }
     };
 
-    fetchEligibleInfoForMidwife();
+    return () => {
+      fetchEligibleInfoForMidwife();
+    };
   }, []);
 
   const handleSubmit = async (e) => {

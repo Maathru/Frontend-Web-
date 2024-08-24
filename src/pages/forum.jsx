@@ -55,7 +55,9 @@ const Forum = () => {
       }
     };
 
-    fetchQuestions();
+    return () => {
+      fetchQuestions();
+    };
   }, []);
 
   const handleAsk = (e) => {
