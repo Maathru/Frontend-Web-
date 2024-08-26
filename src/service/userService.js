@@ -34,6 +34,16 @@ class UserService {
     }
   }
 
+  //By admin
+  static async getAdminDashboardData() {
+    try {
+      const response = await axiosInstance.get(`/user/dashboard`);
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  }
+
   // By midwife
   static async getUserIdByEmail(email) {
     try {
