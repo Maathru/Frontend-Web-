@@ -30,7 +30,6 @@ const manageRegions = () => {
     const fetchRegions = async () => {
       try {
         const response = await RegionService.getRegions();
-        console.log(response);
         setRows(response);
       } catch (error) {
         console.log(error.message);
@@ -69,8 +68,12 @@ const manageRegions = () => {
     setDeleteId(null);
   };
 
-  const handleRowClick = async (params) => {
-    await fetchRegionData(params.row.regionId);
+  const handleCellClick = async (params) => {
+    if (params.field === "delete") {
+      return;
+    }
+
+    await fetchRegionData(params.id);
   };
 
   const fetchRegionData = async (regionId) => {
@@ -183,7 +186,7 @@ const manageRegions = () => {
             }
             disableRowSelectionOnClick
             slots={{ toolbar: TableSearch }}
-            onRowClick={handleRowClick}
+            onCellClick={handleCellClick}
           ></StripedDataGrid>
         </div>
       </div>
