@@ -96,11 +96,6 @@ const manageRegions = () => {
       width: 90,
       headerClassName: "bold",
     },
-    // {
-    //   field: "number",
-    //   headerName: "Region Number",
-    //   flex: 1,
-    // },
     {
       field: "regionName",
       headerName: "Region Name",
@@ -120,7 +115,7 @@ const manageRegions = () => {
       field: "edit",
       headerName: "",
       flex: 0.1,
-      renderCell: (params) => (
+      renderCell: () => (
         <IconButton
           aria-label="delete"
           size="small"
@@ -154,7 +149,7 @@ const manageRegions = () => {
 
   return (
     <div className="content-container">
-      <Heading title={"Manage Divisions"} />
+      <Heading title={"Manage Regions"} />
 
       <RegionAddPopup
         addButton={"Add New Region"}

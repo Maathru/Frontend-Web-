@@ -1,16 +1,5 @@
-import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
-import {
-  HiOutlinePencilAlt,
-  HiOutlinePlusSm,
-  HiOutlineTrash,
-} from "react-icons/hi";
-import { styled } from "@mui/material/styles";
-import {
-  DataGrid,
-  GridToolbarQuickFilter,
-  gridClasses,
-} from "@mui/x-data-grid";
+import { HiOutlinePencilAlt, HiOutlineTrash } from "react-icons/hi";
 import { Box, IconButton } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import Heading from "@/components/ui/heading";
@@ -37,23 +26,6 @@ const FormattedDateTime = (params) => {
   return `${readableTime} at ${readableDate}`;
 };
 
-// function QuickSearchToolbar() {
-//   const { t } = useTranslation("Manageusers");
-
-//   return (
-//     <Box
-//       sx={{
-//         display: "flex",
-//         justifyContent: "space-between",
-//         alignItems: "center",
-//       }}
-//     >
-//       <TableSearch />
-
-//     </Box>
-//   );
-// }
-
 const columns = [
   { field: "id", headerName: "User ID", width: 70 },
   { field: "name", headerName: "User Name", width: 130 },
@@ -77,7 +49,6 @@ const columns = [
     flex: 0.1,
     renderCell: (params) => (
       <IconButton
-        // onClick={() => handleDelete(params.row.id)}
         aria-label="delete"
         size="small"
         sx={{
@@ -94,7 +65,6 @@ const columns = [
     flex: 0.1,
     renderCell: (params) => (
       <IconButton
-        // onClick={() => handleEdit(params.row.id)}
         aria-label="delete"
         size="small"
         sx={{
