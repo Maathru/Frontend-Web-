@@ -10,6 +10,15 @@ class BlogService {
     }
   }
 
+  static async getPendingBlogs() {
+    try {
+      const response = await axiosInstance.get(`/blogs/pending`);
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  }
+
   static async addBlog(articleData) {
     try {
       const response = await axiosInstance.post(`/blogs`, {
@@ -30,16 +39,16 @@ class BlogService {
     }
   }
 
-//   static async getAllQuestionsWithPagination(offset, pageSize) {
-//     try {
-//       const response = await axiosInstance.get(
-//         `/question/pagination/${offset}/${pageSize}`
-//       );
-//       return response.data;
-//     } catch (error) {
-//       throw error;
-//     }
-//   }
+  //   static async getAllQuestionsWithPagination(offset, pageSize) {
+  //     try {
+  //       const response = await axiosInstance.get(
+  //         `/question/pagination/${offset}/${pageSize}`
+  //       );
+  //       return response.data;
+  //     } catch (error) {
+  //       throw error;
+  //     }
+  //   }
 }
 
 export default BlogService;
