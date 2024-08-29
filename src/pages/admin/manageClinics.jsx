@@ -1,25 +1,9 @@
 import { StripedDataGrid } from "@/components/StripedDataGrid";
-import { Button } from "@/components/ui/button";
 import Heading from "@/components/ui/heading";
-import {
-  Box,
-  Chip,
-  FormControl,
-  IconButton,
-  InputBase,
-  MenuItem,
-  Paper,
-  Select,
-  Switch,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { DataGrid, GridToolbarQuickFilter } from "@mui/x-data-grid";
-import { SearchIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 import ClinicAddPopup from "@/components/ClinicAddPopup";
-import Search from "@/components/Search";
-import { t } from "i18next";
 import { useTranslation } from "react-i18next";
 import ClinicService from "@/service/clinicService";
 import { errorType, Toast } from "@/components/toast";
@@ -46,22 +30,44 @@ const columns = [
 ];
 
 const columns2 = [
-  { field: "id", headerName: "Patient ID", width: 90 },
-  { field: "patient", headerName: "Patient Name", flex: 1 },
+  { field: "id", headerName: "Clinic ID", width: 90 },
+  { field: "name", headerName: "Clinic Name", flex: 1 },
   {
-    field: "action",
-    headerName: "Is Present",
+    field: "date",
+    headerName: "Date",
     flex: 1,
-    renderCell: () => {
-      return <Chip />;
-    },
+  },
+  {
+    field: "startTime",
+    headerName: "Start Time",
+    flex: 1,
+    valueFormatter: (params) => formatTime(params),
+  },
+  {
+    field: "endTime",
+    headerName: "End Time",
+    flex: 1,
+    valueFormatter: (params) => formatTime(params),
+  },
+  {
+    field: "region",
+    headerName: "Region",
+    flex: 1,
   },
 ];
 
-const rows2 = [
-  { id: 1, patient: "saumya", doctor: "saumya" },
-  { id: 2, patient: "saumya", doctor: "saumya" },
-];
+const formatTime = (timeString) => {
+  const [hours, minutes] = timeString.split(":");
+  const date = new Date();
+  date.setHours(hours);
+  date.setMinutes(minutes);
+
+  return date.toLocaleTimeString([], {
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: true,
+  });
+};
 
 function QuickSearchToolbar() {
   return (
@@ -99,6 +105,7 @@ const manageClinics = () => {
   const [month, setMonth] = useState(new Date());
   const [dates, setDates] = useState([]);
   const [rows, setRows] = useState([]);
+  const [rows2, setRows2] = useState([]);
   const [formData, setFormData] = useState({
     name: "",
     region: "",
@@ -123,7 +130,7 @@ const manageClinics = () => {
   };
 
   const stringArrayToDateArray = (array) => {
-    return array.map((dateString) => new Date(dateString));
+    return array.map((clinic) => new Date(clinic.date));
   };
 
   useEffect(() => {
@@ -153,6 +160,7 @@ const manageClinics = () => {
       try {
         const response = await ClinicService.getClinicsByMonth(isoDateString);
 
+        setRows2(response);
         const dateObjects = stringArrayToDateArray(response);
         setDates(dateObjects);
       } catch (error) {
@@ -235,9 +243,10 @@ const manageClinics = () => {
         </div>
       </div>
       <div>
-        <Typography variant="h4">{t("subtitle2")}</Typography>
+        {/* <Typography variant="h4">{t("subtitle2")}</Typography> */}
+        <Typography variant="h4">This Month clinics</Typography>
 
-        <Select
+        {/* <Select
           defaultValue={1}
           labelId="select-label"
           id="select"
@@ -251,7 +260,7 @@ const manageClinics = () => {
         <TextField
           type="date"
           sx={{ width: "300px", marginLeft: "30px" }}
-        ></TextField>
+        ></TextField> */}
 
         <div style={{ height: "100%", width: "100%" }}>
           <StripedDataGrid
@@ -268,6 +277,7 @@ const manageClinics = () => {
             }
             disableRowSelectionOnClick
             slots={{ toolbar: QuickSearchToolbar }}
+            onRowClick={handleRowClick}
           ></StripedDataGrid>
         </div>
       </div>
