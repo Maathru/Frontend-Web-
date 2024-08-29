@@ -142,22 +142,26 @@ const ClinicAddPopup = ({
 
   useEffect(() => {
     const fetchRegions = async () => {
-      try {
-        const response = await ClinicService.getRegions();
-        setRegions(response);
-      } catch (error) {
-        Toast(error.response.data || "Unauthorized", errorType.ERROR);
-        console.log(error.response.data);
+      if (!regions.length > 0) {
+        try {
+          const response = await ClinicService.getRegions();
+          setRegions(response);
+        } catch (error) {
+          Toast(error.response.data || "Unauthorized", errorType.ERROR);
+          console.log(error.response.data);
+        }
       }
     };
 
     const fetchDoctors = async () => {
-      try {
-        const response = await ClinicService.getDoctors();
-        setDoctors(response);
-      } catch (error) {
-        Toast(error.response.data || "Unauthorized", errorType.ERROR);
-        console.log(error.response.data);
+      if (!doctors.length > 0) {
+        try {
+          const response = await ClinicService.getDoctors();
+          setDoctors(response);
+        } catch (error) {
+          Toast(error.response.data || "Unauthorized", errorType.ERROR);
+          console.log(error.response.data);
+        }
       }
     };
 
