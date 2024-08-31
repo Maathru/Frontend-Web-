@@ -15,6 +15,7 @@ import Heading from "@/components/ui/heading";
 import { useTranslation } from "react-i18next";
 import { TextField } from "@mui/material";
 import { useTitle } from "@/hooks/useTitle";
+import LocationAddPopup from "@/components/LocationAddPopup";
 
 const Pregnancy1 = () => {
   useTitle("Pregnancy Card - Page 1");
@@ -192,18 +193,20 @@ const Pregnancy1 = () => {
                 onChange={(e) => setData("man", "name", e.target.value)}
               />
             </div>
-
-            <div className="grid grid-cols-3 gap-4 items-center mt-4 mx-14">
+            <div className="grid grid-cols-3 gap-4 items-center mt-4 mx-14 pr-3">
               <p>2. Address</p>
               <TextField
                 value={formObject.address || ""}
                 label="Enter Address"
                 variant="outlined"
-                className="w-96"
+                className="col-start-2 col-end-4"
                 onChange={(e) =>
                   setFormObject({ ...formObject, address: e.target.value })
                 }
               />
+            </div>
+            <div className="grid grid-cols-3 gap-4 items-center mt-4 mx-14 pr-3">
+              <LocationAddPopup />
             </div>
 
             <div className="grid grid-cols-3 gap-4 items-center mt-4 mx-14">
