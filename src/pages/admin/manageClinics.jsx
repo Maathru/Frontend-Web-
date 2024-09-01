@@ -7,7 +7,7 @@ import ClinicAddPopup from "@/components/ClinicAddPopup";
 import { useTranslation } from "react-i18next";
 import ClinicService from "@/service/clinicService";
 import { errorType, Toast } from "@/components/toast";
-import { Calendar } from "@/components/ui/calendar";
+import Calendar from "@/components/Calendar";
 
 const columns = [
   { field: "id", width: 20 },
@@ -101,8 +101,6 @@ const manageClinics = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isFetch, setIsFetch] = useState(false);
   const [isDisabled, setIsDisabled] = useState(false);
-  const [date, setDate] = useState(new Date());
-  const [month, setMonth] = useState(new Date());
   const [dates, setDates] = useState([]);
   const [rows, setRows] = useState([]);
   const [rows2, setRows2] = useState([]);
@@ -117,62 +115,45 @@ const manageClinics = () => {
   });
   const { t } = useTranslation("manageClinics");
 
-  const onMonthChange = (day) => {
-    const newDate = new Date(day);
-    newDate.setMonth(newDate.getMonth() + 1);
-    setMonth(newDate);
-  };
-
-  const onDayClick = (day) => {
-    const newDate = new Date(day);
-    newDate.setDate(newDate.getDate() + 1);
-    setDate(newDate);
-  };
-
   const stringArrayToDateArray = (array) => {
-    return array.map((clinic) => new Date(clinic.date));
+    return array.map((clinic) => clinic.date);
   };
 
   useEffect(() => {
-    const fetchClinicsByDate = async () => {
-      setRows([]);
-
-      const isoDateString = date.toISOString().split("T")[0];
-
-      try {
-        const response = await ClinicService.getClinicsByDate(isoDateString);
-        setRows(response);
-      } catch (error) {
-        Toast(error.response.data || "Unauthorized", errorType.ERROR);
-        console.log(error.response.data);
-      }
-    };
-
     return () => {
-      fetchClinicsByDate();
+      fetchClinicsByDate(new Date().toISOString().split("T")[0]);
     };
-  }, [date, isFetch]);
+  }, [isFetch]);
 
   useEffect(() => {
-    const fetchClinicsForGivenMonth = async () => {
-      const isoDateString = month.toISOString().split("T")[0];
-
-      try {
-        const response = await ClinicService.getClinicsByMonth(isoDateString);
-
-        setRows2(response);
-        const dateObjects = stringArrayToDateArray(response);
-        setDates(dateObjects);
-      } catch (error) {
-        Toast(error.response.data || "Unauthorized", errorType.ERROR);
-        console.log(error.response.data);
-      }
-    };
-
     return () => {
-      fetchClinicsForGivenMonth();
+      fetchClinicsForGivenMonth(new Date().toISOString().split("T")[0]);
     };
-  }, [month, isFetch]);
+  }, [isFetch]);
+
+  const fetchClinicsForGivenMonth = async (date) => {
+    try {
+      const response = await ClinicService.getClinicsByMonth(date);
+      setRows2(response);
+      const dateObjects = stringArrayToDateArray(response);
+      setDates(dateObjects);
+    } catch (error) {
+      Toast(error.response.data || "Unauthorized", errorType.ERROR);
+      console.log(error.response.data);
+    }
+  };
+
+  const fetchClinicsByDate = async (date) => {
+    setRows([]);
+
+    try {
+      const response = await ClinicService.getClinicsByDate(date);
+      setRows(response);
+    } catch (error) {
+      Toast(error.response.data || "Unauthorized", errorType.ERROR);
+      console.log(error.response.data);
+    }
+  };
 
   const fetchClinicData = async (clinicId) => {
     try {
@@ -189,6 +170,14 @@ const manageClinics = () => {
       Toast(error.response.data || "Unauthorized", errorType.ERROR);
       console.log(error.response.data);
     }
+  };
+
+  const handleMonthChange = async (date) => {
+    await fetchClinicsForGivenMonth(date.format("YYYY-MM-DD"));
+  };
+
+  const handleDateChange = async (date) => {
+    await fetchClinicsByDate(date.format("YYYY-MM-DD"));
   };
 
   const handleRowClick = async (params) => {
@@ -214,10 +203,9 @@ const manageClinics = () => {
         <div className="flex">
           <div className="w-6/12">
             <Calendar
-              highlightDates={dates}
-              highlightColor="#45075c"
-              onDayClick={onDayClick}
-              onMonthChange={onMonthChange}
+              handleMonthChange={handleMonthChange}
+              highlightedDays={dates}
+              handleDateChange={handleDateChange}
             />
           </div>
           <div className="shadow-md p-5 w-6/12 h-fit">
@@ -243,24 +231,7 @@ const manageClinics = () => {
         </div>
       </div>
       <div>
-        {/* <Typography variant="h4">{t("subtitle2")}</Typography> */}
         <Typography variant="h4">This Month clinics</Typography>
-
-        {/* <Select
-          defaultValue={1}
-          labelId="select-label"
-          id="select"
-          sx={{ width: "300px" }}
-        >
-          <MenuItem value={1}>CL01</MenuItem>
-          <MenuItem value={2}>CL01</MenuItem>
-          <MenuItem value={3}>CL01</MenuItem>
-        </Select>
-
-        <TextField
-          type="date"
-          sx={{ width: "300px", marginLeft: "30px" }}
-        ></TextField> */}
 
         <div style={{ height: "100%", width: "100%" }}>
           <StripedDataGrid

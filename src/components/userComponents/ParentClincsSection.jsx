@@ -6,10 +6,6 @@ import { useEffect, useState } from "react";
 const ParentClinicsSection = () => {
   const [dates, setDates] = useState([]);
 
-  const stringArrayToDateArray = (array) => {
-    return array.map((clinic) => clinic.date);
-  };
-
   useEffect(() => {
     return () => {
       fetchClinicsForGivenMonth(new Date().toISOString().split("T")[0]);
@@ -19,9 +15,7 @@ const ParentClinicsSection = () => {
   const fetchClinicsForGivenMonth = async (date) => {
     try {
       const response = await ClinicService.getClinicsGivenMonthForParent(date);
-
-      const dateObjects = stringArrayToDateArray(response);
-      setDates(dateObjects);
+      setDates(response);
     } catch (error) {
       Toast(error.response.data || "Unauthorized", errorType.ERROR);
       console.log(error.response.data);

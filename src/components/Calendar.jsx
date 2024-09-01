@@ -32,9 +32,9 @@ function ServerDay(props) {
     },
   };
 
-  const handleClick = () => {
-    console.log(day.format("YYYY-MM-DD"));
-  };
+  // const handleClick = () => {
+  //   console.log(day.format("YYYY-MM-DD"));
+  // };
 
   return (
     <Badge
@@ -45,28 +45,26 @@ function ServerDay(props) {
         {...other}
         outsideCurrentMonth={outsideCurrentMonth}
         day={day}
-        onClick={handleClick}
+        // onClick={handleClick}
         sx={style}
       />
     </Badge>
   );
 }
 
-export default function Calendar({ handleMonthChange, highlightedDays }) {
-  const [selectedDate, setSelectedDate] = React.useState(dayjs(new Date()));
-
+export default function Calendar({
+  handleMonthChange,
+  highlightedDays,
+  handleDateChange,
+}) {
   const handleYearChange = (date) => {
     console.log(`Year changed to: ${date.year()}`);
-  };
-
-  const handleDateChange = (date) => {
-    setSelectedDate(date);
   };
 
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <DateCalendar
-        value={selectedDate}
+        // value={selectedDate}
         onChange={handleDateChange}
         slots={{ day: ServerDay }}
         slotProps={{ day: { highlightedDays: highlightedDays } }}
