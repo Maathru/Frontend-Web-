@@ -207,6 +207,7 @@ const ClinicAddPopup = ({
             <IoIosCloseCircleOutline
               size={25}
               className="cursor-pointer hover:text-purple-500 hover:scale-110"
+              aria-label="Close"
               onClick={close}
             />
           </div>
