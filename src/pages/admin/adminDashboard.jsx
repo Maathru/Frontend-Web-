@@ -11,8 +11,8 @@ import ReactApexChart from "react-apexcharts";
 import { userData } from "@/context/userAuth";
 import ApexCharts from "react-apexcharts";
 import { useTranslation } from "react-i18next";
-import UserService from "@/service/userService";
 import { errorType, Toast } from "@/components/toast";
+import EmployeeService from "@/service/employeeService";
 
 const Widget = ({ icon: Icon, count, label1, label2, link }) => (
   <div className="card w-3/12 shadow-md rounded-lg ">
@@ -44,7 +44,7 @@ const AdminDashboard = () => {
   useEffect(() => {
     const fetchDashboardData = async () => {
       try {
-        const response = await UserService.getAdminDashboardData();
+        const response = await EmployeeService.getAdminDashboardData();
         setCardData(response);
       } catch (error) {
         console.log(error.message);

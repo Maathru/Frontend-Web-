@@ -1,5 +1,5 @@
 import { IoPeopleCircle } from "react-icons/io5";
-import React, { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { MdOutlinePregnantWoman } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { Box, Grid, Paper, Typography } from "@mui/material";
@@ -7,12 +7,15 @@ import { FaCircle } from "react-icons/fa";
 import { Button } from "flowbite-react";
 import ReactApexChart from "react-apexcharts";
 import { userData } from "@/context/userAuth";
-import { Calendar } from "@/components/ui/calendar";
 import { HiCalendar } from "react-icons/hi";
 import { useDarkMode } from "@/context/darkModeContext";
+import EmployeeService from "@/service/employeeService";
+import { errorType, Toast } from "@/components/toast";
+import ClinicService from "@/service/clinicService";
+import Calendar from "@/components/Calendar";
 // import { title } from "process";
 
-const Widget = ({ icon: Icon, count, label1, label2 }) => (
+const Widget = ({ icon: Icon, count, label1, label2, link }) => (
   <div className="card w-3/12 shadow-md rounded-lg dark:bg-dark-background">
     <div className="flex gap-5 items-center px-8 py-5">
       <div className="bg-primary-purple w-10 h-10 rounded-lg flex justify-center items-center">
@@ -24,7 +27,7 @@ const Widget = ({ icon: Icon, count, label1, label2 }) => (
       </div>
     </div>
     <hr className="w-full" />
-    <Link>
+    <Link to={link}>
       <div className="px-8 py-2 hover:bg-purple-50">
         <p className="text-primary-purple text-sm font-semibold text-center">
           {label2}
@@ -34,9 +37,12 @@ const Widget = ({ icon: Icon, count, label1, label2 }) => (
   </div>
 );
 
-const dashboard = () => {
+const Dashboard = () => {
   const { isDarkMode } = useDarkMode();
   const { userDetails } = useContext(userData);
+  const [cardData, setCardData] = useState({});
+  const [dates, setDates] = useState([]);
+
   // pregnancy visits line chart data starts
   const pregnancyVisitsOptions = {
     // options: {
@@ -224,9 +230,42 @@ const dashboard = () => {
     },
   ];
 
-  const handleDayClick = (day, { selected }) => {
-    console.log("Day clicked:", day, selected);
-    // You can handle the day click event here
+  useEffect(() => {
+    const fetchDashboardData = async () => {
+      try {
+        const response = await EmployeeService.getMidwifeDashboardData();
+        setCardData(response);
+      } catch (error) {
+        console.log(error.message);
+
+        const data = error.response.data;
+        console.log(data);
+        Toast(data || "Error occurred", errorType.ERROR);
+      }
+    };
+    return () => {
+      fetchDashboardData();
+    };
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      fetchClinicsForGivenMonth(new Date().toISOString().split("T")[0]);
+    };
+  }, []);
+
+  const fetchClinicsForGivenMonth = async (date) => {
+    try {
+      const response = await ClinicService.getClinicsGivenMonthForMidwife(date);
+      setDates(response);
+    } catch (error) {
+      Toast(error.response.data || "Unauthorized", errorType.ERROR);
+      console.log(error.response.data);
+    }
+  };
+
+  const handleMonthChange = async (date) => {
+    await fetchClinicsForGivenMonth(date.format("YYYY-MM-DD"));
   };
 
   return (
@@ -235,21 +274,24 @@ const dashboard = () => {
       <div className="flex justify-around flex-wrap mb-12">
         <Widget
           icon={IoPeopleCircle}
-          count={25}
+          count={cardData.eligibles || 0}
           label1="Eligible Couples"
           label2="Manage Eligible Couple Records"
+          link="/eligibles"
         />
         <Widget
           icon={MdOutlinePregnantWoman}
-          count={25}
+          count={cardData.parents || 0}
           label1="Registered Parents"
           label2="Manage Parents Records"
+          link="/parents"
         />
         <Widget
           icon={HiCalendar}
-          count={25}
+          count={cardData.clinics || 0}
           label1="Clinics this month"
           label2="View Clinic Records"
+          link="/clinics"
         />
       </div>
       <div>
@@ -257,13 +299,8 @@ const dashboard = () => {
         <div className="flex">
           <div className="w-5/12">
             <Calendar
-              highlightDates={[
-                new Date(2024, 6, 20),
-                new Date(2024, 7, 5),
-                new Date(2024, 7, 8),
-              ]}
-              highlightColor="#45075c"
-              onDayClick={handleDayClick}
+              handleMonthChange={handleMonthChange}
+              highlightedDays={dates}
             />
           </div>
           <div className="w-7/12 flex flex-col gap-9">
@@ -356,4 +393,4 @@ const dashboard = () => {
   );
 };
 
-export default dashboard;
+export default Dashboard;
