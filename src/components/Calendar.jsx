@@ -52,22 +52,11 @@ function ServerDay(props) {
   );
 }
 
-export default function Calendar() {
+export default function Calendar({ handleMonthChange, highlightedDays }) {
   const [selectedDate, setSelectedDate] = React.useState(dayjs(new Date()));
-  const exampleHighlightedDays = [
-    "2024-07-02",
-    "2024-07-05",
-    "2024-07-10",
-    "2024-07-15",
-    "2024-07-20",
-  ]; // Example dates to highlight
 
   const handleYearChange = (date) => {
     console.log(`Year changed to: ${date.year()}`);
-  };
-
-  const handleMonthChange = (date) => {
-    console.log(`Month changed to: ${date.format("MMMM")}`);
   };
 
   const handleDateChange = (date) => {
@@ -80,7 +69,7 @@ export default function Calendar() {
         value={selectedDate}
         onChange={handleDateChange}
         slots={{ day: ServerDay }}
-        slotProps={{ day: { highlightedDays: exampleHighlightedDays } }}
+        slotProps={{ day: { highlightedDays: highlightedDays } }}
         onYearChange={handleYearChange}
         onMonthChange={handleMonthChange}
       />

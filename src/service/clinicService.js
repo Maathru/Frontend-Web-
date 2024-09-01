@@ -63,6 +63,15 @@ class ClinicService {
     }
   }
 
+  static async getClinicsGivenMonthForParent(date) {
+    try {
+      const response = await axiosInstance.get(`/clinic/month/parent/${date}`);
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  }
+
   static async getClinic(clinicId) {
     try {
       const response = await axiosInstance.get(`/clinic/${clinicId}`);
