@@ -14,7 +14,7 @@ const ForBoth = ({
   const setData = (field, name, value) => {
     const newObject = {};
     newObject[name + "_" + field] = value || "";
-    setFormObject({ ...formObject, ...newObject });
+    setFormObject(prevState => ({ ...prevState, ...newObject }));
   };
 
   const handleSave = (e) => {
