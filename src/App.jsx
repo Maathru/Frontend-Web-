@@ -23,11 +23,7 @@ import Dashboard from "./pages/user/dashboard";
 import { Route, Routes } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import Footer from "./components/footer";
-import Eligible1 from "./pages/user/eligible1";
-import Eligible2 from "./pages/user/eligible2";
-import Eligible3 from "./pages/user/eligible3";
-import Eligible4 from "./pages/user/eligible4";
-import Eligible5 from "./pages/user/eligible5";
+import Eligible from "./pages/user/eligible";
 import Pregnancy1 from "./pages/pregnancycard/pregnancy1";
 import Pregnancy2 from "./pages/pregnancycard/pregnancy2";
 import Pregnancy3 from "./pages/pregnancycard/pregnancy3";
@@ -209,11 +205,7 @@ function App() {
               {(userDetails.role === role.PARENT ||
                 userDetails.role === role.ELIGIBLE) && (
                 <>
-                  <Route path="/eligible/1" element={<Eligible1 />} />
-                  <Route path="/eligible/2" element={<Eligible2 />} />
-                  <Route path="/eligible/3" element={<Eligible3 />} />
-                  <Route path="/eligible/4" element={<Eligible4 />} />
-                  <Route path="/eligible/5" element={<Eligible5 />} />
+                  <Route path="/eligible" element={<Eligible />} />
                 </>
               )}
 

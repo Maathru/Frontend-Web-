@@ -9,7 +9,7 @@ export const navConfig = {
     { name: "Home", path: "/" },
     { name: "Blogs", path: "/blogs" },
     { name: "Discussion Forum", path: "/forum" },
-    { name: "Recovery Checklist", path: "/eligible/1" },
+    { name: "Recovery Checklist", path: "/eligible" },
   ],
   PARENT: [
     { name: "Home", path: "/" },
@@ -21,7 +21,7 @@ export const navConfig = {
       links: [
         { name: "Blogs", path: "/blogs" },
         { name: "Discussion Forum", path: "/forum" },
-        { name: "Recovery Checklist", path: "/eligible/1" },
+        { name: "Recovery Checklist", path: "/eligible" },
       ],
     },
   ],
