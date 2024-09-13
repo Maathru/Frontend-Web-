@@ -24,9 +24,7 @@ import { Route, Routes } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import Footer from "./components/footer";
 import Eligible from "./pages/user/eligible";
-import Pregnancy1 from "./pages/pregnancycard/pregnancy1";
-import Pregnancy2 from "./pages/pregnancycard/pregnancy2";
-import Pregnancy3 from "./pages/pregnancycard/pregnancy3";
+import Pregnancy from "./pages/pregnancycard/pregnancy";
 import Growth from "./pages/user/growth";
 import AskQuestion from "./pages/question";
 import MidwifeDashboard from "./pages/midwife/dashboard";
@@ -154,12 +152,6 @@ function App() {
                 </>
               )}
 
-              {/* Admin and Doctor routes */}
-              {(userDetails.role === role.ADMIN ||
-                userDetails.role === role.DOCTOR) && (
-                <Route path="/pregnancy/3" element={<Pregnancy3 />} />
-              )}
-
               {/* Midwife routes */}
               {userDetails.role === role.MIDWIFE && (
                 <>
@@ -185,9 +177,7 @@ function App() {
               {(userDetails.role === role.MIDWIFE ||
                 userDetails.role === role.PARENT) && (
                 <>
-                  <Route path="/pregnancy/1" element={<Pregnancy1 />} />
-                  <Route path="/pregnancy/2" element={<Pregnancy2 />} />
-                  <Route path="/pregnancy/3" element={<Pregnancy3 />} />
+                  <Route path="/pregnancy" element={<Pregnancy />} />
                 </>
               )}
 

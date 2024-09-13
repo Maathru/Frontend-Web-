@@ -175,17 +175,20 @@ export const otherSituations = [
   },
 ];
 
-export const prenatalCare = [
+export const prenatalCare1 = [
   {
     title: "Anemia",
-    placeholder: "",
+    placeholder: "Other details",
     name: "anemia",
   },
   {
-    title: "Swelled Up",
-    placeholder: "",
+    title: "Swelled up",
+    placeholder: "Other details",
     name: "swelled_up",
   },
+];
+
+export const prenatalCare = [
   {
     title: "Fetal Height",
     placeholder: "",
@@ -205,11 +208,6 @@ export const prenatalCare = [
     title: "Urine Glucose",
     placeholder: "",
     name: "urine_glucose",
-  },
-  {
-    title: "Urine",
-    placeholder: "",
-    name: "urine",
   },
   {
     title: "Urine Albumin",
@@ -292,8 +290,8 @@ export const prenatalCare = [
     name: "need_of_family_development",
   },
   {
-    title: "Postpartum Risk Factors (Child/Mother)",
+    title: "A days to visit the clinic",
     placeholder: "",
-    name: "postpartum_risk_factors_child_mother",
+    name: "a_days_to_visit_the_clinic",
   },
 ];

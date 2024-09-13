@@ -14,7 +14,7 @@ export const navConfig = {
   PARENT: [
     { name: "Home", path: "/" },
     { name: "Child Growth", path: "/growth" },
-    { name: "Pregnancy Card", path: "/pregnancy/1" },
+    { name: "Pregnancy Card", path: "/pregnancy" },
     { name: "Memories", path: "/memories" },
     {
       name: "More",
