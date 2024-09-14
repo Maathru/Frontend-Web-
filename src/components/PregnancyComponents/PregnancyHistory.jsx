@@ -17,7 +17,7 @@ const PregnancyHistory = ({
   };
 
   const handleSave = (e) => {
-    localStorage.setItem("formObject", JSON.stringify(formObject));
+    localStorage.setItem("pregnancy", JSON.stringify(formObject));
     handleChangeMainDetails(e, 3);
   };
 

@@ -19,7 +19,7 @@ const HealthDetails = ({
   };
 
   const handleSave = (e) => {
-    localStorage.setItem("formObject", JSON.stringify(formObject));
+    localStorage.setItem("pregnancy", JSON.stringify(formObject));
     handleChangePostnatalCare(e, 1);
   };
 
