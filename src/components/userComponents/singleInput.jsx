@@ -9,7 +9,7 @@ const SingleInput = ({
   type = "text",
 }) => {
   return (
-    <div className="grid grid-cols-3 gap-4 items-center mt-4 mx-14">
+    <div className="grid grid-cols-3 gap-4 items-center mt-4">
       <div className="w-fit">
         {index >= 0 ? (
           `${index + 1}. ${title}`
