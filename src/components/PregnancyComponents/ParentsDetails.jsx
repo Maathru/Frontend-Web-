@@ -6,6 +6,7 @@ import dayjs from "dayjs";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { Button } from "../ui/button";
+import LocationAddPopup from "../map/LocationAddPopup";
 
 const ParentsDetails = ({
   formObject,
@@ -102,6 +103,13 @@ const ParentsDetails = ({
             onChange={(e) =>
               setFormObject({ ...formObject, address: e.target.value })
             }
+          />
+        </div>
+
+        <div className="grid grid-cols-3 gap-4 items-center mt-4 mx-14 pr-3">
+          <LocationAddPopup
+            setFormObject={setFormObject}
+            formObject={formObject}
           />
         </div>
 
