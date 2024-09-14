@@ -69,6 +69,21 @@ export const conditions1 = [
     placeholder: "Other Details",
     name: "surgeries",
   },
+  {
+    title: "Are you dissatisfied with sex?",
+    placeholder: "Other Details",
+    name: "dissatisfied",
+  },
+  {
+    title: "Do you both use a family planning system?",
+    placeholder: "If yes, What's it?",
+    name: "planning",
+  },
+  {
+    title: "Looking to delay the birth of your first child?",
+    placeholder: "If yes, For how long?",
+    name: "delay",
+  },
 ];
 
 export const specials1 = [
@@ -133,24 +148,6 @@ export const specials4 = [
     title: "Tubal Pregnancy (Ectopic)",
     placeholder: "Other Details",
     name: "tubal",
-  },
-];
-
-export const specials3 = [
-  {
-    title: "Are you dissatisfied with sex?",
-    placeholder: "Other Details",
-    name: "dissatisfied",
-  },
-  {
-    title: "Do you both use a family planning system?",
-    placeholder: "If yes, What's it?",
-    name: "planning",
-  },
-  {
-    title: "Looking to delay the birth of your first child?",
-    placeholder: "If yes, For how long?",
-    name: "delay",
   },
 ];
 
@@ -334,3 +331,5 @@ export const sections = [
   { title: "Blood type", name: "BloodType" },
   { title: "Hemoglobin level", name: "Hemoglobin" },
 ];
+
+export const examinations = ["BP", "CVC", "RS", "Abd", "CNS"];

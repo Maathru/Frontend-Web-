@@ -9,19 +9,19 @@ export const navConfig = {
     { name: "Home", path: "/" },
     { name: "Blogs", path: "/blogs" },
     { name: "Discussion Forum", path: "/forum" },
-    { name: "Recovery Checklist", path: "/eligible/1" },
+    { name: "Recovery Checklist", path: "/eligible" },
   ],
   PARENT: [
     { name: "Home", path: "/" },
     { name: "Child Growth", path: "/growth" },
-    { name: "Pregnancy Card", path: "/pregnancy/1" },
+    { name: "Pregnancy Card", path: "/pregnancy" },
     { name: "Memories", path: "/memories" },
     {
       name: "More",
       links: [
         { name: "Blogs", path: "/blogs" },
         { name: "Discussion Forum", path: "/forum" },
-        { name: "Recovery Checklist", path: "/eligible/1" },
+        { name: "Recovery Checklist", path: "/eligible" },
       ],
     },
   ],

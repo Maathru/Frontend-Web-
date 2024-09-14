@@ -15,7 +15,6 @@ import Heading from "@/components/ui/heading";
 import { useTranslation } from "react-i18next";
 import { TextField } from "@mui/material";
 import { useTitle } from "@/hooks/useTitle";
-import LocationAddPopup from "@/components/map/LocationAddPopup";
 
 const Pregnancy1 = () => {
   useTitle("Pregnancy Card - Page 1");
@@ -52,7 +51,6 @@ const Pregnancy1 = () => {
     initialData.name_woman = "";
     initialData.name_man = "";
     initialData.address = "";
-    initialData.location = "";
     initialData.phone_woman = "";
     initialData.phone_man = "";
     initialData.dob_woman = "";
@@ -194,22 +192,17 @@ const Pregnancy1 = () => {
                 onChange={(e) => setData("man", "name", e.target.value)}
               />
             </div>
-            <div className="grid grid-cols-3 gap-4 items-center mt-4 mx-14 pr-3">
+
+            <div className="grid grid-cols-3 gap-4 items-center mt-4 mx-14">
               <p>2. Address</p>
               <TextField
                 value={formObject.address || ""}
                 label="Enter Address"
                 variant="outlined"
-                className="col-start-2 col-end-4"
-                disabled
-                aria-readonly
-              />
-            </div>
-
-            <div className="grid grid-cols-3 gap-4 items-center mt-4 mx-14 pr-3">
-              <LocationAddPopup
-                setFormObject={setFormObject}
-                formObject={formObject}
+                className="w-96"
+                onChange={(e) =>
+                  setFormObject({ ...formObject, address: e.target.value })
+                }
               />
             </div>
 
@@ -237,7 +230,7 @@ const Pregnancy1 = () => {
                 <DatePicker
                   label="Wife's Date of Birth"
                   className="w-96"
-                  value={dayjs(formObject.dob_woman) || null}
+                  value={dayjs(formObject.dob_woman)}
                   onChange={(newValue) => {
                     const isoDate = newValue ? newValue.toISOString() : null;
                     setFormObject((prevFormObject) => ({
@@ -251,7 +244,7 @@ const Pregnancy1 = () => {
                 <DatePicker
                   label="Husband's Date of Birth"
                   className="w-96"
-                  value={dayjs(formObject.dob_man) || null}
+                  value={dayjs(formObject.dob_man)}
                   onChange={(newValue) => {
                     const isoDate = newValue ? newValue.toISOString() : null;
                     setFormObject((prevFormObject) => ({
