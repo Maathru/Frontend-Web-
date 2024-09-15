@@ -184,8 +184,11 @@ const Eligible = () => {
         </p>
 
         <Box sx={{ width: "100%" }}>
-          <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+          <Box sx={{ borderBottom: 1, borderColor: "divider", mt: "40px" }}>
             <Tabs
+              variant="fullWidth"
+              textColor="secondary"
+              indicatorColor="secondary"
               value={value}
               onChange={handleChange}
               aria-label="Recovery checklist tabs"

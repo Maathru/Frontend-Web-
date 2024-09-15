@@ -16,6 +16,9 @@ const OtherDetails = ({ formObject }) => {
       <Box sx={{ width: "100%" }}>
         <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
           <Tabs
+            variant="fullWidth"
+            textColor="secondary"
+            indicatorColor="secondary"
             value={valueOtherDetails}
             onChange={handleChangeOtherDetails}
             aria-label="Other details tabs"

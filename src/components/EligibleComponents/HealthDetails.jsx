@@ -16,6 +16,9 @@ const HealthDetails = ({ formObject, setFormObject, handleChange }) => {
       <Box sx={{ width: "100%" }}>
         <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
           <Tabs
+            variant="fullWidth"
+            textColor="secondary"
+            indicatorColor="secondary"
             value={valueHealth}
             onChange={handleChangeHealth}
             aria-label="Health details tabs"
