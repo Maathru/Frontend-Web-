@@ -1,19 +1,25 @@
 import { Select, MenuItem } from "@mui/material";
 import { useState } from "react";
-import SingleInput from "@/components/userComponents/singleInput"; // Import the SingleInput component
-import YesNoButton from "@/components/userComponents/yesNoButton"; // Import the YesNoButton component
+import SingleInput from "@/components/userComponents/singleInput"; 
+import YesNoButton from "@/components/userComponents/yesNoButton"; 
 
 const ChildBirth = ({ formObject, setFormObject, handleChangeMainDetails }) => {
-  // Individual state variables for each detail
-  const [motherName, setMotherName] = useState(formObject.motherName || "");
-  const [date, setDate] = useState(formObject.date || "");
-  const [pregnancyResult, setPregnancyResult] = useState(formObject.pregnancyResult || "");
-  const [childSex, setChildSex] = useState("");
-  const [mothersDeath, setMothersDeath] = useState(false);
-  const [birthWeight, setBirthWeight] = useState("");
-  const [childDate, setChildDate] = useState("");
+  const [birthPlace , setBirthPlace] = useState("");
 
-  // Boolean fields for complications
+  const [dob, setDob] = useState("");
+  const [dateReleased, setDateReleased] = useState("");
+  const [doneBy, setDoneBy] = useState("");
+  const [pregnancyResult, setPregnancyResult] = useState(formObject.pregnancyResult || "");
+  const [pregnancyStatus, setPregnancyStatus] = useState(formObject.pregnancyStatus || "");
+
+  const [childSex, setChildSex] = useState("");
+  const [birthWeight, setBirthWeight] = useState("");
+
+  const [mothersDeath, setMothersDeath] = useState(false);
+  const [mothersDeathDate, setMothersDeathDate] = useState("");
+  const [mothersDeathCause, setMothersDeathCause] = useState("");
+  const [investigated, setInvestigated] = useState(false);
+
   const [complicationsCracked, setComplicationsCracked] = useState(false);
   const [complicationsPostpartumBleeding, setComplicationsPostpartumBleeding] = useState(false);
   const [complicationsTrappedAura, setComplicationsTrappedAura] = useState(false);
@@ -24,17 +30,21 @@ const ChildBirth = ({ formObject, setFormObject, handleChangeMainDetails }) => {
   const [rubellaVaccine, setRubellaVaccine] = useState(false);
   const [prematureBirth, setPrematureBirth] = useState(false);
   const [complicationsAtBirth, setComplicationsAtBirth] = useState(false);
-  const [investigated, setInvestigated] = useState(false);
 
   const handleSave = (e) => {
     const record = {
-      motherName,
-      date,
+      birthPlace,
+      dob,
+      dateReleased,
+      doneBy,
+      pregnancyStatus,
       pregnancyResult,
       childSex,
-      mothersDeath,
       birthWeight,
-      childDate,
+      mothersDeath,
+      mothersDeathDate,
+      mothersDeathCause,
+      investigated,
       complicationsCracked,
       complicationsPostpartumBleeding,
       complicationsTrappedAura,
@@ -45,11 +55,10 @@ const ChildBirth = ({ formObject, setFormObject, handleChangeMainDetails }) => {
       rubellaVaccine,
       prematureBirth,
       complicationsAtBirth,
-      investigated,
     };
 
     localStorage.setItem("pregnancyRecord", JSON.stringify(record));
-    handleChangeMainDetails(e, 4); // Adjust the page number as necessary
+    handleChangeMainDetails(e, 4); 
   };
 
   return (
@@ -58,25 +67,43 @@ const ChildBirth = ({ formObject, setFormObject, handleChangeMainDetails }) => {
       
       {/* Mother's Name */}
       <SingleInput
-        title="Mother’s Name"
+        title="Birth Place"
         index={0}
-        placeholder="Enter mother’s name"
-        value={motherName}
-        onChange={setMotherName}
+        placeholder="Enter birth place"
+        value={birthPlace}
+        onChange={setBirthPlace}
       />
 
       {/* Date */}
       <SingleInput
-        title="Date"
+        title="Date of Birth"
         index={1}
-        value={date}
-        onChange={setDate}
+        value={dob}
+        onChange={setDob}
         type="date"
       />
 
+      {/* Date Released */}
+      <SingleInput
+        title="Date Released"
+        index={2}
+        value={dateReleased}
+        onChange={setDateReleased}
+        type="date"
+      />
+
+      {/* Done By */}
+      <SingleInput
+        title="Done By"
+        index={3}
+        value={doneBy}
+        onChange={setDoneBy}
+      />
+
+
       {/* Result of Pregnancy */}
       <div className="grid grid-cols-3 gap-4 items-center mt-4">
-        <p className="w-fit">3. Result of Pregnancy</p>
+        <p className="w-fit">4. Result of Pregnancy</p>
         <Select
           value={pregnancyResult}
           onChange={(e) => setPregnancyResult(e.target.value)}
@@ -88,29 +115,124 @@ const ChildBirth = ({ formObject, setFormObject, handleChangeMainDetails }) => {
         </Select>
       </div>
 
-      {/* Child Details */}
-      <h3 className="font-semibold text-xl mb-4">Child Details</h3>
+      {/* Status of Pregnancy */}
+      <div className="grid grid-cols-3 gap-4 items-center mt-4">
+        <p className="w-fit">5. Status of Pregnancy</p>
+        <Select
+          value={pregnancyStatus}
+          onChange={(e) => setPregnancyStatus(e.target.value)}
+          className="w-96"
+        >
+          <MenuItem value="Normal">Normal</MenuItem>
+          <MenuItem value="LessMonths">Less Months</MenuItem>
+          <MenuItem value="Cesarean">Cesarean</MenuItem>
+          <MenuItem value="Other">Other</MenuItem>
+        </Select>
+      </div>
 
-      <SingleInput
-        title="Child's Sex"
-        index={2}
-        placeholder="Enter child's sex"
-        value={childSex}
-        onChange={setChildSex}
-      />
 
-      <SingleInput
-        title="Birth Weight"
-        index={3}
-        placeholder="Enter birth weight"
-        value={birthWeight}
-        onChange={setBirthWeight}
-        type="number"
-      />
+      {/* Obstetric Complications */}
+    <h3 className="font-semibold text-xl mb-4 mt-10">Obstetric Complications</h3>
+
+    <div className="grid grid-cols-2 gap-2 items-center mt-4">
+
+    <div className="grid grid-cols-4 gap-4 items-center mt-4">
+      <div className="w-fit">
+          <span>1. Cracked Around</span>s
+      </div>
+      <YesNoButton onChange={(e) => setComplicationsCracked(e)} value={complicationsCracked} />
+    </div>
+
+    <div className="grid grid-cols-4 gap-4 items-center mt-4">
+      <div className="w-fit">
+          <span>2. Postpartum Bleeding</span>
+      </div>
+      <YesNoButton onChange={(e) => setComplicationsPostpartumBleeding(e)} value={complicationsPostpartumBleeding} />
+    </div>
+
+    <div className="grid grid-cols-4 gap-4 items-center mt-4">
+      <div className="w-fit">
+          <span>3. The Trapped Aura</span>
+      </div>
+      <YesNoButton onChange={(e) => setComplicationsTrappedAura(e)} value={complicationsTrappedAura} />
+    </div>
+
+    <div className="grid grid-cols-4 gap-4 items-center mt-4">
+      <div className="w-fit">
+          <span>4. Any Cuts Around</span>
+      </div>
+      <YesNoButton onChange={(e) => setComplicationsCuts(e)} value={complicationsCuts} />
+    </div>
+
+    <div className="grid grid-cols-4 gap-4 items-center mt-4">
+      <div className="w-fit">
+          <span>5. Long Delivery</span>
+      </div>
+      <YesNoButton onChange={(e) => setComplicationsLongDelivery(e)} value={complicationsLongDelivery} />
+    </div>
+
+    <div className="grid grid-cols-4 gap-4 items-center mt-4">
+      <div className="w-fit">
+          <span>6. Other Complications</span>
+      </div>
+      <YesNoButton onChange={(e) => setComplicationsOther(e)} value={complicationsOther} />
+    </div>
+
+    <div className="grid grid-cols-4 gap-4 items-center mt-4">
+      <div className="w-fit">
+          <span>7. Vitamin A Dose</span>
+      </div>
+      <YesNoButton onChange={(e) => setVitaminADose(e)} value={vitaminADose} />
+    </div>
+
+    <div className="grid grid-cols-4 gap-4 items-center mt-4">
+      <div className="w-fit">
+          <span>8. Rubella Vaccine</span>
+      </div>
+      <YesNoButton onChange={(e) => setRubellaVaccine(e)} value={rubellaVaccine} />
+    </div>
+
+    </div>
+
+    {/* Child Details */}
+    <h3 className="font-semibold text-xl my-4">Child Details</h3>
+
+    <SingleInput
+      title="Child's Sex"
+      index={0}
+      placeholder="Enter child's sex"
+      value={childSex}
+      onChange={setChildSex}
+    />
+
+    <SingleInput
+      title="Birth Weight"
+      index={1}
+      placeholder="Enter birth weight"
+      value={birthWeight}
+      onChange={setBirthWeight}
+      type="number"
+    />
 
     <div className="grid grid-cols-4 gap-4 items-center mt-4">
     <div className="w-fit">
-        <span>5. Mother's Dead </span>
+        <span>3. Premature Birth</span>
+    </div>
+    <YesNoButton onChange={(e) => setPrematureBirth(e)} value={prematureBirth} />
+    </div>
+
+    <div className="grid grid-cols-4 gap-4 items-center mt-4">
+    <div className="w-fit">
+        <span>4. Complications at Birth</span>
+    </div>
+    <YesNoButton onChange={(e) => setComplicationsAtBirth(e)} value={complicationsAtBirth} />
+    </div>
+
+    <h3 className="font-semibold text-xl my-4">Mother Dead</h3>
+
+    <div className="grid grid-cols-4 gap-4 items-center mt-4">
+    <div className="w-fit">
+        <span>1. Mother Dead </span>
     </div>
     <YesNoButton
         title="Mother's Death"
@@ -118,92 +240,39 @@ const ChildBirth = ({ formObject, setFormObject, handleChangeMainDetails }) => {
         onChange={setMothersDeath}
       />
     </div>
+
+    {mothersDeath && (
+      <>
+        <SingleInput
+          title="Mother's Death Date"
+          index={1}
+          value={mothersDeathDate}
+          onChange={setMothersDeathDate}
+          type="date"
+        />
+
+        <SingleInput
+          title="Mother's Death Cause"
+          index={2}
+          value={mothersDeathCause}
+          onChange={setMothersDeathCause}
+        />
+
+
+      <div className="grid grid-cols-4 gap-4 items-center mt-4">
+      <div className="w-fit">
+          <span>3. Investigated</span>
+      </div>
+      <YesNoButton onChange={(e) => setInvestigated(e)} value={investigated} />
+      </div>
+    </>
+    )}
     
-
-      {/* Obstetric Complications */}
-    <h3 className="font-semibold text-xl mb-4 mt-10">Obstetric Complications</h3>
-
-    <div className="grid grid-cols-4 gap-4 items-center mt-4">
-    <div className="w-fit">
-        <span>1. Cracked Around</span>
-    </div>
-    <YesNoButton onChange={(e) => setComplicationsCracked(e)} value={complicationsCracked} />
-    </div>
-
-    <div className="grid grid-cols-4 gap-4 items-center mt-4">
-    <div className="w-fit">
-        <span>2. Postpartum Bleeding</span>
-    </div>
-    <YesNoButton onChange={(e) => setComplicationsPostpartumBleeding(e)} value={complicationsPostpartumBleeding} />
-    </div>
-
-    <div className="grid grid-cols-4 gap-4 items-center mt-4">
-    <div className="w-fit">
-        <span>3. The Trapped Aura</span>
-    </div>
-    <YesNoButton onChange={(e) => setComplicationsTrappedAura(e)} value={complicationsTrappedAura} />
-    </div>
-
-    <div className="grid grid-cols-4 gap-4 items-center mt-4">
-    <div className="w-fit">
-        <span>4. Any Cuts Around</span>
-    </div>
-    <YesNoButton onChange={(e) => setComplicationsCuts(e)} value={complicationsCuts} />
-    </div>
-
-    <div className="grid grid-cols-4 gap-4 items-center mt-4">
-    <div className="w-fit">
-        <span>5. Long Delivery</span>
-    </div>
-    <YesNoButton onChange={(e) => setComplicationsLongDelivery(e)} value={complicationsLongDelivery} />
-    </div>
-
-    <div className="grid grid-cols-4 gap-4 items-center mt-4">
-    <div className="w-fit">
-        <span>6. Other Complications</span>
-    </div>
-    <YesNoButton onChange={(e) => setComplicationsOther(e)} value={complicationsOther} />
-    </div>
-
-    <div className="grid grid-cols-4 gap-4 items-center mt-4">
-    <div className="w-fit">
-        <span>7. Vitamin A Dose</span>
-    </div>
-    <YesNoButton onChange={(e) => setVitaminADose(e)} value={vitaminADose} />
-    </div>
-
-    <div className="grid grid-cols-4 gap-4 items-center mt-4">
-    <div className="w-fit">
-        <span>8. Rubella Vaccine</span>
-    </div>
-    <YesNoButton onChange={(e) => setRubellaVaccine(e)} value={rubellaVaccine} />
-    </div>
-
-    <div className="grid grid-cols-4 gap-4 items-center mt-4">
-    <div className="w-fit">
-        <span>9. Premature Birth</span>
-    </div>
-    <YesNoButton onChange={(e) => setPrematureBirth(e)} value={prematureBirth} />
-    </div>
-
-    <div className="grid grid-cols-4 gap-4 items-center mt-4">
-    <div className="w-fit">
-        <span>10. Complications at Birth</span>
-    </div>
-    <YesNoButton onChange={(e) => setComplicationsAtBirth(e)} value={complicationsAtBirth} />
-    </div>
-
-    <div className="grid grid-cols-4 gap-4 items-center mt-4">
-    <div className="w-fit">
-        <span>11. Investigated</span>
-    </div>
-    <YesNoButton onChange={(e) => setInvestigated(e)} value={investigated} />
-    </div>
 
 
       {/* Save Button */}
       <div className="mt-6">
-        <button onClick={handleSave} className="bg-blue-500 text-white py-2 px-4 rounded">
+        <button onClick={handleSave} className="bg-primary-purple text-white py-2 px-4 rounded">
           Save
         </button>
       </div>
