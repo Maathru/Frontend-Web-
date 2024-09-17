@@ -15,7 +15,7 @@ const CurrentPregnancyStatus = ({
 
   const handleSave = (e) => {
     formObject.stage = Math.max(formObject.stage, 2);
-    localStorage.setItem("formObject", JSON.stringify(formObject));
+    localStorage.setItem("pregnancy", JSON.stringify(formObject));
     handleChange(e, 1);
   };
 
