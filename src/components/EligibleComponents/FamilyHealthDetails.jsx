@@ -17,6 +17,9 @@ const FamilyHealthDetails = ({ formObject, setFormObject, handleChange }) => {
       <Box sx={{ width: "100%" }}>
         <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
           <Tabs
+            variant="fullWidth"
+            textColor="secondary"
+            indicatorColor="secondary"
             value={valueFamilyHealth}
             onChange={handleChangeFamilyHealth}
             aria-label="Health details tabs"
