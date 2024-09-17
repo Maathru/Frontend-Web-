@@ -1,5 +1,5 @@
-import { TextField } from "@mui/material";
 import YesNoButton from "./yesNoButton";
+import MinHeightTextarea from "./minHeightTextarea";
 
 const SpeciallyWomenInput = ({
   title,
@@ -21,11 +21,11 @@ const SpeciallyWomenInput = ({
         )}
       </div>
       <YesNoButton onChange={(e) => onChange("woman", e)} value={value1} />
-      <TextField
-        label={placeholder}
-        variant="outlined"
-        className="w-72"
+
+      <MinHeightTextarea
         value={value2}
+        placeholder={placeholder}
+        disabled={false}
         onChange={(e) => onChange("other", e.target.value)}
       />
     </div>

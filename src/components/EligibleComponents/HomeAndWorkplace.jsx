@@ -1,4 +1,3 @@
-import { TextField } from "@mui/material";
 import YesNoButton from "../userComponents/yesNoButton";
 import EligibleCardBoolInput from "../userComponents/eligibleCardBoolInput";
 import { facilities1, facilities2 } from "@/data/eligibleData";
@@ -6,6 +5,7 @@ import { useEffect } from "react";
 import { Button } from "../ui/button";
 import EligibleService from "@/service/eligibleService";
 import { errorType, Toast } from "../toast";
+import MinHeightTextarea from "../userComponents/minHeightTextarea";
 
 const HomeAndWorkplace = ({ formObject, setFormObject, handleChange }) => {
   const setData = (field, name, value) => {
@@ -107,11 +107,11 @@ const HomeAndWorkplace = ({ formObject, setFormObject, handleChange }) => {
             onChange={(e) => setData("man", "hazardous", e)}
             value={formObject.hazardous_man || false}
           />
-          <TextField
-            label="Other Details"
-            variant="outlined"
-            className="w-72"
+
+          <MinHeightTextarea
             value={formObject.hazardous_other || ""}
+            placeholder="Other Details"
+            disabled={false}
             onChange={(e) => setData("other", "hazardous", e.target.value)}
           />
         </div>
@@ -144,11 +144,11 @@ const HomeAndWorkplace = ({ formObject, setFormObject, handleChange }) => {
             onChange={(e) => setData("man", "noisy", e)}
             value={formObject.noisy_man || false}
           />
-          <TextField
-            label="Other Details"
-            variant="outlined"
-            className="w-72"
+
+          <MinHeightTextarea
             value={formObject.noisy_other || ""}
+            placeholder="Other Details"
+            disabled={false}
             onChange={(e) => setData("other", "noisy", e.target.value)}
           />
         </div>
@@ -165,11 +165,11 @@ const HomeAndWorkplace = ({ formObject, setFormObject, handleChange }) => {
             onChange={(e) => setData("man", "saving", e)}
             value={formObject.saving_man || false}
           />
-          <TextField
-            label="Other Details"
-            variant="outlined"
-            className="w-72"
+
+          <MinHeightTextarea
             value={formObject.saving_other || ""}
+            placeholder="Other Details"
+            disabled={false}
             onChange={(e) => setData("other", "saving", e.target.value)}
           />
         </div>

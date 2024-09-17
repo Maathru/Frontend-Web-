@@ -3,7 +3,7 @@ import EligibleCardBoolInput from "../userComponents/eligibleCardBoolInput";
 import { Button } from "../ui/button";
 import { useEffect } from "react";
 import YesNoButton from "../userComponents/yesNoButton";
-import { TextField } from "@mui/material";
+import MinHeightTextarea from "../userComponents/minHeightTextarea";
 
 const ForBoth = ({
   formObject,
@@ -14,7 +14,7 @@ const ForBoth = ({
   const setData = (field, name, value) => {
     const newObject = {};
     newObject[name + "_" + field] = value || "";
-    setFormObject(prevState => ({ ...prevState, ...newObject }));
+    setFormObject((prevState) => ({ ...prevState, ...newObject }));
   };
 
   const handleSave = (e) => {
@@ -69,11 +69,10 @@ const ForBoth = ({
               value={formObject.breast_woman || false}
             />
             <p></p>
-            <TextField
-              label="Other Details"
-              variant="outlined"
-              className="w-72"
+            <MinHeightTextarea
               value={formObject.breast_other || ""}
+              placeholder="Other Details"
+              disabled={false}
               onChange={(e) => setData("other", "breast", e.target.value)}
             />
           </div>
