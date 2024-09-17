@@ -13,8 +13,6 @@ const ChildBirth = ({ handleChange }) => {
     setRecord((prevState) => ({ ...prevState, ...newObject }));
   };
 
-  console.log(record);
-
   const handleSave = (e) => {
     localStorage.setItem("birth", JSON.stringify(record));
     handleChange(e, 3);

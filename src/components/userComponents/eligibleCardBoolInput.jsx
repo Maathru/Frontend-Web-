@@ -1,5 +1,5 @@
-import { TextField } from "@mui/material";
 import YesNoButton from "./yesNoButton";
+import MinHeightTextarea from "./minHeightTextarea";
 
 const EligibleCardBoolInput = ({
   title,
@@ -23,11 +23,10 @@ const EligibleCardBoolInput = ({
       </div>
       <YesNoButton onChange={(e) => onChange("woman", e)} value={value1} />
       <YesNoButton onChange={(e) => onChange("man", e)} value={value2} />
-      <TextField
-        label={placeholder}
-        variant="outlined"
-        className="w-72"
+      <MinHeightTextarea
         value={value3}
+        placeholder={placeholder}
+        disabled={false}
         onChange={(e) => onChange("other", e.target.value)}
       />
     </div>

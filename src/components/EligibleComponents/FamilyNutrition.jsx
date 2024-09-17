@@ -1,9 +1,9 @@
 import { meals, nutrition } from "@/data/eligibleData";
 import EligibleCardBoolInput from "../userComponents/eligibleCardBoolInput";
-import { TextField } from "@mui/material";
 import YesNoButton from "../userComponents/yesNoButton";
 import { useEffect } from "react";
 import { Button } from "../ui/button";
+import MinHeightTextarea from "../userComponents/minHeightTextarea";
 
 const FamilyNutrition = ({
   formObject,
@@ -62,11 +62,11 @@ const FamilyNutrition = ({
             onChange={(e) => setData("man", "meal", e)}
             value={formObject.meal_man || false}
           />
-          <TextField
-            label="Other Details"
-            variant="outlined"
-            className="w-72"
+
+          <MinHeightTextarea
             value={formObject.meal_other || ""}
+            placeholder="Other Details"
+            disabled={false}
             onChange={(e) => setData("other", "meal", e.target.value)}
           />
         </div>
