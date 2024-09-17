@@ -19,6 +19,7 @@ import MainDetails from "@/components/PregnancyComponents/MainDetails";
 import PostnatalCare from "@/components/PregnancyComponents/PostnatalCare";
 import ClinicalConservation from "@/components/PregnancyComponents/ClinicalConservation";
 import PrenatalCareRelated from "@/components/PregnancyComponents/PrenatalCareRelated";
+import ChildBirth from "@/components/PregnancyComponents/ChildBirth";
 import { a11yProps, CustomTabPanel } from "@/components/BasicTabs";
 
 const Pregnancy1 = () => {
@@ -152,12 +153,10 @@ const Pregnancy1 = () => {
               aria-label="Pregnancy card tabs"
             >
               <Tab label="Main Details" {...a11yProps(0)} />
-              <Tab label="Postnatal Care" {...a11yProps(1)} />
-              <Tab
-                label="Clinical Conservation & Child Birth"
-                {...a11yProps(2)}
-              />
-              <Tab label="Prenatal care Related" {...a11yProps(3)} />
+              <Tab label="Clinical Conservation" {...a11yProps(1)} />
+              <Tab label="Child Birth" {...a11yProps(2)} />
+              <Tab label="Postnatal care" {...a11yProps(3)} />
+              <Tab label="Prenatal care Related" {...a11yProps(4)} />
             </Tabs>
           </Box>
           <CustomTabPanel value={value} index={0}>
@@ -168,20 +167,23 @@ const Pregnancy1 = () => {
             />
           </CustomTabPanel>
           <CustomTabPanel value={value} index={1}>
-            <PostnatalCare
-              formObject={formObject}
-              setFormObject={setFormObject}
-              handleChange={handleChange}
-            />
-          </CustomTabPanel>
-          <CustomTabPanel value={value} index={2}>
             <ClinicalConservation
               formObject={formObject}
               setFormObject={setFormObject}
               handleChange={handleChange}
             />
           </CustomTabPanel>
+          <CustomTabPanel value={value} index={2}>
+            <ChildBirth handleChange={handleChange} />
+          </CustomTabPanel>
           <CustomTabPanel value={value} index={3}>
+            <PostnatalCare
+              formObject={formObject}
+              setFormObject={setFormObject}
+              handleChange={handleChange}
+            />
+          </CustomTabPanel>
+          <CustomTabPanel value={value} index={4}>
             <PrenatalCareRelated
               formObject={formObject}
               setFormObject={setFormObject}
