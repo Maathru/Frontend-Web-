@@ -295,3 +295,136 @@ export const prenatalCare = [
     name: "a_days_to_visit_the_clinic",
   },
 ];
+
+export const record = [
+  {
+    title: "Clinic Date",
+    name: "clinicDate",
+    type: "date",
+    shrink: true,
+  },
+  {
+    title: "Weeks into Pregnancy",
+    name: "weeksIntoPregnancy",
+  },
+  {
+    title: "Weight (kg)",
+    name: "weight",
+  },
+  {
+    title: "Height",
+    name: "height",
+  },
+  {
+    title: "BMI",
+    name: "bmi",
+  },
+  {
+    title: "Glucose Level",
+    name: "glucoseLevel",
+  },
+  {
+    title: "Albumin Level",
+    name: "albuminLevel",
+  },
+  {
+    title: "Swelling",
+    name: "swelling",
+  },
+  {
+    title: "Blood Pressure",
+    name: "bloodPressure",
+  },
+  {
+    title: "Fetal Height",
+    name: "fetalHeight",
+  },
+  {
+    title: "Fetal Location",
+    name: "fetalLocation",
+  },
+  {
+    title: "Fetal Movements",
+    name: "fetalMovements",
+  },
+  {
+    title: "Heart Sound",
+    name: "heartSound",
+  },
+  {
+    title: "Iron Folate",
+    name: "ironFolate",
+  },
+  {
+    title: "Vitamin C",
+    name: "vitaminC",
+  },
+  {
+    title: "Calcium Malaria",
+    name: "calciumMalaria",
+  },
+  {
+    title: "Thriposha",
+    name: "thriposha",
+  },
+  {
+    title: "Blood Sample",
+    name: "bloodSample",
+  },
+  {
+    title: "Blood Sugar Level",
+    name: "bloodSugarLevel",
+  },
+  {
+    title: "Hemoglobin Level",
+    name: "hemoglobinLevel",
+  },
+  {
+    title: "Malaria",
+    name: "malaria",
+  },
+  {
+    title: "VDRL Result",
+    name: "vdrlResult",
+  },
+  {
+    title: "Lungs",
+    name: "lungs",
+  },
+  {
+    title: "Dental Tests",
+    name: "dentalTests",
+  },
+  {
+    title: "Dental Drying",
+    name: "dentalDrying",
+  },
+  {
+    title: "Galagandaya",
+    name: "galagandaya",
+  },
+  {
+    title: "Checked By",
+    name: "checkedBy",
+  },
+  {
+    title: "Referral",
+    name: "referral",
+  },
+];
+
+export const birth1 = [
+  {
+    title: "Birth Place",
+    placeholder: "Enter birth place",
+    name: "birth_place",
+  },
+  { title: "Date of Birth", placeholder: "", name: "dob", type: "date" },
+  {
+    title: "Date Released",
+    placeholder: "",
+    name: "date_released",
+    type: "date",
+  },
+  { title: "Done By", placeholder: "", name: "done_by" },
+];

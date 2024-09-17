@@ -153,14 +153,10 @@ const Pregnancy1 = () => {
               aria-label="Pregnancy card tabs"
             >
               <Tab label="Main Details" {...a11yProps(0)} />
-              <Tab
-                label="Clinical Conservation"
-                {...a11yProps(1)}
-              />
+              <Tab label="Clinical Conservation" {...a11yProps(1)} />
               <Tab label="Child Birth" {...a11yProps(2)} />
               <Tab label="Postnatal care" {...a11yProps(3)} />
               <Tab label="Prenatal care Related" {...a11yProps(4)} />
-
             </Tabs>
           </Box>
           <CustomTabPanel value={value} index={0}>
@@ -178,11 +174,7 @@ const Pregnancy1 = () => {
             />
           </CustomTabPanel>
           <CustomTabPanel value={value} index={2}>
-            <ChildBirth
-              formObject={formObject}
-              setFormObject={setFormObject}
-              handleChange={handleChange}
-            />
+            <ChildBirth handleChange={handleChange} />
           </CustomTabPanel>
           <CustomTabPanel value={value} index={3}>
             <PostnatalCare
