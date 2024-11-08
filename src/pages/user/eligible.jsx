@@ -32,6 +32,9 @@ const Eligible = () => {
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
+    document.getElementById("recoveryCheckListContainer").scrollIntoView({
+      behavior: "smooth",
+    });
   };
 
   const initiateFields = () => {
@@ -171,7 +174,10 @@ const Eligible = () => {
   const { t } = useTranslation("eligible1");
 
   return (
-    <div className="container my-10 font-poppins">
+    <div
+      className="container my-10 font-poppins"
+      id="recoveryCheckListContainer"
+    >
       {/* Hero section */}
       <>
         <Heading title={t("title")} />

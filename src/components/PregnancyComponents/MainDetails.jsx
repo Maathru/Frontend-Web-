@@ -11,6 +11,9 @@ const MainDetails = ({ formObject, setFormObject, handleChange }) => {
 
   const handleChangeMainDetails = (event, newValue) => {
     setValueMainDetails(newValue);
+    document.getElementById("pregnancyCardContainer").scrollIntoView({
+      behavior: "smooth",
+    });
   };
   return (
     <>

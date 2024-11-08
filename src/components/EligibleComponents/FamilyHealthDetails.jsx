@@ -11,6 +11,9 @@ const FamilyHealthDetails = ({ formObject, setFormObject, handleChange }) => {
 
   const handleChangeFamilyHealth = (event, newValue) => {
     setValueFamilyHealth(newValue);
+    document.getElementById("recoveryCheckListContainer").scrollIntoView({
+      behavior: "smooth",
+    });
   };
   return (
     <>

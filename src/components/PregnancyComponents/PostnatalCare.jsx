@@ -9,6 +9,9 @@ const PostnatalCare = ({ formObject, setFormObject, handleChange }) => {
 
   const handleChangePostnatalCare = (event, newValue) => {
     setValuePostnatalCare(newValue);
+    document.getElementById("pregnancyCardContainer").scrollIntoView({
+      behavior: "smooth",
+    });
   };
 
   return (
