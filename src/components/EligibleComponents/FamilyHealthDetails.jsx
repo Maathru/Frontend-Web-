@@ -11,9 +11,12 @@ const FamilyHealthDetails = ({ formObject, setFormObject, handleChange }) => {
 
   const handleChangeFamilyHealth = (event, newValue) => {
     setValueFamilyHealth(newValue);
-    document.getElementById("recoveryCheckListContainer").scrollIntoView({
-      behavior: "smooth",
-    });
+    const element = document.getElementById("recoveryCheckListContainer");
+    if (element) {
+      element.scrollIntoView({
+        behavior: "smooth",
+      });
+    }
   };
   return (
     <>
