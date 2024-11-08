@@ -32,9 +32,19 @@ const Eligible = () => {
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
-    document.getElementById("recoveryCheckListContainer").scrollIntoView({
-      behavior: "smooth",
-    });
+    const element = document.getElementById("recoveryCheckListContainer");
+    if (element) {
+      try {
+        // Check if user prefers reduced motion
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        element.scrollIntoView({
+          behavior: prefersReducedMotion ? 'auto' : 'smooth',
+        });
+      } catch (e) {
+        // Fallback for browsers that don't support smooth scroll
+        element.scrollIntoView();
+      }
+    }
   };
 
   const initiateFields = () => {
