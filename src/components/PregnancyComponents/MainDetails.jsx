@@ -11,6 +11,10 @@ const MainDetails = ({ formObject, setFormObject, handleChange }) => {
 
   const handleChangeMainDetails = (event, newValue) => {
     setValueMainDetails(newValue);
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    document.getElementById("pregnancyCardContainer")?.scrollIntoView({
+      behavior: prefersReducedMotion.matches ? 'auto' : 'smooth',
+    });
   };
   return (
     <>

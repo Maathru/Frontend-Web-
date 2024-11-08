@@ -30,6 +30,9 @@ const Pregnancy1 = () => {
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
+    document.getElementById("pregnancyCardContainer").scrollIntoView({
+      behavior: "smooth",
+    });
   };
 
   const editMode =
@@ -131,13 +134,13 @@ const Pregnancy1 = () => {
   const { t } = useTranslation("pregnancy1");
 
   return (
-    <div className="container my-10 font-poppins">
+    <div className="container my-10 font-poppins" id="pregnancyCardContainer">
       {/* Hero section */}
       <div>
         <Heading title={t("title")} />
 
         <p className="text-xl font-bold mt-8">
-          Mother&apos;s Name : A.P. Gamage
+          Mother&apos;s Name : {formObject.name_woman}
         </p>
 
         <div className="flex flex-row-reverse gap-10">

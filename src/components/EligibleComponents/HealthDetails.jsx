@@ -9,6 +9,12 @@ const HealthDetails = ({ formObject, setFormObject, handleChange }) => {
 
   const handleChangeHealth = (event, newValue) => {
     setValueHealth(newValue);
+    const targetElement = document.getElementById("recoveryCheckListContainer");
+    if (targetElement) {
+      targetElement.scrollIntoView({
+        behavior: "smooth",
+      });
+    }
   };
 
   return (

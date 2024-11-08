@@ -32,6 +32,19 @@ const Eligible = () => {
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
+    const element = document.getElementById("recoveryCheckListContainer");
+    if (element) {
+      try {
+        // Check if user prefers reduced motion
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        element.scrollIntoView({
+          behavior: prefersReducedMotion ? 'auto' : 'smooth',
+        });
+      } catch (e) {
+        // Fallback for browsers that don't support smooth scroll
+        element.scrollIntoView();
+      }
+    }
   };
 
   const initiateFields = () => {
@@ -171,7 +184,10 @@ const Eligible = () => {
   const { t } = useTranslation("eligible1");
 
   return (
-    <div className="container my-10 font-poppins">
+    <div
+      className="container my-10 font-poppins"
+      id="recoveryCheckListContainer"
+    >
       {/* Hero section */}
       <>
         <Heading title={t("title")} />
