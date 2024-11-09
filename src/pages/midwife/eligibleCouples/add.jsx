@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { HiChevronLeft, HiPlus } from "react-icons/hi";
+import { HiPlus } from "react-icons/hi";
 import {
   Typography,
   TextField,
@@ -310,6 +310,42 @@ const addCouples = () => {
       : location.pathname.split("/")[2] === "edit"
       ? `Edit Eligible Couple - ID ${eligibleId}`
       : "Add New Eligible Couple";
+
+  const bmiCalculator = (weight, height) => {
+    if (!weight || !height || weight <= 0 || height <= 0) {
+      return 0;
+    }
+    const heightInMeters = height / 100;
+    const bmi = weight / Math.pow(heightInMeters, 2);
+    return bmi.toFixed(2);
+  };
+
+  const updateBMI = useCallback(
+    (person) => {
+      const weight = formData[`${person}Weight`];
+      const height = formData[`${person}Height`];
+
+      if (weight && height) {
+        const bmi = bmiCalculator(weight, height);
+        if (!isNaN(bmi) && isFinite(bmi)) {
+          setFormData((prevData) => ({ ...prevData, [`${person}Bmi`]: bmi }));
+          setErrors((prevErrors) => ({
+            ...prevErrors,
+            [`${person}Bmi`]: validateField(`${person}Bmi`, bmi),
+          }));
+        }
+      }
+    },
+    [formData]
+  );
+
+  useEffect(() => {
+    updateBMI("woman");
+  }, [formData.womanHeight, formData.womanWeight, updateBMI]);
+
+  useEffect(() => {
+    updateBMI("man");
+  }, [formData.manHeight, formData.manWeight, updateBMI]);
 
   return (
     <div className="content-container">
