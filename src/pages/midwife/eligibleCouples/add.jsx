@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { HiPlus } from "react-icons/hi";
 import {
@@ -320,29 +320,32 @@ const addCouples = () => {
     return bmi.toFixed(2);
   };
 
+  const updateBMI = useCallback(
+    (person) => {
+      const weight = formData[`${person}Weight`];
+      const height = formData[`${person}Height`];
+
+      if (weight && height) {
+        const bmi = bmiCalculator(weight, height);
+        if (!isNaN(bmi) && isFinite(bmi)) {
+          setFormData((prevData) => ({ ...prevData, [`${person}Bmi`]: bmi }));
+          setErrors((prevErrors) => ({
+            ...prevErrors,
+            [`${person}Bmi`]: validateField(`${person}Bmi`, bmi),
+          }));
+        }
+      }
+    },
+    [formData]
+  );
+
   useEffect(() => {
-    if (formData.womanWeight && formData.womanHeight) {
-      let bmi = bmiCalculator(formData.womanWeight, formData.womanHeight / 100);
-
-      setFormData((prevData) => ({ ...prevData, womanBmi: bmi }));
-      setErrors((prevErrors) => ({
-        ...prevErrors,
-        womanBmi: validateField("womanBmi", bmi),
-      }));
-    }
-  }, [formData.womanHeight, formData.womanWeight]);
+    updateBMI("woman");
+  }, [formData.womanHeight, formData.womanWeight, updateBMI]);
 
   useEffect(() => {
-    if (formData.manWeight && formData.manHeight) {
-      let bmi = bmiCalculator(formData.manWeight, formData.manHeight / 100);
-
-      setFormData((prevData) => ({ ...prevData, manBmi: bmi }));
-      setErrors((prevErrors) => ({
-        ...prevErrors,
-        manBmi: validateField("manBmi", bmi),
-      }));
-    }
-  }, [formData.manHeight, formData.manWeight]);
+    updateBMI("man");
+  }, [formData.manHeight, formData.manWeight, updateBMI]);
 
   return (
     <div className="content-container">
