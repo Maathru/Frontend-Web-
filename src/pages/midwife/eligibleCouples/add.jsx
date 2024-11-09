@@ -25,7 +25,7 @@ const addCouples = () => {
   const navigate = useNavigate();
   const [updateParent, setUpdateParent] = useState(false);
   const { userId, eligibleId } = useParams();
-  const [FormData, setFormData] = useState({
+  const [formData, setFormData] = useState({
     womanName: "",
     manName: "",
     address: "",
@@ -112,7 +112,7 @@ const addCouples = () => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData({ ...FormData, [name]: value });
+    setFormData({ ...formData, [name]: value });
     setErrors({ ...errors, [name]: validateField(name, value) });
   };
 
@@ -189,8 +189,8 @@ const addCouples = () => {
   const validate = () => {
     const newErrors = {};
 
-    Object.keys(FormData).forEach((key) => {
-      const error = validateField(key, FormData[key]);
+    Object.keys(formData).forEach((key) => {
+      const error = validateField(key, formData[key]);
       if (error) newErrors[key] = error;
     });
 
@@ -203,7 +203,7 @@ const addCouples = () => {
         const response = await EligibleService.getEligibleInfoForMidwife(
           userId
         );
-        setFormData({ ...FormData, ...response });
+        setFormData({ ...formData, ...response });
 
         // Update pastPregnancySections based on formData
         const newPastPregnancySections = response.pastPregnancies.map(
@@ -260,7 +260,7 @@ const addCouples = () => {
 
     const formObject = EligibleService.createMidwifeEligibleObject(
       userId,
-      FormData,
+      formData,
       pastPregnancySections,
       familyMethods
     );
@@ -327,9 +327,14 @@ const addCouples = () => {
                 <Link to={`/eligibles/edit/${userId}/${eligibleId}`}>
                   <Button className="px-10">Edit</Button>
                 </Link>
-                <Button onClick={() => setUpdateParent(true)} className="ml-10">
-                  Change status to parent
-                </Button>
+                {formData.role && formData.role == "ELIGIBLE" && (
+                  <Button
+                    onClick={() => setUpdateParent(true)}
+                    className="ml-10"
+                  >
+                    Change status to parent
+                  </Button>
+                )}
               </>
             )}
           </div>
@@ -346,7 +351,7 @@ const addCouples = () => {
               disabled={!editMode}
               className="rounded"
               size="small"
-              value={FormData.womanName || ""}
+              value={formData.womanName || ""}
               name="womanName"
               onChange={handleInputChange || ""}
               error={errors.womanName ? true : false}
@@ -356,7 +361,7 @@ const addCouples = () => {
               disabled={!editMode}
               className="rounded"
               size="small"
-              value={FormData.manName || ""}
+              value={formData.manName || ""}
               name="manName"
               onChange={handleInputChange}
               error={errors.manName ? true : false}
@@ -370,7 +375,7 @@ const addCouples = () => {
               aria-readonly
               className="rounded col-span-2"
               size="small"
-              value={FormData.address || ""}
+              value={formData.address || ""}
               name="address"
               error={errors.address ? true : false}
               helperText={errors.address ? errors.address : ""}
@@ -380,7 +385,7 @@ const addCouples = () => {
               <div className="rounded col-span-3">
                 <LocationAddPopup
                   setFormObject={setFormData}
-                  formObject={FormData}
+                  formObject={formData}
                 />
               </div>
             )}
@@ -391,7 +396,7 @@ const addCouples = () => {
               disabled={!editMode}
               className="rounded"
               size="small"
-              value={FormData.womanPhone || ""}
+              value={formData.womanPhone || ""}
               name="womanPhone"
               onChange={handleInputChange}
               error={errors.womanPhone ? true : false}
@@ -401,7 +406,7 @@ const addCouples = () => {
               disabled={!editMode}
               className="rounded"
               size="small"
-              value={FormData.manPhone || ""}
+              value={formData.manPhone || ""}
               name="manPhone"
               onChange={handleInputChange}
               error={errors.manPhone ? true : false}
@@ -415,7 +420,7 @@ const addCouples = () => {
               className="rounded"
               size="small"
               type="date"
-              value={FormData.womanDob || ""}
+              value={formData.womanDob || ""}
               name="womanDob"
               onChange={handleInputChange}
               error={errors.womanDob ? true : false}
@@ -426,7 +431,7 @@ const addCouples = () => {
               className="rounded"
               size="small"
               type="date"
-              value={FormData.manDob || ""}
+              value={formData.manDob || ""}
               name="manDob"
               onChange={handleInputChange}
               error={errors.manDob ? true : false}
@@ -440,7 +445,7 @@ const addCouples = () => {
               className="rounded"
               size="small"
               type="number"
-              value={FormData.womanAgeMarried || ""}
+              value={formData.womanAgeMarried || ""}
               name="womanAgeMarried"
               onChange={handleInputChange}
               error={errors.womanAgeMarried ? true : false}
@@ -451,7 +456,7 @@ const addCouples = () => {
               className="rounded"
               size="small"
               type="number"
-              value={FormData.manAgeMarried || ""}
+              value={formData.manAgeMarried || ""}
               name="manAgeMarried"
               onChange={handleInputChange}
               error={errors.manAgeMarried ? true : false}
@@ -464,7 +469,7 @@ const addCouples = () => {
               disabled={!editMode}
               className="rounded"
               size="small"
-              value={FormData.womanEducationLevel || ""}
+              value={formData.womanEducationLevel || ""}
               name="womanEducationLevel"
               onChange={handleInputChange}
               error={errors.womanEducationLevel ? true : false}
@@ -476,7 +481,7 @@ const addCouples = () => {
               disabled={!editMode}
               className="rounded"
               size="small"
-              value={FormData.manEducationLevel || ""}
+              value={formData.manEducationLevel || ""}
               name="manEducationLevel"
               onChange={handleInputChange}
               error={errors.manEducationLevel ? true : false}
@@ -491,7 +496,7 @@ const addCouples = () => {
               disabled={!editMode}
               className="rounded"
               size="small"
-              value={FormData.womanOccupation || ""}
+              value={formData.womanOccupation || ""}
               name="womanOccupation"
               onChange={handleInputChange}
               error={errors.womanOccupation ? true : false}
@@ -501,7 +506,7 @@ const addCouples = () => {
               disabled={!editMode}
               className="rounded"
               size="small"
-              value={FormData.manOccupation || ""}
+              value={formData.manOccupation || ""}
               name="manOccupation"
               onChange={handleInputChange}
               error={errors.manOccupation ? true : false}
@@ -516,7 +521,7 @@ const addCouples = () => {
               disabled={!editMode}
               className="rounded col-span-2"
               size="small"
-              value={FormData.children && FormData.children}
+              value={formData.children}
               name="children"
               onChange={handleInputChange}
               error={errors.children ? true : false}
@@ -687,7 +692,7 @@ const addCouples = () => {
               className="rounded"
               size="small"
               type="number"
-              value={FormData.womanWeight || ""}
+              value={formData.womanWeight || ""}
               name="womanWeight"
               onChange={handleInputChange}
               error={errors.womanWeight ? true : false}
@@ -698,7 +703,7 @@ const addCouples = () => {
               className="rounded"
               size="small"
               type="number"
-              value={FormData.manWeight || ""}
+              value={formData.manWeight || ""}
               name="manWeight"
               onChange={handleInputChange}
               error={errors.manWeight ? true : false}
@@ -712,7 +717,7 @@ const addCouples = () => {
               className="rounded"
               size="small"
               type="number"
-              value={FormData.womanHeight || ""}
+              value={formData.womanHeight || ""}
               name="womanHeight"
               onChange={handleInputChange}
               error={errors.womanHeight ? true : false}
@@ -723,7 +728,7 @@ const addCouples = () => {
               className="rounded"
               size="small"
               type="number"
-              value={FormData.manHeight || ""}
+              value={formData.manHeight || ""}
               name="manHeight"
               onChange={handleInputChange}
               error={errors.manHeight ? true : false}
@@ -737,7 +742,7 @@ const addCouples = () => {
               className="rounded"
               size="small"
               type="number"
-              value={FormData.womanBmi || ""}
+              value={formData.womanBmi || ""}
               name="womanBmi"
               onChange={handleInputChange}
               error={errors.womanBmi ? true : false}
@@ -748,7 +753,7 @@ const addCouples = () => {
               className="rounded"
               size="small"
               type="number"
-              value={FormData.manBmi || ""}
+              value={formData.manBmi || ""}
               name="manBmi"
               onChange={handleInputChange}
               error={errors.manBmi ? true : false}
@@ -761,7 +766,7 @@ const addCouples = () => {
               disabled={!editMode}
               className="rounded"
               size="small"
-              value={FormData.womanBloodType || ""}
+              value={formData.womanBloodType || ""}
               name="womanBloodType"
               onChange={handleInputChange}
               error={errors.womanBloodType ? true : false}
@@ -771,7 +776,7 @@ const addCouples = () => {
               disabled={!editMode}
               className="rounded"
               size="small"
-              value={FormData.manBloodType || ""}
+              value={formData.manBloodType || ""}
               name="manBloodType"
               onChange={handleInputChange}
               error={errors.manBloodType ? true : false}
@@ -785,7 +790,7 @@ const addCouples = () => {
               className="rounded"
               size="small"
               type="number"
-              value={FormData.womanHemoglobin || ""}
+              value={formData.womanHemoglobin || ""}
               name="womanHemoglobin"
               onChange={handleInputChange}
               error={errors.womanHemoglobin ? true : false}
@@ -796,7 +801,7 @@ const addCouples = () => {
               className="rounded"
               size="small"
               type="number"
-              value={FormData.manHemoglobin || ""}
+              value={formData.manHemoglobin || ""}
               name="manHemoglobin"
               onChange={handleInputChange}
               error={errors.manHemoglobin ? true : false}
@@ -810,7 +815,7 @@ const addCouples = () => {
           <TextField
             disabled={!editMode}
             name="special"
-            value={FormData.special || ""}
+            value={formData.special || ""}
             onChange={handleInputChange}
             className="rounded"
             sx={{ width: "100%" }}
@@ -821,7 +826,7 @@ const addCouples = () => {
           <TextField
             disabled={!editMode}
             name="session"
-            value={FormData.session || ""}
+            value={formData.session || ""}
             onChange={handleInputChange}
             className="rounded"
             sx={{ width: "100%" }}
