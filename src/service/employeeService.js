@@ -8,7 +8,10 @@ class EmployeeService {
       });
       return response.data;
     } catch (error) {
-      throw error;
+      if (error.response) {
+        throw new Error(`Employee registration failed: ${error.response.data.message || 'Unknown error'}`);
+      }
+      throw new Error('Network error while registering employee');
     }
   }
 
