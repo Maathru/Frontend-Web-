@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { HiChevronLeft, HiPlus } from "react-icons/hi";
+import { HiPlus } from "react-icons/hi";
 import {
   Typography,
   TextField,
@@ -310,6 +310,34 @@ const addCouples = () => {
       : location.pathname.split("/")[2] === "edit"
       ? `Edit Eligible Couple - ID ${eligibleId}`
       : "Add New Eligible Couple";
+
+  const bmiCalculator = (weight, height) => {
+    return (weight / (height * height)).toFixed(2);
+  };
+
+  useEffect(() => {
+    if (formData.womanWeight && formData.womanHeight) {
+      let bmi = bmiCalculator(formData.womanWeight, formData.womanHeight / 100);
+
+      setFormData((prevData) => ({ ...prevData, womanBmi: bmi }));
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        womanBmi: validateField("womanBmi", bmi),
+      }));
+    }
+  }, [formData.womanHeight, formData.womanWeight]);
+
+  useEffect(() => {
+    if (formData.manWeight && formData.manHeight) {
+      let bmi = bmiCalculator(formData.manWeight, formData.manHeight / 100);
+
+      setFormData((prevData) => ({ ...prevData, manBmi: bmi }));
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        manBmi: validateField("manBmi", bmi),
+      }));
+    }
+  }, [formData.manHeight, formData.manWeight]);
 
   return (
     <div className="content-container">
