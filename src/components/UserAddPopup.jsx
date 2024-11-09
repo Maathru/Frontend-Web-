@@ -12,6 +12,8 @@ import {
   Typography,
 } from "@mui/material";
 import { useState } from "react";
+import EmployeeService from "@/service/employeeService";
+import { errorType, Toast } from "./toast";
 
 const UserAddPopup = ({
   isOpen,
@@ -26,12 +28,14 @@ const UserAddPopup = ({
   address1,
   street,
   city,
+  formData,
+  setFormData,
 }) => {
   const [errors, setErrors] = useState({});
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    // setFormData({ ...formData, [name]: value });
+    setFormData({ ...formData, [name]: value });
     setErrors({ ...errors, [name]: validateField(name, value) });
   };
 
@@ -44,15 +48,17 @@ const UserAddPopup = ({
         if (!value) return "Last name is required";
         break;
       case "email":
-        if (!value) return "Email address is required";
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!value) return "Email is required";
+        if (!emailPattern.test(value)) return "Email is not valid";
         break;
-      case "phone":
+      case "phoneNumber":
         if (!value) return "Phone number is required";
         break;
       case "nic":
         if (!value) return "NIC number is required";
         break;
-      case "address1":
+      case "addressLine1":
         if (!value) return "Address line 1 is required";
         break;
       case "street":
@@ -65,6 +71,65 @@ const UserAddPopup = ({
         break;
     }
     return "";
+  };
+
+  const validate = () => {
+    const newErrors = {};
+
+    Object.keys(formData).forEach((key) => {
+      const error = validateField(key, formData[key]);
+      if (error) newErrors[key] = error;
+    });
+
+    return newErrors;
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const validationErrors = validate();
+
+    if (Object.keys(validationErrors).length !== 0) {
+      setErrors(validationErrors);
+      return;
+    }
+    try {
+      const response = await EmployeeService.register(formData);
+
+      setFormData({
+        firstName: "",
+        lastName: "",
+        email: "",
+        role: "",
+        phoneNumber: "",
+        nic: "",
+        addressLine1: "",
+        street: "",
+        city: "",
+        designation: "",
+        qualifications: "",
+      });
+      Toast(response, errorType.SUCCESS);
+      setIsOpen(false);
+    } catch (error) {
+      console.log(error.message);
+
+      const data = error.response.data;
+      if (data) {
+        if (Array.isArray(data)) {
+          const newErrors = {};
+          data.map((msg) => {
+            Toast(msg.message, errorType.ERROR);
+            newErrors[msg.field] = msg.message;
+          });
+
+          setErrors(newErrors);
+        } else {
+          console.log(data);
+          Toast(data || "Error occurred", errorType.ERROR);
+        }
+      }
+    }
   };
 
   return (
@@ -110,7 +175,7 @@ const UserAddPopup = ({
                 label={firstName}
                 name="firstName"
                 variant="standard"
-                //   value={formData.firstName}
+                value={formData.firstName}
                 onChange={handleInputChange}
                 error={!!errors.firstName}
                 helperText={errors.firstName ? errors.firstName : ""}
@@ -121,7 +186,7 @@ const UserAddPopup = ({
                 label={lastName}
                 name="lastName"
                 variant="standard"
-                //   value={formData.lastName}
+                value={formData.lastName}
                 onChange={handleInputChange}
                 error={!!errors.lastName}
                 helperText={errors.lastName ? errors.lastName : ""}
@@ -134,7 +199,7 @@ const UserAddPopup = ({
               name="email"
               type="email"
               variant="standard"
-              //   value={formData.email}
+              value={formData.email}
               onChange={handleInputChange}
               error={!!errors.email}
               helperText={errors.email ? errors.email : ""}
@@ -143,12 +208,12 @@ const UserAddPopup = ({
               required
               fullWidth
               label={phone}
-              name="phone"
+              name="phoneNumber"
               variant="standard"
-              //   value={formData.phone}
+              value={formData.phoneNumber}
               onChange={handleInputChange}
-              error={!!errors.phone}
-              helperText={errors.phone ? errors.phone : ""}
+              error={!!errors.phoneNumber}
+              helperText={errors.phoneNumber ? errors.phoneNumber : ""}
             />
             <TextField
               required
@@ -156,30 +221,57 @@ const UserAddPopup = ({
               label={nic}
               name="nic"
               variant="standard"
-              //   value={formData.nic}
+              value={formData.nic}
               onChange={handleInputChange}
               error={!!errors.nic}
               helperText={errors.nic ? errors.nic : ""}
             />
             <FormControl required>
-              <InputLabel sx={{ left: "-10px" }}>Select Designation</InputLabel>
+              <InputLabel sx={{ left: "-10px" }}>Select Role</InputLabel>
 
-              <Select label={designation} name="designation" variant="standard">
-                <MenuItem>Midwife</MenuItem>
-                <MenuItem>Doctor</MenuItem>
+              <Select
+                label="Select Role"
+                name="role"
+                value={formData.role}
+                onChange={handleInputChange}
+                variant="standard"
+              >
+                <MenuItem value="MIDWIFE">Midwife</MenuItem>
+                <MenuItem value="DOCTOR">Doctor</MenuItem>
               </Select>
             </FormControl>
 
             <TextField
               required
-              label={address1}
-              name="address1"
+              label={designation}
+              name="designation"
               variant="standard"
               fullWidth
-              //   value={formData.address1}
+              value={formData.designation}
               onChange={handleInputChange}
-              error={!!errors.address1}
-              helperText={errors.address1 ? errors.address1 : ""}
+              error={!!errors.designation}
+              helperText={errors.designation ? errors.designation : ""}
+            />
+            <TextField
+              label="Enter qualifications"
+              name="qualifications"
+              variant="standard"
+              fullWidth
+              value={formData.qualifications}
+              onChange={handleInputChange}
+              error={!!errors.qualifications}
+              helperText={errors.qualifications ? errors.qualifications : ""}
+            />
+            <TextField
+              required
+              label={address1}
+              name="addressLine1"
+              variant="standard"
+              fullWidth
+              value={formData.addressLine1}
+              onChange={handleInputChange}
+              error={!!errors.addressLine1}
+              helperText={errors.addressLine1 ? errors.addressLine1 : ""}
             />
             <div className="flex gap-8">
               <TextField
@@ -188,7 +280,7 @@ const UserAddPopup = ({
                 name="street"
                 variant="standard"
                 fullWidth
-                //   value={formData.street}
+                value={formData.street}
                 onChange={handleInputChange}
                 error={!!errors.street}
                 helperText={errors.street ? errors.street : ""}
@@ -200,14 +292,17 @@ const UserAddPopup = ({
                 name="city"
                 variant="standard"
                 fullWidth
-                //   value={formData.city}
+                value={formData.city}
                 onChange={handleInputChange}
                 error={!!errors.city}
                 helperText={errors.city ? errors.city : ""}
               />
             </div>
 
-            <Button className="my-6 mx-24 bg-footer-purple">
+            <Button
+              onClick={handleSubmit}
+              className="my-6 mx-24 bg-footer-purple"
+            >
               Save Details
             </Button>
           </div>

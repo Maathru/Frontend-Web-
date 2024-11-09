@@ -1,6 +1,17 @@
 import axiosInstance from "./axiosInstance";
 
 class EmployeeService {
+  static async register(formData) {
+    try {
+      const response = await axiosInstance.post(`/employee`, {
+        ...formData,
+      });
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  }
+
   static async getMidwives() {
     try {
       const response = await axiosInstance.get(`/employee/midwife`);
