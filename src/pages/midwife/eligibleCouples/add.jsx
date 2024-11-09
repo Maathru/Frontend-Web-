@@ -312,7 +312,12 @@ const addCouples = () => {
       : "Add New Eligible Couple";
 
   const bmiCalculator = (weight, height) => {
-    return (weight / (height * height)).toFixed(2);
+    if (!weight || !height || weight <= 0 || height <= 0) {
+      return 0;
+    }
+    const heightInMeters = height / 100;
+    const bmi = weight / Math.pow(heightInMeters, 2);
+    return bmi.toFixed(2);
   };
 
   useEffect(() => {
