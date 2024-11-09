@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { HiOutlinePencilAlt, HiOutlineTrash } from "react-icons/hi";
-import { Box, IconButton } from "@mui/material";
+import { IconButton } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import Heading from "@/components/ui/heading";
 import { useTitle } from "@/hooks/useTitle";
@@ -82,6 +82,19 @@ const ManageUsers = () => {
   const [rows, setRows] = useState([]);
   const { t } = useTranslation("manageUsers");
   const [isOpen, setIsOpen] = useState(false);
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    role: "",
+    phoneNumber: "",
+    nic: "",
+    addressLine1: "",
+    street: "",
+    city: "",
+    designation: "",
+    qualifications: "",
+  });
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -118,6 +131,8 @@ const ManageUsers = () => {
           city={t("city")}
           isOpen={isOpen}
           setIsOpen={setIsOpen}
+          formData={formData}
+          setFormData={setFormData}
         />
       </div>
       <div className="w-full h-full">
