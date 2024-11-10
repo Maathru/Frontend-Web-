@@ -48,13 +48,11 @@ const UserAddPopup = ({
         if (!value) return "Last name is required";
         break;
       case "email":
-          case "email":
-           {
-            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!value) return "Email is required";
-            if (!emailPattern.test(value)) return "Email is not valid";
-           }
-            break;
+        {
+          const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+          if (!value) return "Email is required";
+          if (!emailPattern.test(value)) return "Email is not valid";
+        }
         break;
       case "phoneNumber":
         if (!value) return "Phone number is required";
