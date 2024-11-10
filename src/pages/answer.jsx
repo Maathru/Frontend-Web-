@@ -338,6 +338,7 @@ const Answer = () => {
       <DeleteConfirmationDialog
         isOpen={isDeleteDialogOpen}
         onClose={closeDeleteDialog}
+        item={"answer"}
         handleDelete={() => handleDelete(deleteId)}
       />
     </div>

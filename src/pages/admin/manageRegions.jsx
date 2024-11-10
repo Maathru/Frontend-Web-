@@ -192,6 +192,7 @@ const manageRegions = () => {
       <DeleteConfirmationDialog
         isOpen={isDeleteDialogOpen}
         onClose={closeDeleteDialog}
+        item={"region"}
         handleDelete={() => handleDelete(deleteId)}
       />
     </div>

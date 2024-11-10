@@ -560,6 +560,18 @@ class EligibleService {
     }
   }
 
+  // By midwife
+  static async deleteEligibleUserByMidwife(userId) {
+    try {
+      const response = await axiosInstance.delete(
+        `/eligible/midwife/delete/${userId}`
+      );
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  }
+
   // For midwife
   static async getEligibleListForMidwife() {
     try {
