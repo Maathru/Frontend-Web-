@@ -10,6 +10,7 @@ import ReactApexChart from "react-apexcharts";
 import Calendar from "@/components/Calendar";
 import ClinicService from "@/service/clinicService";
 import { errorType, Toast } from "@/components/toast";
+import { formatTime } from "@/utils/FormatTime";
 
 const doctorCards = [
   {
@@ -32,19 +33,19 @@ const doctorCards = [
   },
 ];
 
-const NextClinic = ({ clinicId, clinicName, date, startTime, endTime }) => {
+const NextClinic = ({ region, clinicName, date, startTime, endTime }) => {
   return (
-    <div className="mb-5 w-full h-24 px-5 rounded-lg bg-light-blogcard dark:bg-dark-blogcard flex items-center justify-between">
+    <div className="mb-5 w-[99%] h-24 px-5 rounded-lg bg-light-blogcard dark:bg-dark-blogcard flex items-center justify-between">
       <p className="text-lg">
-        {`Clinic ${clinicId}: ${clinicName} on `}
-        <b>{date}</b> {`at `}
-        <b>
-          {startTime}
-          {` to `}
-          {endTime}
-        </b>
+        {`You are assigned to ${clinicName} on `}
+        <span className="font-semibold">{date}</span> {`from `}
+        <span className="font-semibold">{formatTime(startTime)}</span>
+        {` to `}
+        <span className="font-semibold">{formatTime(endTime)}</span>
       </p>
-      <Button className="px-10">View More</Button>
+      <Button className="px-10 cursor-auto hover:bg-primary-purple">
+        {region}
+      </Button>
     </div>
   );
 };
@@ -157,7 +158,7 @@ const doctorDashboard = () => {
             {clinics.map((clinic) => (
               <NextClinic
                 key={clinic.clinicId}
-                clinicId={clinic.other}
+                region={clinic.other}
                 clinicName={clinic.name}
                 date={clinic.date}
                 startTime={clinic.startTime}

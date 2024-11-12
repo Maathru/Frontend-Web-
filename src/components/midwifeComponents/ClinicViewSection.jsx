@@ -1,5 +1,6 @@
 import { FaCircle } from "react-icons/fa";
 import { Button } from "../ui/button";
+import { formatTime } from "@/utils/FormatTime";
 
 const ClinicViewSection = ({ clinics }) => {
   return (
@@ -18,12 +19,20 @@ const ClinicViewSection = ({ clinics }) => {
       <div className="h-72 overflow-y-auto">
         {clinics.map((clinic, index) => (
           <div
-            className="bg-[#6e00961c] dark:bg-dark-background w-full p-5 mb-6 rounded-md flex justify-between items-center"
+            className="bg-[#6e00961c] dark:bg-dark-background w-[99%] p-5 mb-6 rounded-md flex justify-between items-center"
             key={index}
           >
             <p className="text-lg">
-              Your Next MOH Clinic on:{" "}
-              <span className="font-bold">{clinic.date}</span>
+              {clinic.name} on{" "}
+              <span className="font-semibold">{clinic.date} </span>
+              from{" "}
+              <span className="font-semibold">
+                {formatTime(clinic.startTime)}
+              </span>{" "}
+              to{" "}
+              <span className="font-semibold">
+                {formatTime(clinic.endTime)}
+              </span>
             </p>
             <Button className="bg-footer-purple">{clinic.name}</Button>
           </div>

@@ -304,8 +304,8 @@ const Dashboard = () => {
       </div>
       <div>
         <Typography variant="h4">Upcoming Clinics & Home Visits</Typography>
-        <div className="flex">
-          <div className="w-5/12">
+        <div className="flex mt-8">
+          <div className="w-5/12 mt-6">
             <Calendar
               handleMonthChange={handleMonthChange}
               highlightedDays={dates}
@@ -315,7 +315,7 @@ const Dashboard = () => {
         </div>
       </div>
       <div>
-        <div className="flex justify-between mb-10">
+        <div className="flex justify-between mb-10 mt-10">
           <Typography variant="h4">
             Trend Analysis in your Midwife Area
           </Typography>

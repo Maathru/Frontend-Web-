@@ -8,6 +8,7 @@ import { useTranslation } from "react-i18next";
 import ClinicService from "@/service/clinicService";
 import { errorType, Toast } from "@/components/toast";
 import Calendar from "@/components/Calendar";
+import { formatTime } from "@/utils/FormatTime";
 
 const columns = [
   { field: "id", width: 20 },
@@ -55,19 +56,6 @@ const columns2 = [
     flex: 1,
   },
 ];
-
-const formatTime = (timeString) => {
-  const [hours, minutes] = timeString.split(":");
-  const date = new Date();
-  date.setHours(hours);
-  date.setMinutes(minutes);
-
-  return date.toLocaleTimeString([], {
-    hour: "2-digit",
-    minute: "2-digit",
-    hour12: true,
-  });
-};
 
 function QuickSearchToolbar() {
   return (
