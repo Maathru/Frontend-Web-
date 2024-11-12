@@ -13,6 +13,7 @@ import EmployeeService from "@/service/employeeService";
 import { errorType, Toast } from "@/components/toast";
 import ClinicService from "@/service/clinicService";
 import Calendar from "@/components/Calendar";
+import ClinicViewSection from "@/components/midwifeComponents/ClinicViewSection";
 // import { title } from "process";
 
 const Widget = ({ icon: Icon, count, label1, label2, link }) => (
@@ -42,6 +43,7 @@ const Dashboard = () => {
   const { userDetails } = useContext(userData);
   const [cardData, setCardData] = useState({});
   const [dates, setDates] = useState([]);
+  const [clinics, setClinics] = useState([]);
 
   // pregnancy visits line chart data starts
   const pregnancyVisitsOptions = {
@@ -246,12 +248,8 @@ const Dashboard = () => {
     };
     return () => {
       fetchDashboardData();
-    };
-  }, []);
-
-  useEffect(() => {
-    return () => {
       fetchClinicsForGivenMonth(new Date().toISOString().split("T")[0]);
+      fetchUpcomingClinicsForMidwife();
     };
   }, []);
 
@@ -267,6 +265,16 @@ const Dashboard = () => {
 
   const handleMonthChange = async (date) => {
     await fetchClinicsForGivenMonth(date.format("YYYY-MM-DD"));
+  };
+
+  const fetchUpcomingClinicsForMidwife = async () => {
+    try {
+      const response = await ClinicService.getUpcomingClinicsForMidwife();
+      setClinics(response);
+    } catch (error) {
+      Toast(error.response.data || "Unauthorized", errorType.ERROR);
+      console.log(error.response.data);
+    }
   };
 
   return (
@@ -297,40 +305,18 @@ const Dashboard = () => {
       </div>
       <div>
         <Typography variant="h4">Upcoming Clinics & Home Visits</Typography>
-        <div className="flex">
-          <div className="w-5/12">
+        <div className="flex mt-8">
+          <div className="w-5/12 mt-6">
             <Calendar
               handleMonthChange={handleMonthChange}
               highlightedDays={dates}
             />
           </div>
-          <div className="w-7/12 flex flex-col gap-9">
-            <div className="flex gap-10">
-              <p className="text-lg">
-                <FaCircle className="text-light-clinics inline" /> Clinics
-              </p>
-              <p className="text-lg">
-                <FaCircle className="text-light-home-visit inline" /> Home
-                Visits
-              </p>
-            </div>
-            <div className="bg-[#6e00961c] dark:bg-dark-background w-full p-5 rounded-md flex justify-between items-center">
-              <p className="text-lg">
-                Your Next Home Visits on: <span>05/08/2024</span>
-              </p>
-              <Button className="bg-footer-purple">View Home Visits</Button>
-            </div>
-            <div className="bg-[#6e00961c] dark:bg-dark-background w-full p-5 rounded-md flex justify-between items-center">
-              <p className="text-lg">
-                Your Next Home Visits on: <span>08/08/2024</span>
-              </p>
-              <Button className="bg-footer-purple">View MOH Clinics</Button>
-            </div>
-          </div>
+          <ClinicViewSection clinics={clinics} />
         </div>
       </div>
       <div>
-        <div className="flex justify-between mb-10">
+        <div className="flex justify-between mb-10 mt-10">
           <Typography variant="h4">
             Trend Analysis in your Midwife Area
           </Typography>
