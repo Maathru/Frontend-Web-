@@ -106,7 +106,7 @@ const viewAllParents = () => {
   }, []);
 
   const handleRowClick = (params) => {
-    navigate(`/pregnancy/1`);
+    navigate(`/pregnancy/`);
   };
 
   return (

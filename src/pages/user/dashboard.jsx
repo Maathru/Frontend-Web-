@@ -37,7 +37,7 @@ const parentCards = [
     title: "Contact Midwife",
     description: "Easily connect with your midwife",
     image: midwife,
-    url: "/midwife",
+    url: "#contactMidwife",
   },
   {
     title: "Child Growth",
@@ -153,7 +153,7 @@ const Dashboard = () => {
         </>
       )}
 
-      <ContactMidwifeSection />
+      <ContactMidwifeSection id="contactMidwife" />
 
       {userDetails.role === "PARENT" && (
         <>
