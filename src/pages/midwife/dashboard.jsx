@@ -48,9 +48,7 @@ const Dashboard = () => {
     // options: {
     chart: {
       type: "line",
-      zoom: {
-        enabled: false,
-      },
+
       dropShadow: {
         enabled: true,
         enabledOnSeries: undefined,
@@ -132,6 +130,9 @@ const Dashboard = () => {
         color: isDarkMode ? "#ffffff" : "#263238",
         padding: "20px",
       },
+    },
+    dataLabels: {
+      enabled: false,
     },
 
     stroke: {

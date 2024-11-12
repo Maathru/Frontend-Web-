@@ -14,19 +14,19 @@ const doctorCards = [
     title: "View Patient Records",
     description: "Access and review detailed patient medical histories",
     image: patient,
-    // url: "/clinics",
+    url: "/clinics",
   },
   {
     title: "Manage drugs",
-    description: "Monitor and control drug inventory and usage",
+    description: "Overview MOH drug inventory and usage",
     image: drugs,
-    // url: "/midwife",
+    url: "/drugs",
   },
   {
     title: "Clinic Handling",
     description: "Oversee clinic operations and patient services",
     image: clinic,
-    // url: "/growth",
+    url: "/clinics",
   },
 ];
 

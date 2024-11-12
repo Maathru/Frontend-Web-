@@ -70,7 +70,7 @@ const Forum = () => {
   };
 
   return (
-    <div className="p-12 grid content-start min-h-screen">
+    <div className="p-12 grid content-start content-container">
       <div className="flex justify-between mb-8">
         <div className="flex text-3xl text-[#5B5B5B] font-semibold">
           <IoIosArrowBack
