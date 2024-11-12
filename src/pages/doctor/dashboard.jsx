@@ -5,9 +5,11 @@ import { Typography } from "@mui/material";
 import clinic from "../../assets/doctor/clinic.png";
 import patient from "../../assets/doctor/patient.png";
 import drugs from "../../assets/doctor/drugs.png";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import ReactApexChart from "react-apexcharts";
-import { Calendar } from "@/components/ui/calendar";
+import Calendar from "@/components/Calendar";
+import ClinicService from "@/service/clinicService";
+import { errorType, Toast } from "@/components/toast";
 
 const doctorCards = [
   {
@@ -48,6 +50,9 @@ const NextClinic = ({ clinicId, clinicName, date, startTime, endTime }) => {
 };
 
 const doctorDashboard = () => {
+  const [dates, setDates] = useState([]);
+  const [clinics, setClinics] = useState([]);
+
   const options1 = {
     chart: {
       type: "line",
@@ -99,6 +104,38 @@ const doctorDashboard = () => {
       data: [10, 41, 35, 51, 49, 62, 69, 91, 115, 98, 100, 110],
     },
   ];
+
+  useEffect(() => {
+    return () => {
+      fetchClinicsForGivenMonth(new Date().toISOString().split("T")[0]);
+      fetchUpcomingClinicsForDoctor();
+    };
+  }, []);
+
+  const fetchClinicsForGivenMonth = async (date) => {
+    try {
+      const response = await ClinicService.getClinicsGivenMonthForDoctor(date);
+      setDates(response);
+    } catch (error) {
+      Toast(error.response.data || "Unauthorized", errorType.ERROR);
+      console.log(error.response.data);
+    }
+  };
+
+  const handleMonthChange = async (date) => {
+    await fetchClinicsForGivenMonth(date.format("YYYY-MM-DD"));
+  };
+
+  const fetchUpcomingClinicsForDoctor = async () => {
+    try {
+      const response = await ClinicService.getUpcomingClinicsForDoctor();
+      setClinics(response);
+    } catch (error) {
+      Toast(error.response.data || "Unauthorized", errorType.ERROR);
+      console.log(error.response.data);
+    }
+  };
+
   return (
     <div className="content-container">
       <p className="text-3xl text-light-title dark:text-dark-title font-semibold mb-8">
@@ -109,32 +146,24 @@ const doctorDashboard = () => {
         <Typography variant="h4">Upcoming Clinics</Typography>
         <div className="flex">
           <div className="w-4/12">
-            <Calendar />
+            <Calendar
+              handleMonthChange={handleMonthChange}
+              highlightedDays={dates}
+            />
           </div>
 
           {/* display next 3 clinics */}
-          <div className="w-8/12">
-            <NextClinic
-              clinicId={"C/04/Nu"}
-              clinicName={"Growth Check"}
-              date={"01/08/2024"}
-              startTime={"10:00 AM"}
-              endTime={"12:00 PM"}
-            />
-            <NextClinic
-              clinicId={"C/24/A"}
-              clinicName={"Dental Clinic"}
-              date={"01/08/2024"}
-              startTime={"01:00 PM"}
-              endTime={"02:00 PM"}
-            />
-            <NextClinic
-              clinicId={"C/45/P"}
-              clinicName={"Diabetics Clinic"}
-              date={"01/08/2024"}
-              startTime={"02:00 PM"}
-              endTime={"04:00 PM"}
-            />
+          <div className="w-8/12 h-80 overflow-y-auto">
+            {clinics.map((clinic) => (
+              <NextClinic
+                key={clinic.clinicId}
+                clinicId={clinic.other}
+                clinicName={clinic.name}
+                date={clinic.date}
+                startTime={clinic.startTime}
+                endTime={clinic.endTime}
+              />
+            ))}
           </div>
         </div>
       </div>
