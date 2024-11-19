@@ -12,6 +12,7 @@ import Heading from "@/components/ui/heading";
 import { useTitle } from "@/hooks/useTitle";
 import { StripedDataGrid } from "@/components/StripedDataGrid";
 import TableSearch from "@/components/TableSearch";
+import Calendar from "@/components/Calendar";
 
 const columns = [
   { field: "id", headerName: "Clinic ID", width: 100 },
@@ -57,23 +58,18 @@ const Clinic = () => {
     <div className="content-container">
       <Heading title={title} />
 
-      <div className="flex gap-36 justify-around px-24">
-        <Link to={"/clinics/view"}>
-          {/* <Button className="flex-1 text-md">{t("past")}</Button> */}
-          <Button className="flex-1 text-md">{t("clinics")}</Button>
-        </Link>
-
-        <Link to={"/clinics/dates"}>
-          <Button className="flex-1 text-md">{t("dates")}</Button>
-        </Link>
-
+      <div className="">
         <Link to={"/clinics/reports"}>
-          <Button className="flex-1 text-md">{t("reports")}</Button>
+          <Button className="float-right text-md">{t("reports")}</Button>
         </Link>
       </div>
-      <div className="flex flex-col items-end mt-10">
+
+      <div className="flex w-full">
+        <div className="w-3/12">
+          <Calendar />
+        </div>
         {/* clinics table */}
-        <div style={{ height: "100%", width: "100%" }}>
+        <div className="w-9/12">
           <StripedDataGrid
             rows={rows}
             columns={columns}
