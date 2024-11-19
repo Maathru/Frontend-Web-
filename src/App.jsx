@@ -9,8 +9,7 @@ import WriteBlog2 from "./pages/blog/writeblog2";
 import WriteBlog3 from "./pages/blog/writeblog3";
 import WriteBlog4 from "./pages/blog/writeblog4";
 import Landing from "./pages/landing";
-import Drug from "./pages/drug";
-import DrugAdd from "./pages/drugAdd";
+import Drug from "./pages/admin/manageDrugs";
 import DoctorDashboard from "./pages/doctor/dashboard";
 import Clinic from "./pages/doctor/clinic";
 import ViewClinics from "./pages/doctor/viewClinics";
@@ -24,14 +23,8 @@ import Dashboard from "./pages/user/dashboard";
 import { Route, Routes } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import Footer from "./components/footer";
-import Eligible1 from "./pages/user/eligible1";
-import Eligible2 from "./pages/user/eligible2";
-import Eligible3 from "./pages/user/eligible3";
-import Eligible4 from "./pages/user/eligible4";
-import Eligible5 from "./pages/user/eligible5";
-import Pregnancy1 from "./pages/pregnancycard/pregnancy1";
-import Pregnancy2 from "./pages/pregnancycard/pregnancy2";
-import Pregnancy3 from "./pages/pregnancycard/pregnancy3";
+import Eligible from "./pages/user/eligible";
+import Pregnancy from "./pages/pregnancycard/pregnancy";
 import Growth from "./pages/user/growth";
 import AskQuestion from "./pages/question";
 import MidwifeDashboard from "./pages/midwife/dashboard";
@@ -55,6 +48,7 @@ import getTheme from "./theme.js";
 import VaccineCard from "./pages/vaccinecard/vaccinecard";
 import Nav from "./components/nav";
 import { useDarkMode } from "./context/darkModeContext";
+import SystemAnalytics from "./pages/admin/systemAnalytics.jsx";
 
 function App() {
   const { toggleDarkMode } = useDarkMode();
@@ -133,6 +127,8 @@ function App() {
                   <Route path="/users" element={<ManageUsers />} />
                   <Route path="/clinics" element={<ManageClinics />} />
                   <Route path="/regions" element={<ManageRegions />} />
+                  <Route path="/analytics" element={<SystemAnalytics />} />
+                  <Route path="/drugs" element={<Drug />} />
                 </>
               )}
 
@@ -146,8 +142,6 @@ function App() {
               {userDetails.role === role.DOCTOR && (
                 <>
                   <Route path="/" element={<DoctorDashboard />} />
-                  <Route path="/drugs" element={<Drug />} />
-                  <Route path="/drugs/add" element={<DrugAdd />} />
 
                   <Route path="/midwife" element={<Midwife />} />
 
@@ -156,12 +150,6 @@ function App() {
                   <Route path="/clinics/dates" element={<ClinicDates />} />
                   <Route path="/clinics/reports" element={<ClinicReports />} />
                 </>
-              )}
-
-              {/* Admin and Doctor routes */}
-              {(userDetails.role === role.ADMIN ||
-                userDetails.role === role.DOCTOR) && (
-                <Route path="/pregnancy/3" element={<Pregnancy3 />} />
               )}
 
               {/* Midwife routes */}
@@ -188,7 +176,9 @@ function App() {
               {/* Midwife and Parent routes */}
               {(userDetails.role === role.MIDWIFE ||
                 userDetails.role === role.PARENT) && (
-                <Route path="/pregnancy/3" element={<Pregnancy3 />} />
+                <>
+                  <Route path="/pregnancy" element={<Pregnancy />} />
+                </>
               )}
 
               {/* Parent routes */}
@@ -196,9 +186,6 @@ function App() {
                 <>
                   <Route path="/growth" element={<Growth />} />
                   <Route path="/memories" element={<Memories />} />
-
-                  <Route path="/pregnancy/1" element={<Pregnancy1 />} />
-                  <Route path="/pregnancy/2" element={<Pregnancy2 />} />
 
                   <Route path="/vaccinecard" element={<VaccineCard />} />
                 </>
@@ -208,11 +195,7 @@ function App() {
               {(userDetails.role === role.PARENT ||
                 userDetails.role === role.ELIGIBLE) && (
                 <>
-                  <Route path="/eligible/1" element={<Eligible1 />} />
-                  <Route path="/eligible/2" element={<Eligible2 />} />
-                  <Route path="/eligible/3" element={<Eligible3 />} />
-                  <Route path="/eligible/4" element={<Eligible4 />} />
-                  <Route path="/eligible/5" element={<Eligible5 />} />
+                  <Route path="/eligible" element={<Eligible />} />
                 </>
               )}
 

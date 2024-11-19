@@ -1,17 +1,6 @@
-import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
-import {
-  HiOutlinePencilAlt,
-  HiOutlinePlusSm,
-  HiOutlineTrash,
-} from "react-icons/hi";
-import { styled } from "@mui/material/styles";
-import {
-  DataGrid,
-  GridToolbarQuickFilter,
-  gridClasses,
-} from "@mui/x-data-grid";
-import { Box, IconButton } from "@mui/material";
+import { HiOutlinePencilAlt, HiOutlineTrash } from "react-icons/hi";
+import { IconButton } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import Heading from "@/components/ui/heading";
 import { useTitle } from "@/hooks/useTitle";
@@ -19,6 +8,8 @@ import UserService from "@/service/userService";
 import { errorType, Toast } from "@/components/toast";
 import { format } from "date-fns";
 import { StripedDataGrid } from "@/components/StripedDataGrid";
+import TableSearch from "@/components/TableSearch";
+import UserAddPopup from "@/components/UserAddPopup";
 
 const Capitalize = (str) => {
   return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
@@ -34,41 +25,6 @@ const FormattedDateTime = (params) => {
 
   return `${readableTime} at ${readableDate}`;
 };
-
-function QuickSearchToolbar() {
-  const { t } = useTranslation("Manageusers");
-
-  return (
-    <Box
-      sx={{
-        p: 0.5,
-        pb: 0,
-        m: 2,
-        display: "flex",
-        justifyContent: "space-between",
-        alignItems: "center",
-      }}
-    >
-      <GridToolbarQuickFilter
-        sx={{
-          width: 400,
-          "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline":
-            {
-              border: "none",
-            },
-          "& .MuiOutlinedInput-root:focus-within": {
-            outline: "none",
-            boxShadow: "none",
-          },
-        }}
-      />
-      <Button className="bg-[#6F0096] h-10 flexbox items-center">
-        {t("Add New User")}
-        <HiOutlinePlusSm className="ml-2 h-5 w-5" />
-      </Button>
-    </Box>
-  );
-}
 
 const columns = [
   { field: "id", headerName: "User ID", width: 70 },
@@ -93,7 +49,6 @@ const columns = [
     flex: 0.1,
     renderCell: (params) => (
       <IconButton
-        // onClick={() => handleDelete(params.row.id)}
         aria-label="delete"
         size="small"
         sx={{
@@ -110,7 +65,6 @@ const columns = [
     flex: 0.1,
     renderCell: (params) => (
       <IconButton
-        // onClick={() => handleEdit(params.row.id)}
         aria-label="delete"
         size="small"
         sx={{
@@ -126,8 +80,21 @@ const columns = [
 const ManageUsers = () => {
   useTitle("Users");
   const [rows, setRows] = useState([]);
-  const { t } = useTranslation("Manageusers");
-  const title = t("Manage Users");
+  const { t } = useTranslation("manageUsers");
+  const [isOpen, setIsOpen] = useState(false);
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    role: "",
+    phoneNumber: "",
+    nic: "",
+    addressLine1: "",
+    street: "",
+    city: "",
+    designation: "",
+    qualifications: "",
+  });
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -142,15 +109,33 @@ const ManageUsers = () => {
         Toast(data || "Error occurred", errorType.ERROR);
       }
     };
-
-    fetchUsers();
+    return () => {
+      fetchUsers();
+    };
   }, []);
 
   return (
     <div className="content-container">
-      <Heading title={title} />
-
-      <div style={{ height: "100%", width: "100%", marginTop: "20px" }}>
+      <div className="flex justify-between">
+        <Heading title={t("title")} />
+        <UserAddPopup
+          addButton={"Add New User"}
+          firstName={t("firstName")}
+          lastName={t("lastName")}
+          email={t("email")}
+          phone={t("phone")}
+          nic={t("nic")}
+          designation={t("designation")}
+          address1={t("address1")}
+          street={t("street")}
+          city={t("city")}
+          isOpen={isOpen}
+          setIsOpen={setIsOpen}
+          formData={formData}
+          setFormData={setFormData}
+        />
+      </div>
+      <div className="w-full h-full">
         <StripedDataGrid
           rows={rows}
           columns={columns}
@@ -164,7 +149,7 @@ const ManageUsers = () => {
             params.indexRelativeToCurrentPage % 2 === 0 ? "even" : "odd"
           }
           disableRowSelectionOnClick
-          slots={{ toolbar: QuickSearchToolbar }}
+          slots={{ toolbar: TableSearch }}
         />
       </div>
     </div>

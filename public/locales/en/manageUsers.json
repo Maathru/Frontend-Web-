@@ -1,0 +1,13 @@
+{
+  "title": "Manage Users",
+  "addButton": "Add New User",
+  "firstName": "First Name",
+  "lastName": "Last Name",
+  "email": "Email Address",
+  "phone": "Phone Number",
+  "nic": "NIC Number",
+  "designation": "Select Designation",
+  "address1": "Address Line 1",
+  "street": "Street",
+  "city": "City"
+}

@@ -46,7 +46,9 @@ const Answer = () => {
       }
     };
 
-    fetchQuestion();
+    return () => {
+      fetchQuestion();
+    };
   }, [questionId]);
 
   useEffect(() => {
@@ -59,8 +61,9 @@ const Answer = () => {
         Toast(data || "Error occurred", errorType.ERROR);
       }
     };
-
-    fetchAnswersByQuestion();
+    return () => {
+      fetchAnswersByQuestion();
+    };
   }, [pageLoader, questionId]);
 
   const handleAnswerSubmit = async (e) => {
@@ -335,6 +338,7 @@ const Answer = () => {
       <DeleteConfirmationDialog
         isOpen={isDeleteDialogOpen}
         onClose={closeDeleteDialog}
+        item={"answer"}
         handleDelete={() => handleDelete(deleteId)}
       />
     </div>

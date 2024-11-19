@@ -54,7 +54,10 @@ const blog = () => {
         }
       }
     };
-    fetchBlogs();
+
+    return () => {
+      fetchBlogs();
+    };
   }, []);
 
   return (
@@ -223,7 +226,7 @@ const blog = () => {
       </Card>
 
       <p className="md:mt-10 mt-8 ml-6 text-3xl font-semibold text-neutral-800 dark:text-neutral-100">
-        All Blogs
+        Recent Blogs
       </p>
 
       <div className="grid grid-cols-1 md:grid-cols-3 md:gap-8 gap-4 md:mt-8 mt-4 mx-4">
@@ -262,230 +265,11 @@ const blog = () => {
             </CardFooter>
           </Card>
         ))}
-        <Card className={`${cardColor} flex flex-col justify-between`}>
-          <CardHeader>
-            <img src={BlogImage} alt="Blog Image" className="rounded-md mb-2" />
-            <CardTitle>Understanding Prenatal Nutrition</CardTitle>
-            <CardDescription>
-              What to Eat for a Healthy Pregnancy
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="text-sm">
-            <p>
-              Maintaining a balanced diet during pregnancy is crucial for the
-              health of both the mother and the developing baby. In this post,
-              we'll explore essential nutrients needed during pregnancy, healthy
-              eating habits, and practical tips for managing common dietary
-              challenges. Discover how to create a nutritious meal plan that
-              supports a healthy pregnancy journey
-            </p>
-          </CardContent>
-          <CardFooter className="pb-0">
-            <div className="flex flex-wrap gap-2">
-              <Badge variant="secondary" className={badgeColor}>
-                Prenatal Nutrition
-              </Badge>
-              <Badge variant="secondary" className={badgeColor}>
-                Meal Plan
-              </Badge>
-              <Badge variant="secondary" className={badgeColor}>
-                Dietary Tips
-              </Badge>
-            </div>
-          </CardFooter>
-          <CardFooter className={`text-sm flex justify-end ${readMoreColor}`}>
-            <p>Read More</p>
-          </CardFooter>
-        </Card>
-
-        <Card className={`${cardColor} flex flex-col justify-between`}>
-          <CardHeader>
-            <img src={BlogImage} alt="Blog Image" className="rounded-md mb-2" />
-            <CardTitle>Understanding Prenatal Nutrition</CardTitle>
-            <CardDescription>
-              What to Eat for a Healthy Pregnancy
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="text-sm">
-            <p>
-              Maintaining a balanced diet during pregnancy is crucial for the
-              health of both the mother and the developing baby. In this post,
-              we'll explore essential nutrients needed during pregnancy, healthy
-              eating habits, and practical tips for managing common dietary
-              challenges. Discover how to create a nutritious meal plan that
-              supports a healthy pregnancy journey
-            </p>
-          </CardContent>
-          <CardFooter className="pb-0">
-            <div className="flex flex-wrap gap-2">
-              <Badge variant="secondary" className={badgeColor}>
-                Prenatal Nutrition
-              </Badge>
-              <Badge variant="secondary" className={badgeColor}>
-                Meal Plan
-              </Badge>
-              <Badge variant="secondary" className={badgeColor}>
-                Dietary Tips
-              </Badge>
-            </div>
-          </CardFooter>
-          <CardFooter className={`text-sm flex justify-end ${readMoreColor}`}>
-            <p>Read More</p>
-          </CardFooter>
-        </Card>
-
-        <Card className={`${cardColor} flex flex-col justify-between`}>
-          <CardHeader>
-            <img src={BlogImage} alt="Blog Image" className="rounded-md mb-2" />
-            <CardTitle>Understanding Prenatal Nutrition</CardTitle>
-            <CardDescription>
-              What to Eat for a Healthy Pregnancy
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="text-sm">
-            <p>
-              Maintaining a balanced diet during pregnancy is crucial for the
-              health of both the mother and the developing baby. In this post,
-              we'll explore essential nutrients needed during pregnancy, healthy
-              eating habits, and practical tips for managing common dietary
-              challenges. Discover how to create a nutritious meal plan that
-              supports a healthy pregnancy journey
-            </p>
-          </CardContent>
-          <CardFooter className="pb-0">
-            <div className="flex flex-wrap gap-2">
-              <Badge variant="secondary" className={badgeColor}>
-                Prenatal Nutrition
-              </Badge>
-              <Badge variant="secondary" className={badgeColor}>
-                Meal Plan
-              </Badge>
-              <Badge variant="secondary" className={badgeColor}>
-                Dietary Tips
-              </Badge>
-            </div>
-          </CardFooter>
-          <CardFooter className={`text-sm flex justify-end ${readMoreColor}`}>
-            <p>Read More</p>
-          </CardFooter>
-        </Card>
-
-        <Card className={`${cardColor} flex flex-col justify-between`}>
-          <CardHeader>
-            <img src={BlogImage} alt="Blog Image" className="rounded-md mb-2" />
-            <CardTitle>Understanding Prenatal Nutrition</CardTitle>
-            <CardDescription>
-              What to Eat for a Healthy Pregnancy
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="text-sm">
-            <p>
-              Maintaining a balanced diet during pregnancy is crucial for the
-              health of both the mother and the developing baby. In this post,
-              we'll explore essential nutrients needed during pregnancy, healthy
-              eating habits, and practical tips for managing common dietary
-              challenges. Discover how to create a nutritious meal plan that
-              supports a healthy pregnancy journey
-            </p>
-          </CardContent>
-          <CardFooter className="pb-0">
-            <div className="flex flex-wrap gap-2">
-              <Badge variant="secondary" className={badgeColor}>
-                Prenatal Nutrition
-              </Badge>
-              <Badge variant="secondary" className={badgeColor}>
-                Meal Plan
-              </Badge>
-              <Badge variant="secondary" className={badgeColor}>
-                Dietary Tips
-              </Badge>
-            </div>
-          </CardFooter>
-          <CardFooter className={`text-sm flex justify-end ${readMoreColor}`}>
-            <p>Read More</p>
-          </CardFooter>
-        </Card>
-
-        <Card className={`${cardColor} flex flex-col justify-between`}>
-          <CardHeader>
-            <img src={BlogImage} alt="Blog Image" className="rounded-md mb-2" />
-            <CardTitle>Understanding Prenatal Nutrition</CardTitle>
-            <CardDescription>
-              What to Eat for a Healthy Pregnancy
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="text-sm">
-            <p>
-              Maintaining a balanced diet during pregnancy is crucial for the
-              health of both the mother and the developing baby. In this post,
-              we'll explore essential nutrients needed during pregnancy, healthy
-              eating habits, and practical tips for managing common dietary
-              challenges. Discover how to create a nutritious meal plan that
-              supports a healthy pregnancy journey
-            </p>
-          </CardContent>
-          <CardFooter className="pb-0">
-            <div className="flex flex-wrap gap-2">
-              <Badge variant="secondary" className={badgeColor}>
-                Prenatal Nutrition
-              </Badge>
-              <Badge variant="secondary" className={badgeColor}>
-                Meal Plan
-              </Badge>
-              <Badge variant="secondary" className={badgeColor}>
-                Dietary Tips
-              </Badge>
-            </div>
-          </CardFooter>
-          <CardFooter className={`text-sm flex justify-end ${readMoreColor}`}>
-            <p>Read More</p>
-          </CardFooter>
-        </Card>
-
-        <Card className={`${cardColor} flex flex-col justify-between`}>
-          <CardHeader>
-            <img src={BlogImage} alt="Blog Image" className="rounded-md mb-2" />
-            <CardTitle>Understanding Prenatal Nutrition</CardTitle>
-            <CardDescription>
-              What to Eat for a Healthy Pregnancy
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="text-sm">
-            <p>
-              Maintaining a balanced diet during pregnancy is crucial for the
-              health of both the mother and the developing baby. In this post,
-              we'll explore essential nutrients needed during pregnancy, healthy
-              eating habits, and practical tips for managing common dietary
-              challenges. Discover how to create a nutritious meal plan that
-              supports a healthy pregnancy journey
-            </p>
-          </CardContent>
-          <CardFooter className="pb-0">
-            <div className="flex flex-wrap gap-2">
-              <Badge variant="secondary" className={badgeColor}>
-                Prenatal Nutrition
-              </Badge>
-              <Badge variant="secondary" className={badgeColor}>
-                Meal Plan
-              </Badge>
-              <Badge variant="secondary" className={badgeColor}>
-                Dietary Tips
-              </Badge>
-            </div>
-          </CardFooter>
-          <CardFooter className={`text-sm flex justify-end ${readMoreColor}`}>
-            <p>Read More</p>
-          </CardFooter>
-        </Card>
       </div>
 
       <div>
         <Pagination />
       </div>
-
-      {/* <div>
-        <Footer />
-      </div> */}
     </div>
   );
 };

@@ -17,6 +17,7 @@ import Calendar from "@/components/Calendar";
 import { userData } from "@/context/userAuth";
 import { useTitle } from "@/hooks/useTitle";
 import ContactMidwifeSection from "@/components/userComponents/contactMidwifeSection";
+import ParentClinicsSection from "@/components/userComponents/ParentClincsSection";
 
 const userCards = [
   { title: "Visit Blog", image: blog, url: "/blogs" },
@@ -36,7 +37,7 @@ const parentCards = [
     title: "Contact Midwife",
     description: "Easily connect with your midwife",
     image: midwife,
-    url: "/midwife",
+    url: "#contactMidwife",
   },
   {
     title: "Child Growth",
@@ -152,7 +153,7 @@ const Dashboard = () => {
         </>
       )}
 
-      <ContactMidwifeSection />
+      <ContactMidwifeSection id="contactMidwife" />
 
       {userDetails.role === "PARENT" && (
         <>
@@ -167,14 +168,7 @@ const Dashboard = () => {
             </div>
 
             <div className="mx-auto flex justify-around">
-              <div className="mt-4">
-                <h1 className="font-xl">MOH Clinic Days</h1>
-                <Calendar />
-              </div>
-              <div className="mt-4">
-                <h1 className="font-xl">Home Visit Days</h1>
-                <Calendar />
-              </div>
+              <ParentClinicsSection />
             </div>
           </div>
         </>

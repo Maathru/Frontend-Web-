@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   IoPeopleCircle,
   IoDocumentTextOutline,
@@ -11,6 +11,8 @@ import ReactApexChart from "react-apexcharts";
 import { userData } from "@/context/userAuth";
 import ApexCharts from "react-apexcharts";
 import { useTranslation } from "react-i18next";
+import { errorType, Toast } from "@/components/toast";
+import EmployeeService from "@/service/employeeService";
 
 const Widget = ({ icon: Icon, count, label1, label2, link }) => (
   <div className="card w-3/12 shadow-md rounded-lg ">
@@ -37,6 +39,25 @@ const Widget = ({ icon: Icon, count, label1, label2, link }) => (
 const AdminDashboard = () => {
   const { userDetails } = useContext(userData);
   const { t } = useTranslation("HealthStatistics");
+  const [cardData, setCardData] = useState({});
+
+  useEffect(() => {
+    const fetchDashboardData = async () => {
+      try {
+        const response = await EmployeeService.getAdminDashboardData();
+        setCardData(response);
+      } catch (error) {
+        console.log(error.message);
+
+        const data = error.response.data;
+        console.log(data);
+        Toast(data || "Error occurred", errorType.ERROR);
+      }
+    };
+    return () => {
+      fetchDashboardData();
+    };
+  }, []);
 
   const data = {
     crucialStats: {
@@ -159,28 +180,28 @@ const AdminDashboard = () => {
       <div className="flex gap-3 justify-around mb-12">
         <Widget
           icon={IoDocumentTextOutline}
-          count={10}
+          count={cardData.blogsToConfirm || 0}
           label1="Blogs to Confirm"
           label2="Manage Blogs"
           link="/manage/blogs"
         />
         <Widget
           icon={IoBusiness}
-          count={8}
-          label1="Divisions in the Area"
-          label2="Manage Divisions"
+          count={cardData.regions || 0}
+          label1="Regions in the Area"
+          label2="Manage Regions"
           link="/regions"
         />
         <Widget
           icon={IoPeopleCircle}
-          count={100}
-          label1="Registerd Users"
+          count={cardData.users || 0}
+          label1="Registered Users"
           label2="Manage Users"
           link="/users"
         />
         <Widget
           icon={MdOutlinePregnantWoman}
-          count={20}
+          count={cardData.thisMonthClinics || 0}
           label1="Clinics this month"
           label2="Manage Clinic Schedules"
           link="/clinics"

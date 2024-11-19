@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { HiChevronLeft, HiPlus } from "react-icons/hi";
+import { HiPlus } from "react-icons/hi";
 import {
   Typography,
   TextField,
@@ -17,8 +17,10 @@ import { errorType, Toast } from "@/components/toast";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import Heading from "@/components/ui/heading";
 import CustomDialog from "@/components/customDialog";
+import LocationAddPopup from "@/components/map/LocationAddPopup";
 
 const addCouples = () => {
+  const { t } = useTranslation("eligibleCouplesAdd");
   const location = useLocation();
   const navigate = useNavigate();
   const [updateParent, setUpdateParent] = useState(false);
@@ -27,6 +29,7 @@ const addCouples = () => {
     womanName: "",
     manName: "",
     address: "",
+    location: "",
     womanPhone: "",
     manPhone: "",
     womanDob: "",
@@ -61,7 +64,6 @@ const addCouples = () => {
   const editMode =
     location.pathname.split("/")[2] === "add" ||
     location.pathname.split("/")[2] === "edit";
-  const { t } = useTranslation("eligibleCouplesAdd");
 
   const addPregnancySection = () => {
     if (!editMode) return;
@@ -239,7 +241,9 @@ const addCouples = () => {
       }
     };
 
-    fetchEligibleInfoForMidwife();
+    return () => {
+      fetchEligibleInfoForMidwife();
+    };
   }, []);
 
   const handleSubmit = async (e) => {
@@ -253,7 +257,6 @@ const addCouples = () => {
       setErrors(validationErrors);
       return;
     }
-    console.log("Helooo");
 
     const formObject = EligibleService.createMidwifeEligibleObject(
       userId,
@@ -308,6 +311,42 @@ const addCouples = () => {
       ? `Edit Eligible Couple - ID ${eligibleId}`
       : "Add New Eligible Couple";
 
+  const bmiCalculator = (weight, height) => {
+    if (!weight || !height || weight <= 0 || height <= 0) {
+      return 0;
+    }
+    const heightInMeters = height / 100;
+    const bmi = weight / Math.pow(heightInMeters, 2);
+    return bmi.toFixed(2);
+  };
+
+  const updateBMI = useCallback(
+    (person) => {
+      const weight = formData[`${person}Weight`];
+      const height = formData[`${person}Height`];
+
+      if (weight && height) {
+        const bmi = bmiCalculator(weight, height);
+        if (!isNaN(bmi) && isFinite(bmi)) {
+          setFormData((prevData) => ({ ...prevData, [`${person}Bmi`]: bmi }));
+          setErrors((prevErrors) => ({
+            ...prevErrors,
+            [`${person}Bmi`]: validateField(`${person}Bmi`, bmi),
+          }));
+        }
+      }
+    },
+    [formData]
+  );
+
+  useEffect(() => {
+    updateBMI("woman");
+  }, [formData.womanHeight, formData.womanWeight, updateBMI]);
+
+  useEffect(() => {
+    updateBMI("man");
+  }, [formData.manHeight, formData.manWeight, updateBMI]);
+
   return (
     <div className="content-container">
       <Heading title={title} />
@@ -324,9 +363,14 @@ const addCouples = () => {
                 <Link to={`/eligibles/edit/${userId}/${eligibleId}`}>
                   <Button className="px-10">Edit</Button>
                 </Link>
-                <Button onClick={() => setUpdateParent(true)} className="ml-10">
-                  Change status to parent
-                </Button>
+                {formData.role && formData.role == "ELIGIBLE" && (
+                  <Button
+                    onClick={() => setUpdateParent(true)}
+                    className="ml-10"
+                  >
+                    Change status to parent
+                  </Button>
+                )}
               </>
             )}
           </div>
@@ -363,15 +407,24 @@ const addCouples = () => {
             <Typography variant="body1">2. Address</Typography>
             <TextField
               required
-              disabled={!editMode}
+              disabled
+              aria-readonly
               className="rounded col-span-2"
               size="small"
               value={formData.address || ""}
               name="address"
-              onChange={handleInputChange}
               error={errors.address ? true : false}
               helperText={errors.address ? errors.address : ""}
             ></TextField>
+
+            {editMode && (
+              <div className="rounded col-span-3">
+                <LocationAddPopup
+                  setFormObject={setFormData}
+                  formObject={formData}
+                />
+              </div>
+            )}
 
             <Typography variant="body1">3. Telephone Number</Typography>
             <TextField
@@ -504,7 +557,7 @@ const addCouples = () => {
               disabled={!editMode}
               className="rounded col-span-2"
               size="small"
-              value={formData.children || ""}
+              value={formData.children}
               name="children"
               onChange={handleInputChange}
               error={errors.children ? true : false}

@@ -48,8 +48,9 @@ const WriteBlog4 = () => {
         setFormData({ stage: 1 });
       }
     };
-
-    fetchBlog();
+    return () => {
+      fetchBlog();
+    };
   }, []);
 
   return (
@@ -68,7 +69,7 @@ const WriteBlog4 = () => {
           <div className="mt-2 md:ml-6 md:text-lg text-base font-medium text-[#6f6c90] dark:text-neutral-400">
             Confirm that you want to publish the article.
           </div>
-          
+
           {/* print formData */}
           {/* <div className="mt-6 md:ml-6 md:text-lg text-base font-medium text-[#6f6c90] dark:text-neutral-400">
             {JSON.stringify(formData)}

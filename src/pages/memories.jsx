@@ -19,6 +19,8 @@ import {
 } from "@mui/icons-material";
 import babyImage from "@/assets/Babys-First-Words-When-Do-Babies-Start-Talking.jpg";
 import Heading from "@/components/ui/heading";
+import { styled } from "@mui/material/styles";
+import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 
 const memories = [
   { title: "Memories 1", date: "02/10/2024", video: "/path-to-video1" },
@@ -40,6 +42,18 @@ const scenarios = [
     images: [babyImage, babyImage, babyImage, babyImage],
   },
 ];
+
+const VisuallyHiddenInput = styled("input")({
+  clip: "rect(0 0 0 0)",
+  clipPath: "inset(50%)",
+  height: 1,
+  overflow: "hidden",
+  position: "absolute",
+  bottom: 0,
+  left: 0,
+  whiteSpace: "nowrap",
+  width: 1,
+});
 
 const Memories = () => {
   return (
@@ -100,7 +114,7 @@ const Memories = () => {
           }}
         />
 
-        <Button
+        {/* <Button
           variant="contained"
           color="primary"
           sx={{
@@ -111,6 +125,26 @@ const Memories = () => {
         >
           Upload Media
           <UploadIcon sx={{ marginLeft: 1 }} />
+        </Button> */}
+        <Button
+          component="label"
+          role={undefined}
+          variant="contained"
+          tabIndex={-1}
+          startIcon={<CloudUploadIcon />}
+          color="primary"
+          sx={{
+            marginLeft: 3,
+            backgroundColor: "#9C33C1",
+            "&:hover": { backgroundColor: "#6F0096" },
+          }}
+        >
+          Upload Media
+          <VisuallyHiddenInput
+            type="file"
+            onChange={(event) => console.log(event.target.files)}
+            multiple
+          />
         </Button>
       </Box>
       {scenarios.map((scenario, index) => (

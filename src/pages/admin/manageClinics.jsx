@@ -1,29 +1,14 @@
 import { StripedDataGrid } from "@/components/StripedDataGrid";
-import { Button } from "@/components/ui/button";
 import Heading from "@/components/ui/heading";
-import {
-  Box,
-  Chip,
-  FormControl,
-  IconButton,
-  InputBase,
-  MenuItem,
-  Paper,
-  Select,
-  Switch,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { DataGrid, GridToolbarQuickFilter } from "@mui/x-data-grid";
-import { SearchIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 import ClinicAddPopup from "@/components/ClinicAddPopup";
-import Search from "@/components/Search";
-import { t } from "i18next";
 import { useTranslation } from "react-i18next";
 import ClinicService from "@/service/clinicService";
 import { errorType, Toast } from "@/components/toast";
-import { Calendar } from "@/components/ui/calendar";
+import Calendar from "@/components/Calendar";
+import { formatTime } from "@/utils/FormatTime";
 
 const columns = [
   { field: "id", width: 20 },
@@ -46,21 +31,30 @@ const columns = [
 ];
 
 const columns2 = [
-  { field: "id", headerName: "Patient ID", width: 90 },
-  { field: "patient", headerName: "Patient Name", flex: 1 },
+  { field: "id", headerName: "Clinic ID", width: 90 },
+  { field: "name", headerName: "Clinic Name", flex: 1 },
   {
-    field: "action",
-    headerName: "Is Present",
+    field: "date",
+    headerName: "Date",
     flex: 1,
-    renderCell: () => {
-      return <Chip />;
-    },
   },
-];
-
-const rows2 = [
-  { id: 1, patient: "saumya", doctor: "saumya" },
-  { id: 2, patient: "saumya", doctor: "saumya" },
+  {
+    field: "startTime",
+    headerName: "Start Time",
+    flex: 1,
+    valueFormatter: (params) => formatTime(params),
+  },
+  {
+    field: "endTime",
+    headerName: "End Time",
+    flex: 1,
+    valueFormatter: (params) => formatTime(params),
+  },
+  {
+    field: "region",
+    headerName: "Region",
+    flex: 1,
+  },
 ];
 
 function QuickSearchToolbar() {
@@ -93,86 +87,118 @@ function QuickSearchToolbar() {
 
 const manageClinics = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [date, setDate] = useState(new Date());
-  const [month, setMonth] = useState(new Date());
+  const [isFetch, setIsFetch] = useState(false);
+  const [isDisabled, setIsDisabled] = useState(false);
   const [dates, setDates] = useState([]);
   const [rows, setRows] = useState([]);
+  const [rows2, setRows2] = useState([]);
+  const [formData, setFormData] = useState({
+    name: "",
+    region: "",
+    date: "",
+    startTime: "",
+    endTime: "",
+    doctors: [],
+    other: "",
+  });
   const { t } = useTranslation("manageClinics");
 
-  const onMonthChange = (day) => {
-    const newDate = new Date(day);
-    newDate.setMonth(newDate.getMonth() + 1);
-    setMonth(newDate);
-  };
-
-  const onDayClick = (day) => {
-    const newDate = new Date(day);
-    newDate.setDate(newDate.getDate() + 1);
-    setDate(newDate);
-  };
-
   const stringArrayToDateArray = (array) => {
-    return array.map((dateString) => new Date(dateString));
+    return array.map((clinic) => clinic.date);
   };
 
   useEffect(() => {
-    const fetchClinicsByDate = async () => {
-      setRows([]);
-
-      const isoDateString = date.toISOString().split("T")[0];
-
-      try {
-        const response = await ClinicService.getClinicsByDate(isoDateString);
-        setRows(response);
-      } catch (error) {
-        Toast(error.response.data || "Unauthorized", errorType.ERROR);
-        console.log(error.response.data);
-      }
+    return () => {
+      fetchClinicsByDate(new Date().toISOString().split("T")[0]);
     };
-
-    fetchClinicsByDate();
-  }, [date, isOpen]);
+  }, [isFetch]);
 
   useEffect(() => {
-    const fetchClinicsForGivenMonth = async () => {
-      const isoDateString = month.toISOString().split("T")[0];
-
-      try {
-        const response = await ClinicService.getClinicsByMonth(isoDateString);
-
-        const dateObjects = stringArrayToDateArray(response);
-        setDates(dateObjects);
-      } catch (error) {
-        Toast(error.response.data || "Unauthorized", errorType.ERROR);
-        console.log(error.response.data);
-      }
+    return () => {
+      fetchClinicsForGivenMonth(new Date().toISOString().split("T")[0]);
     };
+  }, [isFetch]);
 
-    fetchClinicsForGivenMonth();
-  }, [month, isOpen]);
+  const fetchClinicsForGivenMonth = async (date) => {
+    try {
+      const response = await ClinicService.getClinicsByMonth(date);
+      setRows2(response);
+      const dateObjects = stringArrayToDateArray(response);
+      setDates(dateObjects);
+    } catch (error) {
+      Toast(error.response.data || "Unauthorized", errorType.ERROR);
+      console.log(error.response.data);
+    }
+  };
+
+  const fetchClinicsByDate = async (date) => {
+    setRows([]);
+
+    try {
+      const response = await ClinicService.getClinicsByDate(date);
+      setRows(response);
+    } catch (error) {
+      Toast(error.response.data || "Unauthorized", errorType.ERROR);
+      console.log(error.response.data);
+    }
+  };
+
+  const fetchClinicData = async (clinicId) => {
+    try {
+      const response = await ClinicService.getClinic(clinicId);
+
+      setFormData({
+        ...response,
+        startTime: new Date(`${response.date} ${response.startTime}`),
+        endTime: new Date(`${response.date} ${response.endTime}`),
+      });
+      setIsOpen(true);
+      setIsDisabled(true);
+    } catch (error) {
+      Toast(error.response.data || "Unauthorized", errorType.ERROR);
+      console.log(error.response.data);
+    }
+  };
+
+  const handleMonthChange = async (date) => {
+    await fetchClinicsForGivenMonth(date.format("YYYY-MM-DD"));
+  };
+
+  const handleDateChange = async (date) => {
+    await fetchClinicsByDate(date.format("YYYY-MM-DD"));
+  };
+
+  const handleRowClick = async (params) => {
+    await fetchClinicData(params.row.id);
+  };
 
   return (
     <div className="content-container">
       <Heading title={t("title")} />
 
-      <Search placeholder={t("search")} />
       <div className="mt-12">
         <Typography variant="h4">{t("subtitle1")}</Typography>
-        <ClinicAddPopup isOpen={isOpen} setIsOpen={setIsOpen} />
+        <ClinicAddPopup
+          isOpen={isOpen}
+          setIsOpen={setIsOpen}
+          setIsFetch={setIsFetch}
+          isDisabled={isDisabled}
+          setIsDisabled={setIsDisabled}
+          formData={formData}
+          setFormData={setFormData}
+        />
 
         <div className="flex">
           <div className="w-6/12">
             <Calendar
-              highlightDates={dates}
-              highlightColor="#ffcc00"
-              onDayClick={onDayClick}
-              onMonthChange={onMonthChange}
+              handleMonthChange={handleMonthChange}
+              highlightedDays={dates}
+              handleDateChange={handleDateChange}
             />
           </div>
           <div className="shadow-md p-5 w-6/12 h-fit">
             <div className="flex justify-between">
               <Typography variant="h6">{t("subtitle1.1")}</Typography>
-              <Button>{t("viewBtn")}</Button>
             </div>
             <div style={{ height: "100%", width: "100%" }}>
               <DataGrid
@@ -186,29 +212,14 @@ const manageClinics = () => {
                   },
                 }}
                 pageSizeOptions={[5]}
+                onRowClick={handleRowClick}
               ></DataGrid>
             </div>
           </div>
         </div>
       </div>
       <div>
-        <Typography variant="h4">{t("subtitle2")}</Typography>
-
-        <Select
-          defaultValue={1}
-          labelId="select-label"
-          id="select"
-          sx={{ width: "300px" }}
-        >
-          <MenuItem value={1}>CL01</MenuItem>
-          <MenuItem value={2}>CL01</MenuItem>
-          <MenuItem value={3}>CL01</MenuItem>
-        </Select>
-
-        <TextField
-          type="date"
-          sx={{ width: "300px", marginLeft: "30px" }}
-        ></TextField>
+        <Typography variant="h4">This Month clinics</Typography>
 
         <div style={{ height: "100%", width: "100%" }}>
           <StripedDataGrid
@@ -225,6 +236,7 @@ const manageClinics = () => {
             }
             disableRowSelectionOnClick
             slots={{ toolbar: QuickSearchToolbar }}
+            onRowClick={handleRowClick}
           ></StripedDataGrid>
         </div>
       </div>

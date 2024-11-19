@@ -62,6 +62,60 @@ class ClinicService {
       throw error;
     }
   }
+
+  static async getClinicsGivenMonthForParent(date) {
+    try {
+      const response = await axiosInstance.get(`/clinic/month/parent/${date}`);
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  static async getClinicsGivenMonthForMidwife(date) {
+    try {
+      const response = await axiosInstance.get(`/clinic/month/midwife/${date}`);
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  static async getClinicsGivenMonthForDoctor(date) {
+    try {
+      const response = await axiosInstance.get(`/clinic/month/doctor/${date}`);
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  static async getUpcomingClinicsForMidwife() {
+    try {
+      const response = await axiosInstance.get(`/clinic/upcoming/midwife`);
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  static async getUpcomingClinicsForDoctor() {
+    try {
+      const response = await axiosInstance.get(`/clinic/upcoming/doctor`);
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  static async getClinic(clinicId) {
+    try {
+      const response = await axiosInstance.get(`/clinic/${clinicId}`);
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  }
 }
 
 export default ClinicService;

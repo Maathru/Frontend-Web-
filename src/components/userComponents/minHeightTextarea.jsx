@@ -1,10 +1,18 @@
-export default function MinHeightTextarea({ cols, value }) {
+export default function MinHeightTextarea({
+  cols = 1,
+  value,
+  onChange,
+  disabled = true,
+  placeholder,
+}) {
   return (
     <textarea
-      aria-label="minimum height"
+      aria-label="minimum height text area"
       rows={cols}
-      disabled
+      placeholder={placeholder}
+      disabled={disabled}
       value={value}
+      onChange={onChange}
       className="
         box-border
         w-full

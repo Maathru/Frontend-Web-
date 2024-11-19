@@ -1,24 +1,14 @@
-import { styled } from "@mui/material/styles";
-import {
-  DataGrid,
-  gridClasses,
-  GridToolbarQuickFilter,
-} from "@mui/x-data-grid";
-import {
-  HiOutlinePencilAlt,
-  HiOutlinePlusSm,
-  HiOutlineTrash,
-} from "react-icons/hi";
-import { Box, Chip, IconButton } from "@mui/material";
+import { HiOutlinePencilAlt, HiOutlineTrash } from "react-icons/hi";
+import { Chip, IconButton } from "@mui/material";
 import { useTranslation } from "react-i18next";
-import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import DrugService from "@/service/drugService";
 import { errorType, Toast } from "@/components/toast";
 import Heading from "@/components/ui/heading";
-import { Button } from "@/components/ui/button";
 import { useTitle } from "@/hooks/useTitle";
 import { StripedDataGrid } from "@/components/StripedDataGrid";
+import TableSearch from "@/components/TableSearch";
+import DrugAddPopup from "@/components/DrugAddPopup";
 
 const transformDate = (params) => {
   const originalDate = new Date(params.value);
@@ -29,34 +19,6 @@ const transformDate = (params) => {
   return targetDate.toISOString().split("T")[0];
 };
 
-function QuickSearchToolbar() {
-  return (
-    <Box
-      sx={{
-        p: 0.5,
-        pb: 0,
-        m: 2,
-        display: "flex",
-        justifyContent: "flex-end",
-      }}
-    >
-      <GridToolbarQuickFilter
-        sx={{
-          width: 400,
-          "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline":
-            {
-              border: "none",
-            },
-          "& .MuiOutlinedInput-root:focus-within": {
-            outline: "none",
-            boxShadow: "none",
-          },
-        }}
-      />
-    </Box>
-  );
-}
-
 const columns = [
   {
     field: "drugId",
@@ -65,7 +27,7 @@ const columns = [
     fontSize: 18,
     fontWeight: "bold",
   },
-  { field: "composition", headerName: "Product", width: 130 },
+  { field: "brandName", headerName: "Brand Name", width: 130 },
   { field: "batchNumber", headerName: "Batch Number", flex: 1 },
   { field: "strength", headerName: "Strength", flex: 1 },
   {
@@ -135,6 +97,7 @@ const Drug = () => {
   useTitle("Drugs");
   const [rows, setRows] = useState([]);
   const { t } = useTranslation("drug");
+  const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     const fetchDrugs = async () => {
@@ -150,22 +113,30 @@ const Drug = () => {
       }
     };
 
-    fetchDrugs();
-  }, []);
-
-  const title = t("title");
+    return () => {
+      fetchDrugs();
+    };
+  }, [isOpen]);
 
   return (
     <div className="p-12 pt-8 content-container">
       <div className="flex justify-between mb-8">
-        <Heading title={title} />
+        <Heading title={t("title")} />
 
-        <Link to={"/drugs/add"}>
-          <Button className="bg-[#6F0096] h-10 flexbox items-center">
-            {t("add")}
-            <HiOutlinePlusSm className="ml-2 h-5 w-5" />
-          </Button>
-        </Link>
+        <DrugAddPopup
+          addButton={t("add")}
+          brandLabel={t("brand")}
+          batchLabel={t("batch")}
+          strengthLabel={t("strength")}
+          quantityLabel={t("quantity")}
+          compositionLabel={t("composition")}
+          doseLabel={t("dose")}
+          manufactureLabel={t("manufactured")}
+          expiryLabel={t("expired")}
+          submitButton={t("submit")}
+          isOpen={isOpen}
+          setIsOpen={setIsOpen}
+        />
       </div>
       <div style={{ height: "100%", width: "100%" }}>
         <StripedDataGrid
@@ -182,7 +153,7 @@ const Drug = () => {
             params.indexRelativeToCurrentPage % 2 === 0 ? "even" : "odd"
           }
           disableRowSelectionOnClick
-          slots={{ toolbar: QuickSearchToolbar }}
+          slots={{ toolbar: TableSearch }}
         />
       </div>
     </div>
