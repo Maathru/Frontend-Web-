@@ -127,7 +127,7 @@ const ArticleRecent1 = () => {
         </div>
       </div>
 
-      <div className="ml-6 md:ml-14">
+      {/* <div className="ml-6 md:ml-14">
         <p className="md:mt-12 mt-8 text-3xl font-semibold text-neutral-800 dark:text-neutral-100">
           Recent Blogs
         </p>
@@ -197,9 +197,12 @@ const ArticleRecent1 = () => {
             </CardFooter>
           </Card>
         </div>
+      </div> */}
+
+      <div>
+        <br></br>
       </div>
 
-      {/* <Footer /> */}
     </div>
   );
 };
