@@ -4,6 +4,7 @@ import Login from "./pages/login";
 import Signup from "./pages/signup";
 import Blog from "./pages/blog/blog";
 import Article from "./pages/blog/article";
+import ArticleRecent1 from "./pages/blog/article_recent1";
 import WriteBlog1 from "./pages/blog/writeblog1";
 import WriteBlog2 from "./pages/blog/writeblog2";
 import WriteBlog3 from "./pages/blog/writeblog3";
@@ -113,7 +114,8 @@ function App() {
           )}
 
           <Route path="/blogs" element={<Blog />} />
-          <Route path="/blogs/article" element={<Article />} />
+          <Route path="/blogs/article/:articleId" element={<Article />} />
+          <Route path="/blogs/article/recent/1" element={<ArticleRecent1 />} />
           <Route path="/forum" element={<Forum />} />
           <Route path="/forum/answer/:questionId" element={<Answer />} />
 

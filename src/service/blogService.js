@@ -32,7 +32,7 @@ class BlogService {
 
   static async getArticle(id) {
     try {
-      const response = await axiosInstance.get(`/blogs/article/${id}`);
+      const response = await axiosInstance.get(`/blogs/${id}`);
       return response.data;
     } catch (error) {
       throw error;
