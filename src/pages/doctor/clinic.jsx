@@ -1,11 +1,5 @@
 import { Button } from "@/components/ui/button";
-import React from "react";
-import {
-  HiOutlinePencilAlt,
-  HiOutlinePlusSm,
-  HiOutlineTrash,
-} from "react-icons/hi";
-import { Chip, IconButton } from "@mui/material";
+import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import Heading from "@/components/ui/heading";
@@ -13,39 +7,24 @@ import { useTitle } from "@/hooks/useTitle";
 import { StripedDataGrid } from "@/components/StripedDataGrid";
 import TableSearch from "@/components/TableSearch";
 import Calendar from "@/components/Calendar";
+import ClinicService from "@/service/clinicService";
+import { errorType, Toast } from "@/components/toast";
+import { formatTime } from "@/utils/FormatTime";
 
 const columns = [
   { field: "id", headerName: "Clinic ID", width: 100 },
   { field: "name", headerName: "Clinic Name", flex: 1 },
   { field: "region", headerName: "Region", flex: 1 },
   { field: "date", headerName: "Date", flex: 1 },
-  { field: "time", headerName: "Time", flex: 1 },
-];
-
-const rows = [
   {
-    id: 1,
-    name: "Child Growth",
-    region: "Maharamagama",
-    date: "25/08/2024",
-    time: "9am-1pm",
-    // action: "edit",
-  },
-  {
-    id: 2,
-    name: "Diabetics Clinic",
-    region: "Piliyandala",
-    date: "26/08/2024",
-    time: "10am-12pm",
-    // action: "edit",
-  },
-  {
-    id: 3,
-    name: "Dental Clinic",
-    region: "Nugegoda",
-    date: "27/08/2024",
-    time: "11am-2pm",
-    // action: "edit",
+    field: "time",
+    headerName: "Time",
+    flex: 1,
+    renderCell: (params) => (
+      <>
+        {formatTime(params.row.startTime)} - {formatTime(params.row.endTime)}
+      </>
+    ),
   },
 ];
 
@@ -53,6 +32,43 @@ const Clinic = () => {
   useTitle("Clinics");
   const { t } = useTranslation("clinic");
   const title = t("title");
+  const [clinics, setClinics] = useState([]);
+  const [dates, setDates] = useState([]);
+
+  useEffect(() => {
+    fetchClinicsForGivenMonth(new Date().toISOString().split("T")[0]);
+    fetchClinicsByDate(new Date().toISOString().split("T")[0]);
+  }, []);
+
+  const fetchClinicsForGivenMonth = async (date) => {
+    try {
+      const response = await ClinicService.getClinicsGivenMonthForDoctor(date);
+      setDates(response);
+    } catch (error) {
+      Toast(error.response.data || "Unauthorized", errorType.ERROR);
+      console.log(error.response.data);
+    }
+  };
+
+  const fetchClinicsByDate = async (date) => {
+    setClinics([]);
+
+    try {
+      const response = await ClinicService.getClinicsByDateToDoctor(date);
+      setClinics(response);
+    } catch (error) {
+      Toast(error.response.data || "Unauthorized", errorType.ERROR);
+      console.log(error.response.data);
+    }
+  };
+
+  const handleMonthChange = async (date) => {
+    await fetchClinicsForGivenMonth(date.format("YYYY-MM-DD"));
+  };
+
+  const handleDateChange = async (date) => {
+    await fetchClinicsByDate(date.format("YYYY-MM-DD"));
+  };
 
   return (
     <div className="content-container">
@@ -66,12 +82,16 @@ const Clinic = () => {
 
       <div className="flex w-full">
         <div className="w-3/12">
-          <Calendar />
+          <Calendar
+            handleMonthChange={handleMonthChange}
+            highlightedDays={dates}
+            handleDateChange={handleDateChange}
+          />
         </div>
         {/* clinics table */}
         <div className="w-9/12">
           <StripedDataGrid
-            rows={rows}
+            rows={clinics}
             columns={columns}
             initialState={{
               pagination: {

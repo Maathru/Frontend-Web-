@@ -45,9 +45,18 @@ class ClinicService {
     }
   }
 
-  static async getClinicsByDate(date) {
+  static async getClinicsByDateToAdmin(date) {
     try {
-      const response = await axiosInstance.get(`/clinic/by/${date}`);
+      const response = await axiosInstance.get(`/clinic/admin/by/${date}`);
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  static async getClinicsByDateToDoctor(date) {
+    try {
+      const response = await axiosInstance.get(`/clinic/doctor/by/${date}`);
       return response.data;
     } catch (error) {
       throw error;

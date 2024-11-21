@@ -22,7 +22,12 @@ const columns = [
     flex: 1,
     renderCell: () => {
       return (
-        <Typography color={"purple"} lineHeight={4} fontSize={13}>
+        <Typography
+          className="cursor-pointer"
+          color={"purple"}
+          lineHeight={4}
+          fontSize={13}
+        >
           View Details
         </Typography>
       );
@@ -135,7 +140,7 @@ const manageClinics = () => {
     setRows([]);
 
     try {
-      const response = await ClinicService.getClinicsByDate(date);
+      const response = await ClinicService.getClinicsByDateToAdmin(date);
       setRows(response);
     } catch (error) {
       Toast(error.response.data || "Unauthorized", errorType.ERROR);
