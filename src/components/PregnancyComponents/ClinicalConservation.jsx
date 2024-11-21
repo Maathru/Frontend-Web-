@@ -6,84 +6,71 @@ import TableRow from "@mui/material/TableRow";
 import Button from "@mui/material/Button";
 import AddRecordForm from "@/components/PregnancyComponents/AddRecordForm";
 import { styled } from "@mui/material/styles";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import PregnancyService from "@/service/pregnancyService";
+import { errorType, Toast } from "../toast";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   fontWeight: "bold",
 }));
 
 const ClinicalConservation = () => {
-  const [clinicRecords, setClinicRecords] = useState([
-    {
-      clinicDate: "20/07/2024",
-      weeksIntoPregnancy: "8 Weeks",
-      weight: "62 kg",
-      height: "Correct",
-      bmi: "Correct",
-      glucoseLevel: "0.8 mmol/L",
-      albuminLevel: "29 mg per 24 hours",
-      swelling: "No",
-      bloodPressure: "110mm Hg",
-      fetalHeight: "1.57 cm",
-      fetalLocation: "Correct",
-      fetalMovements: "Correct",
-      heartSound: "Correct",
-      ironFolate: "Correct",
-      vitaminC: "Correct",
-      calciumMalaria: "Correct",
-      thriposha: "Correct",
-      bloodSample: "Correct",
-      bloodSugarLevel: "Correct",
-      hemoglobinLevel: "Correct",
-      malaria: "Correct",
-      vdrlResult: "Correct",
-      lungs: "Correct",
-      dentalTests: "Correct",
-      dentalDrying: "Correct",
-      galagandaya: "Correct",
-      checkedBy: "Correct",
-      referral: "Correct",
-    },
-    {
-      clinicDate: "27/07/2024",
-      weeksIntoPregnancy: "9 Weeks",
-      weight: "63 kg",
-      height: "Correct",
-      bmi: "Correct",
-      glucoseLevel: "0.9 mmol/L",
-      albuminLevel: "30 mg per 24 hours",
-      swelling: "No",
-      bloodPressure: "115mm Hg",
-      fetalHeight: "1.65 cm",
-      fetalLocation: "Correct",
-      fetalMovements: "Correct",
-      heartSound: "Correct",
-      ironFolate: "Correct",
-      vitaminC: "Correct",
-      calciumMalaria: "Correct",
-      thriposha: "Correct",
-      bloodSample: "Correct",
-      bloodSugarLevel: "Correct",
-      hemoglobinLevel: "Correct",
-      malaria: "Correct",
-      vdrlResult: "Correct",
-      lungs: "Correct",
-      dentalTests: "Correct",
-      dentalDrying: "Correct",
-      galagandaya: "Correct",
-      checkedBy: "Correct",
-      referral: "Correct",
-    },
-  ]);
+  const [clinicRecords, setClinicRecords] = useState([{}]);
 
   const [open, setOpen] = useState(false);
+  const [state, setState] = useState(false);
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  const handleAddRecord = (newRecord) => {
-    setClinicRecords([...clinicRecords, newRecord]);
+  const handleAddRecord = async (newRecord) => {
+    try {
+      const response = await PregnancyService.saveClinicalConservation(
+        newRecord
+      );
+      Toast(response, errorType.SUCCESS);
+      setState((prevState) => !prevState);
+    } catch (error) {
+      console.log(error.message);
+
+      const data = error.response.data;
+      if (data) {
+        if (Array.isArray(data)) {
+          const newErrors = {};
+          data.map((msg) => {
+            Toast(msg.message, errorType.ERROR);
+            newErrors[msg.field] = msg.message;
+          });
+
+          console.log(newErrors);
+        } else {
+          console.log(data);
+          Toast(data || "Error occurred", errorType.ERROR);
+        }
+      }
+    }
   };
+
+  useEffect(() => {
+    const fetchClinicalConservation = async () => {
+      try {
+        const response = await PregnancyService.getClinicalConservation();
+
+        setClinicRecords(response);
+      } catch (error) {
+        console.log(error.message);
+
+        console.log(error);
+        const data = error.response.data;
+        console.log(data);
+        Toast(data, errorType.ERROR);
+      }
+    };
+
+    return () => {
+      fetchClinicalConservation();
+    };
+  }, [state]);
 
   return (
     <>
@@ -112,20 +99,20 @@ const ClinicalConservation = () => {
             <StyledTableCell>Weeks into Pregnancy</StyledTableCell>
             {clinicRecords.map((record, index) => (
               <TableCell key={`weeks-${index}`}>
-                {record.weeksIntoPregnancy}
+                {record.weeksIntoPregnancy} Weeks
               </TableCell>
             ))}
           </TableRow>
           <TableRow sx={{ backgroundColor: "white" }}>
             <StyledTableCell>Weight (kg)</StyledTableCell>
             {clinicRecords.map((record, index) => (
-              <TableCell key={`weight-${index}`}>{record.weight}</TableCell>
+              <TableCell key={`weight-${index}`}>{record.weight} kg</TableCell>
             ))}
           </TableRow>
           <TableRow sx={{ backgroundColor: "#f0f8ff" }}>
             <StyledTableCell>Height (cm)</StyledTableCell>
             {clinicRecords.map((record, index) => (
-              <TableCell key={`height-${index}`}>{record.height}</TableCell>
+              <TableCell key={`height-${index}`}>{record.height} m</TableCell>
             ))}
           </TableRow>
           <TableRow sx={{ backgroundColor: "white" }}>
@@ -138,7 +125,7 @@ const ClinicalConservation = () => {
             <StyledTableCell>Urine - Glucose Level</StyledTableCell>
             {clinicRecords.map((record, index) => (
               <TableCell key={`glucose-${index}`}>
-                {record.glucoseLevel}
+                {record.glucoseLevel} mmol/L
               </TableCell>
             ))}
           </TableRow>
@@ -146,7 +133,7 @@ const ClinicalConservation = () => {
             <StyledTableCell>Urine - Albumin Level</StyledTableCell>
             {clinicRecords.map((record, index) => (
               <TableCell key={`albumin-${index}`}>
-                {record.albuminLevel}
+                {record.albuminLevel} mg per 24 hours
               </TableCell>
             ))}
           </TableRow>
@@ -160,7 +147,7 @@ const ClinicalConservation = () => {
             <StyledTableCell>Blood Pressure (mm Hg)</StyledTableCell>
             {clinicRecords.map((record, index) => (
               <TableCell key={`bloodPressure-${index}`}>
-                {record.bloodPressure}
+                {record.bloodPressure} mm Hg
               </TableCell>
             ))}
           </TableRow>
@@ -168,7 +155,7 @@ const ClinicalConservation = () => {
             <StyledTableCell>Fetal Height (cm)</StyledTableCell>
             {clinicRecords.map((record, index) => (
               <TableCell key={`fetalHeight-${index}`}>
-                {record.fetalHeight}
+                {record.fetalHeight} cm
               </TableCell>
             ))}
           </TableRow>

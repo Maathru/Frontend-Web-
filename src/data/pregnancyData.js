@@ -156,22 +156,22 @@ export const otherSituations = [
   {
     title: "Diabetes",
     placeholder: "Other details",
-    name: "diabetes",
+    name: "diabetes_current",
   },
   {
     title: "Malaria",
     placeholder: "Other details",
-    name: "malaria",
+    name: "malaria_current",
   },
   {
     title: "Heart Diseaeses",
     placeholder: "Other details",
-    name: "heart_diseases",
+    name: "heart_diseases_current",
   },
   {
     title: "Kidney Diseases",
     placeholder: "Other details",
-    name: "kidney_diseases",
+    name: "kidney_diseases_current",
   },
 ];
 

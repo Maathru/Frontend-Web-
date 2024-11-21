@@ -4,22 +4,77 @@ import DateInput from "../userComponents/dateInput";
 import DoubleInput from "../userComponents/doubleInput";
 import { Button } from "../ui/button";
 import { presentObstetricDates } from "@/data/pregnancyData";
+import { useEffect } from "react";
+import PregnancyService from "@/service/pregnancyService";
+import { errorType, Toast } from "../toast";
 
 const PregnancyHistory = ({
   formObject,
   setFormObject,
   handleChangeMainDetails,
 }) => {
-  const setData = (field, name, value) => {
+  const setData = (name, value) => {
     const newObject = {};
-    newObject[name + "_" + field] = value || "";
+    newObject[name] = value || "";
     setFormObject((prevState) => ({ ...prevState, ...newObject }));
   };
 
-  const handleSave = (e) => {
+  const handleSave = async (e) => {
     localStorage.setItem("pregnancy", JSON.stringify(formObject));
+    await handleSubmit();
     handleChangeMainDetails(e, 3);
   };
+
+  const handleSubmit = async () => {
+    const formData =
+      PregnancyService.mapFormObjectToPregnancyHistory(formObject);
+
+    try {
+      const response = await PregnancyService.savePregnancyHistory(formData);
+      Toast(response, errorType.SUCCESS);
+    } catch (error) {
+      console.log(error.message);
+
+      const data = error.response.data;
+      if (data) {
+        if (Array.isArray(data)) {
+          const newErrors = {};
+          data.map((msg) => {
+            Toast(msg.message, errorType.ERROR);
+            newErrors[msg.field] = msg.message;
+          });
+
+          console.log(newErrors);
+        } else {
+          console.log(data);
+          Toast(data || "Error occurred", errorType.ERROR);
+        }
+      }
+    }
+  };
+
+  useEffect(() => {
+    const fetchPregnancyHistory = async () => {
+      try {
+        const response = await PregnancyService.getPregnancyHistory();
+
+        const existing =
+          PregnancyService.mapPregnancyHistoryToFormObject(response);
+        setFormObject((prevState) => ({ ...prevState, ...existing }));
+      } catch (error) {
+        console.log(error.message);
+
+        console.log(error);
+        const data = error.response.data;
+        console.log(data);
+        Toast(data, errorType.ERROR);
+      }
+    };
+
+    return () => {
+      fetchPregnancyHistory();
+    };
+  }, []);
 
   return (
     <>
@@ -85,8 +140,8 @@ const PregnancyHistory = ({
           title="Number of gestational weeks at enrollment"
           placeholder="Gestational Weeks"
           value={formObject["gestational_weeks"] || ""}
-          onChange={(field, value) => {
-            setData(field, "gestational_weeks", value);
+          onChange={(value) => {
+            setData("gestational_weeks", value);
           }}
         />
 
@@ -105,7 +160,7 @@ const PregnancyHistory = ({
             label="The Methods?"
             variant="outlined"
             className="w-96"
-            onChange={(e) => onChange("family_methods", e.target.value)}
+            onChange={(e) => setData("family_methods", e.target.value)}
           />
         </div>
       </div>
