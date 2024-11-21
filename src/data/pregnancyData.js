@@ -156,36 +156,39 @@ export const otherSituations = [
   {
     title: "Diabetes",
     placeholder: "Other details",
-    name: "diabetes",
+    name: "diabetes_current",
   },
   {
     title: "Malaria",
     placeholder: "Other details",
-    name: "malaria",
+    name: "malaria_current",
   },
   {
     title: "Heart Diseaeses",
     placeholder: "Other details",
-    name: "heart_diseases",
+    name: "heart_diseases_current",
   },
   {
     title: "Kidney Diseases",
     placeholder: "Other details",
-    name: "kidney_diseases",
+    name: "kidney_diseases_current",
+  },
+];
+
+export const prenatalCare1 = [
+  {
+    title: "Anemia",
+    placeholder: "Other details",
+    name: "anemia",
+  },
+  {
+    title: "Swelled up",
+    placeholder: "Other details",
+    name: "swelled_up",
   },
 ];
 
 export const prenatalCare = [
-  {
-    title: "Anemia",
-    placeholder: "",
-    name: "anemia",
-  },
-  {
-    title: "Swelled Up",
-    placeholder: "",
-    name: "swelled_up",
-  },
   {
     title: "Fetal Height",
     placeholder: "",
@@ -205,11 +208,6 @@ export const prenatalCare = [
     title: "Urine Glucose",
     placeholder: "",
     name: "urine_glucose",
-  },
-  {
-    title: "Urine",
-    placeholder: "",
-    name: "urine",
   },
   {
     title: "Urine Albumin",
@@ -292,8 +290,141 @@ export const prenatalCare = [
     name: "need_of_family_development",
   },
   {
-    title: "Postpartum Risk Factors (Child/Mother)",
+    title: "A days to visit the clinic",
     placeholder: "",
-    name: "postpartum_risk_factors_child_mother",
+    name: "a_days_to_visit_the_clinic",
   },
+];
+
+export const record = [
+  {
+    title: "Clinic Date",
+    name: "clinicDate",
+    type: "date",
+    shrink: true,
+  },
+  {
+    title: "Weeks into Pregnancy",
+    name: "weeksIntoPregnancy",
+  },
+  {
+    title: "Weight (kg)",
+    name: "weight",
+  },
+  {
+    title: "Height",
+    name: "height",
+  },
+  {
+    title: "BMI",
+    name: "bmi",
+  },
+  {
+    title: "Glucose Level",
+    name: "glucoseLevel",
+  },
+  {
+    title: "Albumin Level",
+    name: "albuminLevel",
+  },
+  {
+    title: "Swelling",
+    name: "swelling",
+  },
+  {
+    title: "Blood Pressure",
+    name: "bloodPressure",
+  },
+  {
+    title: "Fetal Height",
+    name: "fetalHeight",
+  },
+  {
+    title: "Fetal Location",
+    name: "fetalLocation",
+  },
+  {
+    title: "Fetal Movements",
+    name: "fetalMovements",
+  },
+  {
+    title: "Heart Sound",
+    name: "heartSound",
+  },
+  {
+    title: "Iron Folate",
+    name: "ironFolate",
+  },
+  {
+    title: "Vitamin C",
+    name: "vitaminC",
+  },
+  {
+    title: "Calcium Malaria",
+    name: "calciumMalaria",
+  },
+  {
+    title: "Thriposha",
+    name: "thriposha",
+  },
+  {
+    title: "Blood Sample",
+    name: "bloodSample",
+  },
+  {
+    title: "Blood Sugar Level",
+    name: "bloodSugarLevel",
+  },
+  {
+    title: "Hemoglobin Level",
+    name: "hemoglobinLevel",
+  },
+  {
+    title: "Malaria",
+    name: "malaria",
+  },
+  {
+    title: "VDRL Result",
+    name: "vdrlResult",
+  },
+  {
+    title: "Lungs",
+    name: "lungs",
+  },
+  {
+    title: "Dental Tests",
+    name: "dentalTests",
+  },
+  {
+    title: "Dental Drying",
+    name: "dentalDrying",
+  },
+  {
+    title: "Galagandaya",
+    name: "galagandaya",
+  },
+  {
+    title: "Checked By",
+    name: "checkedBy",
+  },
+  {
+    title: "Referral",
+    name: "referral",
+  },
+];
+
+export const birth1 = [
+  {
+    title: "Birth Place",
+    placeholder: "Enter birth place",
+    name: "birth_place",
+  },
+  { title: "Date of Birth", placeholder: "", name: "dob", type: "date" },
+  {
+    title: "Date Released",
+    placeholder: "",
+    name: "date_released",
+    type: "date",
+  },
+  { title: "Done By", placeholder: "", name: "done_by" },
 ];

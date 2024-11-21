@@ -1,16 +1,29 @@
-import React, { useState } from "react";
-import TextField from "@mui/material/TextField";
-import { HiChevronLeft } from "react-icons/hi";
-import { Button } from "@/components/ui/button";
-import { useTranslation } from "react-i18next";
-import { useNavigate } from "react-router-dom";
+import Popup from "reactjs-popup";
+import { Button } from "./ui/button";
+import { HiOutlinePlusSm } from "react-icons/hi";
+import { TextField, Typography } from "@mui/material";
+import { useState } from "react";
+import { IoIosCloseCircleOutline } from "react-icons/io";
+import { errorType, Toast } from "./toast";
 import DrugService from "@/service/drugService";
-import { errorType, Toast } from "@/components/toast";
-import Heading from "@/components/ui/heading";
 import { useTitle } from "@/hooks/useTitle";
 
-const DrugAdd = () => {
+const DrugAddPopup = ({
+  addButton,
+  brandLabel,
+  batchLabel,
+  strengthLabel,
+  quantityLabel,
+  compositionLabel,
+  doseLabel,
+  manufactureLabel,
+  expiryLabel,
+  submitButton,
+  isOpen,
+  setIsOpen,
+}) => {
   useTitle("Add Drug");
+
   const [formData, setFormData] = useState({
     brandName: "",
     recommendedDose: "",
@@ -22,8 +35,6 @@ const DrugAdd = () => {
     composition: "",
   });
   const [errors, setErrors] = useState({});
-  const navigate = useNavigate();
-  const { t } = useTranslation("drugAdd");
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -101,7 +112,7 @@ const DrugAdd = () => {
         composition: "",
       });
       Toast(response, errorType.SUCCESS);
-      navigate("/drugs");
+      setIsOpen(false);
     } catch (error) {
       console.log(error.message);
 
@@ -123,18 +134,44 @@ const DrugAdd = () => {
     }
   };
 
-  const title = t("title");
-
   return (
-    <div className="content-container">
-      <div>
-        <Heading title={title} />
-
-        <div className="flex justify-center">
-          <div className=" w-8/12 py-12 px-36 flex flex-col gap-6 ">
+    <Popup
+      open={isOpen}
+      onOpen={() => setIsOpen(true)}
+      onClose={() => {
+        setIsOpen(false);
+      }}
+      trigger={
+        <Button className="bg-[#6F0096] h-10 flexbox items-center ">
+          {addButton}
+          <HiOutlinePlusSm className="ml-2 h-5 w-5" />
+        </Button>
+      }
+      modal
+      nested
+      overlayStyle={{
+        backgroundColor: "rgba(0, 0, 0, 0.6)",
+      }}
+    >
+      {(close) => (
+        <div
+          className="rounded-md bg-white dark:bg-dark-popup"
+          style={{ width: "600px" }}
+        >
+          <div className="flex flex-row-reverse justify-between pt-5 px-5">
+            <IoIosCloseCircleOutline
+              size={25}
+              className="cursor-pointer hover:text-purple-500 hover:scale-110"
+              onClick={close}
+            />
+          </div>
+          <Typography variant="h5" align="center">
+            Add New Drug
+          </Typography>
+          <div className="px-10 flex flex-col gap-6 pb-6 h-[500px] overflow-y-scroll">
             <TextField
               required
-              label={t("brand")}
+              label={brandLabel}
               name="brandName"
               value={formData.brandName}
               onChange={handleInputChange}
@@ -145,7 +182,7 @@ const DrugAdd = () => {
 
             <TextField
               required
-              label={t("batch")}
+              label={batchLabel}
               name="batchNumber"
               value={formData.batchNumber}
               onChange={handleInputChange}
@@ -156,7 +193,7 @@ const DrugAdd = () => {
 
             <TextField
               required
-              label={t("strength")}
+              label={strengthLabel}
               name="strength"
               value={formData.strength}
               onChange={handleInputChange}
@@ -167,8 +204,8 @@ const DrugAdd = () => {
 
             <TextField
               required
+              label={quantityLabel}
               type="number"
-              label={t("quantity")}
               name="quantity"
               value={formData.quantity}
               onChange={handleInputChange}
@@ -178,7 +215,7 @@ const DrugAdd = () => {
             />
             <TextField
               required
-              label={t("composition")}
+              label={compositionLabel}
               name="composition"
               value={formData.composition}
               onChange={handleInputChange}
@@ -188,7 +225,7 @@ const DrugAdd = () => {
             />
 
             <TextField
-              label={t("dose")}
+              label={doseLabel}
               name="recommendedDose"
               value={formData.recommendedDose}
               onChange={handleInputChange}
@@ -197,6 +234,7 @@ const DrugAdd = () => {
 
             <TextField
               required
+              label={manufactureLabel}
               type="date"
               name="manufacturedDate"
               value={formData.manufacturedDate}
@@ -211,6 +249,7 @@ const DrugAdd = () => {
 
             <TextField
               required
+              label={expiryLabel}
               type="date"
               name="expiryDate"
               value={formData.expiryDate}
@@ -222,16 +261,16 @@ const DrugAdd = () => {
             />
 
             <Button
-              className="w-1/2 self-center bg-[#620084] mt-5"
+              className="w-1/2 self-center bg-footer-purple mt-5"
               onClick={handleSubmit}
             >
-              {t("add")}
+              {submitButton}
             </Button>
           </div>
         </div>
-      </div>
-    </div>
+      )}
+    </Popup>
   );
 };
 
-export default DrugAdd;
+export default DrugAddPopup;

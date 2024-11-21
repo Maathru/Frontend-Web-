@@ -32,6 +32,7 @@ export default function MultipleSelectChip({
   users,
   personName,
   setPersonName,
+  isDisabled,
 }) {
   const theme = useTheme();
 
@@ -39,6 +40,7 @@ export default function MultipleSelectChip({
     const {
       target: { value },
     } = event;
+
     setPersonName(
       // On autofill we get a stringified value.
       typeof value === "string" ? value.split(",") : value
@@ -47,19 +49,17 @@ export default function MultipleSelectChip({
 
   return (
     <div>
-      <FormControl sx={{ width: 300 }}  size="small" >
+      <FormControl sx={{ width: 300 }} size="small">
         <InputLabel id="demo-multiple-chip-label">Select Doctors</InputLabel>
         <Select
+          disabled={isDisabled}
           labelId="demo-multiple-chip-label"
           id="demo-multiple-chip"
           multiple
           value={personName}
           onChange={handleChange}
           input={
-            <OutlinedInput
-              id="select-multiple-chip"
-              label="Select Doctors"
-            />
+            <OutlinedInput id="select-multiple-chip" label="Select Doctors" />
           }
           renderValue={(selected) => (
             <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>

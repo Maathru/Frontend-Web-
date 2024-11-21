@@ -1,109 +1,30 @@
 import { Button } from "@/components/ui/button";
-import React from "react";
-import {
-  HiOutlinePencilAlt,
-  HiOutlinePlusSm,
-  HiOutlineTrash,
-} from "react-icons/hi";
-import { Chip, IconButton } from "@mui/material";
+import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import Heading from "@/components/ui/heading";
 import { useTitle } from "@/hooks/useTitle";
 import { StripedDataGrid } from "@/components/StripedDataGrid";
 import TableSearch from "@/components/TableSearch";
+import Calendar from "@/components/Calendar";
+import ClinicService from "@/service/clinicService";
+import { errorType, Toast } from "@/components/toast";
+import { formatTime } from "@/utils/FormatTime";
 
 const columns = [
-  { field: "id", headerName: "Clinic ID", width: 70 },
-  { field: "name", headerName: "Clinic Name", width: 130 },
-  { field: "devision", headerName: "Devision", flex: 1 },
+  { field: "id", headerName: "Clinic ID", width: 100 },
+  { field: "name", headerName: "Clinic Name", flex: 1 },
+  { field: "region", headerName: "Region", flex: 1 },
   { field: "date", headerName: "Date", flex: 1 },
-  { field: "time", headerName: "Time", flex: 1 },
-  { field: "appoinments", headerName: "No. of Appoinments", flex: 1 },
   {
-    field: "view",
-    headerName: "View Appoinments",
+    field: "time",
+    headerName: "Time",
     flex: 1,
-    renderCell: () => {
-      return (
-        <Chip
-          size={"small"}
-          label="View"
-          sx={{
-            backgroundColor: "#EBF9F1",
-            color: "#1F9254",
-            width: "60%",
-          }}
-        />
-      );
-    },
-  },
-  {
-    field: "edit",
-    headerName: "",
-    flex: 0.1,
     renderCell: (params) => (
-      <IconButton
-        // onClick={() => handleDelete(params.row.id)}
-        aria-label="delete"
-        size="small"
-        sx={{
-          color: "#624DE3",
-        }}
-      >
-        <HiOutlinePencilAlt />
-      </IconButton>
+      <>
+        {formatTime(params.row.startTime)} - {formatTime(params.row.endTime)}
+      </>
     ),
-  },
-  {
-    field: "delete",
-    headerName: "",
-    flex: 0.1,
-    renderCell: (params) => (
-      <IconButton
-        // onClick={() => handleEdit(params.row.id)}
-        aria-label="delete"
-        size="small"
-        sx={{
-          color: "#A30D11",
-        }}
-      >
-        <HiOutlineTrash />
-      </IconButton>
-    ),
-  },
-];
-
-const rows = [
-  {
-    id: 1,
-    name: "Clinic1",
-    devision: "Piliyandala",
-    date: "25/04/2024",
-    time: "8am-5pm",
-    appoinments: "12",
-    View: "Out of Stock",
-    // action: "edit",
-  },
-  {
-    id: 2,
-    name: "Clinic1",
-    devision: "Piliyandala",
-    date: "25/04/2024",
-    time: "8am-5pm",
-    appoinments: "12",
-    View: "Out of Stock",
-    // action: "edit",
-  },
-  {
-    id: 3,
-    name: "Clinic1",
-    devision: "Piliyandala",
-    date: "25/04/2024",
-    time: "8am-5pm",
-    appoinments: "12",
-    View: "Out of Stock",
-    // action: "edit",
   },
 ];
 
@@ -111,35 +32,66 @@ const Clinic = () => {
   useTitle("Clinics");
   const { t } = useTranslation("clinic");
   const title = t("title");
+  const [clinics, setClinics] = useState([]);
+  const [dates, setDates] = useState([]);
+
+  useEffect(() => {
+    fetchClinicsForGivenMonth(new Date().toISOString().split("T")[0]);
+    fetchClinicsByDate(new Date().toISOString().split("T")[0]);
+  }, []);
+
+  const fetchClinicsForGivenMonth = async (date) => {
+    try {
+      const response = await ClinicService.getClinicsGivenMonthForDoctor(date);
+      setDates(response);
+    } catch (error) {
+      Toast(error.response.data || "Unauthorized", errorType.ERROR);
+      console.log(error.response.data);
+    }
+  };
+
+  const fetchClinicsByDate = async (date) => {
+    setClinics([]);
+
+    try {
+      const response = await ClinicService.getClinicsByDateToDoctor(date);
+      setClinics(response);
+    } catch (error) {
+      Toast(error.response.data || "Unauthorized", errorType.ERROR);
+      console.log(error.response.data);
+    }
+  };
+
+  const handleMonthChange = async (date) => {
+    await fetchClinicsForGivenMonth(date.format("YYYY-MM-DD"));
+  };
+
+  const handleDateChange = async (date) => {
+    await fetchClinicsByDate(date.format("YYYY-MM-DD"));
+  };
 
   return (
     <div className="content-container">
       <Heading title={title} />
 
-      <div className="flex gap-36 justify-around px-24">
-        <Link to={"/clinics/view"}>
-          {/* <Button className="flex-1 text-md">{t("past")}</Button> */}
-          <Button className="flex-1 text-md">{t("clinics")}</Button>
-        </Link>
-
-        <Link to={"/clinics/dates"}>
-          <Button className="flex-1 text-md">{t("dates")}</Button>
-        </Link>
-
+      <div className="">
         <Link to={"/clinics/reports"}>
-          <Button className="flex-1 text-md">{t("reports")}</Button>
+          <Button className="float-right text-md">{t("reports")}</Button>
         </Link>
       </div>
-      <div className="flex flex-col items-end mt-10">
-        <Button className="bg-[#6F0096] h-10 flexbox items-center ">
-          {t("add")}
-          <HiOutlinePlusSm className="ml-2 h-5 w-5" />
-        </Button>
 
+      <div className="flex w-full">
+        <div className="w-3/12">
+          <Calendar
+            handleMonthChange={handleMonthChange}
+            highlightedDays={dates}
+            handleDateChange={handleDateChange}
+          />
+        </div>
         {/* clinics table */}
-        <div style={{ height: "100%", width: "100%" }}>
+        <div className="w-9/12">
           <StripedDataGrid
-            rows={rows}
+            rows={clinics}
             columns={columns}
             initialState={{
               pagination: {

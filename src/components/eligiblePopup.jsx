@@ -200,7 +200,9 @@ const EligiblePopup = ({ addButton }) => {
           {(backendError.msg || isLoading) && (
             <div className="px-5 pt-5">
               <Alert severity={backendError.type} variant="outlined">
-                <AlertTitle>Error</AlertTitle>
+                <AlertTitle>
+                  {backendError.type == "info" ? "Info" : "Error"}
+                </AlertTitle>
                 {backendError.msg}
               </Alert>
             </div>

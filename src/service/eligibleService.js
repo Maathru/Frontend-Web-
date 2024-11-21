@@ -266,6 +266,7 @@ class EligibleService {
       womanName: eligibleDto.basicInfoDto.womanName,
       manName: eligibleDto.basicInfoDto.manName,
       address: eligibleDto.basicInfoDto.address,
+      location: eligibleDto.basicInfoDto.location,
       createdDate: eligibleDto.basicInfoDto.createdDate,
 
       anemia_woman: eligibleDto.medicalHistoryDto.womenAnemia,
@@ -506,6 +507,7 @@ class EligibleService {
       womanName: formObject.womanName,
       manName: formObject.manName,
       address: formObject.address,
+      location: formObject.location,
       womanPhone: formObject.womanPhone,
       manPhone: formObject.manPhone,
       womanDob: formObject.womanDob,
@@ -551,6 +553,18 @@ class EligibleService {
     try {
       const response = await axiosInstance.get(
         `/eligible/midwife/get/${userId}`
+      );
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  // By midwife
+  static async deleteEligibleUserByMidwife(userId) {
+    try {
+      const response = await axiosInstance.delete(
+        `/eligible/midwife/delete/${userId}`
       );
       return response.data;
     } catch (error) {
