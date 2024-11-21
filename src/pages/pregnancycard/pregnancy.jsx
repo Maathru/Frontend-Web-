@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import {
   conditions1,
@@ -9,8 +8,6 @@ import {
   currentPregnancyStatus,
   otherSituations,
 } from "@/data/pregnancyData";
-import { errorType, Toast } from "@/components/toast";
-import EligibleService from "@/service/eligibleService";
 import Heading from "@/components/ui/heading";
 import { useTranslation } from "react-i18next";
 import { Box, Tab, Tabs } from "@mui/material";
@@ -26,7 +23,6 @@ const Pregnancy1 = () => {
   useTitle("Pregnancy Card");
   const [formObject, setFormObject] = useState({});
   const [value, setValue] = useState(0);
-  const location = useLocation();
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -34,29 +30,6 @@ const Pregnancy1 = () => {
       behavior: "smooth",
     });
   };
-
-  const editMode =
-    location.pathname.split("/")[2] === "add" ||
-    location.pathname.split("/")[2] === "edit";
-
-  useEffect(() => {
-    const fetchEligibleInfo = async () => {
-      try {
-        const response = await EligibleService.getEligibleInfo();
-        const existing = EligibleService.mapDtoToFormObject(response);
-        localStorage.setItem("pregnancy", JSON.stringify(existing));
-      } catch (error) {
-        console.log(error.message);
-        Toast(error.message, errorType.ERROR);
-
-        const data = error.response.data;
-        console.log(data);
-        Toast(data, errorType.ERROR);
-      }
-    };
-
-    // fetchEligibleInfo();
-  }, []);
 
   const initiateFields = () => {
     const initialData = {};
@@ -76,7 +49,7 @@ const Pregnancy1 = () => {
       initialData[info.name + "_woman"] = "";
     });
 
-    initialData.duration = "";
+    initialData.distance = "";
 
     conditions1.forEach((condition) => {
       initialData[condition.name + "_woman"] = "";

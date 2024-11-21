@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import SingleInput from "@/components/userComponents/singleInput";
 import YesNoButton from "@/components/userComponents/yesNoButton";
 import { birth1 } from "@/data/pregnancyData";
+import PregnancyService from "@/service/pregnancyService";
+import { errorType, Toast } from "../toast";
 
 const ChildBirth = ({ handleChange }) => {
   const [record, setRecord] = useState({});
@@ -13,8 +15,9 @@ const ChildBirth = ({ handleChange }) => {
     setRecord((prevState) => ({ ...prevState, ...newObject }));
   };
 
-  const handleSave = (e) => {
+  const handleSave = async (e) => {
     localStorage.setItem("birth", JSON.stringify(record));
+    await handleSubmit();
     handleChange(e, 3);
   };
 
@@ -47,6 +50,33 @@ const ChildBirth = ({ handleChange }) => {
     return initialData;
   };
 
+  const handleSubmit = async () => {
+    const formData = PregnancyService.mapFormObjectToChildBirth(record);
+
+    try {
+      const response = await PregnancyService.saveChildBirth(formData);
+      Toast(response, errorType.SUCCESS);
+    } catch (error) {
+      console.log(error.message);
+
+      const data = error.response.data;
+      if (data) {
+        if (Array.isArray(data)) {
+          const newErrors = {};
+          data.map((msg) => {
+            Toast(msg.message, errorType.ERROR);
+            newErrors[msg.field] = msg.message;
+          });
+
+          console.log(newErrors);
+        } else {
+          console.log(data);
+          Toast(data || "Error occurred", errorType.ERROR);
+        }
+      }
+    }
+  };
+
   useEffect(() => {
     const getFromLocalStorage = () => {
       const jsonString = localStorage.getItem("birth");
@@ -56,13 +86,32 @@ const ChildBirth = ({ handleChange }) => {
       return {};
     };
 
-    const obj1 = initiateFields();
-    const obj2 = getFromLocalStorage();
-    setRecord((prevRecord) => ({
-      ...prevRecord,
-      ...obj1,
-      ...obj2,
-    }));
+    const fetchFamilyHistory = async () => {
+      try {
+        const response = await PregnancyService.getChildBirth();
+
+        const existing = PregnancyService.mapChildBirthToFormObject(response);
+        setRecord((prevState) => ({ ...prevState, ...existing }));
+      } catch (error) {
+        console.log(error.message);
+
+        console.log(error);
+        const data = error.response.data;
+        console.log(data);
+        Toast(data, errorType.ERROR);
+      }
+    };
+
+    return () => {
+      const obj1 = initiateFields();
+      const obj2 = getFromLocalStorage();
+      fetchFamilyHistory();
+      setRecord((prevRecord) => ({
+        ...prevRecord,
+        ...obj1,
+        ...obj2,
+      }));
+    };
   }, []);
 
   return (

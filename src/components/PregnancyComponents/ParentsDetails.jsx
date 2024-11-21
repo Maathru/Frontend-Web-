@@ -7,6 +7,9 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { Button } from "../ui/button";
 import LocationAddPopup from "../map/LocationAddPopup";
+import PregnancyService from "@/service/pregnancyService";
+import { errorType, Toast } from "../toast";
+import { useEffect } from "react";
 
 const ParentsDetails = ({
   formObject,
@@ -19,10 +22,61 @@ const ParentsDetails = ({
     setFormObject((prevState) => ({ ...prevState, ...newObject }));
   };
 
-  const handleSave = (e) => {
+  const handleSave = async (e) => {
     localStorage.setItem("pregnancy", JSON.stringify(formObject));
+    await handleSubmit();
     handleChangeMainDetails(e, 1);
   };
+
+  const handleSubmit = async () => {
+    const formData = PregnancyService.mapFormObjectToParentDetails(formObject);
+
+    try {
+      const response = await PregnancyService.saveParentDetails(formData);
+      Toast(response, errorType.SUCCESS);
+    } catch (error) {
+      console.log(error.message);
+
+      const data = error.response.data;
+      if (data) {
+        if (Array.isArray(data)) {
+          const newErrors = {};
+          data.map((msg) => {
+            Toast(msg.message, errorType.ERROR);
+            newErrors[msg.field] = msg.message;
+          });
+
+          console.log(newErrors);
+        } else {
+          console.log(data);
+          Toast(data || "Error occurred", errorType.ERROR);
+        }
+      }
+    }
+  };
+
+  useEffect(() => {
+    const fetchParentDetails = async () => {
+      try {
+        const response = await PregnancyService.getParentDetails();
+
+        const existing =
+          PregnancyService.mapParentDetailsToFormObject(response);
+        setFormObject((prevState) => ({ ...prevState, ...existing }));
+      } catch (error) {
+        console.log(error.message);
+
+        console.log(error);
+        const data = error.response.data;
+        console.log(data);
+        Toast(data, errorType.ERROR);
+      }
+    };
+
+    return () => {
+      fetchParentDetails();
+    };
+  }, []);
 
   return (
     <>
@@ -182,12 +236,12 @@ const ParentsDetails = ({
         <div className="grid grid-cols-3 gap-4 items-center mt-4 mx-14">
           <p>8. Distance for the office </p>
           <TextField
-            value={formObject.duration || ""}
+            value={formObject.distance || ""}
             label="Enter distance"
             variant="outlined"
             className="w-96"
             onChange={(e) =>
-              setFormObject({ ...formObject, duration: e.target.value })
+              setFormObject({ ...formObject, distance: e.target.value })
             }
           />
         </div>

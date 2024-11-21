@@ -6,7 +6,7 @@ const AddRecordForm = ({ open, handleClose, handleAddRecord }) => {
   const initiateFields = () => {
     const initialData = {};
 
-    record.forEach((birth) => {
+    record.forEach(() => {
       initialData[record.name] = "";
     });
 
