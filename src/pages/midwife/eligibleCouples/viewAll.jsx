@@ -60,9 +60,7 @@ const eligibleCouples = () => {
       }
     };
 
-    return () => {
-      fetchEligibleListForMidwife();
-    };
+    fetchEligibleListForMidwife();
   }, [state]);
 
   const handleRowClick = (params) => {
