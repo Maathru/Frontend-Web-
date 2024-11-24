@@ -18,9 +18,10 @@ function createData(name, value) {
 
 const dateTableRows = [createData("2024/12/12", "status")];
 
-const homeVisit = () => {
+const HomeVisit = () => {
   const [parentData, setParentData] = useState({});
   const [location, setLocation] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
   const { userId } = useParams();
   const navigate = useNavigate();
 
@@ -32,50 +33,58 @@ const homeVisit = () => {
     createData("Father's Phone Number", parentData.fatherPhone),
   ];
 
+  const parseLocation = (locationData) => {
+    try {
+      return JSON.parse(locationData || "{}");
+    } catch (error) {
+      Toast("Invalid location data", errorType.ERROR);
+      return {};
+    }
+  };
+
   useEffect(() => {
+    let isComponentMounted = true;
     const fetchParentDataForMidwife = async () => {
       try {
+        setIsLoading(true);
         const response = await EmployeeService.getMidwifeHomeVisitsData(userId);
-        setParentData(response);
-        try {
-          setLocation(JSON.parse(response.location || '{}'));
-        } catch (error) {
-          console.error('Failed to parse location:', error);
-          setLocation({});
-          Toast('Invalid location data', errorType.ERROR);
+        if (isComponentMounted) {
+          setParentData(response);
+          setLocation(parseLocation(response.location));
         }
       } catch (error) {
-        console.log(error.message);
-
-        const data = error.response.data;
-        console.log(data);
+        const data = error.response?.data || "Error occurred";
         Toast(data || "Error occurred", errorType.ERROR);
-        alert(data || "Error occurred");
         navigate("/");
+      } finally {
+        if (isComponentMounted) {
+          setIsLoading(false);
+        }
       }
     };
-
     fetchParentDataForMidwife();
-  }, []);
+    return () => {
+      isComponentMounted = false;
+    };
+  }, [userId, navigate]);
+
+  const isValidLocation =
+    location?.lat &&
+    location?.lng &&
+    !isNaN(location.lat) &&
+    !isNaN(location.lng);
+
+  const mapUrl = isValidLocation
+    ? `https://www.google.com/maps?q=${encodeURIComponent(
+        location.lat
+      )},${encodeURIComponent(location.lng)}&hl=es;z=14&output=embed`
+    : "about:blank";
 
   return (
     <div className="content-container">
       <Heading title={"Home Visit"} />
       <div className="flex gap-20">
         <div>
-const homeVisit = () => {
-  // ... existing code ...
-  const isValidLocation = location?.lat && location?.lng && 
-    !isNaN(location.lat) && !isNaN(location.lng);
-
-  const mapUrl = isValidLocation ? 
-    `https://www.google.com/maps?q=${encodeURIComponent(location.lat)},${encodeURIComponent(location.lng)}&hl=es;z=14&output=embed` 
-    : 'about:blank';
-
-  return (
-    <div className="content-container">
-      {/* ... */}
-
           <iframe
             src={mapUrl}
             width="500"
@@ -163,4 +172,4 @@ const homeVisit = () => {
   );
 };
 
-export default homeVisit;
+export default HomeVisit;
