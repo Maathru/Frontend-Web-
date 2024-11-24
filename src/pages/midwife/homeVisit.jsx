@@ -10,7 +10,7 @@ import {
   Typography,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 function createData(name, value) {
   return { name, value };
@@ -21,9 +21,8 @@ const dateTableRows = [createData("2024/12/12", "status")];
 const homeVisit = () => {
   const [parentData, setParentData] = useState({});
   const [location, setLocation] = useState({});
-  const userId = useParams();
-
-  console.log(userId);
+  const { userId } = useParams();
+  const navigate = useNavigate();
 
   const dataTableRows = [
     createData("Mother's Name", parentData.motherName),
@@ -36,9 +35,7 @@ const homeVisit = () => {
   useEffect(() => {
     const fetchParentDataForMidwife = async () => {
       try {
-        const response = await EmployeeService.getMidwifeHomeVisitsData(
-          userId.userId
-        );
+        const response = await EmployeeService.getMidwifeHomeVisitsData(userId);
         setParentData(response);
         setLocation(JSON.parse(response.location));
       } catch (error) {
@@ -47,6 +44,8 @@ const homeVisit = () => {
         const data = error.response.data;
         console.log(data);
         Toast(data || "Error occurred", errorType.ERROR);
+        alert(data || "Error occurred");
+        navigate("/");
       }
     };
 
