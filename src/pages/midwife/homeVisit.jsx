@@ -37,7 +37,13 @@ const homeVisit = () => {
       try {
         const response = await EmployeeService.getMidwifeHomeVisitsData(userId);
         setParentData(response);
-        setLocation(JSON.parse(response.location));
+        try {
+          setLocation(JSON.parse(response.location || '{}'));
+        } catch (error) {
+          console.error('Failed to parse location:', error);
+          setLocation({});
+          Toast('Invalid location data', errorType.ERROR);
+        }
       } catch (error) {
         console.log(error.message);
 
