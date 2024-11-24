@@ -57,12 +57,18 @@ const homeVisit = () => {
       <Heading title={"Home Visit"} />
       <div className="flex gap-20">
         <div>
-          const isValidLocation = location?.lat && location?.lng && 
-            !isNaN(location.lat) && !isNaN(location.lng);
+const homeVisit = () => {
+  // ... existing code ...
+  const isValidLocation = location?.lat && location?.lng && 
+    !isNaN(location.lat) && !isNaN(location.lng);
 
-          const mapUrl = isValidLocation ? 
-            `https://www.google.com/maps?q=${encodeURIComponent(location.lat)},${encodeURIComponent(location.lng)}&hl=es;z=14&output=embed` 
-            : 'about:blank';
+  const mapUrl = isValidLocation ? 
+    `https://www.google.com/maps?q=${encodeURIComponent(location.lat)},${encodeURIComponent(location.lng)}&hl=es;z=14&output=embed` 
+    : 'about:blank';
+
+  return (
+    <div className="content-container">
+      {/* ... */}
 
           <iframe
             src={mapUrl}
