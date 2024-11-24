@@ -3,7 +3,6 @@ import { Button } from "../ui/button";
 import { formatTime } from "@/utils/FormatTime";
 
 const ClinicViewSection = ({ clinics }) => {
-  console.log(clinics);
   return (
     <div className="w-7/12 flex flex-col gap-6">
       <div className="flex gap-10">
