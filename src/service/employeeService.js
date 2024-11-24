@@ -51,11 +51,10 @@ class EmployeeService {
   //By midwife
   static async getMidwifeHomeVisitsData(id) {
     if (!id) {
-      throw new Error('Midwife ID is required');
+      throw new Error("Midwife ID is required");
     }
     const response = await axiosInstance.get(`/employee/home-visits/${id}`);
     return response.data;
-  }
   }
 }
 
