@@ -30,20 +30,20 @@ class ForumService {
     }
   }
 
-  static async getAllQuestionsWithDefaultPagination() {
+  static async getAllQuestionsWithPagination(offset, pageSize) {
     try {
-      const response = await axiosInstance.get(`/question/pagination`);
+      const response = await axiosInstance.get(
+        `/question/pagination/${offset}/${pageSize}`
+      );
       return response.data;
     } catch (error) {
       throw error;
     }
   }
 
-  static async getAllQuestionsWithPagination(offset, pageSize) {
+  static async getAllQuestionsWithDefaultPagination() {
     try {
-      const response = await axiosInstance.get(
-        `/question/pagination/${offset}/${pageSize}`
-      );
+      const response = await axiosInstance.get(`/question/pagination`);
       return response.data;
     } catch (error) {
       throw error;
