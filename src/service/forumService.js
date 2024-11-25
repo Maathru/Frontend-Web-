@@ -40,6 +40,15 @@ class ForumService {
       throw error;
     }
   }
+
+  static async getAllQuestionsWithDefaultPagination() {
+    try {
+      const response = await axiosInstance.get(`/question/pagination`);
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  }
   
   static async searchQuestionsByKeyword(keyword){
     try{

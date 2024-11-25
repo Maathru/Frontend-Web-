@@ -14,30 +14,41 @@ import { Badge } from "@/components/ui/badge";
 import { useTitle } from "@/hooks/useTitle";
 import Heading from "@/components/ui/heading";
 import { growthData } from "@/data/growthData";
+import GrowthService from "@/service/growthService";
 
 const Growth = () => {
   useTitle("Growth");
   const { t } = useTranslation("growth");
 
-  const [dob, setDob] = useState(new Date());  // User input for DOB
+  const [dob, setDob] = useState();  // User input for DOB
   const [age, setAge] = useState("");  // Age selection (for demonstration)
   const [currentWeek, setCurrentWeek] = useState(1);  // Default to 1st week
 
   useEffect(() => {
-    const calculateWeek = (dob) => {
-      if (!dob) return;
-
-      const currentDate = new Date();
-      const dobDate = new Date(dob);
-      const timeDifference = currentDate - dobDate;
-      const daysInWeek = 7 * 24 * 60 * 60 * 1000; 
-      const weeksPregnant = Math.floor(timeDifference / daysInWeek);
-      console.log(weeksPregnant);
-      setCurrentWeek(weeksPregnant);
+    // Fetch DOB from the backend
+    const fetchDob = async () => {
+      try {
+        const response = await GrowthService.getDob();
+        const userDob = response.data;
+        setDob(new Date(userDob));
+        calculateWeek(new Date(userDob));
+      } catch (error) {
+        console.error("Error fetching DOB:", error);
+      }
     };
 
-    calculateWeek(dob);
-  });
+    fetchDob();
+  }, []);
+
+  const calculateWeek = (dob) => {
+    if (!dob) return;
+
+    const currentDate = new Date();
+    const timeDifference = currentDate - dob;
+    const daysInWeek = 7 * 24 * 60 * 60 * 1000;
+    const weeksPregnant = Math.floor(timeDifference / daysInWeek);
+    setCurrentWeek(weeksPregnant);
+  };
 
   const handleChange = (event) => {
     setAge(event.target.value);
@@ -75,7 +86,7 @@ const Growth = () => {
             </div>
 
             <p className="text-right font-semibold">
-              {dob && `DOB: ${dob.toLocaleDateString()}`}
+              {/* {dob && `DOB: ${dob.toLocaleDateString()}`} */}
               Current Stage: {currentWeek} Weeks Pregnant
             </p>
           </div>
@@ -101,7 +112,7 @@ const Growth = () => {
       <div className="mx-12 mt-12">
         <p className="text-2xl font-semibold mb-3">
           Your child's current state:{" "}
-          <span className="font-normal"> {stage.week} weeks </span>
+          <span className="font-normal"> {currentWeek} weeks </span>
         </p>
         <p className="text-lg mb-10 text-justify">
           {stage.description}
