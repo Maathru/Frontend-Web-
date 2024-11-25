@@ -111,7 +111,7 @@ const Growth = () => {
 
         {/*food cards container starts */}
         <div className="grid grid-cols-1 xl:grid-cols-2 gap-10 mt-10">
-          {stage.foods && stage.foods.map((food, index) => (
+          {stage.foods?.map((food, index) => (
             <div key={index}>
               <Card className="bg-white flex flex-row items-center">
                 <img src={food.image} alt={food.title} className="rounded-md hidden md:block m-2 max-w-52 object-fit" />
