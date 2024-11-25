@@ -1,7 +1,7 @@
 import { HiChevronLeft } from "react-icons/hi";
 import { useTranslation } from "react-i18next";
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -11,30 +11,39 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import meal1 from "../../assets/user/salmon-eggs.png";
-import meal2 from "../../assets/user/tofu.png";
-import walking from "../../assets/user/walking.png";
-import yoga from "../../assets/user/yoga.png";
 import { useTitle } from "@/hooks/useTitle";
 import Heading from "@/components/ui/heading";
+import { growthData } from "@/data/growthData";
 
-const video1 =
-  "https://s3-figma-videos-production-sig.figma.com/video/1331174703014716309/TEAM/b24c/4ba4/-bdc0-4212-a2d5-50aa6a709148?Expires=1723420800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=ci8yxNhFAVrtsax9QPjO0C33VEYTh6YCLjGi5-1507Lc4gVrc--mm8fi4GO7zFwFdo2E2HAGZpPicE-NfoFJ5-5EVLvbtmd5t9PsN2ID-6jLwHj59CRlTVEK8mSvT2rTgG2pLQm17cO2peqYXC8WwhWPCAANOwHafIMmqIhfIgGFhQKH~n4N6T8xQaC7YyIx7PtpYhIhWmrN-3okj0gXhZwKnTDJ-IxXcYR2RULVxn29y4PGAffqlL4oqzPUPDkLvEXl57-Vjs7A0fMgVqzabmmkoyBeZgT08A5TD6E7nza-g3E1LJw1p798lOMCRA120niqOoUEDUSZyDnTY1ZO~g__";
-const cardColor = "bg-white dark:bg-dark-card";
-const badgeColor = "bg-light-badge-green text-light-success-green";
-("bg-fuchsia-200 dark:bg-fuchsia-300 hover:dark:bg-fuchsia-100 dark:text-neutral-800");
-const cardheader = "pb-2 pt-0";
-const cardcontent = "text-base pb-3 text-justify";
-
-const growth = () => {
+const Growth = () => {
   useTitle("Growth");
   const { t } = useTranslation("growth");
 
-  const [age, setAge] = React.useState("");
+  const [dob, setDob] = useState(new Date());  // User input for DOB
+  const [age, setAge] = useState("");  // Age selection (for demonstration)
+  const [currentWeek, setCurrentWeek] = useState(1);  // Default to 1st week
+
+  useEffect(() => {
+    const calculateWeek = (dob) => {
+      if (!dob) return;
+
+      const currentDate = new Date();
+      const dobDate = new Date(dob);
+      const timeDifference = currentDate - dobDate;
+      const daysInWeek = 7 * 24 * 60 * 60 * 1000; 
+      const weeksPregnant = Math.floor(timeDifference / daysInWeek);
+      console.log(weeksPregnant);
+      setCurrentWeek(weeksPregnant);
+    };
+
+    calculateWeek(dob);
+  });
 
   const handleChange = (event) => {
     setAge(event.target.value);
   };
+
+  const stage = growthData.find((stage) => stage.week === currentWeek) || {};
 
   return (
     <div className="bg-white dark:bg-dark-background p-12 pt-8">
@@ -45,7 +54,7 @@ const growth = () => {
 
       <div className="mx-12">
         <div className="rounded-sm shadow-md px-8 py-4 flex flex-col items-end">
-          <div className="flex w-full justify-between">
+        <div className="flex w-full justify-between">
             <div className="">
               <FormControl style={{ minWidth: 300 }}>
                 <InputLabel id="label">{t("dropdown")}</InputLabel>
@@ -66,20 +75,23 @@ const growth = () => {
             </div>
 
             <p className="text-right font-semibold">
-              Current Stage: 3 Months Pregnant
+              {dob && `DOB: ${dob.toLocaleDateString()}`}
+              Current Stage: {currentWeek} Weeks Pregnant
             </p>
           </div>
 
-          <div className="text-right">
-            <video
-              src={video1}
-              width="800"
-              // height="300"
-              controls="controls"
-              autoplay="true"
-            />
-          </div>
+          {stage.video && (
+            <div className="text-right">
+              <video
+                src={stage.video}
+                width="800"
+                controls="controls"
+                autoPlay="true"
+              />
+            </div>
+          )}
         </div>
+
         <div className="flex justify-between mt-6">
           <Button className="w-24">{t("previous")}</Button>
           <Button className="w-24">{t("next")}</Button>
@@ -89,135 +101,36 @@ const growth = () => {
       <div className="mx-12 mt-12">
         <p className="text-2xl font-semibold mb-3">
           Your child's current state:{" "}
-          <span className="font-normal">3 months</span>
+          <span className="font-normal"> {stage.week} weeks </span>
         </p>
         <p className="text-lg mb-10 text-justify">
-          It's month 3, and your baby is still very small. They're about an inch
-          long, with tiny bud-like arms and legs. Their digestive tract, eyes,
-          ears, nose, tongue, and skin are developing. Your baby's facial
-          features continue to develop. Each ear begins as a little fold of skin
-          at the side of the head. Tiny buds that eventually grow into arms and
-          legs are forming. Fingers, toes, and eyes are also forming in the
-          second month of pregnancy. <br />
-          The neural tube (brain, spinal cord, and other neural tissue of the
-          central nervous system) is well formed. The digestive tract and
-          sensory organs begin to develop. Bone starts to replace cartilage. The
-          embryo begins to move, although the mother cannot yet feel it. Due to
-          hormonal changes, Mother may still be experiencing some nausea and
-          fatigue in your second month.
+          {stage.description}
         </p>
 
-        <p className="text-2xl">Food to eat during pregnancy—Month 3</p>
+        <p className="text-2xl">Food to eat during pregnancy—Week {stage.week}</p>
 
         {/*food cards container starts */}
         <div className="grid grid-cols-1 xl:grid-cols-2 gap-10 mt-10">
-          <div>
-            <Card
-              className={`${cardColor} flex flex-row items-center row-span-1`}
-            >
-              <img
-                src={meal1}
-                alt="Blog Image"
-                className="rounded-md hidden md:block m-2 max-w-52 object-fit"
-              />
-              <div className="flex flex-col">
-                <CardHeader className={`${cardheader}`}>
-                  <CardTitle className="text-lg">Salmon, cooked eggs</CardTitle>
-                </CardHeader>
-                <CardContent className={`${cardcontent}`}>
-                  <p>
-                    great source of iron. It's important to get enough iron
-                    throughout your pregnancy, since it's needed to support your
-                    baby's developing brain.
-                  </p>
-                </CardContent>
-              </div>
-            </Card>
-          </div>
-
-          <div>
-            <Card
-              className={`${cardColor} flex flex-row items-center row-span-1`}
-            >
-              <img
-                src={meal2}
-                alt="Blog Image"
-                className="rounded-md hidden md:block m-2 max-w-52 object-fit"
-              />
-              <div className="flex flex-col">
-                <CardHeader className={`${cardheader}`}>
-                  <CardTitle className="text-lg">
-                    Leafy greens, chickpeas, tofu, beans
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className={`${cardcontent}`}>
-                  <p>
-                    Eat iron-rich plant foods, along with some vitamin C (just a
-                    squeeze of lemon). This encourages your body's absorption of
-                    iron from non-animal sources.
-                  </p>
-                </CardContent>
-                <CardFooter className="pb-0">
-                  <Badge variant="secondary" className={badgeColor}>
-                    veg
-                  </Badge>
-                </CardFooter>
-              </div>
-            </Card>
-          </div>
-          <div>
-            <Card
-              className={`${cardColor} flex flex-row items-center row-span-1`}
-            >
-              <img
-                src={meal1}
-                alt="Blog Image"
-                className="rounded-md hidden md:block m-2 max-w-52 object-fit"
-              />
-              <div className="flex flex-col">
-                <CardHeader className={`${cardheader}`}>
-                  <CardTitle className="text-lg">Salmon, cooked eggs</CardTitle>
-                </CardHeader>
-                <CardContent className={`${cardcontent}`}>
-                  <p>
-                    great source of iron. It's important to get enough iron
-                    throughout your pregnancy, since it's needed to support your
-                    baby's developing brain.
-                  </p>
-                </CardContent>
-              </div>
-            </Card>
-          </div>
-          <div>
-            <Card
-              className={`${cardColor} flex flex-row items-center row-span-1`}
-            >
-              <img
-                src={meal2}
-                alt="Blog Image"
-                className="rounded-md hidden md:block m-2 max-w-52 object-fit"
-              />
-              <div className="flex flex-col">
-                <CardHeader className={`${cardheader}`}>
-                  <CardTitle className="text-lg">
-                    Leafy greens, chickpeas, tofu, beans
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className={`${cardcontent}`}>
-                  <p>
-                    Eat iron-rich plant foods, along with some vitamin C (just a
-                    squeeze of lemon). This encourages your body's absorption of
-                    iron from non-animal sources.
-                  </p>
-                </CardContent>
-                <CardFooter className="pb-0">
-                  <Badge variant="secondary" className={badgeColor}>
-                    veg
-                  </Badge>
-                </CardFooter>
-              </div>
-            </Card>
-          </div>
+          {stage.foods?.map((food, index) => (
+            <div key={index}>
+              <Card className="bg-white flex flex-row items-center">
+                <img src={food.image} alt={food.title} className="rounded-md hidden md:block m-2 max-w-52 object-fit" />
+                <div className="flex flex-col">
+                  <CardHeader className="pb-2 pt-0">
+                    <CardTitle className="text-lg">{food.title}</CardTitle>
+                  </CardHeader>
+                  <CardContent className="text-base pb-3 text-justify">
+                    <p>{food.content}</p>
+                  </CardContent>
+                  {food.badgeText && (
+                    <CardFooter className="pb-0">
+                      <Badge variant="secondary" className="bg-light-badge-green text-light-success-green">{food.badgeText}</Badge>
+                    </CardFooter>
+                  )}
+                </div>
+              </Card>
+            </div>
+          ))}
         </div>
 
         <p className="text-2xl mt-12">
@@ -225,105 +138,34 @@ const growth = () => {
         </p>
 
         <p className="text-lg my-10 text-justify">
-          Regular exercise during pregnancy is essential for your well-being and
-          your baby's health. It helps reduce discomfort, improves mood, and
-          prepares your body for childbirth. Remember, a healthy mother means a
-          healthy baby.
+          Regular exercise during pregnancy is essential for your well-being and your baby's health...
         </p>
 
         {/*exercise cards container starts */}
-
         <div className="grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 gap-8">
-          <div>
-            <Card className={`${cardColor} flex flex-col items-center`}>
-              <CardHeader className={`${cardheader}`}>
-                <CardTitle className="text-lg">Walking</CardTitle>
-              </CardHeader>
-              <img
-                src={walking}
-                alt="Blog Image"
-                className="rounded-md hidden md:block m-2 object-fit px-4"
-              />
-              <div className="flex flex-col">
-                <CardContent className={`${cardcontent}`}>
-                  <p>
-                    great source of iron. It's important to get enough iron
-                    throughout your pregnancy, since it's needed to support your
-                    baby's developing brain.
-                  </p>
-                </CardContent>
-              </div>
-            </Card>
-          </div>
-          <div>
-            <Card className={`${cardColor} flex flex-col items-center`}>
-              <CardHeader className={`${cardheader}`}>
-                <CardTitle className="text-lg">Prenatal Yoga</CardTitle>
-              </CardHeader>
-              <img
-                src={yoga}
-                alt="Blog Image"
-                className="rounded-md hidden md:block m-2 object-fit px-4"
-              />
-              <div className="flex flex-col">
-                <CardContent className={`${cardcontent}`}>
-                  <p>
-                    Gentle stretching and breathing exercises tailored for
-                    pregnant women. Join a prenatal yoga class or follow a
-                    certified instructor online.
-                    <br /> Enhances flexibility, reduces stress, and improves
-                    sleep quality.
-                  </p>
-                </CardContent>
-              </div>
-            </Card>
-          </div>
-          <div>
-            <Card className={`${cardColor} flex flex-col items-center`}>
-              <CardHeader className={`${cardheader}`}>
-                <CardTitle className="text-lg">Walking</CardTitle>
-              </CardHeader>
-              <img
-                src={walking}
-                alt="Blog Image"
-                className="rounded-md hidden md:block m-2 object-fit px-4"
-              />
-              <div className="flex flex-col">
-                <CardContent className={`${cardcontent}`}>
-                  <p>
-                    great source of iron. It's important to get enough iron
-                    throughout your pregnancy, since it's needed to support your
-                    baby's developing brain.
-                  </p>
-                </CardContent>
-              </div>
-            </Card>
-          </div>
-          <div>
-            <Card className={`${cardColor} flex flex-col items-center`}>
-              <CardHeader className={`${cardheader}`}>
-                <CardTitle className="text-lg">Walking</CardTitle>
-              </CardHeader>
-              <img
-                src={walking}
-                alt="Blog Image"
-                className="rounded-md hidden md:block m-2 object-fit px-4"
-              />
-              <div className="flex flex-col">
-                <CardContent className={`${cardcontent}`}>
-                  <p>
-                    great source of iron. It's important to get enough iron
-                    throughout your pregnancy, since it's needed to support your
-                    baby's developing brain.
-                  </p>
-                </CardContent>
-              </div>
-            </Card>
-          </div>
+          {stage.activities?.map((activity, index) => (
+            <div key={index}>
+              <Card className="bg-white flex flex-col items-center">
+                <CardHeader className="pb-2 pt-0">
+                  <CardTitle className="text-lg">{activity.title}</CardTitle>
+                </CardHeader>
+                <img
+                  src={activity.image}
+                  alt={activity.title}
+                  className="rounded-md hidden md:block m-2 object-fit px-4"
+                />
+                <div className="flex flex-col">
+                  <CardContent className="text-base pb-3 text-justify">
+                    <p>{activity.content}</p>
+                  </CardContent>
+                </div>
+              </Card>
+            </div>
+          ))}
         </div>
       </div>
     </div>
   );
 };
 
-export default growth;
+export default Growth;

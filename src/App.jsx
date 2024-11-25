@@ -31,6 +31,7 @@ import MidwifeDashboard from "./pages/midwife/dashboard";
 import EligibleCouples from "./pages/midwife/eligibleCouples/viewAll";
 import EligibleCouplesAdd from "./pages/midwife/eligibleCouples/add";
 import Parents from "./pages/midwife/parents/viewAll";
+import HomeVisit from "./pages/midwife/homeVisit";
 import NotFound from "./pages/notFound";
 import { userData } from "./context/userAuth";
 import ScrollToTop from "./components/ScrollToTop";
@@ -170,6 +171,7 @@ function App() {
                     element={<EligibleCouplesAdd />}
                   />
                   <Route path="/parents" element={<Parents />} />
+                  <Route path="/homevisit/:userId" element={<HomeVisit />} />
                 </>
               )}
 

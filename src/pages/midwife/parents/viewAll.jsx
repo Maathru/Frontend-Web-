@@ -100,9 +100,7 @@ const viewAllParents = () => {
       }
     };
 
-    return () => {
-      fetchParentListForMidwife();
-    };
+    fetchParentListForMidwife();
   }, []);
 
   const handleRowClick = (params) => {
