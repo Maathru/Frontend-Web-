@@ -66,6 +66,7 @@ const Forum = () => {
     if (userDetails.authenticated == true) {
       navigate("/forum/ask");
     } else {
+      Toast("You need to login to ask a question", errorType.ERROR);
       navigate("/login");
     }
   };
