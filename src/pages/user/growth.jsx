@@ -143,7 +143,7 @@ const Growth = () => {
 
         {/*exercise cards container starts */}
         <div className="grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 gap-8">
-          {stage.activities && stage.activities.map((activity, index) => (
+          {stage.activities?.map((activity, index) => (
             <div key={index}>
               <Card className="bg-white flex flex-col items-center">
                 <CardHeader className="pb-2 pt-0">
