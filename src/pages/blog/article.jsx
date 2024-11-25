@@ -36,10 +36,7 @@ const Article = () => {
         Toast(data || "Failed to fetch article", errorType.ERROR);
       }
     };
-
-    return () => {
-      fetchArticle();
-    };
+    fetchArticle();
   }, [articleId]);
 
     
