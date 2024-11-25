@@ -53,6 +53,8 @@ const Forum = () => {
         console.log(data);
         Toast(data || "Error occurred", errorType.ERROR);
       }
+
+      console.log(userDetails.authenticated);
     };
 
     return () => {
@@ -61,10 +63,9 @@ const Forum = () => {
   }, []);
 
   const handleAsk = (e) => {
-    if (userDetails) {
+    if (userDetails.authenticated == true) {
       navigate("/forum/ask");
     } else {
-      Toast("Log in to ask question");
       navigate("/login");
     }
   };
