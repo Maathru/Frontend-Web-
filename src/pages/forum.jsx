@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { List } from "@mui/material";
 import Item from "@/components/ui/item";
-import Pagination from "@/components/pagination";
+import Pagination from "@/components/pagination-dynamic";
 import { Button } from "flowbite-react";
 import SearchBar from "@mkyy/mui-search-bar";
 import ForumService from "@/service/forumService";
@@ -13,61 +13,48 @@ import { useTitle } from "@/hooks/useTitle";
 
 const Forum = () => {
   useTitle("Forum");
-  const handleSearch = async (labelOptionValue) => {
-    try {
-      const response = await ForumService.searchQuestionsByKeyword(
-        textFieldValue
-      );
-      setQuestions(response);
-    } catch (error) {
-      console.log(error.message);
-      Toast(error.message, errorType.ERROR);
-
-      const data = error.response.data;
-      console.log(data);
-      Toast(data, errorType.ERROR);
-    }
-  };
 
   const [textFieldValue, setTextFieldValue] = useState("");
   const [questions, setQuestions] = useState([]);
-  const [pageSize, setPageSize] = useState(0);
-  const [offset, setOffset] = useState(10);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize] = useState(5);
+  const [totalPages, setTotalPages] = useState(0);
 
   const navigate = useNavigate();
-
   const { userDetails } = useContext(userData);
 
+  const fetchQuestions = async (page) => {
+    try {
+      const offset = (page - 1) * pageSize;
+      const response = await ForumService.getAllQuestionsWithPagination(offset, pageSize);
+      setQuestions(response.content);
+      setTotalPages(response.totalPages);
+    } catch (error) {
+      console.log(error.message);
+      Toast(error.response?.data || "Error occurred", errorType.ERROR);
+    }
+  };
+
   useEffect(() => {
-    const fetchQuestions = async () => {
-      try {
-        const response = await ForumService.getAllQuestionsWithPagination(
-          pageSize,
-          offset
-        );
-        setQuestions(response.content);
-      } catch (error) {
-        console.log(error.message);
+    fetchQuestions(currentPage);
+  }, [currentPage]);
 
-        const data = error.response.data;
-        console.log(data);
-        Toast(data || "Error occurred", errorType.ERROR);
-      }
-
-      console.log(userDetails.authenticated);
-    };
-
-    return () => {
-      fetchQuestions();
-    };
-  }, []);
-
-  const handleAsk = (e) => {
-    if (userDetails.authenticated == true) {
+  const handleAsk = () => {
+    if (userDetails.authenticated) {
       navigate("/forum/ask");
     } else {
       Toast("You need to login to ask a question", errorType.ERROR);
       navigate("/login");
+    }
+  };
+
+  const handleSearch = async () => {
+    try {
+      const response = await ForumService.searchQuestionsByKeyword(textFieldValue);
+      setQuestions(response);
+    } catch (error) {
+      console.log(error.message);
+      Toast(error.response?.data || "Error occurred", errorType.ERROR);
     }
   };
 
@@ -89,7 +76,7 @@ const Forum = () => {
         </div>
         <Button
           className="bg-[#6F0096] h-10 min-w-max flexbox items-center"
-          onClick={(e) => handleAsk(e)}
+          onClick={handleAsk}
         >
           Ask a Question
         </Button>
@@ -108,9 +95,14 @@ const Forum = () => {
           ))}
         </List>
       </div>
-      <Pagination />
+      <Pagination
+        totalPages={totalPages}
+        currentPage={currentPage}
+        onPageChange={setCurrentPage}
+      />
     </div>
   );
 };
 
 export default Forum;
+
