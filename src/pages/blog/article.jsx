@@ -32,7 +32,7 @@ const Article = () => {
         const response = await BlogService.getArticle(articleId);
         setArticle(response);
       } catch (error) {
-        const data = error.response.data;
+        const data = error.response?.data;
         Toast(data || "Failed to fetch article", errorType.ERROR);
       }
     };
