@@ -70,7 +70,7 @@ const blog = () => {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 md:gap-8 gap-4 md:mt-8 mt-4 mx-4">
         <div className="row-span-2">
-          <Link to="/blogs/article">
+          <Link to="/blogs/article/recent/1">
             <Card
               className={`${cardColor} flex flex-col justify-between h-[100%]`}
             >
@@ -117,90 +117,94 @@ const blog = () => {
           </Link>
         </div>
 
-        <Card className={`${cardColor} flex flex-row items-center row-span-1`}>
-          <img
-            src={RecentBlogImage1}
-            alt="Blog Image"
-            className="rounded-md hidden md:block m-2 max-w-72 max-h-72 object-fit"
-          />
-          <div className="flex flex-col justify-between">
-            <CardHeader>
-              <img
-                src={RecentBlogImage1}
-                alt="Blog Image"
-                className="rounded-md mb-2 md:hidden w-[100%] max-h-48 object-cover"
-              />
-              <CardTitle>The Importance of Regular Prenatal Checkups</CardTitle>
-              {/* <CardDescription>
-              Prenatal checkups are a vital part of ensuring the well-being of both mother and baby during pregnancy. 
-              </CardDescription> */}
-            </CardHeader>
-            <CardContent className="text-sm">
-              <p>
-                Prenatal checkups are a vital part of ensuring the well-being of
-                both mother and baby during pregnancy.
-              </p>
-            </CardContent>
-            <CardFooter className="pb-0">
-              <div className="flex flex-wrap gap-2">
-                <Badge variant="secondary" className={badgeColor}>
-                  Prenatal Visits
-                </Badge>
-                <Badge variant="secondary" className={badgeColor}>
-                  Health
-                </Badge>
-              </div>
-            </CardFooter>
-            <CardFooter className={`text-sm flex justify-end ${readMoreColor}`}>
-              <p>Read More</p>
-            </CardFooter>
-          </div>
-        </Card>
+        <Link to="/blogs/article/recent/2">
+          <Card className={`${cardColor} flex flex-row items-center row-span-1`}>
+            <img
+              src={RecentBlogImage1}
+              alt="Blog Image"
+              className="rounded-md hidden md:block m-2 max-w-72 max-h-72 object-fit"
+            />
+            <div className="flex flex-col justify-between">
+              <CardHeader>
+                <img
+                  src={RecentBlogImage1}
+                  alt="Blog Image"
+                  className="rounded-md mb-2 md:hidden w-[100%] max-h-48 object-cover"
+                />
+                <CardTitle>The Importance of Regular Prenatal Checkups</CardTitle>
+                <CardDescription>
+                    Maternal Clinics
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="text-sm">
+                <p>
+                  Prenatal checkups are a vital part of ensuring the well-being of
+                  both mother and baby during pregnancy.
+                </p>
+              </CardContent>
+              <CardFooter className="pb-0">
+                <div className="flex flex-wrap gap-2">
+                  <Badge variant="secondary" className={badgeColor}>
+                    Prenatal Visits
+                  </Badge>
+                  <Badge variant="secondary" className={badgeColor}>
+                    Health
+                  </Badge>
+                </div>
+              </CardFooter>
+              <CardFooter className={`text-sm flex justify-end ${readMoreColor}`}>
+                <p>Read More</p>
+              </CardFooter>
+            </div>
+          </Card>
+        </Link>
 
-        <Card className={`${cardColor} flex flex-row items-center row-span-1`}>
-          <img
-            src={RecentBlogImage2}
-            alt="Blog Image"
-            className="rounded-md hidden md:block m-2 max-w-72 max-h-72 object-fit"
-          />
-          <div className="flex flex-col justify-between">
-            <CardHeader>
-              <img
-                src={RecentBlogImage2}
-                alt="Blog Image"
-                className="rounded-md mb-2 md:hidden w-[100%] max-h-48 object-cover"
-              />
-              <CardTitle>Vaccination Guide for Newborns and Infants</CardTitle>
-              {/* <CardDescription>
-              Prenatal checkups are a vital part of ensuring the well-being of both mother and baby during pregnancy. 
-              </CardDescription> */}
-            </CardHeader>
-            <CardContent className="text-sm">
-              <p>
-                Vaccinating newborns is crucial. Their developing immune systems
-                leave them vulnerable to serious diseases. Vaccines safely train
-                their bodies to fight these illnesses, protecting them from
-                harm.
-              </p>
-            </CardContent>
-            <CardFooter className="pb-0">
-              <div className="flex flex-wrap gap-2">
-                <Badge variant="secondary" className={badgeColor}>
-                  Newborn
-                </Badge>
-                <Badge variant="secondary" className={badgeColor}>
-                  Vaccination
-                </Badge>
-                <Badge variant="secondary" className={badgeColor}>
-                  Health
-                </Badge>
-              </div>
-            </CardFooter>
-            <CardFooter className={`text-sm flex justify-end ${readMoreColor}`}>
-              <p>Read More</p>
-            </CardFooter>
-          </div>
-        </Card>
+        <Link to="/blogs/article/recent/3">
+          <Card className={`${cardColor} flex flex-row items-center row-span-1`}>
+            <img
+              src={RecentBlogImage2}
+              alt="Blog Image"
+              className="rounded-md hidden md:block m-2 max-w-72 max-h-72 object-fit"
+            />
+            <div className="flex flex-col justify-between">
+              <CardHeader>
+                <img
+                  src={RecentBlogImage2}
+                  alt="Blog Image"
+                  className="rounded-md mb-2 md:hidden w-[100%] max-h-48 object-cover"
+                />
+                <CardTitle>Vaccination Guide for Newborns and Infants</CardTitle>
+                <CardDescription>
+                  Infant Health
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="text-sm">
+                <p>
+                  Vaccinating newborns is crucial. Their developing immune systems
+                  leave them vulnerable to serious diseases. Vaccines safely train
+                  their bodies to fight these illnesses, protecting them from
+                  harm.
+                </p>
+              </CardContent>
+              <CardFooter className="pb-0">
+                <div className="flex flex-wrap gap-2">
+                  <Badge variant="secondary" className={badgeColor}>
+                    Newborn
+                  </Badge>
+                  <Badge variant="secondary" className={badgeColor}>
+                    Vaccination
+                  </Badge>
+                  <Badge variant="secondary" className={badgeColor}>
+                    Health
+                  </Badge>
+                </div>
+              </CardFooter>
+              <CardFooter className={`text-sm flex justify-end ${readMoreColor}`}>
+                <p>Read More</p>
+              </CardFooter>
+            </div>
+          </Card>
+        </Link>
       </div>
 
       <Card className="mt-8 md:mt:12 shadow-sm shadow-gray-100 dark:shadow-gray-900 mx-1 md:mx-8">
@@ -231,6 +235,8 @@ const blog = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-3 md:gap-8 gap-4 md:mt-8 mt-4 mx-4">
         {blogs.map((blog) => (
+          
+          <Link to={`/blogs/article/${blog.blogId}`}>
           <Card
             className={`${cardColor} flex flex-col justify-between`}
             key={blog.blogId}
@@ -264,6 +270,7 @@ const blog = () => {
               <p>Read More</p>
             </CardFooter>
           </Card>
+          </Link>
         ))}
       </div>
 
