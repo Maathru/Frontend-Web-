@@ -10,7 +10,7 @@ const badgeStyle =
 const ArticleRecent3 = () => {
   return (
     <div className="">
-      <Link to={"/blogs/"}>
+      <Link to="/blogs/" aria-label="Back to blogs">
         <div className="md:mt-10 mt-5 md:ml-10 ml-3 text-3xl font-semibold text-neutral-800 dark:text-neutral-100">
           <MdOutlineArrowBackIosNew />
         </div>
