@@ -6,8 +6,6 @@ import { Link } from "react-router-dom";
 
 const badgeStyle =
   "bg-fuchsia-200 dark:bg-fuchsia-300 hover:dark:bg-fuchsia-100 dark:text-neutral-800 md:text-xl text-sm font-normal px-4 py-1";
-const cardColor = "bg-pink-100 dark:bg-[#251F28] hover:dark:bg-[#1D1A1F]";
-const readMoreColor = "text-[#9c3cc1] dark:text-neutral-300";
 
 const ArticleRecent3 = () => {
   return (
