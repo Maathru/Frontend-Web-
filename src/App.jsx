@@ -53,6 +53,8 @@ import VaccineCard from "./pages/vaccinecard/vaccinecard";
 import Nav from "./components/nav";
 import { useDarkMode } from "./context/darkModeContext";
 import SystemAnalytics from "./pages/admin/systemAnalytics.jsx";
+import Clinics from "./pages/midwife/clinics/mohClinics";
+
 
 function App() {
   const { toggleDarkMode } = useDarkMode();
@@ -178,6 +180,7 @@ function App() {
                   />
                   <Route path="/parents" element={<Parents />} />
                   <Route path="/homevisit/:userId" element={<HomeVisit />} />
+                  <Route path="/clinics" element={<Clinics />} />
                 </>
               )}
 
