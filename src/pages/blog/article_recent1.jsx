@@ -2,20 +2,10 @@ import React from "react";
 import { MdOutlineArrowBackIosNew } from "react-icons/md";
 import { Badge } from "@/components/ui/badge";
 import ArticleImage from "../../assets/blog/article-image.png";
-import BlogImage from "../../assets/blog/blog-image.png";
 import { Link } from "react-router-dom";
-
-import {
-  Card,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 
 const badgeStyle =
   "bg-fuchsia-200 dark:bg-fuchsia-300 hover:dark:bg-fuchsia-100 dark:text-neutral-800 md:text-xl text-sm font-normal px-4 py-1";
-const cardColor = "bg-pink-100 dark:bg-[#251F28] hover:dark:bg-[#1D1A1F]";
-const readMoreColor = "text-[#9c3cc1] dark:text-neutral-300";
 
 const ArticleRecent1 = () => {
   return (
