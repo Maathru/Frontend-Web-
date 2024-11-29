@@ -20,7 +20,7 @@ const Growth = () => {
   useTitle("Growth");
   const { t } = useTranslation("growth");
 
-  const [dob, setDob] = useState();  // User input for DOB
+  const [dop, setDop] = useState("");  // Date of birth
   const [age, setAge] = useState("");  // Age selection (for demonstration)
   const [currentWeek, setCurrentWeek] = useState(1);  // Default to 1st week
 
@@ -28,10 +28,10 @@ const Growth = () => {
     // Fetch DOB from the backend
     const fetchDob = async () => {
       try {
-        const response = await GrowthService.getDob();
-        const userDob = response.data;
-        setDob(new Date(userDob));
-        calculateWeek(new Date(userDob));
+        const response = await GrowthService.getDop();
+        const userDop = response.data;
+        setDop(new Date(userDop));
+        calculateWeek(new Date(userDop));
       } catch (error) {
         console.error("Error fetching DOB:", error);
       }
@@ -40,11 +40,11 @@ const Growth = () => {
     fetchDob();
   }, []);
 
-  const calculateWeek = (dob) => {
-    if (!dob) return;
+  const calculateWeek = (dop) => {
+    if (!dop) return;
 
     const currentDate = new Date();
-    const timeDifference = currentDate - dob;
+    const timeDifference = currentDate - dop;
     const daysInWeek = 7 * 24 * 60 * 60 * 1000;
     const weeksPregnant = Math.floor(timeDifference / daysInWeek);
     setCurrentWeek(weeksPregnant);
