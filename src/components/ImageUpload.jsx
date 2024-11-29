@@ -22,6 +22,20 @@ const ImageUploader = () => {
   const handleUploadClick = (event) => {
     const file = event.target.files[0];
     if (file) {
+      // Validate file type
+      const validTypes = ['image/jpeg', 'image/png', 'image/gif'];
+      if (!validTypes.includes(file.type)) {
+        setErrorMessage('Please select a valid image file (JPEG, PNG, or GIF)');
+        return;
+      }
+      
+      // Validate file size (e.g., 5MB limit)
+      const maxSize = 5 * 1024 * 1024;
+      if (file.size > maxSize) {
+        setErrorMessage('File size should not exceed 5MB');
+        return;
+      }
+
       const imageData = new FormData();
       imageData.append("imageFile", file);
       setImageData(imageData);
