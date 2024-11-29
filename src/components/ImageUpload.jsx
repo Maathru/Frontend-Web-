@@ -12,6 +12,8 @@ import {
 } from "@material-ui/core";
 import ImageService from "@/service/ImageService";
 
+import { useState, useEffect } from "react";
+
 const ImageUploader = () => {
   const [imagePreview, setImagePreview] = useState(null);
   const [imageData, setImageData] = useState(null);
@@ -19,6 +21,13 @@ const ImageUploader = () => {
   const [uploadSuccess, setUploadSuccess] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
+  useEffect(() => {
+    return () => {
+      if (imagePreview) {
+        URL.revokeObjectURL(imagePreview);
+      }
+    };
+  }, [imagePreview]);
   const handleUploadClick = (event) => {
     const file = event.target.files[0];
     if (file) {
