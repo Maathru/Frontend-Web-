@@ -1,4 +1,3 @@
-import { useState } from "react";
 import {
   Grid,
   Card,
@@ -11,7 +10,6 @@ import {
   Snackbar,
 } from "@material-ui/core";
 import ImageService from "@/service/ImageService";
-
 import { useState, useEffect } from "react";
 
 const ImageUploader = () => {
@@ -32,16 +30,16 @@ const ImageUploader = () => {
     const file = event.target.files[0];
     if (file) {
       // Validate file type
-      const validTypes = ['image/jpeg', 'image/png', 'image/gif'];
+      const validTypes = ["image/jpeg", "image/png", "image/gif"];
       if (!validTypes.includes(file.type)) {
-        setErrorMessage('Please select a valid image file (JPEG, PNG, or GIF)');
+        setErrorMessage("Please select a valid image file (JPEG, PNG, or GIF)");
         return;
       }
-      
+
       // Validate file size (e.g., 5MB limit)
       const maxSize = 5 * 1024 * 1024;
       if (file.size > maxSize) {
-        setErrorMessage('File size should not exceed 5MB');
+        setErrorMessage("File size should not exceed 5MB");
         return;
       }
 
