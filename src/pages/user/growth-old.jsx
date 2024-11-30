@@ -1,7 +1,6 @@
-import { HiChevronLeft } from "react-icons/hi";
 import { useTranslation } from "react-i18next";
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -15,63 +14,46 @@ import { useTitle } from "@/hooks/useTitle";
 import Heading from "@/components/ui/heading";
 import { growthData } from "@/data/growthData";
 import GrowthService from "@/service/growthService";
-
 const Growth = () => {
   useTitle("Growth");
   const { t } = useTranslation("growth");
 
-  const [pregnancyCards, setPregnancyCards] = useState([]); // Pregnancy cards
-  const [selectedCardId, setSelectedCardId] = useState(""); // Selected pregnancy card ID
-  const [currentWeek, setCurrentWeek] = useState(1); // Current pregnancy week
+  const [dop, setDop] = useState("");  // Date of birth
+  const [pregnancyCards, setPregnancyCards] = useState([]);  // Pregnancy cards
+  const [age, setAge] = useState("");  // Age selection (for demonstration)
+  const [currentWeek, setCurrentWeek] = useState(1);  // Default to 1st week
 
   useEffect(() => {
-    // Fetch pregnancy cards from the backend
-    const fetchPregnancyCards = async () => {
+    // Fetch DOB from the backend
+    const fetchDob = async () => {
       try {
         const response = await GrowthService.getPreganancyCards();
-        setPregnancyCards(response.data || []);
-
-        // Set the default card (first card in the list)
-        if (cards.length > 0) {
-          const defaultCard = cards[0];
-          setSelectedCardId(defaultCard.pregnancyCardId);
-          calculateWeek(defaultCard.dateOfPregnancy);
-        }
+        response.data && setPregnancyCards(response.data);
+        console.log("Pregnancy cards:", response.data);
+        // setDop(new Date(userDop));
+        // calculateWeek(new Date(userDop));
       } catch (error) {
-        console.error("Error fetching pregnancy cards:", error);
+        console.error("Error fetching DOB:", error);
       }
     };
 
-    fetchPregnancyCards();
+    fetchDob();
   }, []);
 
-  // Calculate the pregnancy week based on the date of pregnancy
-  const calculateWeek = (dateOfPregnancy) => {
-    if (!dateOfPregnancy) return;
+  const calculateWeek = (dop) => {
+    if (!dop) return;
 
-    const dop = new Date(dateOfPregnancy);
     const currentDate = new Date();
     const timeDifference = currentDate - dop;
     const daysInWeek = 7 * 24 * 60 * 60 * 1000;
     const weeksPregnant = Math.floor(timeDifference / daysInWeek);
-    setCurrentWeek(weeksPregnant >= 0 ? weeksPregnant : 0); // Ensure non-negative weeks
+    setCurrentWeek(weeksPregnant);
   };
 
-  // Handle dropdown change and calculate weeks
-  const handleCardChange = (event) => {
-    const cardId = event.target.value;
-    setSelectedCardId(cardId);
-
-    // Find the selected card and calculate the week
-    const selectedCard = pregnancyCards.find(
-      (card) => card.pregnancyCardId === cardId
-    );
-    if (selectedCard) {
-      calculateWeek(selectedCard.dateOfPregnancy);
-    }
+  const handleChange = (event) => {
+    setAge(event.target.value);
   };
 
-  // Get the current stage based on the week
   const stage = growthData.find((stage) => stage.week === currentWeek) || {};
 
   return (
@@ -83,27 +65,28 @@ const Growth = () => {
 
       <div className="mx-12">
         <div className="rounded-sm shadow-md px-8 py-4 flex flex-col items-end">
-          <div className="flex w-full justify-between">
+        <div className="flex w-full justify-between">
             <div className="">
               <FormControl style={{ minWidth: 300 }}>
-                <InputLabel id="label">{t("Select Pregnancy Card")}</InputLabel>
+                <InputLabel id="label">{t("dropdown")}</InputLabel>
                 <Select
                   labelId="label"
                   variant="standard"
                   id="select"
-                  value={selectedCardId}
-                  onChange={handleCardChange}
+                  value={age}
+                  label="select child"
+                  onChange={handleChange}
+                  sx={{ border: 0 }}
                 >
-                  {pregnancyCards.map((card) => (
-                    <MenuItem key={card.pregnancyCardId} value={card.pregnancyCardId}>
-                      Card {card.pregnancyCardId} - {new Date(card.dateOfPregnancy).toLocaleDateString()}
-                    </MenuItem>
-                  ))}
+                  <MenuItem value={10}>Ten</MenuItem>
+                  <MenuItem value={20}>Twenty</MenuItem>
+                  <MenuItem value={30}>Thirty</MenuItem>
                 </Select>
               </FormControl>
             </div>
 
             <p className="text-right font-semibold">
+              {/* {dob && `DOB: ${dob.toLocaleDateString()}`} */}
               Current Stage: {currentWeek} Weeks Pregnant
             </p>
           </div>
@@ -137,16 +120,12 @@ const Growth = () => {
 
         <p className="text-2xl">Food to eat during pregnancy—Week {stage.week}</p>
 
-        {/* Food cards container */}
+        {/*food cards container starts */}
         <div className="grid grid-cols-1 xl:grid-cols-2 gap-10 mt-10">
           {stage.foods?.map((food, index) => (
             <div key={index}>
               <Card className="bg-white flex flex-row items-center">
-                <img
-                  src={food.image}
-                  alt={food.title}
-                  className="rounded-md hidden md:block m-2 max-w-52 object-fit"
-                />
+                <img src={food.image} alt={food.title} className="rounded-md hidden md:block m-2 max-w-52 object-fit" />
                 <div className="flex flex-col">
                   <CardHeader className="pb-2 pt-0">
                     <CardTitle className="text-lg">{food.title}</CardTitle>
@@ -156,12 +135,7 @@ const Growth = () => {
                   </CardContent>
                   {food.badgeText && (
                     <CardFooter className="pb-0">
-                      <Badge
-                        variant="secondary"
-                        className="bg-light-badge-green text-light-success-green"
-                      >
-                        {food.badgeText}
-                      </Badge>
+                      <Badge variant="secondary" className="bg-light-badge-green text-light-success-green">{food.badgeText}</Badge>
                     </CardFooter>
                   )}
                 </div>
@@ -178,7 +152,7 @@ const Growth = () => {
           Regular exercise during pregnancy is essential for your well-being and your baby's health...
         </p>
 
-        {/* Exercise cards container */}
+        {/*exercise cards container starts */}
         <div className="grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 gap-8">
           {stage.activities?.map((activity, index) => (
             <div key={index}>
