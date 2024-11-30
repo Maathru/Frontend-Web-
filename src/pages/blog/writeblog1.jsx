@@ -4,7 +4,10 @@ import { IoImageOutline } from "react-icons/io5";
 import Heading from "@/components/ui/heading";
 import BlogHeading from "@/components/blogComponents/blogHeading";
 import BlogProgress from "@/components/blogComponents/BlogProgress";
-import { useState } from "react";
+import { useState, useRef } from "react";
+import { set } from "date-fns";
+import Popup from "reactjs-popup";
+import 'reactjs-popup/dist/index.css';
 
 const accentColor = "bg-[#9c3cc1]";
 
@@ -28,6 +31,22 @@ const WriteBlog1 = () => {
     navigate("/blogs/write/2");
   };
 
+  const [isPopupVisible, setIsPopupVisible] = useState(false);
+  const handlePreviewClick = () => {
+    setIsPopupVisible(!isPopupVisible);
+  };
+
+  const [imageName, setImageName] = useState("Choose Image");
+  const [cachedURL, setcachedURL] = useState("");
+
+  const uploadImage = async () => {
+    const file = document.getElementById("picture").files[0];
+    setImageName(file.name);
+    const cachedURL = URL.createObjectURL(file);
+    setcachedURL(cachedURL);
+  };
+
+
   useState(() => {
     const fetchBlog = () => {
       const blog = JSON.parse(localStorage.getItem("blog"));
@@ -44,6 +63,15 @@ const WriteBlog1 = () => {
 
   return (
     <div className="content-container">
+
+      {cachedURL && (
+        <Popup open={isPopupVisible} onClose={() => setIsPopupVisible(false)} modal>
+          <div className="flex justify-center">
+            <img src={cachedURL} />
+          </div>
+        </Popup>
+      )}
+      
       <Heading />
 
       <BlogHeading />
@@ -104,15 +132,27 @@ const WriteBlog1 = () => {
                 className="md:col-span-2 w-full md:h-12 h-10 mt-4 px-3 py-2 border-2 border-[#e0e0e0] text-neutral-400 rounded-full text-lg focus:outline-none focus:border-[#9c3cc1] dark:bg-neutral-800 cursor-pointer flex items-center gap-2"
               >
                 <IoImageOutline />
-                Choose File
+                {imageName}
               </label>
-              <Input id="picture" type="file" className="hidden" />
+              <Input id="picture" type="file" accept=".png, .jpg, .jpeg" className="hidden" onChange={uploadImage} />
               <div className="flex justify-center md:block">
-                <button
-                  className={`${accentColor} px-4 py-2 md:h-12 h-10 md:col-span-1 mt-4 rounded-full text-sm hover:bg-neutral-100 text-white dark:hover:bg-neutral-900 hover:text-fuchsia-700 hover:ring-fuchsia-700 hover:ring-inset hover:ring-2`}
-                >
-                  Preview Image
-                </button>
+                {/* <Popup trigger={
+                  <button className={`${accentColor} px-4 py-2 md:h-12 h-10 md:col-span-1 mt-4 rounded-full text-sm hover:bg-neutral-100 text-white dark:hover:bg-neutral-900 hover:text-fuchsia-700 hover:ring-fuchsia-700 hover:ring-inset hover:ring-2`}>
+                    Preview Image
+                  </button>
+                } position="left top">
+                  <div className="flex justify-center">
+                    <img src={cachedURL} />
+                  </div>
+                </Popup> */}
+              <button 
+              className={`${accentColor} px-4 py-2 md:h-12 h-10 md:col-span-1 mt-4 rounded-full text-sm hover:bg-neutral-100 text-white dark:hover:bg-neutral-900 hover:text-fuchsia-700 hover:ring-fuchsia-700 hover:ring-inset hover:ring-2`}
+              onClick={handlePreviewClick}
+              >
+                Preview Image
+              </button>
+                
+                
               </div>
             </div>
           </div>
