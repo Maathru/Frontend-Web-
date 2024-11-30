@@ -246,11 +246,11 @@ const Dashboard = () => {
         Toast(data || "Error occurred", errorType.ERROR);
       }
     };
-    return () => {
+    
       fetchDashboardData();
       fetchClinicsForGivenMonth(new Date().toISOString().split("T")[0]);
       fetchUpcomingClinicsForMidwife();
-    };
+    
   }, []);
 
   const fetchClinicsForGivenMonth = async (date) => {

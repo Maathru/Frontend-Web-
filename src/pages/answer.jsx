@@ -333,8 +333,6 @@ const Answer = () => {
         )}
       </div>
 
-      <Pagination />
-
       <DeleteConfirmationDialog
         isOpen={isDeleteDialogOpen}
         onClose={closeDeleteDialog}
