@@ -30,7 +30,15 @@ const Growth = () => {
       try {
         const response = await GrowthService.getPreganancyCards();
         response.data && setPregnancyCards(response.data);
-        console.log("Pregnancy cards:", response.data);
+        const cards = response.data || [];
+        setPregnancyCards(cards);
+
+        // Set the default card (first card in the list)
+        if (cards.length > 0) {
+          const defaultCard = cards[0];
+          setSelectedCardId(defaultCard.pregnancyCardId);
+          calculateWeek(defaultCard.dateOfPregnancy);
+        }
       } catch (error) {
         console.error("Error fetching pregnancy cards:", error);
       }
@@ -80,7 +88,7 @@ const Growth = () => {
           <div className="flex w-full justify-between">
             <div className="">
               <FormControl style={{ minWidth: 300 }}>
-                <InputLabel id="label">{t("selectPregnancyCard")}</InputLabel>
+                <InputLabel id="label">{t("Select Pregnancy Card")}</InputLabel>
                 <Select
                   labelId="label"
                   variant="standard"
