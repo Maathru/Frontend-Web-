@@ -1,5 +1,5 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import Pagination from "../../components/pagination";
 import { MdOutlineArrowBackIosNew } from "react-icons/md";
@@ -7,6 +7,7 @@ import { MdCreate } from "react-icons/md";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { errorType, Toast } from "@/components/toast";
+import { userData } from "@/context/userAuth";
 import BlogImage from "../../assets/blog/blog-image.png";
 import ArticleImage from "../../assets/blog/article-image.png";
 import RecentBlogImage1 from "../../assets/blog/recent-blog-image-1.png";
@@ -36,6 +37,7 @@ const blog = () => {
   useTitle("Blogs");
 
   const [blogs, setBlogs] = useState([]);
+  const {userDetails} = useContext(userData);
 
   useEffect(() => {
     const fetchBlogs = async () => {
@@ -207,6 +209,7 @@ const blog = () => {
         </Link>
       </div>
 
+      {userDetails.authenticated ? (
       <Card className="mt-8 md:mt:12 shadow-sm shadow-gray-100 dark:shadow-gray-900 mx-1 md:mx-8">
         <CardHeader>
           <CardTitle className="font-semibold text-3xl ml-4">
@@ -216,8 +219,8 @@ const blog = () => {
         </CardHeader>
         <CardContent className="flex justify-center">
           <p className="text-lg">
-            Share your knowledge & insights with the community, Let's protect
-            pregnant mothers & babies
+            Share your knowledge & insights with the community. Let's protect
+            pregnant mothers & babies.
           </p>
         </CardContent>
         <CardFooter className="flex justify-center">
@@ -228,6 +231,28 @@ const blog = () => {
           </Link>
         </CardFooter>
       </Card>
+      ) : (
+        <Card className="mt-8 md:mt:12 shadow-sm shadow-gray-100 dark:shadow-gray-900 mx-1 md:mx-8">
+          {/* <CardHeader>
+            <CardTitle className="font-semibold text-3xl ml-4">
+              Login to Write a Blog Article
+            </CardTitle>
+          </CardHeader> */}
+          <CardContent className="flex justify-center mt-4">
+            <p className="text-lg">
+              Share your knowledge & insights with the community. Let's protect
+              pregnant mothers & babies.
+            </p>
+          </CardContent>
+          <CardFooter className="flex justify-center">
+            <Link to="/login">
+              <Button className="bg-primary-purple dark:bg-dark-primary text-lg hover:bg-neutral-100 hover:text-primary-purple duration-200">
+                Login to Write A Blog Article
+              </Button>
+            </Link>
+          </CardFooter>
+        </Card>
+      )}
 
       <p className="md:mt-10 mt-8 ml-6 text-3xl font-semibold text-neutral-800 dark:text-neutral-100">
         Recent Blogs
