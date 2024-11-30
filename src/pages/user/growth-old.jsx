@@ -1,7 +1,6 @@
-import { HiChevronLeft } from "react-icons/hi";
 import { useTranslation } from "react-i18next";
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -15,7 +14,6 @@ import { useTitle } from "@/hooks/useTitle";
 import Heading from "@/components/ui/heading";
 import { growthData } from "@/data/growthData";
 import GrowthService from "@/service/growthService";
-
 const Growth = () => {
   useTitle("Growth");
   const { t } = useTranslation("growth");
