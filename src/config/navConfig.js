@@ -35,7 +35,7 @@ export const navConfig = {
       ],
     },
     { name: "Chat", path: "/chat" },
-    { name: "Analytics", path: "/analytics" },
+    { name: "Analytics", path: "/statistics" },
     {
       name: "More",
       links: [
