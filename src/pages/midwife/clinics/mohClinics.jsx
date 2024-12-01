@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import {
   Typography,
   Box,
+  ToggleButton,
+  ToggleButtonGroup,
 } from "@mui/material";
 import Calendar from "@/components/Calendar";
 import { errorType, Toast } from "@/components/toast";
@@ -11,6 +13,7 @@ import { StripedDataGrid } from "@/components/StripedDataGrid";
 import TableSearch from "@/components/TableSearch";
 import { IconButton } from "@mui/material";
 import { HiOutlineTrash } from "react-icons/hi";
+import { useNavigate } from "react-router-dom";
 
 const columns = [
   { field: "id", headerName: "Mother's ID", width: 100 },
@@ -54,11 +57,11 @@ const columns = [
 
 const Clinics = () => {
   const { isDarkMode } = useDarkMode();
-  const [selectedTab, setSelectedTab] = useState(0);
+  const [selectedTab, setSelectedTab] = useState("clinics");
   const [date, setDate] = useState(new Date());
   const [dates, setDates] = useState([]);
   const [rows, setRows] = useState([]);
-  const [searchQuery, setSearchQuery] = useState("");
+  const navigate = useNavigate();
 
   const fetchClinicsForGivenMonth = async (date) => {
     try {
@@ -84,8 +87,11 @@ const Clinics = () => {
     }
   };
 
-  const handleTabChange = (event, newValue) => {
-    setSelectedTab(newValue);
+  const handleTabChange = (event, newTab) => {
+    setSelectedTab(newTab);
+    if (newTab === "home-visits") {
+      navigate("/homevisit");;
+    }
   };
 
   const handleMonthChange = async (date) => {
@@ -108,7 +114,50 @@ const Clinics = () => {
 
   return (
     <div>
-      <Box sx={{ mt: 2, px: 3 }}>
+          <Box sx={{ display: "flex", justifyContent: "center", my: 2 }}>
+            <ToggleButtonGroup
+              value={selectedTab}
+              exclusive
+              onChange={handleTabChange}
+              sx={{
+                borderRadius: 20,
+                overflow: "hidden",
+              }}
+            >
+              <ToggleButton
+                value="clinics"
+                sx={{
+                  px: 4,
+                  py: 1.5,
+                  fontWeight: "bold",
+                  color: selectedTab === "clinics" ? "white" : "#9C33C1",
+                  backgroundColor: selectedTab === "clinics" ? "#9C33C1" : "#FEE2FE",
+                
+                }}
+              >
+                MOH Clinics
+              </ToggleButton>
+              <ToggleButton
+                value="home-visits"
+                sx={{
+                  px: 4,
+                  py: 1,
+                  fontWeight: "strong",
+                  color: selectedTab === "home-visits" ? "white" : "#000",
+                  backgroundColor: selectedTab === "home-visits" ? "#000" : "#FEE2FE",
+                  "&:hover": {
+                    backgroundColor: selectedTab === "home-visits" ? "#000" : "#FDE1FE",
+                  },
+                }}
+              >
+                Home Visits
+              </ToggleButton>
+            </ToggleButtonGroup>
+          </Box>
+
+       
+
+
         <Typography variant="h4">MOH Clinics</Typography>
 
         <Calendar
@@ -120,26 +169,25 @@ const Clinics = () => {
         <Typography variant="h6" sx={{ mt: 4 }}>
           Clinic Schedule - {date.toDateString()}
         </Typography>
-        
-        <div className="w-full h-full mt-4" style={{ height: '400px' }}>
-        <StripedDataGrid
-          columns={columns}
-          rows={rows}
-          initialState={{
-            pagination: {
-            paginationModel: { page: 0, pageSize: 10 },
-           },
-         }}
-        pageSizeOptions={[10, 15]}
-        getRowClassName={(params) =>
-        params.indexRelativeToCurrentPage % 2 === 0 ? "even" : "odd"
-        }
+
+        <div className="w-full h-full mt-4" style={{ height: "400px" }}>
+          <StripedDataGrid
+            columns={columns}
+            rows={rows}
+            initialState={{
+              pagination: {
+                paginationModel: { page: 0, pageSize: 10 },
+              },
+            }}
+            pageSizeOptions={[10, 15]}
+            getRowClassName={(params) =>
+              params.indexRelativeToCurrentPage % 2 === 0 ? "even" : "odd"
+            }
             disableRowSelectionOnClick
             slots={{ toolbar: TableSearch }}
-        />
+          />
         </div>
-
-      </Box>
+      
     </div>
   );
 };
