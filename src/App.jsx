@@ -55,6 +55,8 @@ import { useDarkMode } from "./context/darkModeContext";
 import SystemAnalytics from "./pages/admin/systemAnalytics.jsx";
 import Clinics from "./pages/midwife/clinics/mohClinics";
 
+import PregnancyAnalysis from "./pages/analytics/pregnancyAnalysis";
+
 
 function App() {
   const { toggleDarkMode } = useDarkMode();
@@ -144,7 +146,7 @@ function App() {
               {/* Admin and Doctor routes */}
               {(userDetails.role === role.ADMIN ||
                 userDetails.role === role.DOCTOR) && (
-                <Route path="/statistics" element={<Healthstatics />} />
+                <Route path="/statistics" element={<PregnancyAnalysis />} />
               )}
 
               {/* Doctor routes */}
