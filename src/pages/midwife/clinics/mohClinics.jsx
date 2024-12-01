@@ -55,120 +55,24 @@ const columns = [
   },
 ];
 
-const Clinics = () => {
-  const { isDarkMode } = useDarkMode();
-  const [selectedTab, setSelectedTab] = useState("clinics");
+const MohClinics = () => {
   const [date, setDate] = useState(new Date());
-  const [dates, setDates] = useState([]);
   const [rows, setRows] = useState([]);
-  const navigate = useNavigate();
-
-  const fetchClinicsForGivenMonth = async (date) => {
-    try {
-      const response = await ClinicService.getClinicsGivenMonthForMidwife(date);
-      setDates(response);
-    } catch (error) {
-      Toast(error.response?.data || "Unauthorized", errorType.ERROR);
-    }
-  };
-
-  const fetchClinicsByDate = async (date) => {
-    try {
-      const response = await ClinicService.getClinicsByDate(date);
-      const updatedRows = response.map((clinic) => ({
-        id: clinic.id,
-        name: clinic.name,
-        location: clinic.location,
-        clinicDone: clinic.done,
-      }));
-      setRows(updatedRows);
-    } catch (error) {
-      Toast(error.response?.data || "Unauthorized", errorType.ERROR);
-    }
-  };
-
-  const handleTabChange = (event, newTab) => {
-    setSelectedTab(newTab);
-    if (newTab === "home-visits") {
-      navigate("/homevisit");;
-    }
-  };
-
-  const handleMonthChange = async (date) => {
-    await fetchClinicsForGivenMonth(date.format("YYYY-MM-DD"));
-  };
-
-  const handleDateChange = async (date) => {
-    setDate(date.toDate());
-    await fetchClinicsByDate(date.format("YYYY-MM-DD"));
-  };
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const today = new Date().toISOString().split("T")[0];
-      await fetchClinicsForGivenMonth(today);
-      await fetchClinicsByDate(today);
-    };
-    fetchData();
-  }, []);
+  const [dates, setDates] = useState([]);
 
   return (
     <div>
-          <Box sx={{ display: "flex", justifyContent: "center", my: 2 }}>
-            <ToggleButtonGroup
-              value={selectedTab}
-              exclusive
-              onChange={handleTabChange}
-              sx={{
-                borderRadius: 20,
-                overflow: "hidden",
-              }}
-            >
-              <ToggleButton
-                value="clinics"
-                sx={{
-                  px: 4,
-                  py: 1.5,
-                  fontWeight: "bold",
-                  color: selectedTab === "clinics" ? "white" : "#9C33C1",
-                  backgroundColor: selectedTab === "clinics" ? "#9C33C1" : "#FEE2FE",
-                
-                }}
-              >
-                MOH Clinics
-              </ToggleButton>
-              <ToggleButton
-                value="home-visits"
-                sx={{
-                  px: 4,
-                  py: 1,
-                  fontWeight: "strong",
-                  color: selectedTab === "home-visits" ? "white" : "#000",
-                  backgroundColor: selectedTab === "home-visits" ? "#000" : "#FEE2FE",
-                  "&:hover": {
-                    backgroundColor: selectedTab === "home-visits" ? "#000" : "#FDE1FE",
-                  },
-                }}
-              >
-                Home Visits
-              </ToggleButton>
-            </ToggleButtonGroup>
-          </Box>
-
-       
-
-
-        <Typography variant="h4">MOH Clinics</Typography>
-
-        <Calendar
-          handleMonthChange={handleMonthChange}
-          highlightedDays={dates}
-          handleDateChange={handleDateChange}
-        />
-
-        <Typography variant="h6" sx={{ mt: 4 }}>
-          Clinic Schedule - {date.toDateString()}
-        </Typography>
+      <Typography variant="h5" sx={{ mt: 4 }}>
+        Clinic Schedule - {date.toDateString()}
+      </Typography>
+      <div className="flex gap-10">
+        <div>
+          <Calendar
+            handleMonthChange={handleMonthChange}
+            highlightedDays={dates}
+            handleDateChange={handleDateChange}
+          />
+        </div>
 
         <div className="w-full h-full mt-4" style={{ height: "400px" }}>
           <StripedDataGrid
@@ -187,7 +91,155 @@ const Clinics = () => {
             slots={{ toolbar: TableSearch }}
           />
         </div>
-      
+      </div>
+    </div>
+  );
+};
+
+const fetchClinicsByDate = async (date) => {
+  try {
+    const response = await ClinicService.getClinicsByDate(date);
+    const updatedRows = response.map((clinic) => ({
+      id: clinic.id,
+      name: clinic.name,
+      location: clinic.location,
+      clinicDone: clinic.done,
+    }));
+    setRows(updatedRows);
+  } catch (error) {
+    Toast(error.response?.data || "Unauthorized", errorType.ERROR);
+  }
+};
+
+const HomeVisits = () => {
+  const [date, setDate] = useState(new Date());
+  const [rows, setRows] = useState([]);
+  const [dates, setDates] = useState([]);
+
+  return (
+    <div>
+      <div>
+        <Typography variant="h5" sx={{ mt: 4 }}>
+          Home Visits Schedule - {date.toDateString()}
+        </Typography>
+        <div className="flex gap-10">
+          <div>
+            <Calendar
+              handleMonthChange={handleMonthChange}
+              highlightedDays={dates}
+              handleDateChange={handleDateChange}
+            />
+          </div>
+
+          <div className="w-full h-full mt-4" style={{ height: "400px" }}>
+            <StripedDataGrid
+              columns={columns}
+              rows={rows}
+              initialState={{
+                pagination: {
+                  paginationModel: { page: 0, pageSize: 10 },
+                },
+              }}
+              pageSizeOptions={[10, 15]}
+              getRowClassName={(params) =>
+                params.indexRelativeToCurrentPage % 2 === 0 ? "even" : "odd"
+              }
+              disableRowSelectionOnClick
+              slots={{ toolbar: TableSearch }}
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const handleMonthChange = async (date) => {
+  await fetchClinicsForGivenMonth(date.format("YYYY-MM-DD"));
+};
+
+const handleDateChange = async (date) => {
+  setDate(date.toDate());
+  await fetchClinicsByDate(date.format("YYYY-MM-DD"));
+};
+
+const Clinics = () => {
+  const { isDarkMode } = useDarkMode();
+  const [selectedTab, setSelectedTab] = useState("clinics");
+
+  const handleChange = (event, newTab) => {
+    if (newTab !== null) {
+      setSelectedTab(newTab);
+    }
+  };
+
+  const fetchClinicsForGivenMonth = async (date) => {
+    try {
+      const response = await ClinicService.getClinicsGivenMonthForMidwife(date);
+      setDates(response);
+    } catch (error) {
+      Toast(error.response?.data || "Unauthorized", errorType.ERROR);
+    }
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const today = new Date().toISOString().split("T")[0];
+      await fetchClinicsForGivenMonth(today);
+      await fetchClinicsByDate(today);
+    };
+    fetchData();
+  }, []);
+
+  return (
+    <div className="content-container">
+      <Box sx={{ display: "flex", justifyContent: "center", my: 2 }}>
+        <ToggleButtonGroup
+          value={selectedTab}
+          exclusive
+          onChange={handleChange}
+          sx={{
+            borderRadius: 20,
+            overflow: "hidden",
+          }}
+        >
+          <ToggleButton
+            value="clinics"
+            sx={{
+              px: 4,
+              py: 1.5,
+              fontWeight: "bold",
+              color: selectedTab === "clinics" ? "white" : "#9C33C1",
+              backgroundColor:
+                selectedTab === "clinics" ? "#9C33C1" : "#FEE2FE",
+            }}
+          >
+            MOH Clinics
+          </ToggleButton>
+          <ToggleButton
+            value="home-visits"
+            sx={{
+              px: 4,
+              py: 1,
+              fontWeight: "strong",
+              color: selectedTab === "home-visits" ? "white" : "#000",
+              backgroundColor:
+                selectedTab === "home-visits" ? "#000" : "#FEE2FE",
+              "&:hover": {
+                backgroundColor:
+                  selectedTab === "home-visits" ? "#000" : "#FDE1FE",
+              },
+            }}
+          >
+            Home Visits
+          </ToggleButton>
+        </ToggleButtonGroup>
+      </Box>
+
+      <div style={{ marginTop: "20px" }}>
+        {selectedTab === "clinics" && <MohClinics />}
+        {selectedTab === "home-visits" && <HomeVisits />}
+      </div>
     </div>
   );
 };

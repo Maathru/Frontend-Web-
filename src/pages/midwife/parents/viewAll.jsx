@@ -3,13 +3,13 @@ import Heading from "../../../components/ui/heading";
 import TableSearch from "@/components/TableSearch";
 import { IconButton, Typography } from "@mui/material";
 import { HiOutlineTrash } from "react-icons/hi";
-import ParentPopup from "@/components/parentPopup";
 import { useTranslation } from "react-i18next";
 import { useTitle } from "@/hooks/useTitle";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import EligibleService from "@/service/eligibleService";
 import { errorType, Toast } from "@/components/toast";
+import EligiblePopup from "@/components/eligiblePopup";
 
 const columns = [
   { field: "id", headerName: "P. Couple ID", width: 100 },
@@ -112,7 +112,10 @@ const viewAllParents = () => {
       <Heading title={"Parent Details"} />
 
       <div className="flex flex-col items-end">
-        <ParentPopup addButton="Add New"></ParentPopup>
+        <EligiblePopup
+          addButton="Add New"
+          title1="Register new parent"
+        ></EligiblePopup>
 
         <div className="w-full h-full">
           <StripedDataGrid
