@@ -66,7 +66,7 @@ const PregnancyAnalysis = () => {
             </Box>
           </Paper>
         </Grid>
-        {/* <Grid item xs={6}>
+        <Grid item xs={6}>
           <Paper elevation={3}>
             <Box sx={{ p: 2 }}>
               <Typography variant="h6" component="h2" gutterBottom>
@@ -75,7 +75,7 @@ const PregnancyAnalysis = () => {
               <BMIChart />
             </Box>
           </Paper>
-        </Grid> */}
+        </Grid>
         {/* <Grid item xs={6}>
           <Paper elevation={3}>
             <Box sx={{ p: 2 }}>
