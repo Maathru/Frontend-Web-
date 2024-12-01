@@ -54,7 +54,7 @@ import Nav from "./components/nav";
 import { useDarkMode } from "./context/darkModeContext";
 import SystemAnalytics from "./pages/admin/systemAnalytics.jsx";
 import Clinics from "./pages/midwife/clinics/mohClinics";
-
+import Chat from "./pages/Chat";
 
 function App() {
   const { toggleDarkMode } = useDarkMode();
@@ -223,6 +223,7 @@ function App() {
                 element={<EditQuestion />}
               />
               <Route path="/forum/ask" element={<AskQuestion />} />
+              <Route path="/chat" element={<Chat />} />
             </>
           )}
           <Route path="*" element={<NotFound />} />
