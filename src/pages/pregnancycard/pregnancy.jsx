@@ -132,7 +132,7 @@ const Pregnancy1 = () => {
               <Tab label="Clinical Conservation" {...a11yProps(1)} />
               <Tab label="Child Birth" {...a11yProps(2)} />
               <Tab label="Postnatal care" {...a11yProps(3)} />
-              <Tab label="Prenatal care Related" {...a11yProps(4)} />
+              {/* <Tab label="Prenatal care Related" {...a11yProps(4)} /> */}
             </Tabs>
           </Box>
           <CustomTabPanel value={value} index={0}>
@@ -159,13 +159,13 @@ const Pregnancy1 = () => {
               handleChange={handleChange}
             />
           </CustomTabPanel>
-          <CustomTabPanel value={value} index={4}>
+          {/* <CustomTabPanel value={value} index={4}>
             <PrenatalCareRelated
               formObject={formObject}
               setFormObject={setFormObject}
               handleChange={handleChange}
             />
-          </CustomTabPanel>
+          </CustomTabPanel> */}
         </Box>
       </div>
     </div>

@@ -5,9 +5,10 @@ const Capitalize = (str) => {
 };
 
 class EligibleService {
-  static async addEligibleInfo(formData) {
+  static async addEligibleInfo(userId, formData) {
+    const url = userId ? `/eligible?user=${userId}` : `/eligible`;
     try {
-      const response = await axiosInstance.post(`/eligible`, {
+      const response = await axiosInstance.post(url, {
         ...formData,
       });
       return response.data;
@@ -16,9 +17,10 @@ class EligibleService {
     }
   }
 
-  static async getEligibleInfo() {
+  static async getEligibleInfo(userId) {
+    const url = userId ? `/eligible?user=${userId}` : `/eligible`;
     try {
-      const response = await axiosInstance.get(`/eligible`);
+      const response = await axiosInstance.get(url);
       return response.data;
     } catch (error) {
       throw error;

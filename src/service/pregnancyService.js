@@ -5,21 +5,26 @@ const Capitalize = (str) => {
 };
 
 class PregnancyService {
-  static async getParentDetails() {
+  static async getParentDetails(userId) {
+    const url = userId
+      ? `/parent/pregnancy/main/parent?user=${userId}`
+      : `/parent/pregnancy/main/parent`;
+
     try {
-      const response = await axiosInstance.get(`/parent/pregnancy/main/parent`);
+      const response = await axiosInstance.get(url);
       return response.data;
     } catch (error) {
       throw error;
     }
   }
 
-  static async saveParentDetails(formObject) {
+  static async saveParentDetails(userId, formObject) {
+    const url = userId
+      ? `/parent/pregnancy/main/parent?user=${userId}`
+      : `/parent/pregnancy/main/parent`;
+
     try {
-      const response = await axiosInstance.post(
-        `/parent/pregnancy/main/parent`,
-        formObject
-      );
+      const response = await axiosInstance.post(url, formObject);
       return response.data;
     } catch (error) {
       throw error;
@@ -87,21 +92,26 @@ class PregnancyService {
     };
   }
 
-  static async getFamilyHistory() {
+  static async getFamilyHistory(userId) {
+    const url = userId
+      ? `/parent/pregnancy/main/family?user=${userId}`
+      : `/parent/pregnancy/main/family`;
+
     try {
-      const response = await axiosInstance.get(`/parent/pregnancy/main/family`);
+      const response = await axiosInstance.get(url);
       return response.data;
     } catch (error) {
       throw error;
     }
   }
 
-  static async saveFamilyHistory(formObject) {
+  static async saveFamilyHistory(userId, formObject) {
+    const url = userId
+      ? `/parent/pregnancy/main/family?user=${userId}`
+      : `/parent/pregnancy/main/family`;
+
     try {
-      const response = await axiosInstance.post(
-        `/parent/pregnancy/main/family`,
-        formObject
-      );
+      const response = await axiosInstance.post(url, formObject);
       return response.data;
     } catch (error) {
       throw error;
@@ -135,23 +145,26 @@ class PregnancyService {
     };
   }
 
-  static async getPregnancyHistory() {
+  static async getPregnancyHistory(userId) {
+    const url = userId
+      ? `/parent/pregnancy/main/pregnancy?user=${userId}`
+      : `/parent/pregnancy/main/pregnancy`;
+
     try {
-      const response = await axiosInstance.get(
-        `/parent/pregnancy/main/pregnancy`
-      );
+      const response = await axiosInstance.get(url);
       return response.data;
     } catch (error) {
       throw error;
     }
   }
 
-  static async savePregnancyHistory(formObject) {
+  static async savePregnancyHistory(userId, formObject) {
+    const url = userId
+      ? `/parent/pregnancy/main/pregnancy?user=${userId}`
+      : `/parent/pregnancy/main/pregnancy`;
+
     try {
-      const response = await axiosInstance.post(
-        `/parent/pregnancy/main/pregnancy`,
-        formObject
-      );
+      const response = await axiosInstance.post(url, formObject);
       return response.data;
     } catch (error) {
       throw error;
@@ -197,23 +210,26 @@ class PregnancyService {
     };
   }
 
-  static async getCurrentPregnancy() {
+  static async getCurrentPregnancy(userId) {
+    const url = userId
+      ? `/parent/pregnancy/main/current?user=${userId}`
+      : `/parent/pregnancy/main/current`;
+
     try {
-      const response = await axiosInstance.get(
-        `/parent/pregnancy/main/current`
-      );
+      const response = await axiosInstance.get(url);
       return response.data;
     } catch (error) {
       throw error;
     }
   }
 
-  static async saveCurrentPregnancy(formObject) {
+  static async saveCurrentPregnancy(userId, formObject) {
+    const url = userId
+      ? `/parent/pregnancy/main/current?user=${userId}`
+      : `/parent/pregnancy/main/current`;
+
     try {
-      const response = await axiosInstance.post(
-        `/parent/pregnancy/main/current`,
-        formObject
-      );
+      const response = await axiosInstance.post(url, formObject);
       return response.data;
     } catch (error) {
       throw error;
@@ -292,42 +308,52 @@ class PregnancyService {
     };
   }
 
-  static async getClinicalConservation() {
+  static async getClinicalConservation(userId) {
+    const url = userId
+      ? `/parent/pregnancy/clinical?user=${userId}`
+      : `/parent/pregnancy/clinical`;
+
     try {
-      const response = await axiosInstance.get(`/parent/pregnancy/clinical`);
+      const response = await axiosInstance.get(url);
       return response.data;
     } catch (error) {
       throw error;
     }
   }
 
-  static async saveClinicalConservation(formObject) {
+  static async saveClinicalConservation(userId, formObject) {
+    const url = userId
+      ? `/parent/pregnancy/clinical?user=${userId}`
+      : `/parent/pregnancy/clinical`;
+
     try {
-      const response = await axiosInstance.post(
-        `/parent/pregnancy/clinical`,
-        formObject
-      );
+      const response = await axiosInstance.post(url, formObject);
       return response.data;
     } catch (error) {
       throw error;
     }
   }
 
-  static async getChildBirth() {
+  static async getChildBirth(userId) {
+    const url = userId
+      ? `/parent/pregnancy/child?user=${userId}`
+      : `/parent/pregnancy/child`;
+
     try {
-      const response = await axiosInstance.get(`/parent/pregnancy/child`);
+      const response = await axiosInstance.get(url);
       return response.data;
     } catch (error) {
       throw error;
     }
   }
 
-  static async saveChildBirth(formObject) {
+  static async saveChildBirth(userId, formObject) {
+    const url = userId
+      ? `/parent/pregnancy/child?user=${userId}`
+      : `/parent/pregnancy/child`;
+
     try {
-      const response = await axiosInstance.post(
-        `/parent/pregnancy/child`,
-        formObject
-      );
+      const response = await axiosInstance.post(url, formObject);
       return response.data;
     } catch (error) {
       throw error;

@@ -143,7 +143,7 @@ const Dashboard = () => {
                 {t("title3")}
               </h1>
               <p className="text-sm sm:text-xl m-4">{t("description3")}</p>
-              <Link to="/eligible/1">
+              <Link to="/eligible">
                 <Button className="bg-primary-purple mt-4 mb-10">
                   {t("button2")}
                 </Button>

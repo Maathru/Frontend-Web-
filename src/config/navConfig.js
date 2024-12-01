@@ -34,6 +34,7 @@ export const navConfig = {
       links: [
         { name: "Manage Eligible Couples", path: "/eligibles" },
         { name: "Manage Parents", path: "/parents" },
+        { name: "Clinics", path: "/clinics" },
       ],
     },
     { name: "Chat", path: "/chat" },
