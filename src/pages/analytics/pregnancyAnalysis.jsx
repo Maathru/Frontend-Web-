@@ -17,6 +17,7 @@ import { styled } from '@mui/material/styles';
 import PregnancyAnalysisByRegion from '@/components/analyticComponents/PregnancyAnalysisByRegion';
 import BMIChart from '@/components/analyticComponents/BmiChart';
 import DiseaseAnalysis from '@/components/analyticComponents/diseaseAnalysis';
+import PregnancyCountByAge from '@/components/analyticComponents/PregnancyCountByAge';
 
 const StyledTextField = styled(TextField)({
   '& .MuiInput-underline:before': {
@@ -71,9 +72,9 @@ const PregnancyAnalysis = () => {
           <Paper elevation={3}>
             <Box sx={{ p: 2 }}>
               <Typography variant="h6" component="h2" gutterBottom>
-                {t("BMI Analysis")}
+                {t("Age Analysis")}
               </Typography>
-              <BMIChart />
+              <PregnancyCountByAge />
             </Box>
           </Paper>
         </Grid>
@@ -87,22 +88,17 @@ const PregnancyAnalysis = () => {
             </Box>
           </Paper>
         </Grid>
-        {/*<Grid item xs={6} sx={{ mb: 2 }}> 
+        <Grid item xs={6} sx={{ mb: 2 }}> 
           <Paper elevation={3}>
             <Box sx={{ p: 2 }}>
-              <Typography variant="h6" component="h2" gutterBottom>
-                {t("Different Diseases In Different Regions")}
+            <Typography variant="h6" component="h2" gutterBottom>
+                {t("BMI Analysis")}
               </Typography>
-              <ApexCharts
-                options={data.differentDiseases.options}
-                series={data.differentDiseases.series}
-                type="bar"
-                height={300}
-              />
+              <BMIChart />
             </Box>
           </Paper>
         </Grid>
-        <Grid item xs={6} sx={{ mb: 2 }}> 
+        {/*<Grid item xs={6} sx={{ mb: 2 }}> 
           <Paper elevation={3}>
             <Box sx={{ p: 2 }}>
               <Typography variant="h6" component="h2" gutterBottom>

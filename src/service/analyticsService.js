@@ -10,6 +10,15 @@ class AnalyticsService {
     }
   }
 
+  static async getPregnancyCountByAge() {
+    try {
+      const response = await axiosInstance.get(`/analytics/pregnancy-count-by-age`);
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  }
+
   static async getDiseaseAnalysis() {
     try {
       const response = await axiosInstance.get(`/analytics/health-conditions-stats`);
