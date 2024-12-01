@@ -15,8 +15,6 @@ import Landing from "./pages/landing";
 import Drug from "./pages/admin/manageDrugs";
 import DoctorDashboard from "./pages/doctor/dashboard";
 import Clinic from "./pages/doctor/clinic";
-// import ViewClinics from "./pages/doctor/viewClinics";
-// import ClinicDates from "./pages/doctor/clinicDates";
 import ClinicReports from "./pages/doctor/clinicReports";
 import Midwife from "./pages/doctor/midwife";
 import Forum from "./pages/forum";
@@ -155,8 +153,6 @@ function App() {
                   <Route path="/midwife" element={<Midwife />} />
 
                   <Route path="/clinics" element={<Clinic />} />
-                  {/* <Route path="/clinics/view" element={<ViewClinics />} /> */}
-                  {/* <Route path="/clinics/dates" element={<ClinicDates />} /> */}
                   <Route path="/clinics/reports" element={<ClinicReports />} />
                 </>
               )}
@@ -202,8 +198,9 @@ function App() {
                 </>
               )}
 
-              {/* Parent and Eligible routes */}
-              {(userDetails.role === role.PARENT ||
+              {/* Midwife, Parent and Eligible routes */}
+              {(userDetails.role === role.MIDWIFE ||
+                userDetails.role === role.PARENT ||
                 userDetails.role === role.ELIGIBLE) && (
                 <>
                   <Route path="/eligible" element={<Eligible />} />

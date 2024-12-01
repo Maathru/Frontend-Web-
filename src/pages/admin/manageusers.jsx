@@ -109,9 +109,8 @@ const ManageUsers = () => {
         Toast(data || "Error occurred", errorType.ERROR);
       }
     };
-    return () => {
-      fetchUsers();
-    };
+
+    fetchUsers();
   }, []);
 
   return (

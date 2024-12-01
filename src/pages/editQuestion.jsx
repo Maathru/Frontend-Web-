@@ -44,9 +44,7 @@ function EditQuestion() {
       }
     };
 
-    return () => {
-      fetchQuestion();
-    };
+    fetchQuestion();
   }, [questionId]);
 
   const handleKeywordChange = (keyword) => {

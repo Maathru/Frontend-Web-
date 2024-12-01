@@ -166,20 +166,6 @@ const Chat = () => {
     }
   };
 
-  useEffect(() => {
-    const handleLogout = () => {
-      const stompClient = stompClientRef.current;
-      if (stompClient) {
-        stompClient.send("/app/user.disconnectUser", {}, userDetails.userId);
-      }
-    };
-
-    return () => {
-      // This cleanup function will run before the route changes
-      handleLogout();
-    };
-  }, [location, stompClientRef, userDetails]);
-
   // Auto-scroll to the bottom when messages change
   useEffect(() => {
     if (chatMessagesRef.current) {

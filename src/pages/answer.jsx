@@ -46,9 +46,7 @@ const Answer = () => {
       }
     };
 
-    return () => {
-      fetchQuestion();
-    };
+    fetchQuestion();
   }, [questionId]);
 
   useEffect(() => {
@@ -61,9 +59,8 @@ const Answer = () => {
         Toast(data || "Error occurred", errorType.ERROR);
       }
     };
-    return () => {
-      fetchAnswersByQuestion();
-    };
+
+    fetchAnswersByQuestion();
   }, [pageLoader, questionId]);
 
   const handleAnswerSubmit = async (e) => {

@@ -113,9 +113,7 @@ const Drug = () => {
       }
     };
 
-    return () => {
-      fetchDrugs();
-    };
+    fetchDrugs();
   }, [isOpen]);
 
   return (

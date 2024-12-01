@@ -55,9 +55,7 @@ const blog = () => {
       }
     };
 
-    return () => {
-      fetchBlogs();
-    };
+    fetchBlogs();
   }, []);
 
   return (
@@ -118,7 +116,9 @@ const blog = () => {
         </div>
 
         <Link to="/blogs/article/recent/2">
-          <Card className={`${cardColor} flex flex-row items-center row-span-1`}>
+          <Card
+            className={`${cardColor} flex flex-row items-center row-span-1`}
+          >
             <img
               src={RecentBlogImage1}
               alt="Blog Image"
@@ -131,15 +131,15 @@ const blog = () => {
                   alt="Blog Image"
                   className="rounded-md mb-2 md:hidden w-[100%] max-h-48 object-cover"
                 />
-                <CardTitle>The Importance of Regular Prenatal Checkups</CardTitle>
-                <CardDescription>
-                    Maternal Clinics
-                </CardDescription>
+                <CardTitle>
+                  The Importance of Regular Prenatal Checkups
+                </CardTitle>
+                <CardDescription>Maternal Clinics</CardDescription>
               </CardHeader>
               <CardContent className="text-sm">
                 <p>
-                  Prenatal checkups are a vital part of ensuring the well-being of
-                  both mother and baby during pregnancy.
+                  Prenatal checkups are a vital part of ensuring the well-being
+                  of both mother and baby during pregnancy.
                 </p>
               </CardContent>
               <CardFooter className="pb-0">
@@ -152,7 +152,9 @@ const blog = () => {
                   </Badge>
                 </div>
               </CardFooter>
-              <CardFooter className={`text-sm flex justify-end ${readMoreColor}`}>
+              <CardFooter
+                className={`text-sm flex justify-end ${readMoreColor}`}
+              >
                 <p>Read More</p>
               </CardFooter>
             </div>
@@ -160,7 +162,9 @@ const blog = () => {
         </Link>
 
         <Link to="/blogs/article/recent/3">
-          <Card className={`${cardColor} flex flex-row items-center row-span-1`}>
+          <Card
+            className={`${cardColor} flex flex-row items-center row-span-1`}
+          >
             <img
               src={RecentBlogImage2}
               alt="Blog Image"
@@ -173,17 +177,17 @@ const blog = () => {
                   alt="Blog Image"
                   className="rounded-md mb-2 md:hidden w-[100%] max-h-48 object-cover"
                 />
-                <CardTitle>Vaccination Guide for Newborns and Infants</CardTitle>
-                <CardDescription>
-                  Infant Health
-                </CardDescription>
+                <CardTitle>
+                  Vaccination Guide for Newborns and Infants
+                </CardTitle>
+                <CardDescription>Infant Health</CardDescription>
               </CardHeader>
               <CardContent className="text-sm">
                 <p>
-                  Vaccinating newborns is crucial. Their developing immune systems
-                  leave them vulnerable to serious diseases. Vaccines safely train
-                  their bodies to fight these illnesses, protecting them from
-                  harm.
+                  Vaccinating newborns is crucial. Their developing immune
+                  systems leave them vulnerable to serious diseases. Vaccines
+                  safely train their bodies to fight these illnesses, protecting
+                  them from harm.
                 </p>
               </CardContent>
               <CardFooter className="pb-0">
@@ -199,7 +203,9 @@ const blog = () => {
                   </Badge>
                 </div>
               </CardFooter>
-              <CardFooter className={`text-sm flex justify-end ${readMoreColor}`}>
+              <CardFooter
+                className={`text-sm flex justify-end ${readMoreColor}`}
+              >
                 <p>Read More</p>
               </CardFooter>
             </div>
@@ -235,41 +241,46 @@ const blog = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-3 md:gap-8 gap-4 md:mt-8 mt-4 mx-4">
         {blogs.map((blog) => (
-          
           <Link to={`/blogs/article/${blog.blogId}`}>
-          <Card
-            className={`${cardColor} flex flex-col justify-between`}
-            key={blog.blogId}
-          >
-            <CardHeader>
-              <img
-                src={blog.image}
-                // alt="Blog Image"
-                className="rounded-md mb-2"
-              />
-              <CardTitle>{blog.title}</CardTitle>
-              <CardDescription>{blog.category}</CardDescription>
-            </CardHeader>
-            <CardContent className="text-sm">
-              <div
-                dangerouslySetInnerHTML={{
-                  __html: DOMPurify.sanitize(blog.content),
-                }}
-              />
-            </CardContent>
-            <CardFooter className="pb-0">
-              <div className="flex flex-wrap gap-2">
-                {blog.keywords.map((keyword, index) => (
-                  <Badge key={index} variant="secondary" className={badgeColor}>
-                    {keyword}
-                  </Badge>
-                ))}
-              </div>
-            </CardFooter>
-            <CardFooter className={`text-sm flex justify-end ${readMoreColor}`}>
-              <p>Read More</p>
-            </CardFooter>
-          </Card>
+            <Card
+              className={`${cardColor} flex flex-col justify-between`}
+              key={blog.blogId}
+            >
+              <CardHeader>
+                <img
+                  src={blog.image}
+                  // alt="Blog Image"
+                  className="rounded-md mb-2"
+                />
+                <CardTitle>{blog.title}</CardTitle>
+                <CardDescription>{blog.category}</CardDescription>
+              </CardHeader>
+              <CardContent className="text-sm">
+                <div
+                  dangerouslySetInnerHTML={{
+                    __html: DOMPurify.sanitize(blog.content),
+                  }}
+                />
+              </CardContent>
+              <CardFooter className="pb-0">
+                <div className="flex flex-wrap gap-2">
+                  {blog.keywords.map((keyword, index) => (
+                    <Badge
+                      key={index}
+                      variant="secondary"
+                      className={badgeColor}
+                    >
+                      {keyword}
+                    </Badge>
+                  ))}
+                </div>
+              </CardFooter>
+              <CardFooter
+                className={`text-sm flex justify-end ${readMoreColor}`}
+              >
+                <p>Read More</p>
+              </CardFooter>
+            </Card>
           </Link>
         ))}
       </div>

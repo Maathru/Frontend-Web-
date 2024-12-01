@@ -7,12 +7,16 @@ import { presentObstetricDates } from "@/data/pregnancyData";
 import { useEffect } from "react";
 import PregnancyService from "@/service/pregnancyService";
 import { errorType, Toast } from "../toast";
+import { getQueryParam } from "@/utils/getQueryParam";
+import { useLocation } from "react-router-dom";
 
 const PregnancyHistory = ({
   formObject,
   setFormObject,
   handleChangeMainDetails,
 }) => {
+  const location = useLocation();
+
   const setData = (name, value) => {
     const newObject = {};
     newObject[name] = value || "";
@@ -30,7 +34,10 @@ const PregnancyHistory = ({
       PregnancyService.mapFormObjectToPregnancyHistory(formObject);
 
     try {
-      const response = await PregnancyService.savePregnancyHistory(formData);
+      const response = await PregnancyService.savePregnancyHistory(
+        getQueryParam("user", location),
+        formData
+      );
       Toast(response, errorType.SUCCESS);
     } catch (error) {
       console.log(error.message);
@@ -56,7 +63,9 @@ const PregnancyHistory = ({
   useEffect(() => {
     const fetchPregnancyHistory = async () => {
       try {
-        const response = await PregnancyService.getPregnancyHistory();
+        const response = await PregnancyService.getPregnancyHistory(
+          getQueryParam("user", location)
+        );
 
         const existing =
           PregnancyService.mapPregnancyHistoryToFormObject(response);
@@ -71,9 +80,7 @@ const PregnancyHistory = ({
       }
     };
 
-    return () => {
-      fetchPregnancyHistory();
-    };
+    fetchPregnancyHistory();
   }, []);
 
   return (
