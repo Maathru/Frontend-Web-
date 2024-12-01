@@ -54,6 +54,10 @@ const DiseaseAnalysis = () => {
           t("KidneyDiseases"),
         ],
       },
+      title: {
+        text: 'Number of Preganants with Different Diseases',
+        align: 'center',
+      },
     },
   };
 
@@ -63,7 +67,6 @@ const DiseaseAnalysis = () => {
 
   return (
     <div>
-      <h2>{t("Disease Analysis")}</h2>
       <ApexCharts
         options={chartData.options}
         series={chartData.series}

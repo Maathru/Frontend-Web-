@@ -81,7 +81,7 @@ const PregnancyAnalysis = () => {
           <Paper elevation={3}>
             <Box sx={{ p: 2 }}>
               <Typography variant="h6" component="h2" gutterBottom>
-                {t("Number of Patients with Different Diseases")}
+                {t("Disease Analysis")}
               </Typography>
               <DiseaseAnalysis />
             </Box>
