@@ -19,6 +19,15 @@ class AnalyticsService {
     }
   }
 
+  static async getBirthsByMonth() {
+    try {
+      const response = await axiosInstance.get(`/analytics/births-by-month`);
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  }
+
   static async getDiseaseAnalysis() {
     try {
       const response = await axiosInstance.get(`/analytics/health-conditions-stats`);
