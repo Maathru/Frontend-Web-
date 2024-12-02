@@ -10,8 +10,8 @@ import { errorType, Toast } from "@/components/toast";
 import { userData } from "@/context/userAuth";
 import BlogImage from "../../assets/blog/blog-image.png";
 import ArticleImage from "../../assets/blog/article-image.png";
-import RecentBlogImage1 from "../../assets/blog/recent-blog-image-1.png";
-import RecentBlogImage2 from "../../assets/blog/recent-blog-image-2.png";
+import RecentBlogImage1 from "../../assets/blog/recent-blog-image-1.jpg";
+import RecentBlogImage2 from "../../assets/blog/recent-blog-image-2.jpg";
 import BlogService from "../../service/blogService";
 import DOMPurify from "dompurify";
 
