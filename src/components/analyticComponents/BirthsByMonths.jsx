@@ -10,12 +10,12 @@ const BirthsByMonthChart = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await AnalyticsService.getBirthsByMonth();
-        const data = response.data;
+        const data = await AnalyticsService.getBirthsByMonth();
+        console.log(data);
 
         // Prepare data for the chart
-        const months = Object.keys(data).map(Number);  // Extract months (1-12)
-        const counts = Object.values(data);           // Extract the counts
+        const months = Object.keys(data).map(Number);  
+        const counts = Object.values(data);          
 
         // Set up the chart options
         setChartOptions({
