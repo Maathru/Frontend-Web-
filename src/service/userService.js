@@ -1,6 +1,32 @@
+import { role } from "@/data/roleData";
 import axiosInstance from "./axiosInstance";
 
 class UserService {
+  static async getUser() {
+    try {
+      const response = await axiosInstance.get(`/user`);
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  static async updateProfile(formData) {
+    const url =
+      formData.role == role.ADMIN ||
+      formData.role == role.DOCTOR ||
+      formData.role == role.MIDWIFE
+        ? "/user/employee"
+        : "/user";
+
+    try {
+      const response = await axiosInstance.put(url, formData);
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  }
+
   // by user
   static async getRegions(province, district, area) {
     try {

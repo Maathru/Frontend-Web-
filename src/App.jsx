@@ -54,6 +54,7 @@ import SystemAnalytics from "./pages/admin/systemAnalytics.jsx";
 import Clinics from "./pages/midwife/clinics/Clinics";
 import PregnancyAnalysis from "./pages/analytics/pregnancyAnalysis";
 import Chat from "./pages/Chat";
+import Profile from "./pages/profile";
 import LearnMorepg from "./pages/learnmorepg";
 import MedicalRecords from "./pages/doctor/medicalRecords";
 
@@ -126,6 +127,7 @@ function App() {
           <Route path="/blogs/article/recent/3" element={<ArticleRecent3 />} />
           <Route path="/forum" element={<Forum />} />
           <Route path="/forum/answer/:questionId" element={<Answer />} />
+          <Route path="/profile" element={<Profile />} />
           <Route path="/learnmorepg" element={<LearnMorepg />} />
 
           {userDetails.authenticated && (

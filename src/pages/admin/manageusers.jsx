@@ -28,7 +28,12 @@ const FormattedDateTime = (params) => {
 
 const columns = [
   { field: "id", headerName: "User ID", width: 70 },
-  { field: "name", headerName: "User Name", width: 130 },
+  {
+    field: "name",
+    headerName: "User Name",
+    width: 130,
+    renderCell: (params) => `${params.row.firstName} ${params.row.lastName}`,
+  },
   { field: "email", headerName: "User Email", flex: 1 },
   {
     field: "role",
