@@ -19,7 +19,7 @@ const doctorCards = [
     title: "View Patient Records",
     description: "Access and review detailed patient medical histories",
     image: patient,
-    url: "/clinics",
+    url: "/medicalrecords",
   },
   {
     title: "Manage drugs",
