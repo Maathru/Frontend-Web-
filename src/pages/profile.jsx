@@ -69,43 +69,21 @@ const Profile = () => {
 
     try {
       const response = await UserService.updateProfile(formData);
-
-      setFormData({
-        firstName: "",
-        lastName: "",
-        email: "",
-        role: "",
-        phoneNumber: "",
-        nic: "",
-        dob: "",
-        gender: "",
-        addressLine1: "",
-        street: "",
-        city: "",
-        designation: "",
-        qualifications: "",
-        lastLogin: "",
-      });
       Toast(response, errorType.SUCCESS);
-
       setIsUpdated(true);
       setEditMode(false);
     } catch (error) {
-      console.log(error.message);
-
-      const data = error.response.data;
+      const data = error.response?.data;
       if (data) {
         if (Array.isArray(data)) {
           const newErrors = {};
-          data.map((msg) => {
+          data.forEach((msg) => {
             Toast(msg.message, errorType.ERROR);
             newErrors[msg.field] = msg.message;
           });
-
           setErrors(newErrors);
         } else {
-          console.log(data);
-          Toast(data || "Error occurred", errorType.ERROR);
+          Toast(data || "Failed to update profile", errorType.ERROR);
         }
       }
     }
