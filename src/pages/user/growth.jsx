@@ -25,28 +25,27 @@ const Growth = () => {
   const [currentWeek, setCurrentWeek] = useState(1); // Current pregnancy week
 
   useEffect(() => {
-    // Fetch pregnancy cards from the backend
     const fetchPregnancyCards = async () => {
       try {
         const response = await GrowthService.getPreganancyCards();
-        setPregnancyCards(response.data || []);
-        console.log("Pregnancy cards:", response.data);
-        console.log("Pregnancy cards length:", pregnancyCards.length);
-
-        if (pregnancyCards.length > 0) {
-          const defaultCard = pregnancyCards[0];
+        const fetchedCards = response.data || [];
+        setPregnancyCards(fetchedCards);
+        console.log("Pregnancy cards:", fetchedCards);
+  
+        if (fetchedCards.length > 0) {
+          const defaultCard = fetchedCards[0];
           setSelectedCardId(defaultCard.pregnancyCardId);
-          console.log("Default card:", selectedCardId);
+          console.log("Default card:", defaultCard.pregnancyCardId);
           calculateWeek(defaultCard.dateOfPregnancy);
         }
-
       } catch (error) {
         console.error("Error fetching pregnancy cards:", error);
       }
     };
-
+  
     fetchPregnancyCards();
-  }, [pregnancyCards.length]);
+  }, []); // Empty dependency array to fetch data only once
+  
 
   // Calculate the pregnancy week based on the date of pregnancy
   const calculateWeek = (dateOfPregnancy) => {
