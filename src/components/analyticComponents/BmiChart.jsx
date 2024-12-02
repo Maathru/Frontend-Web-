@@ -39,8 +39,8 @@ const BMIChart = () => {
                 options={chartOptions}
                 series={chartSeries}
                 type="pie"
-                width="400"
-                height="400"
+                width="500"
+                height="500"
             />
         </div>
     );
