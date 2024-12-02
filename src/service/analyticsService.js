@@ -28,6 +28,15 @@ class AnalyticsService {
     }
   }
 
+  static async getBirthWeights() {
+    try {
+      const response = await axiosInstance.get(`/analytics/birth-weights`);
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  }
+
   static async getDiseaseAnalysis() {
     try {
       const response = await axiosInstance.get(`/analytics/health-conditions-stats`);

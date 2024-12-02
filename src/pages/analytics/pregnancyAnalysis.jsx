@@ -19,6 +19,7 @@ import BMIChart from '@/components/analyticComponents/BmiChart';
 import DiseaseAnalysis from '@/components/analyticComponents/diseaseAnalysis';
 import PregnancyCountByAge from '@/components/analyticComponents/PregnancyCountByAge';
 import BirthsByMonthChart from '@/components/analyticComponents/BirthsByMonths';
+import BirthWeightAnalysis from '@/components/analyticComponents/BirthWeightAnalysis';
 
 const StyledTextField = styled(TextField)({
   '& .MuiInput-underline:before': {
@@ -109,6 +110,16 @@ const PregnancyAnalysis = () => {
             </Box>
           </Paper>
         </Grid> 
+        <Grid item xs={12}>
+          <Paper elevation={3}>
+            <Box sx={{ p: 2 }}>
+              <Typography variant="h6" component="h2" gutterBottom>
+                {t("Birthweight Analysis")}
+              </Typography>
+              <BirthWeightAnalysis />
+            </Box>
+          </Paper>
+        </Grid>
       </Grid>
     </Container>
   );
