@@ -122,7 +122,7 @@ const manageClinics = () => {
 
   const fetchClinicsForGivenMonth = async (date) => {
     try {
-      const response = await ClinicService.getClinicsByMonth(date);
+      const response = await ClinicService.getClinicsByMonthForAdmin(date);
       setRows2(response);
       const dateObjects = stringArrayToDateArray(response);
       setDates(dateObjects);

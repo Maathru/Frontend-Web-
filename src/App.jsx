@@ -51,7 +51,7 @@ import VaccineCard from "./pages/vaccinecard/vaccinecard";
 import Nav from "./components/nav";
 import { useDarkMode } from "./context/darkModeContext";
 import SystemAnalytics from "./pages/admin/systemAnalytics.jsx";
-import Clinics from "./pages/midwife/clinics/mohClinics";
+import Clinics from "./pages/midwife/clinics/Clinics";
 import Chat from "./pages/Chat";
 
 function App() {
