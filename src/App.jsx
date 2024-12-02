@@ -55,7 +55,7 @@ import Clinics from "./pages/midwife/clinics/Clinics";
 import PregnancyAnalysis from "./pages/analytics/pregnancyAnalysis";
 import Chat from "./pages/Chat";
 import LearnMorepg from "./pages/learnmorepg";
-
+import MedicalRecords from "./pages/doctor/medicalRecords";
 
 function App() {
   const { toggleDarkMode } = useDarkMode();
@@ -164,6 +164,8 @@ function App() {
 
                   <Route path="/clinics" element={<Clinic />} />
                   <Route path="/clinics/reports" element={<ClinicReports />} />
+                  
+                  <Route path="/medicalrecords" element={<MedicalRecords />} />
                 </>
               )}
 
