@@ -55,7 +55,6 @@ import Clinics from "./pages/midwife/clinics/Clinics";
 import PregnancyAnalysis from "./pages/analytics/pregnancyAnalysis";
 import Chat from "./pages/Chat";
 
-
 function App() {
   const { toggleDarkMode } = useDarkMode();
   const darkQuery = window.matchMedia("(prefers-color-scheme: dark)");
@@ -137,11 +136,16 @@ function App() {
                   <Route path="/clinics" element={<ManageClinics />} />
                   <Route path="/regions" element={<ManageRegions />} />
                   <Route path="/analytics" element={<SystemAnalytics />} />
-                  <Route path="/drugs" element={<Drug />} />
                 </>
               )}
 
-              {/* Admin and Doctor routes */}
+              {/* Admin and Doctor Midwife routes  */}
+              {(userDetails.role === role.ADMIN ||
+                userDetails.role === role.DOCTOR) && (
+                <Route path="/drugs" element={<Drug />} />
+              )}
+
+              {/* Admin, Doctor and Midwife routes  */}
               {(userDetails.role === role.ADMIN ||
                 userDetails.role === role.DOCTOR ||
                 userDetails.role === role.MIDWIFE) && (

@@ -1,7 +1,7 @@
 import { HiOutlinePencilAlt, HiOutlineTrash } from "react-icons/hi";
 import { Chip, IconButton } from "@mui/material";
 import { useTranslation } from "react-i18next";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import DrugService from "@/service/drugService";
 import { errorType, Toast } from "@/components/toast";
 import Heading from "@/components/ui/heading";
@@ -9,6 +9,8 @@ import { useTitle } from "@/hooks/useTitle";
 import { StripedDataGrid } from "@/components/StripedDataGrid";
 import TableSearch from "@/components/TableSearch";
 import DrugAddPopup from "@/components/DrugAddPopup";
+import { userData } from "@/context/userAuth";
+import { role } from "@/data/roleData";
 
 const transformDate = (params) => {
   const originalDate = new Date(params.value);
@@ -56,41 +58,6 @@ const columns = [
       );
     },
   },
-  //   { field: "action", headerName: "Edit/Delete", flex: 1 },
-  {
-    field: "edit",
-    headerName: "",
-    flex: 0.1,
-    renderCell: (params) => (
-      <IconButton
-        // onClick={() => handleDelete(params.row.id)}
-        aria-label="delete"
-        size="small"
-        sx={{
-          color: "#624DE3",
-        }}
-      >
-        <HiOutlinePencilAlt />
-      </IconButton>
-    ),
-  },
-  {
-    field: "delete",
-    headerName: "",
-    flex: 0.1,
-    renderCell: (params) => (
-      <IconButton
-        // onClick={() => handleEdit(params.row.id)}
-        aria-label="delete"
-        size="small"
-        sx={{
-          color: "#A30D11",
-        }}
-      >
-        <HiOutlineTrash />
-      </IconButton>
-    ),
-  },
 ];
 
 const Drug = () => {
@@ -98,6 +65,7 @@ const Drug = () => {
   const [rows, setRows] = useState([]);
   const { t } = useTranslation("drug");
   const [isOpen, setIsOpen] = useState(false);
+  const { userDetails } = useContext(userData);
 
   useEffect(() => {
     const fetchDrugs = async () => {
@@ -119,22 +87,28 @@ const Drug = () => {
   return (
     <div className="p-12 pt-8 content-container">
       <div className="flex justify-between mb-8">
-        <Heading title={t("title")} />
+        {userDetails.role == role.ADMIN ? (
+          <Heading title={t("title")} />
+        ) : (
+          <Heading title={"Drugs"} />
+        )}
 
-        <DrugAddPopup
-          addButton={t("add")}
-          brandLabel={t("brand")}
-          batchLabel={t("batch")}
-          strengthLabel={t("strength")}
-          quantityLabel={t("quantity")}
-          compositionLabel={t("composition")}
-          doseLabel={t("dose")}
-          manufactureLabel={t("manufactured")}
-          expiryLabel={t("expired")}
-          submitButton={t("submit")}
-          isOpen={isOpen}
-          setIsOpen={setIsOpen}
-        />
+        {userDetails.role == role.ADMIN && (
+          <DrugAddPopup
+            addButton={t("add")}
+            brandLabel={t("brand")}
+            batchLabel={t("batch")}
+            strengthLabel={t("strength")}
+            quantityLabel={t("quantity")}
+            compositionLabel={t("composition")}
+            doseLabel={t("dose")}
+            manufactureLabel={t("manufactured")}
+            expiryLabel={t("expired")}
+            submitButton={t("submit")}
+            isOpen={isOpen}
+            setIsOpen={setIsOpen}
+          />
+        )}
       </div>
       <div style={{ height: "100%", width: "100%" }}>
         <StripedDataGrid
