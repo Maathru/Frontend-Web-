@@ -68,9 +68,11 @@ const Dashboard = () => {
               {t("description1")}
             </p>
             <div className="flex items-center mt-12">
+            <Link to="/learnmorepg">
               <Button className="bg-primary-purple px-14 m-auto">
                 {t("button1")}
               </Button>
+            </Link>
             </div>
           </div>
         </div>

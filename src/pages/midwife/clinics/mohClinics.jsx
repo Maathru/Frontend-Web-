@@ -28,7 +28,7 @@ const columns1 = [
     width: 170,
     renderCell: (params) => {
       return (
-        <div className="flex flex-col gap-1">
+        <div className="flex items-center h-full">
           {params.value.map((doctor, index) => (
             <Chip
               key={index}
@@ -72,7 +72,7 @@ const columns2 = [
     width: 170,
     renderCell: (params) => {
       return (
-        <div className="flex flex-col gap-1">
+        <div className="flex items-center h-full">
           {params.value.map((doctor, index) => (
             <Chip
               key={index}

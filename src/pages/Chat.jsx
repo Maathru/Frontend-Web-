@@ -202,22 +202,29 @@ const Chat = () => {
   };
 
   return (
-    <div className="font-sans bg-gray-200 flex items-center justify-center h-screen flex-col">
+    <div className="font-sans bg-gray-200 chat-container">
       <div
-        className="flex w-[800px] h-[600px] m-5 border border-solid border-[#ccc] bg-white overflow-hidden rounded-lg"
+        className="flex w-full h-full border border-solid border-[#ccc] bg-white overflow-hidden rounded-lg"
         style={{ boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)" }}
       >
-        <div className="flex-1 border-r border-solid border-gray-300 p-5 box-border bg-blue-500 text-white rounded-tl-md rounded-bl-md flex flex-col justify-between">
-          <div className="h-full overflow-y-auto">
-            <h2 className="text-2xl mb-2.5">Online Users</h2>
+        <div className="flex-1 border-r border-solid border-gray-300 p-5 box-border bg-footer-purple text-white rounded-tl-md rounded-bl-md flex flex-col justify-between h-full">
+          <div className=" overflow-y-auto">
+            <h2 className="text-2xl mb-2.5">Chats</h2>
             <ul className="list-none">
               {connectedUsers.map((user) => (
-                <li key={user.userId}>
+                <li
+                  key={user.userId}
+                  className={`${
+                    selectedUser?.userId == user.userId
+                      ? "bg-[#8c25b0] text-purple-300 p-1 pb-0 rounded"
+                      : "hover:bg-[#8c25b0] hover:p-1 hover:pb-0 rounded text-gray-200"
+                  }`}
+                >
                   <div
                     className={`flex items-center mb-2 cursor-pointer ${
                       selectedUser?.userId == user.userId
-                        ? "bg-blue-200 text-gray-700 p-2 rounded"
-                        : "hover:bg-blue-600"
+                        ? "bg-[#8c25b0] text-purple-300 rounded"
+                        : ""
                     }`}
                     onClick={() => userItemClick(user)}
                   >
@@ -233,11 +240,11 @@ const Chat = () => {
                       } ${user.hasUnreadMessage == true ? "active" : "hidden"}`}
                     ></span>
                   </div>
-                  <div className="text-xs text-black font-semibold">
-                    <p className="text-xs text-black font-semibold">
+                  <div className="text-xs flex justify-between font-semibold">
+                    <p className="text-xs text-purple-200 font-semibold">
                       {user.role}
                     </p>
-                    <p className="">
+                    <p className="text-purple-200">
                       {user.status == "ONLINE"
                         ? user.status
                         : user.lastSeen
@@ -245,12 +252,11 @@ const Chat = () => {
                         : "Offline"}
                     </p>
                   </div>
-                  <div className="h-px bg-gray-300 my-2.5"></div>
+                  <div className="h-px bg-black bg- my-2.5"></div>
                 </li>
               ))}
             </ul>
           </div>
-          <div>{userDetails.name && <p> {userDetails.name}</p>}</div>
         </div>
 
         <div className="flex-[3] flex flex-col p-5 box-border rounded-tr-md rounded-br-md">
@@ -263,8 +269,8 @@ const Chat = () => {
                 key={index}
                 className={`mb-1 rounded ${
                   msg.senderId == userDetails.userId
-                    ? "bg-blue-500 text-white self-end"
-                    : "bg-gray-200 text-gray-800 self-start"
+                    ? "bg-footer-purple text-white self-end px-2 py-1"
+                    : "bg-gray-200 text-gray-800 self-start px-2 py-1"
                 }`}
               >
                 <p className="px-3 rounded-lg break-words">{msg.content}</p>
@@ -285,7 +291,7 @@ const Chat = () => {
                   required
                 />
                 <button
-                  className="p-2 bg-blue-500 text-white rounded cursor-pointer border-none"
+                  className="p-2 px-10 bg-footer-purple text-white rounded cursor-pointer border-none"
                   type="submit"
                 >
                   Send

@@ -55,6 +55,8 @@ import Clinics from "./pages/midwife/clinics/Clinics";
 import PregnancyAnalysis from "./pages/analytics/pregnancyAnalysis";
 import Chat from "./pages/Chat";
 import Profile from "./pages/profile";
+import LearnMorepg from "./pages/learnmorepg";
+import MedicalRecords from "./pages/doctor/medicalRecords";
 
 function App() {
   const { toggleDarkMode } = useDarkMode();
@@ -126,6 +128,7 @@ function App() {
           <Route path="/forum" element={<Forum />} />
           <Route path="/forum/answer/:questionId" element={<Answer />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/learnmorepg" element={<LearnMorepg />} />
 
           {userDetails.authenticated && (
             <>
@@ -138,11 +141,16 @@ function App() {
                   <Route path="/clinics" element={<ManageClinics />} />
                   <Route path="/regions" element={<ManageRegions />} />
                   <Route path="/analytics" element={<SystemAnalytics />} />
-                  <Route path="/drugs" element={<Drug />} />
                 </>
               )}
 
-              {/* Admin and Doctor routes */}
+              {/* Admin and Doctor Midwife routes  */}
+              {(userDetails.role === role.ADMIN ||
+                userDetails.role === role.DOCTOR) && (
+                <Route path="/drugs" element={<Drug />} />
+              )}
+
+              {/* Admin, Doctor and Midwife routes  */}
               {(userDetails.role === role.ADMIN ||
                 userDetails.role === role.DOCTOR ||
                 userDetails.role === role.MIDWIFE) && (
@@ -158,6 +166,8 @@ function App() {
 
                   <Route path="/clinics" element={<Clinic />} />
                   <Route path="/clinics/reports" element={<ClinicReports />} />
+                  
+                  <Route path="/medicalrecords" element={<MedicalRecords />} />
                 </>
               )}
 
@@ -230,6 +240,7 @@ function App() {
           <Route path="*" element={<NotFound />} />
         </Routes>
         <ToastContainer />
+
         <Footer />
       </main>
     </ThemeProvider>
