@@ -101,13 +101,10 @@ const MohClinics = () => {
   };
 
   useEffect(() => {
-    setDate(new Date().toISOString().split("T")[0]);
-    fetchClinicsByDate(new Date().toISOString().split("T")[0]);
-  }, []);
-
-  useEffect(() => {
-    setDate(new Date().toISOString().split("T")[0]);
-    fetchClinicsForGivenMonth(new Date().toISOString().split("T")[0]);
+    const currentDate = new Date().toISOString().split("T")[0];
+    setDate(currentDate);
+    fetchClinicsByDate(currentDate);
+    fetchClinicsForGivenMonth(currentDate);
   }, []);
 
   const fetchClinicsForGivenMonth = async (date) => {
