@@ -362,7 +362,7 @@ const addCouples = () => {
                   <Button className="px-10">Edit</Button>
                 </Link>
                 <Link to={`/eligible?user=${userId}`}>
-                  <Button className="px-10">View Eligible Card</Button>
+                  <Button className="px-10 ml-10">View Eligible Card</Button>
                 </Link>
                 {formData.role && formData.role == "ELIGIBLE" && (
                   <Button
