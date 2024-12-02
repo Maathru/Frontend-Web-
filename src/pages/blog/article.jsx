@@ -58,7 +58,7 @@ const Article = () => {
         <img
           src={Article.image}
           alt="Article"
-          className="w-full rounded-lg mt-2"
+          className="w-full rounded-lg mt-2  max-h-[500px] object-cover"
         />
 
         <div className="mt-4 text-base text-neutral-600 dark:text-neutral-300">
