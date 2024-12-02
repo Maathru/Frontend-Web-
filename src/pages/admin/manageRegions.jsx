@@ -40,9 +40,7 @@ const manageRegions = () => {
       }
     };
 
-    return () => {
-      fetchRegions();
-    };
+    fetchRegions();
   }, [isSaved, isDeleted]);
 
   const handleDelete = async (id) => {

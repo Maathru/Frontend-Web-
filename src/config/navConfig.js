@@ -10,6 +10,7 @@ export const navConfig = {
     { name: "Blogs", path: "/blogs" },
     { name: "Discussion Forum", path: "/forum" },
     { name: "Recovery Checklist", path: "/eligible" },
+    { name: "Chat", path: "/chat" },
   ],
   PARENT: [
     { name: "Home", path: "/" },
@@ -22,6 +23,7 @@ export const navConfig = {
         { name: "Blogs", path: "/blogs" },
         { name: "Discussion Forum", path: "/forum" },
         { name: "Recovery Checklist", path: "/eligible" },
+        { name: "Chat", path: "/chat" },
       ],
     },
   ],
@@ -32,6 +34,7 @@ export const navConfig = {
       links: [
         { name: "Manage Eligible Couples", path: "/eligibles" },
         { name: "Manage Parents", path: "/parents" },
+        { name: "Clinics", path: "/clinics" },
       ],
     },
     { name: "Chat", path: "/chat" },
@@ -54,6 +57,7 @@ export const navConfig = {
       links: [
         { name: "Blogs", path: "/blogs" },
         { name: "Discussion Forum", path: "/forum" },
+        { name: "Chat", path: "/chat" },
       ],
     },
   ],
@@ -76,6 +80,7 @@ export const navConfig = {
       links: [
         { name: "Blogs", path: "/blogs" },
         { name: "Discussion Forum", path: "/forum" },
+        { name: "Chat", path: "/chat" },
       ],
     },
   ],

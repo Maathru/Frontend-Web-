@@ -109,10 +109,8 @@ const doctorDashboard = () => {
   // ];
 
   useEffect(() => {
-    return () => {
-      fetchClinicsForGivenMonth(new Date().toISOString().split("T")[0]);
-      fetchUpcomingClinicsForDoctor();
-    };
+    fetchClinicsForGivenMonth(new Date().toISOString().split("T")[0]);
+    fetchUpcomingClinicsForDoctor();
   }, []);
 
   const fetchClinicsForGivenMonth = async (date) => {

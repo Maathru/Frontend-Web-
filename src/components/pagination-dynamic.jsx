@@ -23,7 +23,7 @@ const Pagination = ({ totalPages, currentPage, onPageChange }) => {
           ${
             currentPage === 1
               ? "bg-gray-300 text-gray-500 cursor-not-allowed"
-              : "bg-blue-500 text-white hover:bg-blue-600"
+              : "bg-[#6F0096] text-white hover:bg-blue-600"
           }`}
       >
         Previous
@@ -55,7 +55,7 @@ const Pagination = ({ totalPages, currentPage, onPageChange }) => {
           ${
             currentPage === totalPages
               ? "bg-gray-300 text-gray-500 cursor-not-allowed"
-              : "bg-blue-500 text-white hover:bg-blue-600"
+              : "bg-[#6F0096] text-white hover:bg-blue-600"
           }`}
       >
         Next

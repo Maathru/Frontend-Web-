@@ -15,8 +15,6 @@ import Landing from "./pages/landing";
 import Drug from "./pages/admin/manageDrugs";
 import DoctorDashboard from "./pages/doctor/dashboard";
 import Clinic from "./pages/doctor/clinic";
-// import ViewClinics from "./pages/doctor/viewClinics";
-// import ClinicDates from "./pages/doctor/clinicDates";
 import ClinicReports from "./pages/doctor/clinicReports";
 import Midwife from "./pages/doctor/midwife";
 import Forum from "./pages/forum";
@@ -54,8 +52,8 @@ import Nav from "./components/nav";
 import { useDarkMode } from "./context/darkModeContext";
 import SystemAnalytics from "./pages/admin/systemAnalytics.jsx";
 import Clinics from "./pages/midwife/clinics/mohClinics";
-
 import PregnancyAnalysis from "./pages/analytics/pregnancyAnalysis";
+import Chat from "./pages/Chat";
 
 
 function App() {
@@ -158,8 +156,6 @@ function App() {
                   <Route path="/midwife" element={<Midwife />} />
 
                   <Route path="/clinics" element={<Clinic />} />
-                  {/* <Route path="/clinics/view" element={<ViewClinics />} /> */}
-                  {/* <Route path="/clinics/dates" element={<ClinicDates />} /> */}
                   <Route path="/clinics/reports" element={<ClinicReports />} />
                 </>
               )}
@@ -205,8 +201,9 @@ function App() {
                 </>
               )}
 
-              {/* Parent and Eligible routes */}
-              {(userDetails.role === role.PARENT ||
+              {/* Midwife, Parent and Eligible routes */}
+              {(userDetails.role === role.MIDWIFE ||
+                userDetails.role === role.PARENT ||
                 userDetails.role === role.ELIGIBLE) && (
                 <>
                   <Route path="/eligible" element={<Eligible />} />
@@ -226,6 +223,7 @@ function App() {
                 element={<EditQuestion />}
               />
               <Route path="/forum/ask" element={<AskQuestion />} />
+              <Route path="/chat" element={<Chat />} />
             </>
           )}
           <Route path="*" element={<NotFound />} />

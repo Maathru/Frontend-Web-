@@ -7,9 +7,7 @@ const ParentClinicsSection = () => {
   const [dates, setDates] = useState([]);
 
   useEffect(() => {
-    return () => {
-      fetchClinicsForGivenMonth(new Date().toISOString().split("T")[0]);
-    };
+    fetchClinicsForGivenMonth(new Date().toISOString().split("T")[0]);
   }, []);
 
   const fetchClinicsForGivenMonth = async (date) => {

@@ -54,9 +54,8 @@ const AdminDashboard = () => {
         Toast(data || "Error occurred", errorType.ERROR);
       }
     };
-    return () => {
-      fetchDashboardData();
-    };
+
+    fetchDashboardData();
   }, []);
 
   const data = {

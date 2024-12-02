@@ -9,6 +9,8 @@ import { styled } from "@mui/material/styles";
 import { useEffect, useState } from "react";
 import PregnancyService from "@/service/pregnancyService";
 import { errorType, Toast } from "../toast";
+import { useLocation } from "react-router-dom";
+import { getQueryParam } from "@/utils/getQueryParam";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   fontWeight: "bold",
@@ -16,9 +18,10 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
 
 const ClinicalConservation = () => {
   const [clinicRecords, setClinicRecords] = useState([{}]);
-
   const [open, setOpen] = useState(false);
   const [state, setState] = useState(false);
+
+  const location = useLocation();
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -26,6 +29,7 @@ const ClinicalConservation = () => {
   const handleAddRecord = async (newRecord) => {
     try {
       const response = await PregnancyService.saveClinicalConservation(
+        getQueryParam("user", location),
         newRecord
       );
       Toast(response, errorType.SUCCESS);
@@ -54,7 +58,9 @@ const ClinicalConservation = () => {
   useEffect(() => {
     const fetchClinicalConservation = async () => {
       try {
-        const response = await PregnancyService.getClinicalConservation();
+        const response = await PregnancyService.getClinicalConservation(
+          getQueryParam("user", location)
+        );
 
         setClinicRecords(response);
       } catch (error) {
@@ -67,9 +73,7 @@ const ClinicalConservation = () => {
       }
     };
 
-    return () => {
-      fetchClinicalConservation();
-    };
+    fetchClinicalConservation();
   }, [state]);
 
   return (

@@ -29,9 +29,7 @@ const Growth = () => {
     const fetchPregnancyCards = async () => {
       try {
         const response = await GrowthService.getPreganancyCards();
-        response.data && setPregnancyCards(response.data);
-        const cards = response.data || [];
-        setPregnancyCards(cards);
+        setPregnancyCards(response.data || []);
 
         // Set the default card (first card in the list)
         if (cards.length > 0) {

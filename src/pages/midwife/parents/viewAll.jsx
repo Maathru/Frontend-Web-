@@ -104,7 +104,7 @@ const viewAllParents = () => {
   }, []);
 
   const handleRowClick = (params) => {
-    navigate(`/pregnancy/`);
+    navigate(`/pregnancy?user=${params.row.userId}`);
   };
 
   return (

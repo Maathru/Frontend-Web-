@@ -10,12 +10,16 @@ import LocationAddPopup from "../map/LocationAddPopup";
 import PregnancyService from "@/service/pregnancyService";
 import { errorType, Toast } from "../toast";
 import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
+import { getQueryParam } from "@/utils/getQueryParam";
 
 const ParentsDetails = ({
   formObject,
   setFormObject,
   handleChangeMainDetails,
 }) => {
+  const location = useLocation();
+
   const setData = (field, name, value) => {
     const newObject = {};
     newObject[name + "_" + field] = value || "";
@@ -32,7 +36,10 @@ const ParentsDetails = ({
     const formData = PregnancyService.mapFormObjectToParentDetails(formObject);
 
     try {
-      const response = await PregnancyService.saveParentDetails(formData);
+      const response = await PregnancyService.saveParentDetails(
+        getQueryParam("user", location),
+        formData
+      );
       Toast(response, errorType.SUCCESS);
     } catch (error) {
       console.log(error.message);
@@ -58,7 +65,9 @@ const ParentsDetails = ({
   useEffect(() => {
     const fetchParentDetails = async () => {
       try {
-        const response = await PregnancyService.getParentDetails();
+        const response = await PregnancyService.getParentDetails(
+          getQueryParam("user", location)
+        );
 
         const existing =
           PregnancyService.mapParentDetailsToFormObject(response);
@@ -73,9 +82,7 @@ const ParentsDetails = ({
       }
     };
 
-    return () => {
-      fetchParentDetails();
-    };
+    fetchParentDetails();
   }, []);
 
   return (
