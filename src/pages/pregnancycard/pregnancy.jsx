@@ -18,6 +18,7 @@ import ClinicalConservation from "@/components/PregnancyComponents/ClinicalConse
 import PrenatalCareRelated from "@/components/PregnancyComponents/PrenatalCareRelated";
 import ChildBirth from "@/components/PregnancyComponents/ChildBirth";
 import { a11yProps, CustomTabPanel } from "@/components/BasicTabs";
+import HomeVisitDates from "@/components/midwifeComponents/HomeVisitDates";
 
 const Pregnancy1 = () => {
   useTitle("Pregnancy Card");
@@ -111,6 +112,8 @@ const Pregnancy1 = () => {
       {/* Hero section */}
       <div>
         <Heading title={t("title")} />
+
+        <HomeVisitDates addButton="Add Home Visits"></HomeVisitDates>
 
         <p className="text-xl font-bold mt-8">
           Mother&apos;s Name : {formObject.name_woman}

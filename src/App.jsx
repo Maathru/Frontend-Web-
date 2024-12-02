@@ -238,6 +238,7 @@ function App() {
           <Route path="*" element={<NotFound />} />
         </Routes>
         <ToastContainer />
+
         <Footer />
       </main>
     </ThemeProvider>
