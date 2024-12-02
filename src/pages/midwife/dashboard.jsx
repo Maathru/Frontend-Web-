@@ -16,6 +16,13 @@ import Calendar from "@/components/Calendar";
 import ClinicViewSection from "@/components/midwifeComponents/ClinicViewSection";
 // import { title } from "process";
 
+import PregnancyAnalysisByRegion from '@/components/analyticComponents/PregnancyAnalysisByRegion';
+import BMIChart from '@/components/analyticComponents/BmiChart';
+import DiseaseAnalysis from '@/components/analyticComponents/diseaseAnalysis';
+import PregnancyCountByAge from '@/components/analyticComponents/PregnancyCountByAge';
+import BirthsByMonthChart from '@/components/analyticComponents/BirthsByMonths';
+import BirthWeightAnalysis from '@/components/analyticComponents/BirthWeightAnalysis';
+
 const Widget = ({ icon: Icon, count, label1, label2, link }) => (
   <div className="card w-3/12 shadow-md rounded-lg dark:bg-dark-background">
     <div className="flex gap-5 items-center px-8 py-5">
@@ -46,7 +53,7 @@ const Dashboard = () => {
   const [clinics, setClinics] = useState([]);
 
   // pregnancy visits line chart data starts
-  const pregnancyVisitsOptions = {
+{/*  const pregnancyVisitsOptions = {
     // options: {
     chart: {
       type: "line",
@@ -231,7 +238,7 @@ const Dashboard = () => {
       name: "birthrate",
       data: [10, 20, 30, 40, 50, 60],
     },
-  ];
+  ]; */}
 
   useEffect(() => {
     const fetchDashboardData = async () => {
@@ -324,7 +331,7 @@ const Dashboard = () => {
           <Button>View All</Button>
         </div>
 
-        <Grid container spacing={4}>
+      {/*  <Grid container spacing={4}>
           <Grid item xs={6}>
             <Paper elevation={3}>
               <Box sx={{ p: 2 }}>
@@ -375,7 +382,40 @@ const Dashboard = () => {
               </Box>
             </Paper>
           </Grid>
+        </Grid> */}
+
+        { // real analytics components
+          <Grid container spacing={4}>
+          <Grid item xs={6}>
+            <Paper elevation={3}>
+              <Box sx={{ p: 2 }}>
+                <BirthsByMonthChart />
+              </Box>
+            </Paper>
+          </Grid>
+          <Grid item xs={6}>
+            <Paper elevation={3}>
+              <Box sx={{ p: 2 }}>
+                <PregnancyCountByAge />
+              </Box>
+            </Paper>
+          </Grid>
+          <Grid item xs={6}>
+            <Paper elevation={3}>
+              <Box sx={{ p: 2 }}>
+                <BirthWeightAnalysis />
+              </Box>
+            </Paper>
+          </Grid>
+          <Grid item xs={6}>
+            <Paper elevation={3}>
+              <Box sx={{ p: 2 }}>
+                <BMIChart />
+              </Box>
+            </Paper>
+          </Grid>
         </Grid>
+        }
       </div>
     </div>
   );

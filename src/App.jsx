@@ -42,7 +42,7 @@ import ManageClinics from "./pages/admin/manageClinics";
 import ManageRegions from "./pages/admin/manageRegions";
 import ManageBlogs from "./pages/admin/manageBlogs";
 import Memories from "./pages/memories";
-import Healthstatics from "./pages/healthstatics";
+// import Healthstatics from "./pages/healthstatics";
 import { ToastContainer } from "react-toastify";
 import { role } from "./data/roleData";
 import { ThemeProvider } from "@mui/material/styles";
@@ -52,7 +52,9 @@ import Nav from "./components/nav";
 import { useDarkMode } from "./context/darkModeContext";
 import SystemAnalytics from "./pages/admin/systemAnalytics.jsx";
 import Clinics from "./pages/midwife/clinics/Clinics";
+import PregnancyAnalysis from "./pages/analytics/pregnancyAnalysis";
 import Chat from "./pages/Chat";
+
 
 function App() {
   const { toggleDarkMode } = useDarkMode();
@@ -141,8 +143,9 @@ function App() {
 
               {/* Admin and Doctor routes */}
               {(userDetails.role === role.ADMIN ||
-                userDetails.role === role.DOCTOR) && (
-                <Route path="/statistics" element={<Healthstatics />} />
+                userDetails.role === role.DOCTOR ||
+                userDetails.role === role.MIDWIFE) && (
+                <Route path="/statistics" element={<PregnancyAnalysis />} />
               )}
 
               {/* Doctor routes */}
