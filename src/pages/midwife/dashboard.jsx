@@ -253,16 +253,17 @@ const Dashboard = () => {
         Toast(data || "Error occurred", errorType.ERROR);
       }
     };
-    
-      fetchDashboardData();
-      fetchClinicsForGivenMonth(new Date().toISOString().split("T")[0]);
-      fetchUpcomingClinicsForMidwife();
-    
+
+    fetchDashboardData();
+    fetchClinicsForGivenMonth(new Date().toISOString().split("T")[0]);
+    fetchUpcomingClinicsForMidwife();
   }, []);
 
   const fetchClinicsForGivenMonth = async (date) => {
     try {
-      const response = await ClinicService.getClinicsGivenMonthForMidwife(date);
+      const response = await ClinicService.getClinicsDatesGivenMonthForMidwife(
+        date
+      );
       setDates(response);
     } catch (error) {
       Toast(error.response.data || "Unauthorized", errorType.ERROR);

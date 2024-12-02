@@ -115,7 +115,9 @@ const doctorDashboard = () => {
 
   const fetchClinicsForGivenMonth = async (date) => {
     try {
-      const response = await ClinicService.getClinicsGivenMonthForDoctor(date);
+      const response = await ClinicService.getClinicsDatesGivenMonthForDoctor(
+        date
+      );
       setDates(response);
     } catch (error) {
       Toast(error.response.data || "Unauthorized", errorType.ERROR);

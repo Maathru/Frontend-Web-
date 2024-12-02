@@ -12,7 +12,9 @@ const ParentClinicsSection = () => {
 
   const fetchClinicsForGivenMonth = async (date) => {
     try {
-      const response = await ClinicService.getClinicsGivenMonthForParent(date);
+      const response = await ClinicService.getClinicsDatesGivenMonthForParent(
+        date
+      );
       setDates(response);
     } catch (error) {
       Toast(error.response.data || "Unauthorized", errorType.ERROR);

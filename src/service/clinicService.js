@@ -54,6 +54,15 @@ class ClinicService {
     }
   }
 
+  static async getClinicsByDateToMidwife(date) {
+    try {
+      const response = await axiosInstance.get(`/clinic/midwife/by/${date}`);
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  }
+
   static async getClinicsByDateToDoctor(date) {
     try {
       const response = await axiosInstance.get(`/clinic/doctor/by/${date}`);
@@ -63,16 +72,29 @@ class ClinicService {
     }
   }
 
-  static async getClinicsByMonth(date) {
+  static async getClinicsByMonthForAdmin(date) {
     try {
-      const response = await axiosInstance.get(`/clinic/month/${date}`);
+      const response = await axiosInstance.get(
+        `/clinic/month/clinic/admin/${date}`
+      );
       return response.data;
     } catch (error) {
       throw error;
     }
   }
 
-  static async getClinicsGivenMonthForParent(date) {
+  static async getClinicsByMonthForMidwife(date) {
+    try {
+      const response = await axiosInstance.get(
+        `/clinic/month/clinic/midwife/${date}`
+      );
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  static async getClinicsDatesGivenMonthForParent(date) {
     try {
       const response = await axiosInstance.get(`/clinic/month/parent/${date}`);
       return response.data;
@@ -81,7 +103,7 @@ class ClinicService {
     }
   }
 
-  static async getClinicsGivenMonthForMidwife(date) {
+  static async getClinicsDatesGivenMonthForMidwife(date) {
     try {
       const response = await axiosInstance.get(`/clinic/month/midwife/${date}`);
       return response.data;
@@ -90,7 +112,7 @@ class ClinicService {
     }
   }
 
-  static async getClinicsGivenMonthForDoctor(date) {
+  static async getClinicsDatesGivenMonthForDoctor(date) {
     try {
       const response = await axiosInstance.get(`/clinic/month/doctor/${date}`);
       return response.data;
