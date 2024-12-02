@@ -39,6 +39,19 @@ class BlogService {
     }
   }
 
+  static async uploadImage(imageData) {
+    try {
+      const response = await axiosInstance.post(`/upload`, imageData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  }
+
   //   static async getAllQuestionsWithPagination(offset, pageSize) {
   //     try {
   //       const response = await axiosInstance.get(

@@ -4,8 +4,9 @@ import { IoImageOutline } from "react-icons/io5";
 import Heading from "@/components/ui/heading";
 import BlogHeading from "@/components/blogComponents/blogHeading";
 import BlogProgress from "@/components/blogComponents/BlogProgress";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { set } from "date-fns";
+import BlogService from "@/service/blogService";
 import Popup from "reactjs-popup";
 import 'reactjs-popup/dist/index.css';
 
@@ -17,12 +18,18 @@ const WriteBlog1 = () => {
     stage: 1,
     title: "",
     category: "",
+    image: "",
+    cachedURL: "",
+    imageDescription: "",
+    imageName: "",
   });
 
   const setData = (name, value) => {
     const newObject = {};
     newObject[name] = value || "";
-    setFormData({ ...formData, ...newObject });
+    setFormData((prev) => {
+      return { ...prev, ...newObject }
+    });
   };
 
   const handleNext = () => {
@@ -40,10 +47,18 @@ const WriteBlog1 = () => {
   const [cachedURL, setcachedURL] = useState("");
 
   const uploadImage = async () => {
+    const formData = new FormData();
+    formData.append("imageFile", document.getElementById("picture").files[0]);
+    const response = await BlogService.uploadImage(formData);
+    // console.log(response);
+
     const file = document.getElementById("picture").files[0];
     setImageName(file.name);
     const cachedURL = URL.createObjectURL(file);
     setcachedURL(cachedURL);
+    setData("cachedURL", cachedURL);
+    setData("imageName", file.name);
+    setData("image", response);
   };
 
 
@@ -59,7 +74,14 @@ const WriteBlog1 = () => {
     fetchBlog();
   }, []);
 
-  // console.log(formData);
+    useEffect(() => {
+    if (formData.image) {
+      setImageName(formData.imageName);
+      setcachedURL(formData.cachedURL);
+    }
+  }, []);
+
+  //  console.log(formData);
 
   return (
     <div className="content-container">
@@ -125,6 +147,8 @@ const WriteBlog1 = () => {
                 type="text"
                 className="w-full md:col-span-3 md:h-12 h-10 mt-4 px-3 py-2 border-2 border-[#e0e0e0] rounded-full text-lg focus:outline-none focus:border-[#9c3cc1] dark:bg-neutral-800"
                 placeholder="Description of the image"
+                value={formData.imageDescription || ""}
+                onChange={(e) => setData("imageDescription", e.target.value)}
               />
 
               <label
@@ -135,6 +159,11 @@ const WriteBlog1 = () => {
                 {imageName}
               </label>
               <Input id="picture" type="file" accept=".png, .jpg, .jpeg" className="hidden" onChange={uploadImage} />
+
+              {/* <form id="imageUploadForm" encType="multipart/form-data" onSubmit={handleSubmit} className="hidden">
+                <Input id="picture" type="file" accept=".png, .jpg, .jpeg" className="hidden" onChange={handleImageChange} />
+              </form> */}
+
               <div className="flex justify-center md:block">
                 {/* <Popup trigger={
                   <button className={`${accentColor} px-4 py-2 md:h-12 h-10 md:col-span-1 mt-4 rounded-full text-sm hover:bg-neutral-100 text-white dark:hover:bg-neutral-900 hover:text-fuchsia-700 hover:ring-fuchsia-700 hover:ring-inset hover:ring-2`}>
