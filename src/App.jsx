@@ -54,6 +54,8 @@ import SystemAnalytics from "./pages/admin/systemAnalytics.jsx";
 import Clinics from "./pages/midwife/clinics/Clinics";
 import PregnancyAnalysis from "./pages/analytics/pregnancyAnalysis";
 import Chat from "./pages/Chat";
+import LearnMorepg from "./pages/learnmorepg";
+
 
 function App() {
   const { toggleDarkMode } = useDarkMode();
@@ -124,6 +126,7 @@ function App() {
           <Route path="/blogs/article/recent/3" element={<ArticleRecent3 />} />
           <Route path="/forum" element={<Forum />} />
           <Route path="/forum/answer/:questionId" element={<Answer />} />
+          <Route path="/learnmorepg" element={<LearnMorepg />} />
 
           {userDetails.authenticated && (
             <>
