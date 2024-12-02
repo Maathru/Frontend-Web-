@@ -30,20 +30,23 @@ const Growth = () => {
       try {
         const response = await GrowthService.getPreganancyCards();
         setPregnancyCards(response.data || []);
+        console.log("Pregnancy cards:", response.data);
+        console.log("Pregnancy cards length:", pregnancyCards.length);
 
-        // Set the default card (first card in the list)
-        if (cards.length > 0) {
-          const defaultCard = cards[0];
+        if (pregnancyCards.length > 0) {
+          const defaultCard = pregnancyCards[0];
           setSelectedCardId(defaultCard.pregnancyCardId);
+          console.log("Default card:", selectedCardId);
           calculateWeek(defaultCard.dateOfPregnancy);
         }
+
       } catch (error) {
         console.error("Error fetching pregnancy cards:", error);
       }
     };
 
     fetchPregnancyCards();
-  }, []);
+  }, [pregnancyCards.length]);
 
   // Calculate the pregnancy week based on the date of pregnancy
   const calculateWeek = (dateOfPregnancy) => {
@@ -123,9 +126,8 @@ const Growth = () => {
             height="315" 
             src={stage.video} 
             title="YouTube video player" 
-            frameborder="0" 
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-            referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
+            >
           </iframe>
           } 
         </div>
