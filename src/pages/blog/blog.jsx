@@ -42,14 +42,14 @@ const blog = () => {
   useEffect(() => {
     const fetchBlogs = async () => {
       try {
-        const response = await BlogService.getBlogs();
+        const response = await BlogService.getApprovedBlogs();
         console.log(response);
         setBlogs(response);
       } catch (error) {
         // console.log(error);
         if (error.response) {
           const data = error.response.data;
-          console.log(data);
+          // console.log(data);
           // Toast(data, errorType.ERROR);
         } else {
           Toast("An unexpected error occurred", errorType.ERROR);
@@ -261,7 +261,7 @@ const blog = () => {
       <div className="grid grid-cols-1 md:grid-cols-3 md:gap-8 gap-4 md:mt-8 mt-4 mx-4">
         {blogs.map((blog) => (
           
-          <Link to={`/blogs/article/${blog.blogId}`}>
+          <Link to={`/blogs/article/${blog.blogId}`} key={blog.blogId}>
           <Card
             className={`${cardColor} flex flex-col justify-between`}
             key={blog.blogId}
@@ -299,9 +299,9 @@ const blog = () => {
         ))}
       </div>
 
-      <div>
+      {/* <div>
         <Pagination />
-      </div>
+      </div> */}
     </div>
   );
 };
