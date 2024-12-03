@@ -77,7 +77,7 @@ const WriteBlog4 = () => {
 
           <div className="md:w-[90%] mx-auto">
             <div className="flex justify-around">
-              <Link to="/blogs/write/preview">
+              <Link to="#">
                 <button
                   className={`${accentColor} px-8 md:px-16 py-3 mt-8 md:mt-12 mb-4 rounded-lg text-xl font-semibold hover:bg-neutral-100 text-white dark:hover:bg-neutral-900 hover:text-fuchsia-700 hover:ring-fuchsia-700 hover:ring-inset hover:ring-2`}
                 >
