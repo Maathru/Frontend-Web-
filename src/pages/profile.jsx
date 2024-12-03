@@ -183,8 +183,6 @@ const Profile = () => {
         boxShadow: 2,
       }}
     >
-      {!editMode && <Button onClick={() => setEditMode(true)}>Edit</Button>}
-
       <Typography variant="h5" sx={{ mb: 3 }}>
         {editMode ? "Edit Profile" : "View Profile"}
       </Typography>
@@ -193,17 +191,24 @@ const Profile = () => {
         alt="Profile"
         sx={{ width: 100, height: 100, mb: 2 }}
       />
-      <label htmlFor="profile-picture">
-        <Input
-          accept="image/*"
-          id="profile-picture"
-          type="file"
-          onChange={handleProfilePictureChange}
-        />
-        <Button variant="outline" component="span">
-          {formData.profilePicture ? "Change Picture" : "Upload Picture"}
+      {editMode && (
+        <label htmlFor="profile-picture">
+          <Input
+            accept="image/*"
+            id="profile-picture"
+            type="file"
+            onChange={handleProfilePictureChange}
+          />
+          <Button variant="outline" component="span">
+            {formData.profilePicture ? "Change Picture" : "Upload Picture"}
+          </Button>
+        </label>
+      )}
+      {!editMode && (
+        <Button variant="hollow" onClick={() => setEditMode(true)}>
+          Edit
         </Button>
-      </label>
+      )}
 
       <form onSubmit={handleSubmit} style={{ width: "100%", marginTop: 16 }}>
         <TextField

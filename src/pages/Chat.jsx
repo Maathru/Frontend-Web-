@@ -214,7 +214,7 @@ const Chat = () => {
               {connectedUsers.map((user) => (
                 <li
                   key={user.userId}
-                  className={`${
+                  className={`p-1 pb-0 ${
                     selectedUser?.userId == user.userId
                       ? "bg-[#8c25b0] text-purple-300 p-1 pb-0 rounded"
                       : "hover:bg-[#8c25b0] hover:p-1 hover:pb-0 rounded text-gray-200"
@@ -252,7 +252,7 @@ const Chat = () => {
                         : "Offline"}
                     </p>
                   </div>
-                  <div className="h-px bg-black bg- my-2.5"></div>
+                  <div className="h-px bg-black mt-2.5"></div>
                 </li>
               ))}
             </ul>
