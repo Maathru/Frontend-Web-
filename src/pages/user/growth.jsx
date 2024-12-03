@@ -22,7 +22,7 @@ const Growth = () => {
 
   const [pregnancyCards, setPregnancyCards] = useState([]); // Pregnancy cards
   const [selectedCardId, setSelectedCardId] = useState(""); // Selected pregnancy card ID
-  const [currentWeek, setCurrentWeek] = useState(8); // Current pregnancy week
+  const [currentWeek, setCurrentWeek] = useState(1); // Current pregnancy week
 
   useEffect(() => {
     const fetchPregnancyCards = async () => {
