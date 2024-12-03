@@ -52,15 +52,22 @@ const ArticlePreview = () => {
 
     useEffect(() => {
         const fetchBlog = () => {
-            const blog = JSON.parse(localStorage.getItem("blog"));
-
-            if (blog) {
-            setFormData({ ...formData, ...blog });
+            try {
+                const blogData = localStorage.getItem("blog");
+                if (!blogData) return;
+                
+                const blog = JSON.parse(blogData);
+                if (blog) {
+                    setFormData(prevData => ({ ...prevData, ...blog }));
+                }
+            } catch (error) {
+                console.error("Error parsing blog data:", error);
+                Toast("Error loading blog data", errorType.ERROR);
             }
         };
 
         fetchBlog();
-    }, []);  // Consider adding formData as dependency if needed
+    }, []);  // Empty dependency array is correct as we only want to load once
 
     
   return (
