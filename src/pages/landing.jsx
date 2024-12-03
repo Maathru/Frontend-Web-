@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import landingImg from "../assets/landingImg.png";
 import { useTranslation } from "react-i18next";
 import { useTitle } from "@/hooks/useTitle";
+import { Link } from "react-router-dom";
 
 const Landing = () => {
   useTitle("Maathru");
@@ -18,12 +19,14 @@ const Landing = () => {
         </p>
 
         <div className="flex gap-10 mt-10">
+          <Link to="/signup">
           <Button className="bg-[#9C33C1] px-10" size="lg">
             {t("button1")}
           </Button>
-          <Button className="bg-[#9C33C1] px-10" size="lg">
-            {t("button2")}
-          </Button>
+          </Link>
+            <Button className="bg-[#9C33C1] px-10" size="lg">
+              {t("button2")}
+            </Button>
         </div>
       </div>
       <div className="flex-1">

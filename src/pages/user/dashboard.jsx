@@ -22,7 +22,7 @@ import ParentClinicsSection from "@/components/userComponents/ParentClincsSectio
 const userCards = [
   { title: "Visit Blog", image: blog, url: "/blogs" },
   { title: "Visit Discussion Forum", image: forum, url: "/forum" },
-  { title: "Get Vaccine Card", image: vaccine, url: "/vaccine" },
+  // { title: "Get Vaccine Card", image: vaccine, url: "/vaccine" },
 ];
 
 const parentCards = [
