@@ -25,27 +25,27 @@ const Growth = () => {
   const [currentWeek, setCurrentWeek] = useState(1); // Current pregnancy week
 
   useEffect(() => {
-    // Fetch pregnancy cards from the backend
     const fetchPregnancyCards = async () => {
       try {
         const response = await GrowthService.getPreganancyCards();
-        response.data && setPregnancyCards(response.data);
-        const cards = response.data || [];
-        setPregnancyCards(cards);
-
-        // Set the default card (first card in the list)
-        if (cards.length > 0) {
-          const defaultCard = cards[0];
+        const fetchedCards = response.data || [];
+        setPregnancyCards(fetchedCards);
+        console.log("Pregnancy cards:", fetchedCards);
+  
+        if (fetchedCards.length > 0) {
+          const defaultCard = fetchedCards[0];
           setSelectedCardId(defaultCard.pregnancyCardId);
+          console.log("Default card:", defaultCard.pregnancyCardId);
           calculateWeek(defaultCard.dateOfPregnancy);
         }
       } catch (error) {
         console.error("Error fetching pregnancy cards:", error);
       }
     };
-
+  
     fetchPregnancyCards();
-  }, []);
+  }, []); // Empty dependency array to fetch data only once
+  
 
   // Calculate the pregnancy week based on the date of pregnancy
   const calculateWeek = (dateOfPregnancy) => {
@@ -125,9 +125,8 @@ const Growth = () => {
             height="315" 
             src={stage.video} 
             title="YouTube video player" 
-            frameborder="0" 
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-            referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
+            >
           </iframe>
           } 
         </div>
@@ -157,7 +156,7 @@ const Growth = () => {
                 <img
                   src={food.image}
                   alt={food.title}
-                  className="rounded-md hidden md:block m-2 max-w-52 object-fit"
+                  className="rounded-md hidden md:block m-2 h-48 max-w-72 object-fit"
                 />
                 <div className="flex flex-col">
                   <CardHeader className="pb-2 pt-0">
@@ -201,7 +200,7 @@ const Growth = () => {
                 <img
                   src={activity.image}
                   alt={activity.title}
-                  className="rounded-md hidden md:block m-2 object-fit px-4"
+                  className="rounded-md hidden md:block m-2 object-fit px-4 max-h-40"
                 />
                 <div className="flex flex-col">
                   <CardContent className="text-base pb-3 text-justify">

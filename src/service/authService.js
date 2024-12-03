@@ -1,12 +1,16 @@
+import axios from "axios";
 import axiosInstance from "./axiosInstance";
 
 class AuthService {
   static async login(email, password) {
     try {
-      const response = await axiosInstance.post(`/auth/signin`, {
-        email,
-        password,
-      });
+      const response = await axios.post(
+        `${process.env.BACKEND_API_URL}/auth/signin`,
+        {
+          email,
+          password,
+        }
+      );
       return response;
     } catch (error) {
       throw error;
@@ -15,9 +19,12 @@ class AuthService {
 
   static async register(formData) {
     try {
-      const response = await axiosInstance.post(`/auth/signup`, {
-        ...formData,
-      });
+      const response = await axios.post(
+        `${process.env.BACKEND_API_URL}/auth/signup`,
+        {
+          ...formData,
+        }
+      );
       return response.data;
     } catch (error) {
       throw error;

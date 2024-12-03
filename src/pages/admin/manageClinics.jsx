@@ -113,20 +113,16 @@ const manageClinics = () => {
   };
 
   useEffect(() => {
-    return () => {
-      fetchClinicsByDate(new Date().toISOString().split("T")[0]);
-    };
+    fetchClinicsByDate(new Date().toISOString().split("T")[0]);
   }, [isFetch]);
 
   useEffect(() => {
-    return () => {
-      fetchClinicsForGivenMonth(new Date().toISOString().split("T")[0]);
-    };
+    fetchClinicsForGivenMonth(new Date().toISOString().split("T")[0]);
   }, [isFetch]);
 
   const fetchClinicsForGivenMonth = async (date) => {
     try {
-      const response = await ClinicService.getClinicsByMonth(date);
+      const response = await ClinicService.getClinicsByMonthForAdmin(date);
       setRows2(response);
       const dateObjects = stringArrayToDateArray(response);
       setDates(dateObjects);
