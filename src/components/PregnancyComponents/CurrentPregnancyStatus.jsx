@@ -4,12 +4,16 @@ import BoolTextInput from "../userComponents/boolTextInput";
 import PregnancyService from "@/service/pregnancyService";
 import { errorType, Toast } from "../toast";
 import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
+import { getQueryParam } from "@/utils/getQueryParam";
 
 const CurrentPregnancyStatus = ({
   formObject,
   setFormObject,
   handleChange,
 }) => {
+  const location = useLocation();
+
   const setData = (field, name, value) => {
     const newObject = {};
     newObject[name + "_" + field] = value || "";
@@ -28,7 +32,10 @@ const CurrentPregnancyStatus = ({
       PregnancyService.mapFormObjectToCurrentPregnancy(formObject);
 
     try {
-      const response = await PregnancyService.saveCurrentPregnancy(formData);
+      const response = await PregnancyService.saveCurrentPregnancy(
+        getQueryParam("user", location),
+        formData
+      );
       Toast(response, errorType.SUCCESS);
     } catch (error) {
       console.log(error.message);
@@ -54,7 +61,9 @@ const CurrentPregnancyStatus = ({
   useEffect(() => {
     const fetchCurrentPregnancy = async () => {
       try {
-        const response = await PregnancyService.getCurrentPregnancy();
+        const response = await PregnancyService.getCurrentPregnancy(
+          getQueryParam("user", location)
+        );
 
         const existing =
           PregnancyService.mapCurrentPregnancyToFormObject(response);
@@ -69,9 +78,7 @@ const CurrentPregnancyStatus = ({
       }
     };
 
-    return () => {
-      fetchCurrentPregnancy();
-    };
+    fetchCurrentPregnancy();
   }, []);
 
   return (

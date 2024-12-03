@@ -168,7 +168,10 @@ const eligibleCouples = () => {
       <Heading title={t("title")} />
 
       <div className="flex flex-col items-end">
-        <EligiblePopup addButton={t("add")}></EligiblePopup>
+        <EligiblePopup
+          addButton={t("add")}
+          title1={"Register new eligible user"}
+        ></EligiblePopup>
 
         {/* clinics table */}
         <div style={{ height: "100%", width: "100%" }}>

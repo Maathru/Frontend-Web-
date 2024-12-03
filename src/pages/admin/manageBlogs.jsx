@@ -135,9 +135,7 @@ const ManageBlogs = () => {
       }
     };
 
-    return () => {
-      fetchPendingBlogs();
-    };
+    fetchPendingBlogs();
   }, []);
 
   const handleAccept = (id) => {

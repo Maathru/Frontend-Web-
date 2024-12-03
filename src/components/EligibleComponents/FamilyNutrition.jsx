@@ -23,11 +23,9 @@ const FamilyNutrition = ({
   };
 
   useEffect(() => {
-    return () => {
-      if (formObject.stage < 3) {
-        handleChange(undefined, 1);
-      }
-    };
+    if (formObject.stage < 3) {
+      handleChange(undefined, 1);
+    }
   });
 
   return (

@@ -23,11 +23,9 @@ const ForBoth = ({
   };
 
   useEffect(() => {
-    return () => {
-      if (formObject.stage < 2) {
-        handleChange(undefined, 0);
-      }
-    };
+    if (formObject.stage < 2) {
+      handleChange(undefined, 0);
+    }
   });
 
   return (

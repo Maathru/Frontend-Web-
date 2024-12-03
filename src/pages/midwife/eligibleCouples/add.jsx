@@ -241,9 +241,7 @@ const addCouples = () => {
       }
     };
 
-    return () => {
-      fetchEligibleInfoForMidwife();
-    };
+    fetchEligibleInfoForMidwife();
   }, []);
 
   const handleSubmit = async (e) => {
@@ -362,6 +360,9 @@ const addCouples = () => {
               <>
                 <Link to={`/eligibles/edit/${userId}/${eligibleId}`}>
                   <Button className="px-10">Edit</Button>
+                </Link>
+                <Link to={`/eligible?user=${userId}`}>
+                  <Button className="px-10 ml-10">View Eligible Card</Button>
                 </Link>
                 {formData.role && formData.role == "ELIGIBLE" && (
                   <Button
