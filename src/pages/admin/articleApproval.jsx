@@ -21,7 +21,7 @@ const badgeStyle =
 const cardColor = "bg-pink-100 dark:bg-[#251F28] hover:dark:bg-[#1D1A1F]";
 const readMoreColor = "text-[#9c3cc1] dark:text-neutral-300";
 
-const Article = () => {
+const ArticleApproval = () => {
 
   const { articleId } = useParams();
   const [Article, setArticle] = useState({});
@@ -42,7 +42,7 @@ const Article = () => {
     
   return (
     <div className="">
-      <Link to={"/blogs/"}>
+      <Link to={"/manage/blogs"}>
         <div className="md:mt-10 mt-5 md:ml-10 ml-3 text-3xl font-semibold text-neutral-800 dark:text-neutral-100">
           <MdOutlineArrowBackIosNew />
         </div>
@@ -78,82 +78,22 @@ const Article = () => {
           ))}
         </div>
         )}
-      </div>
+      </div>     
 
-      {/* <div className="ml-6 md:ml-14">
-        <p className="md:mt-12 mt-8 text-3xl font-semibold text-neutral-800 dark:text-neutral-100">
-          Recent Blogs
-        </p>
-
-        <div className="mt-5 mb-16 flex flex-row gap-5 overflow-x-auto">
-          <Card
-            className={`${cardColor} flex flex-col justify-between md:min-w-[35%] min-w-[80%] p-0 `}
-          >
-            <CardHeader>
-              <img
-                src={BlogImage}
-                alt="Blog Image"
-                className="rounded-md mb-2"
-              />
-              <CardTitle>Understanding Prenatal Nutrition</CardTitle>
-            </CardHeader>
-            <CardFooter className={`text-sm flex justify-end ${readMoreColor}`}>
-              <p>Read More</p>
-            </CardFooter>
-          </Card>
-
-          <Card
-            className={`${cardColor} flex flex-col justify-between md:min-w-[35%] min-w-[80%] p-0 `}
-          >
-            <CardHeader>
-              <img
-                src={BlogImage}
-                alt="Blog Image"
-                className="rounded-md mb-2"
-              />
-              <CardTitle>Understanding Prenatal Nutrition</CardTitle>
-            </CardHeader>
-            <CardFooter className={`text-sm flex justify-end ${readMoreColor}`}>
-              <p>Read More</p>
-            </CardFooter>
-          </Card>
-
-          <Card
-            className={`${cardColor} flex flex-col justify-between md:min-w-[35%] min-w-[80%] p-0 `}
-          >
-            <CardHeader>
-              <img
-                src={BlogImage}
-                alt="Blog Image"
-                className="rounded-md mb-2"
-              />
-              <CardTitle>Understanding Prenatal Nutrition</CardTitle>
-            </CardHeader>
-            <CardFooter className={`text-sm flex justify-end ${readMoreColor}`}>
-              <p>Read More</p>
-            </CardFooter>
-          </Card>
-
-          <Card
-            className={`${cardColor} flex flex-col justify-between md:min-w-[35%] min-w-[80%] p-0 `}
-          >
-            <CardHeader>
-              <img
-                src={BlogImage}
-                alt="Blog Image"
-                className="rounded-md mb-2"
-              />
-              <CardTitle>Understanding Prenatal Nutrition</CardTitle>
-            </CardHeader>
-            <CardFooter className={`text-sm flex justify-end ${readMoreColor}`}>
-              <p>Read More</p>
-            </CardFooter>
-          </Card>
-        </div>
+      {/* <div className="md:w-[90%] mx-auto mb-3">
+        <NavLink to={`/manage/blogs/approval/${Article.blogId}`}>
+          <button className="bg-blue-600 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded">
+            Approve
+          </button>
+        </NavLink>
+        <NavLink to={`/manage/blogs/reject/${Article.blogId}`}>
+          <button className="bg-red-600 hover:bg-red-800 text-white font-bold py-2 px-4 rounded ml-2">
+            Reject
+          </button>
+        </NavLink>
       </div> */}
-
     </div>
   );
 }
 
-export default Article;
+export default ArticleApproval;
