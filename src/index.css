@@ -92,7 +92,8 @@
 }
 
 .chat-container {
-  height: calc(100vh - 145px);
+  height: calc(100vh - 85px);
+
 }
 
 .eligible-form {

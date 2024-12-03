@@ -3,6 +3,7 @@ import UserImage from "../assets/user_icon.png";
 import { userData } from "@/context/userAuth";
 import axiosInstance from "@/service/axiosInstance";
 import { useLocation } from "react-router-dom";
+import chatimg from "../assets/chatimg.png";
 
 const Chat = () => {
   const { userDetails } = useContext(userData);
@@ -202,12 +203,12 @@ const Chat = () => {
   };
 
   return (
-    <div className="font-sans bg-gray-200 chat-container">
+    <div className="font-sans bg-gray-100 chat-container">
       <div
         className="flex w-full h-full border border-solid border-[#ccc] bg-white overflow-hidden rounded-lg"
         style={{ boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)" }}
       >
-        <div className="flex-1 border-r border-solid border-gray-300 p-5 box-border bg-footer-purple text-white rounded-tl-md rounded-bl-md flex flex-col justify-between h-full">
+        <div className="flex-1 border-r border-solid border-gray-300 p-5 box-border bg-[#F2EFFF] text-[#303030] rounded-tl-md rounded-bl-md flex flex-col justify-between h-full">
           <div className=" overflow-y-auto">
             <h2 className="text-2xl mb-2.5">Chats</h2>
             <ul className="list-none">
@@ -216,14 +217,14 @@ const Chat = () => {
                   key={user.userId}
                   className={`p-1 pb-0 ${
                     selectedUser?.userId == user.userId
-                      ? "bg-[#8c25b0] text-purple-300 p-1 pb-0 rounded"
-                      : "hover:bg-[#8c25b0] hover:p-1 hover:pb-0 rounded text-gray-200"
+                      ? "bg-[#D7AEE1] p-2 pb-0 rounded text-purple-100"
+                      : "hover:bg-[#B163C8] hover:p-1 hover:pb-0 rounded hover:text-white"
                   }`}
                 >
                   <div
                     className={`flex items-center mb-2 cursor-pointer ${
                       selectedUser?.userId == user.userId
-                        ? "bg-[#8c25b0] text-purple-300 rounded"
+                        ? "text-[#FFF] rounded"
                         : ""
                     }`}
                     onClick={() => userItemClick(user)}
@@ -241,10 +242,10 @@ const Chat = () => {
                     ></span>
                   </div>
                   <div className="text-xs flex justify-between font-semibold">
-                    <p className="text-xs text-purple-200 font-semibold">
+                    <p className="text-xs text-[#303030] font-semibold mr-3">
                       {user.role}
                     </p>
-                    <p className="text-purple-200">
+                    <p className="text-purple-800">
                       {user.status == "ONLINE"
                         ? user.status
                         : user.lastSeen
@@ -260,44 +261,56 @@ const Chat = () => {
         </div>
 
         <div className="flex-[3] flex flex-col p-5 box-border rounded-tr-md rounded-br-md">
-          <div
-            ref={chatMessagesRef}
-            className="flex-[3] flex flex-col p-5 box-border rounded-tr-md rounded-br-md overflow-y-auto"
-          >
-            {messages.map((msg, index) => (
-              <div
-                key={index}
-                className={`mb-1 rounded ${
-                  msg.senderId == userDetails.userId
-                    ? "bg-footer-purple text-white self-end px-2 py-1"
-                    : "bg-gray-200 text-gray-800 self-start px-2 py-1"
-                }`}
-              >
-                <p className="px-3 rounded-lg break-words">{msg.content}</p>
-              </div>
-            ))}
-          </div>
-
-          {selectedUser && (
-            <form onSubmit={sendMessage} id="messageForm" name="messageForm">
-              <div className="mt-auto flex">
-                <input
-                  className="flex-1 p-2.5 border border-gray-300 rounded-md mr-2.5"
-                  autoComplete="off"
-                  type="text"
-                  onChange={(e) => setMessageContent(e.target.value)}
-                  value={messageContent}
-                  placeholder="Type your message..."
-                  required
+          {!selectedUser ? (
+            <div className="h-screen flex justify-center items-center">
+              <div className="w-full h-full flex justify-center">
+                <img
+                  className="w-50 max-w-xs h-auto"
+                  src={chatimg}
+                  alt="User"
                 />
-                <button
-                  className="p-2 px-10 bg-footer-purple text-white rounded cursor-pointer border-none"
-                  type="submit"
-                >
-                  Send
-                </button>
               </div>
-            </form>
+            </div>
+          ) : (
+            <>
+              <div
+                ref={chatMessagesRef}
+                className="flex-[3] flex flex-col p-5 box-border rounded-tr-md rounded-br-md overflow-y-auto"
+              >
+                {messages.map((msg, index) => (
+                  <div
+                    key={index}
+                    className={`mb-1 rounded ${
+                      msg.senderId == userDetails.userId
+                        ? "bg-footer-purple text-white self-end px-2 py-1"
+                        : "bg-gray-200 text-gray-800 self-start px-2 py-1"
+                    }`}
+                  >
+                    <p className="px-3 rounded-lg break-words">{msg.content}</p>
+                  </div>
+                ))}
+              </div>
+
+              <form onSubmit={sendMessage} id="messageForm" name="messageForm">
+                <div className="mt-auto flex">
+                  <input
+                    className="flex-1 p-2.5 border border-gray-300 rounded-md mr-2.5"
+                    autoComplete="off"
+                    type="text"
+                    onChange={(e) => setMessageContent(e.target.value)}
+                    value={messageContent}
+                    placeholder="Type your message..."
+                    required
+                  />
+                  <button
+                    className="p-2 px-10 bg-footer-purple text-white rounded cursor-pointer border-none"
+                    type="submit"
+                  >
+                    Send
+                  </button>
+                </div>
+              </form>
+            </>
           )}
         </div>
       </div>
