@@ -50,7 +50,7 @@ const ArticlePreview = () => {
         }
       };
 
-    useState(() => {
+    useEffect(() => {
         const fetchBlog = () => {
             const blog = JSON.parse(localStorage.getItem("blog"));
 
@@ -60,7 +60,7 @@ const ArticlePreview = () => {
         };
 
         fetchBlog();
-    }, []);
+    }, []);  // Consider adding formData as dependency if needed
 
     
   return (
