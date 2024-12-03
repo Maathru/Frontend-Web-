@@ -118,7 +118,7 @@ const Login = () => {
   };
 
   return (
-    <div className="h- w-screen">
+    <div className="content-container w-screen">
       <img
         src={loginImg}
         alt=""
