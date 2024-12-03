@@ -5,9 +5,6 @@ import { MdOutlineArrowBackIosNew } from "react-icons/md";
 import { MdCreate } from "react-icons/md";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import BlogImage from "../../assets/blog/blog-image.png";
-import RecentBlogImage1 from "../../assets/blog/recent-blog-image-1.png";
-import RecentBlogImage2 from "../../assets/blog/recent-blog-image-2.png";
 import Heading from "@/components/ui/heading";
 import Search from "@/components/Search";
 import { t } from "i18next";
@@ -61,8 +58,7 @@ function QuickSearchToolbar() {
 
 const BlogCard = ({ blog, handleAccept }) => {
   return (
-    <div className="flex justify-between my-2">
-      <Card className={`${cardColor} flex items-center`}>
+      <Card className={`${cardColor} flex items-center my-3`} key={blog.blogId}>
         <img
           src={blog.image}
           alt="Blog Image"
@@ -84,13 +80,21 @@ const BlogCard = ({ blog, handleAccept }) => {
               }}
             />
           </CardContent>
-          <CardFooter className="pb-0">
+          <CardFooter className="pb-0 flex">
             <div className="flex flex-wrap gap-2">
               {blog.keywords.map((keyword, index) => (
                 <Badge key={index} variant="secondary" className={badgeColor}>
                   {keyword}
                 </Badge>
               ))}
+            </div>
+            <div className="ml-auto">
+              <Link to={`/manage/blogs/approval/${blog.blogId}`}>
+              <Button
+              className="ml-2 bg-blue-600 hover:bg-blue-800">
+                Read Full Article
+              </Button>
+              </Link>
             </div>
           </CardFooter>
           <CardFooter className={`text-sm flex justify-end ${readMoreColor}`}>
@@ -106,11 +110,18 @@ const BlogCard = ({ blog, handleAccept }) => {
                   Accept
                 </Button>
               )}
+              {/* {blog.approvalStatus === "PENDING" && (
+                <Button
+                  onClick={() => handleAccept(blog.blogId)}
+                  className="ml-2 bg-red-500"
+                >
+                  Reject
+                </Button>
+              )} */}
             </div>
           </CardFooter>
         </div>
       </Card>
-    </div>
   );
 };
 
@@ -140,12 +151,24 @@ const ManageBlogs = () => {
     };
   }, []);
 
-  const handleAccept = (id) => {
-    setBlogs(
-      blogs.map((blog) =>
-        blog.blogId === id ? { ...blog, approvalStatus: "Approved" } : blog
-      )
-    );
+  const handleAccept = async (id) => {
+    try {
+      const response = await BlogService.approveArticle(id);
+      setBlogs(
+        blogs.map((blog) =>
+          blog.blogId === id ? { ...blog, approvalStatus: "Approved" } : blog
+        )
+      );
+      Toast(response, errorType.SUCCESS);
+    } catch (error) {
+      if (error.response) {
+        const data = error.response.data;
+        console.log(data);
+        Toast(data, errorType.ERROR);
+      } else {
+        Toast("An unexpected error occurred", errorType.ERROR);
+      }
+    }
   };
 
   return (
@@ -158,7 +181,7 @@ const ManageBlogs = () => {
         {blogs.map((blog) => (
           <BlogCard key={blog.blogId} blog={blog} handleAccept={handleAccept} />
         ))}
-        <Pagination />
+        {/* <Pagination /> */}
       </div>
     </div>
   );
