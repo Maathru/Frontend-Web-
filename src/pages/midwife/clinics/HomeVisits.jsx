@@ -12,7 +12,7 @@ const columns = [
   { field: "location", headerName: "Location", flex: 1 },
   {
     field: "clinicDone",
-    headerName: "Clinic Done?",
+    headerName: "Home Visit Status",
     flex: 1,
     renderCell: (params) => (
       <div>

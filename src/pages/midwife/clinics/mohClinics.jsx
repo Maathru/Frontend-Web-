@@ -28,7 +28,7 @@ const columns1 = [
     width: 170,
     renderCell: (params) => {
       return (
-        <div className="flex flex-col gap-1">
+        <div className="flex flex-col overflow-y-scroll  h-full">
           {params.value.map((doctor, index) => (
             <Chip
               key={index}
@@ -37,6 +37,8 @@ const columns1 = [
               sx={{
                 backgroundColor: "#C5BCFF",
                 color: "#1F4692",
+                marginTop: "5px",
+                width: "100%",
               }}
             />
           ))}
@@ -72,7 +74,7 @@ const columns2 = [
     width: 170,
     renderCell: (params) => {
       return (
-        <div className="flex flex-col gap-1">
+        <div className="flex flex-col overflow-y-scroll  h-full">
           {params.value.map((doctor, index) => (
             <Chip
               key={index}
@@ -81,6 +83,8 @@ const columns2 = [
               sx={{
                 backgroundColor: "#C5BCFF",
                 color: "#1F4692",
+                marginTop: "5px",
+                width: "100%",
               }}
             />
           ))}
