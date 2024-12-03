@@ -22,14 +22,13 @@ export const navConfig = {
     { name: "Home", path: "/" },
     { name: "Child Growth", path: "/growth" },
     { name: "Pregnancy Card", path: "/pregnancy" },
-    { name: "Memories", path: "/memories" },
+    { name: "Chat", path: "/chat" },
     {
       name: "More",
       links: [
         { name: "Blogs", path: "/blogs" },
         { name: "Discussion Forum", path: "/forum" },
         { name: "Recovery Checklist", path: "/eligible" },
-        { name: "Chat", path: "/chat" },
       ],
     },
   ],
