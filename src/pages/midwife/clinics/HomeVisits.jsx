@@ -6,6 +6,7 @@ import TableSearch from "@/components/TableSearch";
 import VisitsService from "@/service/visitsService";
 import { errorType, Toast } from "@/components/toast";
 import { formatTime } from "@/utils/FormatTime";
+import { useNavigate } from "react-router-dom";
 
 const columns1 = [
   { field: "id", headerName: "Visit's ID", width: 100 },
@@ -88,6 +89,7 @@ const HomeVisits = () => {
   const [rows, setRows] = useState([]);
   const [rows2, setRows2] = useState([]);
   const [dates, setDates] = useState([]);
+  const navigate = useNavigate();
 
   const stringArrayToDateArray = (array) => {
     return array.map((visit) => visit.date);
@@ -142,6 +144,10 @@ const HomeVisits = () => {
     await fetchHomeVisitsForGivenDate(date.format("YYYY-MM-DD"));
   };
 
+  const handleRowClick = (params) => {
+    navigate(`/homevisit/${params.row.userId}`);
+  };
+
   return (
     <div>
       <div>
@@ -172,6 +178,7 @@ const HomeVisits = () => {
               }
               disableRowSelectionOnClick
               slots={{ toolbar: TableSearch }}
+              onRowClick={handleRowClick}
             />
           </div>
         </div>
@@ -197,6 +204,7 @@ const HomeVisits = () => {
             }
             disableRowSelectionOnClick
             slots={{ toolbar: TableSearch }}
+            onRowClick={handleRowClick}
           ></StripedDataGrid>
         </div>
       </div>
