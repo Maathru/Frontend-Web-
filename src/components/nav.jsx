@@ -110,7 +110,7 @@ const Nav = ({ themeFunction, mode }) => {
   };
 
   const renderNavLinks = () => {
-    const roleNavConfig = navConfig[userDetails.role] || navConfig[role.USER];
+    const roleNavConfig = navConfig[userDetails.role] || navConfig[role.GUEST];
     return roleNavConfig.map((item, index) => {
       if (item.links) {
         const isActiveDropdown = item.links.some((link) =>

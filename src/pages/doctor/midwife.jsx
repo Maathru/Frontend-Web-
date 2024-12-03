@@ -44,9 +44,7 @@ const midwife = () => {
       }
     };
 
-    return () => {
-      fetchMidwives();
-    };
+    fetchMidwives();
   }, []);
 
   return (

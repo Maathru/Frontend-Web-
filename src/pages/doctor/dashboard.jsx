@@ -12,12 +12,14 @@ import ClinicService from "@/service/clinicService";
 import { errorType, Toast } from "@/components/toast";
 import { formatTime } from "@/utils/FormatTime";
 
+import PregnancyAnalysisByRegion from "@/components/analyticComponents/PregnancyAnalysisByRegion";
+
 const doctorCards = [
   {
     title: "View Patient Records",
     description: "Access and review detailed patient medical histories",
     image: patient,
-    url: "/clinics",
+    url: "/medicalrecords",
   },
   {
     title: "Manage drugs",
@@ -54,68 +56,68 @@ const doctorDashboard = () => {
   const [dates, setDates] = useState([]);
   const [clinics, setClinics] = useState([]);
 
-  const options1 = {
-    chart: {
-      type: "line",
-      zoom: {
-        enabled: false,
-      },
-    },
-    dataLabels: {
-      enabled: false,
-    },
-    stroke: {
-      curve: "straight",
-      colors: "#721D90",
-      width: 4,
-    },
+  // const options1 = {
+  //   chart: {
+  //     type: "line",
+  //     zoom: {
+  //       enabled: false,
+  //     },
+  //   },
+  //   dataLabels: {
+  //     enabled: false,
+  //   },
+  //   stroke: {
+  //     curve: "straight",
+  //     colors: "#721D90",
+  //     width: 4,
+  //   },
 
-    grid: {
-      row: {
-        colors: ["#f3f3f3", "transparent"],
-        opacity: 0.5,
-      },
-    },
-    markers: {
-      size: 5,
-      colors: "#ffffff",
-      strokeColors: "#721D90",
-    },
-    xaxis: {
-      categories: [
-        "Jan",
-        "Feb",
-        "Mar",
-        "Apr",
-        "May",
-        "Jun",
-        "Jul",
-        "Aug",
-        "Sep",
-        "Oct",
-        "Nov",
-        "Dec",
-      ],
-    },
-  };
+  //   grid: {
+  //     row: {
+  //       colors: ["#f3f3f3", "transparent"],
+  //       opacity: 0.5,
+  //     },
+  //   },
+  //   markers: {
+  //     size: 5,
+  //     colors: "#ffffff",
+  //     strokeColors: "#721D90",
+  //   },
+  //   xaxis: {
+  //     categories: [
+  //       "Jan",
+  //       "Feb",
+  //       "Mar",
+  //       "Apr",
+  //       "May",
+  //       "Jun",
+  //       "Jul",
+  //       "Aug",
+  //       "Sep",
+  //       "Oct",
+  //       "Nov",
+  //       "Dec",
+  //     ],
+  //   },
+  // };
 
-  const series1 = [
-    {
-      name: "Desktops",
-      data: [10, 41, 35, 51, 49, 62, 69, 91, 115, 98, 100, 110],
-    },
-  ];
+  // const series1 = [
+  //   {
+  //     name: "Desktops",
+  //     data: [10, 41, 35, 51, 49, 62, 69, 91, 115, 98, 100, 110],
+  //   },
+  // ];
 
   useEffect(() => {
-    return () => {
-      fetchClinicsForGivenMonth(new Date().toISOString().split("T")[0]);
-      fetchUpcomingClinicsForDoctor();
-    };
+    fetchClinicsForGivenMonth(new Date().toISOString().split("T")[0]);
+    fetchUpcomingClinicsForDoctor();
   }, []);
 
   const fetchClinicsForGivenMonth = async (date) => {
     try {
-      const response = await ClinicService.getClinicsGivenMonthForDoctor(date);
+      const response = await ClinicService.getClinicsDatesGivenMonthForDoctor(
+        date
+      );
       setDates(response);
     } catch (error) {
       Toast(error.response.data || "Unauthorized", errorType.ERROR);
@@ -192,16 +194,17 @@ const doctorDashboard = () => {
 
       <div>
         <Typography variant="h4">
-          Trend Analysis of Pregnant Mothers in MOH Office Area Over Time
+          Analysis of Pregnant Mothers in Regions
         </Typography>
 
-        <ReactApexChart
+        {/* <ReactApexChart
           options={options1}
           series={series1}
           type="line"
           height={350}
           width={"100%"}
-        />
+        /> */}
+        <PregnancyAnalysisByRegion />
       </div>
     </div>
   );

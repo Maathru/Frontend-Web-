@@ -25,25 +25,27 @@ const Growth = () => {
   const [currentWeek, setCurrentWeek] = useState(1); // Current pregnancy week
 
   useEffect(() => {
-    // Fetch pregnancy cards from the backend
     const fetchPregnancyCards = async () => {
       try {
         const response = await GrowthService.getPreganancyCards();
-        setPregnancyCards(response.data || []);
-
-        // Set the default card (first card in the list)
-        if (cards.length > 0) {
-          const defaultCard = cards[0];
+        const fetchedCards = response.data || [];
+        setPregnancyCards(fetchedCards);
+        console.log("Pregnancy cards:", fetchedCards);
+  
+        if (fetchedCards.length > 0) {
+          const defaultCard = fetchedCards[0];
           setSelectedCardId(defaultCard.pregnancyCardId);
+          console.log("Default card:", defaultCard.pregnancyCardId);
           calculateWeek(defaultCard.dateOfPregnancy);
         }
       } catch (error) {
         console.error("Error fetching pregnancy cards:", error);
       }
     };
-
+  
     fetchPregnancyCards();
-  }, []);
+  }, []); // Empty dependency array to fetch data only once
+  
 
   // Calculate the pregnancy week based on the date of pregnancy
   const calculateWeek = (dateOfPregnancy) => {
@@ -108,7 +110,7 @@ const Growth = () => {
             </p>
           </div>
 
-          {stage.video && (
+          {/* {stage.video && (
             <div className="text-right">
               <video
                 src={stage.video}
@@ -117,7 +119,16 @@ const Growth = () => {
                 autoPlay="true"
               />
             </div>
-          )}
+          )} */}
+          {stage.video && <iframe 
+            width="560" 
+            height="315" 
+            src={stage.video} 
+            title="YouTube video player" 
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+            >
+          </iframe>
+          } 
         </div>
 
         <div className="flex justify-between mt-6">

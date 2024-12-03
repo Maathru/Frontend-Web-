@@ -80,7 +80,7 @@ const Login = () => {
         localStorage.setItem("refresh", response.data.refresh_token);
         localStorage.setItem("role", response.data.role);
         localStorage.setItem("name", response.data.name);
-        localStorage.setItem("userId" , response.data.id);
+        localStorage.setItem("userId", response.data.id);
 
         setUserDetails({
           authenticated: true,
@@ -142,7 +142,7 @@ const Login = () => {
               name="email"
               variant="outlined"
               InputProps={{
-                sx: { borderRadius: 8},
+                sx: { borderRadius: 8 },
                 className: "dark:bg-dark-background",
               }}
               value={email}

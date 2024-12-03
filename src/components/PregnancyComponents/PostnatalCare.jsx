@@ -24,10 +24,10 @@ const PostnatalCare = ({ formObject, setFormObject, handleChange }) => {
             aria-label="Postnatal care tabs"
           >
             <Tab label="Health Details" {...a11yProps(0)} />
-            <Tab
+            {/* <Tab
               label="Mark Attendance on Antenatal sessions"
               {...a11yProps(1)}
-            />
+            /> */}
           </Tabs>
         </Box>
         <CustomTabPanel value={valuePostnatalCare} index={0}>
@@ -38,13 +38,13 @@ const PostnatalCare = ({ formObject, setFormObject, handleChange }) => {
           />
         </CustomTabPanel>
 
-        <CustomTabPanel value={valuePostnatalCare} index={1}>
+        {/* <CustomTabPanel value={valuePostnatalCare} index={1}>
           <MarkAttendance
             formObject={formObject}
             setFormObject={setFormObject}
             handleChange={handleChange}
           />
-        </CustomTabPanel>
+        </CustomTabPanel> */}
       </Box>
     </>
   );

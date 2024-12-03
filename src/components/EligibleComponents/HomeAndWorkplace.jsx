@@ -6,8 +6,12 @@ import { Button } from "../ui/button";
 import EligibleService from "@/service/eligibleService";
 import { errorType, Toast } from "../toast";
 import MinHeightTextarea from "../userComponents/minHeightTextarea";
+import { useLocation } from "react-router-dom";
+import { getQueryParam } from "@/utils/getQueryParam";
 
 const HomeAndWorkplace = ({ formObject, setFormObject, handleChange }) => {
+  const location = useLocation();
+
   const setData = (field, name, value) => {
     const newObject = {};
     newObject[name + "_" + field] = value || "";
@@ -26,7 +30,10 @@ const HomeAndWorkplace = ({ formObject, setFormObject, handleChange }) => {
     const formData = EligibleService.createObject(formObject);
 
     try {
-      const response = await EligibleService.addEligibleInfo(formData);
+      const response = await EligibleService.addEligibleInfo(
+        getQueryParam("user", location),
+        formData
+      );
       Toast(response, errorType.SUCCESS);
     } catch (error) {
       console.log(error.message);
@@ -50,12 +57,11 @@ const HomeAndWorkplace = ({ formObject, setFormObject, handleChange }) => {
   };
 
   useEffect(() => {
-    return () => {
-      if (formObject.stage < 3) {
-        handleChange(undefined, 1);
-      }
-    };
+    if (formObject.stage < 3) {
+      handleChange(undefined, 1);
+    }
   });
+
   return (
     <>
       <h3 className="text-xl mt-12">Home and workplace</h3>

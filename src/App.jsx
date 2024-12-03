@@ -16,15 +16,13 @@ import Landing from "./pages/landing";
 import Drug from "./pages/admin/manageDrugs";
 import DoctorDashboard from "./pages/doctor/dashboard";
 import Clinic from "./pages/doctor/clinic";
-// import ViewClinics from "./pages/doctor/viewClinics";
-// import ClinicDates from "./pages/doctor/clinicDates";
 import ClinicReports from "./pages/doctor/clinicReports";
 import Midwife from "./pages/doctor/midwife";
 import Forum from "./pages/forum";
 import Answer from "./pages/answer";
 import EditQuestion from "./pages/editQuestion";
 import Dashboard from "./pages/user/dashboard";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import Footer from "./components/footer";
 import Eligible from "./pages/user/eligible";
@@ -46,7 +44,7 @@ import ManageRegions from "./pages/admin/manageRegions";
 import ManageBlogs from "./pages/admin/manageBlogs";
 import ArticleApproval from "./pages/admin/articleApproval";
 import Memories from "./pages/memories";
-import Healthstatics from "./pages/healthstatics";
+// import Healthstatics from "./pages/healthstatics";
 import { ToastContainer } from "react-toastify";
 import { role } from "./data/roleData";
 import { ThemeProvider } from "@mui/material/styles";
@@ -55,10 +53,15 @@ import VaccineCard from "./pages/vaccinecard/vaccinecard";
 import Nav from "./components/nav";
 import { useDarkMode } from "./context/darkModeContext";
 import SystemAnalytics from "./pages/admin/systemAnalytics.jsx";
-import Clinics from "./pages/midwife/clinics/mohClinics";
-
+import Clinics from "./pages/midwife/clinics/Clinics";
+import PregnancyAnalysis from "./pages/analytics/pregnancyAnalysis";
+import Chat from "./pages/Chat";
+import Profile from "./pages/profile";
+import LearnMorepg from "./pages/learnmorepg";
+import MedicalRecords from "./pages/doctor/medicalRecords";
 
 function App() {
+  const { pathname } = useLocation();
   const { toggleDarkMode } = useDarkMode();
   const darkQuery = window.matchMedia("(prefers-color-scheme: dark)");
   darkQuery.addEventListener("change", (e) => {
@@ -127,6 +130,8 @@ function App() {
           <Route path="/blogs/article/recent/3" element={<ArticleRecent3 />} />
           <Route path="/forum" element={<Forum />} />
           <Route path="/forum/answer/:questionId" element={<Answer />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/learnmorepg" element={<LearnMorepg />} />
 
           {userDetails.authenticated && (
             <>
@@ -140,14 +145,20 @@ function App() {
                   <Route path="/clinics" element={<ManageClinics />} />
                   <Route path="/regions" element={<ManageRegions />} />
                   <Route path="/analytics" element={<SystemAnalytics />} />
-                  <Route path="/drugs" element={<Drug />} />
                 </>
               )}
 
-              {/* Admin and Doctor routes */}
+              {/* Admin and Doctor Midwife routes  */}
               {(userDetails.role === role.ADMIN ||
                 userDetails.role === role.DOCTOR) && (
-                <Route path="/statistics" element={<Healthstatics />} />
+                <Route path="/drugs" element={<Drug />} />
+              )}
+
+              {/* Admin, Doctor and Midwife routes  */}
+              {(userDetails.role === role.ADMIN ||
+                userDetails.role === role.DOCTOR ||
+                userDetails.role === role.MIDWIFE) && (
+                <Route path="/statistics" element={<PregnancyAnalysis />} />
               )}
 
               {/* Doctor routes */}
@@ -158,9 +169,9 @@ function App() {
                   <Route path="/midwife" element={<Midwife />} />
 
                   <Route path="/clinics" element={<Clinic />} />
-                  {/* <Route path="/clinics/view" element={<ViewClinics />} /> */}
-                  {/* <Route path="/clinics/dates" element={<ClinicDates />} /> */}
                   <Route path="/clinics/reports" element={<ClinicReports />} />
+
+                  <Route path="/medicalrecords" element={<MedicalRecords />} />
                 </>
               )}
 
@@ -205,8 +216,9 @@ function App() {
                 </>
               )}
 
-              {/* Parent and Eligible routes */}
-              {(userDetails.role === role.PARENT ||
+              {/* Midwife, Parent and Eligible routes */}
+              {(userDetails.role === role.MIDWIFE ||
+                userDetails.role === role.PARENT ||
                 userDetails.role === role.ELIGIBLE) && (
                 <>
                   <Route path="/eligible" element={<Eligible />} />
@@ -227,12 +239,14 @@ function App() {
                 element={<EditQuestion />}
               />
               <Route path="/forum/ask" element={<AskQuestion />} />
+              <Route path="/chat" element={<Chat />} />
             </>
           )}
           <Route path="*" element={<NotFound />} />
         </Routes>
         <ToastContainer />
-        <Footer />
+
+        {pathname !== "/chat" && <Footer />}
       </main>
     </ThemeProvider>
   );

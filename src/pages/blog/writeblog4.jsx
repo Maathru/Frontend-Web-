@@ -48,9 +48,8 @@ const WriteBlog4 = () => {
         setFormData({ stage: 1 });
       }
     };
-    return () => {
-      fetchBlog();
-    };
+
+    fetchBlog();
   }, []);
 
   return (

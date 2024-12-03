@@ -1,147 +1,201 @@
-import React, { useEffect, useState } from "react";
-import {
-  Typography,
-  Box,
-} from "@mui/material";
+import { useEffect, useState } from "react";
+import { Typography, Chip } from "@mui/material";
 import Calendar from "@/components/Calendar";
 import { errorType, Toast } from "@/components/toast";
 import ClinicService from "@/service/clinicService";
-import { useDarkMode } from "@/context/darkModeContext";
 import { StripedDataGrid } from "@/components/StripedDataGrid";
 import TableSearch from "@/components/TableSearch";
-import { IconButton } from "@mui/material";
-import { HiOutlineTrash } from "react-icons/hi";
+import { formatTime } from "@/utils/FormatTime";
 
-const columns = [
-  { field: "id", headerName: "Mother's ID", width: 100 },
-  { field: "name", headerName: "Mother's Name", flex: 1 },
-  { field: "location", headerName: "Location", flex: 1 },
+const columns1 = [
+  { field: "id", headerName: "Clinic ID", width: 90 },
+  { field: "name", headerName: "Clinic Name", flex: 1 },
   {
-    field: "clinicDone",
-    headerName: "Clinic Done?",
+    field: "startTime",
+    headerName: "Start Time",
     flex: 1,
-    renderCell: (params) => (
-      <div>
-        {params.value ? (
-          <Typography variant="button" color="success.main">
-            Yes
-          </Typography>
-        ) : (
-          <Typography variant="button" color="error.main">
-            No
-          </Typography>
-        )}
-      </div>
-    ),
+    valueFormatter: (params) => formatTime(params),
   },
   {
-    field: "delete",
-    headerName: "",
-    flex: 0.1,
-    renderCell: () => (
-      <IconButton
-        aria-label="delete"
-        size="small"
-        sx={{
-          color: "#A30D11",
-        }}
-      >
-        <HiOutlineTrash />
-      </IconButton>
-    ),
+    field: "endTime",
+    headerName: "End Time",
+    flex: 1,
+    valueFormatter: (params) => formatTime(params),
+  },
+  {
+    field: "doctors",
+    headerName: "Doctors",
+    width: 170,
+    renderCell: (params) => {
+      return (
+        <div className="flex items-center h-full">
+          {params.value.map((doctor, index) => (
+            <Chip
+              key={index}
+              label={doctor}
+              size={"small"}
+              sx={{
+                backgroundColor: "#C5BCFF",
+                color: "#1F4692",
+              }}
+            />
+          ))}
+        </div>
+      );
+    },
   },
 ];
 
-const Clinics = () => {
-  const { isDarkMode } = useDarkMode();
-  const [selectedTab, setSelectedTab] = useState(0);
+const columns2 = [
+  { field: "id", headerName: "Clinic ID", width: 90 },
+  { field: "name", headerName: "Clinic Name", flex: 1 },
+  {
+    field: "date",
+    headerName: "Date",
+    flex: 1,
+  },
+  {
+    field: "startTime",
+    headerName: "Start Time",
+    flex: 1,
+    valueFormatter: (params) => formatTime(params),
+  },
+  {
+    field: "endTime",
+    headerName: "End Time",
+    flex: 1,
+    valueFormatter: (params) => formatTime(params),
+  },
+  {
+    field: "doctors",
+    headerName: "Doctors",
+    width: 170,
+    renderCell: (params) => {
+      return (
+        <div className="flex items-center h-full">
+          {params.value.map((doctor, index) => (
+            <Chip
+              key={index}
+              label={doctor}
+              size={"small"}
+              sx={{
+                backgroundColor: "#C5BCFF",
+                color: "#1F4692",
+              }}
+            />
+          ))}
+        </div>
+      );
+    },
+  },
+];
+
+const MohClinics = () => {
   const [date, setDate] = useState(new Date());
-  const [dates, setDates] = useState([]);
   const [rows, setRows] = useState([]);
-  const [searchQuery, setSearchQuery] = useState("");
+  const [dates, setDates] = useState([]);
+  const [rows2, setRows2] = useState([]);
+
+  const stringArrayToDateArray = (array) => {
+    return array.map((clinic) => clinic.date);
+  };
+
+  useEffect(() => {
+    const currentDate = new Date().toISOString().split("T")[0];
+    setDate(currentDate);
+    fetchClinicsByDate(currentDate);
+    fetchClinicsForGivenMonth(currentDate);
+  }, []);
 
   const fetchClinicsForGivenMonth = async (date) => {
     try {
-      const response = await ClinicService.getClinicsGivenMonthForMidwife(date);
-      setDates(response);
+      const response = await ClinicService.getClinicsByMonthForMidwife(date);
+      setRows2(response);
+      const dateObjects = stringArrayToDateArray(response);
+      setDates(dateObjects);
     } catch (error) {
-      Toast(error.response?.data || "Unauthorized", errorType.ERROR);
+      Toast(error.response.data || "Unauthorized", errorType.ERROR);
+      console.log(error.response.data);
     }
   };
 
   const fetchClinicsByDate = async (date) => {
+    setRows([]);
+
     try {
-      const response = await ClinicService.getClinicsByDate(date);
-      const updatedRows = response.map((clinic) => ({
-        id: clinic.id,
-        name: clinic.name,
-        location: clinic.location,
-        clinicDone: clinic.done,
-      }));
-      setRows(updatedRows);
+      const response = await ClinicService.getClinicsByDateToMidwife(date);
+      setRows(response);
     } catch (error) {
-      Toast(error.response?.data || "Unauthorized", errorType.ERROR);
+      Toast(error.response.data || "Unauthorized", errorType.ERROR);
+      console.log(error.response.data);
     }
   };
 
-  const handleTabChange = (event, newValue) => {
-    setSelectedTab(newValue);
-  };
-
   const handleMonthChange = async (date) => {
+    setDate(date.format("YYYY-MM-DD"));
     await fetchClinicsForGivenMonth(date.format("YYYY-MM-DD"));
   };
 
   const handleDateChange = async (date) => {
-    setDate(date.toDate());
+    setDate(date.format("YYYY-MM-DD"));
     await fetchClinicsByDate(date.format("YYYY-MM-DD"));
   };
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const today = new Date().toISOString().split("T")[0];
-      await fetchClinicsForGivenMonth(today);
-      await fetchClinicsByDate(today);
-    };
-    fetchData();
-  }, []);
-
   return (
     <div>
-      <Box sx={{ mt: 2, px: 3 }}>
-        <Typography variant="h4">MOH Clinics</Typography>
-
-        <Calendar
-          handleMonthChange={handleMonthChange}
-          highlightedDays={dates}
-          handleDateChange={handleDateChange}
-        />
-
-        <Typography variant="h6" sx={{ mt: 4 }}>
-          Clinic Schedule - {date.toDateString()}
-        </Typography>
-        
-        <div className="w-full h-full mt-4" style={{ height: '400px' }}>
-        <StripedDataGrid
-          columns={columns}
-          rows={rows}
-          initialState={{
-            pagination: {
-            paginationModel: { page: 0, pageSize: 10 },
-           },
-         }}
-        pageSizeOptions={[10, 15]}
-        getRowClassName={(params) =>
-        params.indexRelativeToCurrentPage % 2 === 0 ? "even" : "odd"
-        }
-            disableRowSelectionOnClick
-            slots={{ toolbar: TableSearch }}
-        />
+      <Typography variant="h5" sx={{ mt: 4 }}>
+        Clinic Schedule {`${date}`}
+      </Typography>
+      <div className="flex gap-10">
+        <div>
+          <Calendar
+            handleMonthChange={handleMonthChange}
+            highlightedDays={dates}
+            handleDateChange={handleDateChange}
+          />
         </div>
 
-      </Box>
+        <div className="w-full h-full mt-4" style={{ height: "400px" }}>
+          <StripedDataGrid
+            columns={columns1}
+            rows={rows}
+            initialState={{
+              pagination: {
+                paginationModel: { page: 0, pageSize: 10 },
+              },
+            }}
+            pageSizeOptions={[10, 15]}
+            getRowClassName={(params) =>
+              params.indexRelativeToCurrentPage % 2 === 0 ? "even" : "odd"
+            }
+            disableRowSelectionOnClick
+            slots={{ toolbar: TableSearch }}
+          />
+        </div>
+      </div>
+      <div>
+        <Typography variant="h4">This Month Moh Clinics</Typography>
+
+        <div style={{ height: "100%", width: "100%" }}>
+          <StripedDataGrid
+            rows={rows2}
+            columns={columns2}
+            initialState={{
+              pagination: {
+                paginationModel: { page: 0, pageSize: 10 },
+              },
+            }}
+            pageSizeOptions={[10, 15]}
+            getRowClassName={(params) =>
+              params.indexRelativeToCurrentPage % 2 === 0 ? "even" : "odd"
+            }
+            disableRowSelectionOnClick
+            slots={{ toolbar: TableSearch }}
+          ></StripedDataGrid>
+        </div>
+      </div>
     </div>
   );
 };
 
-export default Clinics;
+export default MohClinics;

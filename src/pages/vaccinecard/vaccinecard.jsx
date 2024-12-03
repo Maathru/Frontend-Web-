@@ -274,9 +274,7 @@ const VaccineCard = () => {
       }
     };
 
-    return () => {
-      fetchVaccines();
-    };
+    fetchVaccines();
   }, []);
 
   return (

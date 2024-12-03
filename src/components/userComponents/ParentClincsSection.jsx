@@ -7,14 +7,14 @@ const ParentClinicsSection = () => {
   const [dates, setDates] = useState([]);
 
   useEffect(() => {
-    return () => {
-      fetchClinicsForGivenMonth(new Date().toISOString().split("T")[0]);
-    };
+    fetchClinicsForGivenMonth(new Date().toISOString().split("T")[0]);
   }, []);
 
   const fetchClinicsForGivenMonth = async (date) => {
     try {
-      const response = await ClinicService.getClinicsGivenMonthForParent(date);
+      const response = await ClinicService.getClinicsDatesGivenMonthForParent(
+        date
+      );
       setDates(response);
     } catch (error) {
       Toast(error.response.data || "Unauthorized", errorType.ERROR);
