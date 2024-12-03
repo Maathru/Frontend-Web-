@@ -81,7 +81,7 @@ export const navConfig = {
         { name: "Manage Drugs", path: "/drugs" },
       ],
     },
-    { name: "System Analytics", path: "/analytics" },
+    { name: "Health Analytics", path: "/analytics" },
     {
       name: "More",
       links: [
