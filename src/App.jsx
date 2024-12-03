@@ -21,7 +21,7 @@ import Forum from "./pages/forum";
 import Answer from "./pages/answer";
 import EditQuestion from "./pages/editQuestion";
 import Dashboard from "./pages/user/dashboard";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import Footer from "./components/footer";
 import Eligible from "./pages/user/eligible";
@@ -59,6 +59,7 @@ import LearnMorepg from "./pages/learnmorepg";
 import MedicalRecords from "./pages/doctor/medicalRecords";
 
 function App() {
+  const { pathname } = useLocation();
   const { toggleDarkMode } = useDarkMode();
   const darkQuery = window.matchMedia("(prefers-color-scheme: dark)");
   darkQuery.addEventListener("change", (e) => {
@@ -166,7 +167,7 @@ function App() {
 
                   <Route path="/clinics" element={<Clinic />} />
                   <Route path="/clinics/reports" element={<ClinicReports />} />
-                  
+
                   <Route path="/medicalrecords" element={<MedicalRecords />} />
                 </>
               )}
@@ -241,7 +242,7 @@ function App() {
         </Routes>
         <ToastContainer />
 
-        <Footer />
+        {!pathname == "/chat" && <Footer />}
       </main>
     </ThemeProvider>
   );
