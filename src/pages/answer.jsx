@@ -132,7 +132,7 @@ const Answer = () => {
   };
 
   return (
-    <div className="">
+    <div className="content-container">
       <div className="grid grid-cols-1">
         <div className="row-span-2">
           <div className="flex flex-col justify-between h-[100%]">
