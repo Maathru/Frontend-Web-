@@ -156,7 +156,7 @@ const Growth = () => {
                 <img
                   src={food.image}
                   alt={food.title}
-                  className="rounded-md hidden md:block m-2 max-w-52 object-fit"
+                  className="rounded-md hidden md:block m-2 h-48 max-w-72 object-fit"
                 />
                 <div className="flex flex-col">
                   <CardHeader className="pb-2 pt-0">
@@ -200,7 +200,7 @@ const Growth = () => {
                 <img
                   src={activity.image}
                   alt={activity.title}
-                  className="rounded-md hidden md:block m-2 object-fit px-4"
+                  className="rounded-md hidden md:block m-2 object-fit px-4 max-h-40"
                 />
                 <div className="flex flex-col">
                   <CardContent className="text-base pb-3 text-justify">
