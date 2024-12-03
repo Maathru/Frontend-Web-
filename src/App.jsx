@@ -144,7 +144,7 @@ function App() {
                   <Route path="/users" element={<ManageUsers />} />
                   <Route path="/clinics" element={<ManageClinics />} />
                   <Route path="/regions" element={<ManageRegions />} />
-                  <Route path="/analytics" element={<SystemAnalytics />} />
+                  <Route path="/analytics" element={<PregnancyAnalysis />} />
                 </>
               )}
 
