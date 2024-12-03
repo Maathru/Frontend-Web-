@@ -85,6 +85,7 @@ export const navConfig = {
     {
       name: "More",
       links: [
+        { name: "logs", path: "/logs" },
         { name: "Blogs", path: "/blogs" },
         { name: "Discussion Forum", path: "/forum" },
         { name: "Chat", path: "/chat" },
