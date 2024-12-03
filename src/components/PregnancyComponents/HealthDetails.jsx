@@ -25,7 +25,7 @@ const HealthDetails = ({
 
   useEffect(() => {
     if (formObject.stage < 3) {
-      handleChange(undefined, 0);
+      // handleChange(undefined, 0);
     }
   });
   return (
