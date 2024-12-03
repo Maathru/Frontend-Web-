@@ -305,7 +305,7 @@ const Answer = () => {
           </div>
         ))}
 
-        {userDetails ? (
+        {userDetails.authenticated ? (
           <div className="flex mt-5 gap-5">
             <TextField
               value={yourAnswer}
