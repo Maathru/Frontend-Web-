@@ -263,7 +263,7 @@ const blog = () => {
           
           <Link to={`/blogs/article/${blog.blogId}`} key={blog.blogId}>
           <Card
-            className={`${cardColor} flex flex-col justify-between`}
+            className={`${cardColor} flex flex-col justify-between h-full`}
             key={blog.blogId}
           >
             <CardHeader>
