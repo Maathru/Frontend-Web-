@@ -38,6 +38,15 @@ class VisitsService {
       throw error;
     }
   }
+
+  static async getHomeVisitDatesByDateForParent(date) {
+    try {
+      const response = await axiosInstance.get(`/visits/list/parent/${date}`);
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  }
 }
 
 export default VisitsService;
