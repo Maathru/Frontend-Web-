@@ -242,7 +242,7 @@ function App() {
         </Routes>
         <ToastContainer />
 
-        {!pathname == "/chat" && <Footer />}
+        {pathname !== "/chat" && <Footer />}
       </main>
     </ThemeProvider>
   );
