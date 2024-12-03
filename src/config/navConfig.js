@@ -1,9 +1,15 @@
 // navConfig.js
 export const navConfig = {
+  GUEST: [
+    { name: "Home", path: "/" },
+    { name: "Blogs", path: "/blogs" },
+    { name: "Discussion Forum", path: "/forum" },
+  ],
   USER: [
     { name: "Home", path: "/" },
     { name: "Blogs", path: "/blogs" },
     { name: "Discussion Forum", path: "/forum" },
+    { name: "Chat", path: "/chat" },
   ],
   ELIGIBLE: [
     { name: "Home", path: "/" },
