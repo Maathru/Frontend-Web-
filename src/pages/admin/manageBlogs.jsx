@@ -152,14 +152,13 @@ const ManageBlogs = () => {
   }, []);
 
   const handleAccept = async (id) => {
-    setBlogs(
-      blogs.map((blog) =>
-        blog.blogId === id ? { ...blog, approvalStatus: "Approved" } : blog
-      )
-    );
-
     try {
       const response = await BlogService.approveArticle(id);
+      setBlogs(
+        blogs.map((blog) =>
+          blog.blogId === id ? { ...blog, approvalStatus: "Approved" } : blog
+        )
+      );
       Toast(response, errorType.SUCCESS);
     } catch (error) {
       if (error.response) {
@@ -170,7 +169,6 @@ const ManageBlogs = () => {
         Toast("An unexpected error occurred", errorType.ERROR);
       }
     }
-    
   };
 
   return (
