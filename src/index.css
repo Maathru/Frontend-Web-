@@ -137,9 +137,3 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
-
-.popup-content {
-  background: none;
-  border: none;
-  width: 25%;
-}
