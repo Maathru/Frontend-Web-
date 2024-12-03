@@ -116,8 +116,6 @@ const HomeVisitDates = ({ addButton, userId }) => {
       }}
     >
       <div className="bg-white dark:bg-dark-popup w-fit rounded-md pt-3 p-10 flex flex-col gap-5 items-center">
-        {!editMode && <Button onClick={() => setEditMode(true)}>Edit</Button>}
-
         {homeVisits.map((visit, index) => (
           <div
             key={visit.id}
@@ -217,6 +215,16 @@ const HomeVisitDates = ({ addButton, userId }) => {
 
             <Button onClick={() => handleSubmit()}>Save</Button>
           </>
+        )}
+
+        {!editMode && (
+          <Button
+            variant="hollow"
+            className="text-lg"
+            onClick={() => setEditMode(true)}
+          >
+            Edit
+          </Button>
         )}
       </div>
     </Popup>

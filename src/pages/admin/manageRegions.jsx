@@ -183,9 +183,6 @@ const manageRegions = () => {
           ></StripedDataGrid>
         </div>
       </div>
-      <div>
-        <img src={map} alt="" />
-      </div>
 
       <DeleteConfirmationDialog
         isOpen={isDeleteDialogOpen}

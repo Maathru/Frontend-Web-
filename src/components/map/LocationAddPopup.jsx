@@ -34,7 +34,7 @@ const LocationAddPopup = ({ setFormObject, formObject }) => {
               onClick={close}
             />
           </div>
-          <div className="flex h-[520px] w-full px-5">
+          <div className="flex h-[520px] w-full gap-5 px-5">
             <div className="w-8/12">
               <LocationPicker
                 setAddress={setAddress}

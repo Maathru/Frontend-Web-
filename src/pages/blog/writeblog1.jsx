@@ -8,7 +8,6 @@ import { useState, useRef, useEffect } from "react";
 import { set } from "date-fns";
 import BlogService from "@/service/blogService";
 import Popup from "reactjs-popup";
-import 'reactjs-popup/dist/index.css';
 
 const accentColor = "bg-[#9c3cc1]";
 
@@ -28,7 +27,7 @@ const WriteBlog1 = () => {
     const newObject = {};
     newObject[name] = value || "";
     setFormData((prev) => {
-      return { ...prev, ...newObject }
+      return { ...prev, ...newObject };
     });
   };
 
@@ -61,7 +60,6 @@ const WriteBlog1 = () => {
     setData("image", response);
   };
 
-
   useState(() => {
     const fetchBlog = () => {
       const blog = JSON.parse(localStorage.getItem("blog"));
@@ -74,7 +72,7 @@ const WriteBlog1 = () => {
     fetchBlog();
   }, []);
 
-    useEffect(() => {
+  useEffect(() => {
     if (formData.image) {
       setImageName(formData.imageName);
       setcachedURL(formData.cachedURL);
@@ -85,15 +83,21 @@ const WriteBlog1 = () => {
 
   return (
     <div className="content-container">
-
       {cachedURL && (
-        <Popup open={isPopupVisible} onClose={() => setIsPopupVisible(false)} modal>
-          <div className="flex justify-center">
+        <Popup
+          open={isPopupVisible}
+          onClose={() => setIsPopupVisible(false)}
+          modal
+          overlayStyle={{
+            backgroundColor: "rgba(0, 0, 0, 0.6)",
+          }}
+        >
+          <div className="flex h-[85vh] object-cover border-8 justify-center">
             <img src={cachedURL} />
           </div>
         </Popup>
       )}
-      
+
       <Heading />
 
       <BlogHeading />
@@ -158,7 +162,13 @@ const WriteBlog1 = () => {
                 <IoImageOutline />
                 {imageName}
               </label>
-              <Input id="picture" type="file" accept=".png, .jpg, .jpeg" className="hidden" onChange={uploadImage} />
+              <Input
+                id="picture"
+                type="file"
+                accept=".png, .jpg, .jpeg"
+                className="hidden"
+                onChange={uploadImage}
+              />
 
               {/* <form id="imageUploadForm" encType="multipart/form-data" onSubmit={handleSubmit} className="hidden">
                 <Input id="picture" type="file" accept=".png, .jpg, .jpeg" className="hidden" onChange={handleImageChange} />
@@ -174,14 +184,12 @@ const WriteBlog1 = () => {
                     <img src={cachedURL} />
                   </div>
                 </Popup> */}
-              <button 
-              className={`${accentColor} px-4 py-2 md:h-12 h-10 md:col-span-1 mt-4 rounded-full text-sm hover:bg-neutral-100 text-white dark:hover:bg-neutral-900 hover:text-fuchsia-700 hover:ring-fuchsia-700 hover:ring-inset hover:ring-2`}
-              onClick={handlePreviewClick}
-              >
-                Preview Image
-              </button>
-                
-                
+                <button
+                  className={`${accentColor} px-4 py-2 md:h-12 h-10 md:col-span-1 mt-4 rounded-full text-sm hover:bg-neutral-100 text-white dark:hover:bg-neutral-900 hover:text-fuchsia-700 hover:ring-fuchsia-700 hover:ring-inset hover:ring-2`}
+                  onClick={handlePreviewClick}
+                >
+                  Preview Image
+                </button>
               </div>
             </div>
           </div>
