@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   conditions1,
@@ -19,11 +19,17 @@ import PrenatalCareRelated from "@/components/PregnancyComponents/PrenatalCareRe
 import ChildBirth from "@/components/PregnancyComponents/ChildBirth";
 import { a11yProps, CustomTabPanel } from "@/components/BasicTabs";
 import HomeVisitDates from "@/components/midwifeComponents/HomeVisitDates";
+import { useLocation } from "react-router-dom";
+import { userData } from "@/context/userAuth";
+import { role } from "@/data/roleData";
+import { getQueryParam } from "@/utils/getQueryParam";
 
 const Pregnancy1 = () => {
   useTitle("Pregnancy Card");
   const [formObject, setFormObject] = useState({});
   const [value, setValue] = useState(0);
+  const location = useLocation();
+  const { userDetails } = useContext(userData);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -113,7 +119,12 @@ const Pregnancy1 = () => {
       <div>
         <Heading title={t("title")} />
 
-        <HomeVisitDates addButton="Add Home Visits"></HomeVisitDates>
+        {userDetails.role == role.MIDWIFE && (
+          <HomeVisitDates
+            addButton="Home Visits"
+            userId={getQueryParam("user", location)}
+          ></HomeVisitDates>
+        )}
 
         <p className="text-xl font-bold mt-8">
           Mother&apos;s Name : {formObject.name_woman}
