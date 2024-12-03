@@ -1,6 +1,6 @@
 import Popup from "reactjs-popup";
 import { Button } from "../ui/button";
-import { HiOutlinePlusSm, HiPlus } from "react-icons/hi";
+import { HiPlus } from "react-icons/hi";
 import {
   FormControl,
   IconButton,
@@ -12,8 +12,8 @@ import {
 } from "@mui/material";
 import { AiOutlineClose } from "react-icons/ai";
 import { useEffect, useState } from "react";
-import ClinicService from "@/service/clinicService";
 import { errorType, Toast } from "../toast";
+import VisitsService from "@/service/visitsService";
 
 const HomeVisitDates = ({ addButton, userId }) => {
   const [editMode, setEditMode] = useState(false);
@@ -49,7 +49,7 @@ const HomeVisitDates = ({ addButton, userId }) => {
     console.log(updatedFormData);
 
     try {
-      const response = await ClinicService.saveHomeVisits(updatedFormData);
+      const response = await VisitsService.saveHomeVisits(updatedFormData);
       Toast(response, errorType.SUCCESS);
       setEditMode(false);
     } catch (error) {
@@ -75,7 +75,7 @@ const HomeVisitDates = ({ addButton, userId }) => {
 
   const getHomeVisits = async () => {
     try {
-      const response = await ClinicService.getHomeVisits(userId);
+      const response = await VisitsService.getHomeVisits(userId);
       setHomeVisits(response.visits);
     } catch (error) {
       console.log(error.message);
