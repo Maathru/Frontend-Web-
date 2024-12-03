@@ -44,6 +44,7 @@ const BirthsByMonthChart = () => {
             title: {
               text: "Number of Births",
             },
+            stepSize: 1,
           },
         });
 

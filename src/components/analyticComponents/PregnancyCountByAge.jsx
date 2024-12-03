@@ -45,6 +45,7 @@ const PregnancyCountByAge= () => {
             title: {
               text: "Pregnancy Count",
             },
+            stepSize: 1,
           },
           stroke: {
             curve: "smooth",

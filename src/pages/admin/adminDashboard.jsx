@@ -14,6 +14,8 @@ import { useTranslation } from "react-i18next";
 import { errorType, Toast } from "@/components/toast";
 import EmployeeService from "@/service/employeeService";
 
+import BirthsByMonthChart from "@/components/analyticComponents/BirthsByMonths";
+
 const Widget = ({ icon: Icon, count, label1, label2, link }) => (
   <div className="card w-3/12 shadow-md rounded-lg ">
     <div className="flex gap-5 items-center px-8 py-5">
@@ -209,13 +211,14 @@ const AdminDashboard = () => {
       <div>
         <Typography variant="h4">{t("Health Statistics")}</Typography>
         <div className="shadow-md rounded-sm p-5">
-          <ApexCharts
+          {/* <ApexCharts
             options={data.crucialStats.options}
             series={data.crucialStats.series}
             type="line"
             height={350}
             width={"100%"}
-          />
+          /> */}
+          <BirthsByMonthChart />
         </div>
       </div>
       <div>

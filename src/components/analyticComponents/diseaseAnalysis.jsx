@@ -54,6 +54,12 @@ const DiseaseAnalysis = () => {
           t("KidneyDiseases"),
         ],
       },
+      yaxis: {
+        title: {
+          text: t("Number of Preganants"),
+        },
+        stepSize: 1,
+      },
       title: {
         text: 'Number of Preganants with Different Diseases',
         align: 'center',

@@ -103,6 +103,14 @@ const MohClinics = () => {
   const stringArrayToDateArray = (array) => {
     return array.map((clinic) => clinic.date);
   };
+  const getReadableMonth = (dateStr) => {
+    const date = new Date(dateStr);
+
+    const monthName = new Intl.DateTimeFormat("en-US", {
+      month: "long",
+    }).format(date);
+    return monthName;
+  };
 
   useEffect(() => {
     const currentDate = new Date().toISOString().split("T")[0];
@@ -178,7 +186,9 @@ const MohClinics = () => {
         </div>
       </div>
       <div>
-        <Typography variant="h4">This Month Moh Clinics</Typography>
+        <Typography variant="h4">
+          {`${getReadableMonth(date)}`} Month Moh Clinics
+        </Typography>
 
         <div style={{ height: "100%", width: "100%" }}>
           <StripedDataGrid

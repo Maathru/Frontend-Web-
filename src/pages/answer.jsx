@@ -132,7 +132,7 @@ const Answer = () => {
   };
 
   return (
-    <div className="">
+    <div className="content-container">
       <div className="grid grid-cols-1">
         <div className="row-span-2">
           <div className="flex flex-col justify-between h-[100%]">
@@ -305,7 +305,7 @@ const Answer = () => {
           </div>
         ))}
 
-        {userDetails ? (
+        {userDetails.authenticated ? (
           <div className="flex mt-5 gap-5">
             <TextField
               value={yourAnswer}
