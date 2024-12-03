@@ -147,6 +147,26 @@ class ClinicService {
       throw error;
     }
   }
+
+  static async saveHomeVisits(formData) {
+    try {
+      const response = await axiosInstance.post(`/clinic/home-visits`, {
+        ...formData,
+      });
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  static async getHomeVisits(userId) {
+    try {
+      const response = await axiosInstance.get(`/clinic/home-visits/${userId}`);
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  }
 }
 
 export default ClinicService;
