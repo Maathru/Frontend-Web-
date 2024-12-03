@@ -1,5 +1,5 @@
 import React from "react";
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Pagination from "../../components/pagination";
 import { MdOutlineArrowBackIosNew } from "react-icons/md";
@@ -7,11 +7,10 @@ import { MdCreate } from "react-icons/md";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { errorType, Toast } from "@/components/toast";
-import { userData } from "@/context/userAuth";
 import BlogImage from "../../assets/blog/blog-image.png";
 import ArticleImage from "../../assets/blog/article-image.png";
-import RecentBlogImage1 from "../../assets/blog/recent-blog-image-1.jpg";
-import RecentBlogImage2 from "../../assets/blog/recent-blog-image-2.jpg";
+import RecentBlogImage1 from "../../assets/blog/recent-blog-image-1.png";
+import RecentBlogImage2 from "../../assets/blog/recent-blog-image-2.png";
 import BlogService from "../../service/blogService";
 import DOMPurify from "dompurify";
 
@@ -37,19 +36,18 @@ const blog = () => {
   useTitle("Blogs");
 
   const [blogs, setBlogs] = useState([]);
-  const {userDetails} = useContext(userData);
 
   useEffect(() => {
     const fetchBlogs = async () => {
       try {
-        const response = await BlogService.getApprovedBlogs();
+        const response = await BlogService.getBlogs();
         console.log(response);
         setBlogs(response);
       } catch (error) {
         // console.log(error);
         if (error.response) {
           const data = error.response.data;
-          // console.log(data);
+          console.log(data);
           // Toast(data, errorType.ERROR);
         } else {
           Toast("An unexpected error occurred", errorType.ERROR);
@@ -209,7 +207,6 @@ const blog = () => {
         </Link>
       </div>
 
-      {userDetails.authenticated ? (
       <Card className="mt-8 md:mt:12 shadow-sm shadow-gray-100 dark:shadow-gray-900 mx-1 md:mx-8">
         <CardHeader>
           <CardTitle className="font-semibold text-3xl ml-4">
@@ -219,8 +216,8 @@ const blog = () => {
         </CardHeader>
         <CardContent className="flex justify-center">
           <p className="text-lg">
-            Share your knowledge & insights with the community. Let's protect
-            pregnant mothers & babies.
+            Share your knowledge & insights with the community, Let's protect
+            pregnant mothers & babies
           </p>
         </CardContent>
         <CardFooter className="flex justify-center">
@@ -231,28 +228,6 @@ const blog = () => {
           </Link>
         </CardFooter>
       </Card>
-      ) : (
-        <Card className="mt-8 md:mt:12 shadow-sm shadow-gray-100 dark:shadow-gray-900 mx-1 md:mx-8">
-          {/* <CardHeader>
-            <CardTitle className="font-semibold text-3xl ml-4">
-              Login to Write a Blog Article
-            </CardTitle>
-          </CardHeader> */}
-          <CardContent className="flex justify-center mt-4">
-            <p className="text-lg">
-              Share your knowledge & insights with the community. Let's protect
-              pregnant mothers & babies.
-            </p>
-          </CardContent>
-          <CardFooter className="flex justify-center">
-            <Link to="/login">
-              <Button className="bg-primary-purple dark:bg-dark-primary text-lg hover:bg-neutral-100 hover:text-primary-purple duration-200">
-                Login to Write A Blog Article
-              </Button>
-            </Link>
-          </CardFooter>
-        </Card>
-      )}
 
       <p className="md:mt-10 mt-8 ml-6 text-3xl font-semibold text-neutral-800 dark:text-neutral-100">
         Recent Blogs
@@ -261,9 +236,9 @@ const blog = () => {
       <div className="grid grid-cols-1 md:grid-cols-3 md:gap-8 gap-4 md:mt-8 mt-4 mx-4">
         {blogs.map((blog) => (
           
-          <Link to={`/blogs/article/${blog.blogId}`} key={blog.blogId}>
+          <Link to={`/blogs/article/${blog.blogId}`}>
           <Card
-            className={`${cardColor} flex flex-col justify-between h-full`}
+            className={`${cardColor} flex flex-col justify-between`}
             key={blog.blogId}
           >
             <CardHeader>
@@ -299,9 +274,9 @@ const blog = () => {
         ))}
       </div>
 
-      {/* <div>
+      <div>
         <Pagination />
-      </div> */}
+      </div>
     </div>
   );
 };
