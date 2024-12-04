@@ -3,14 +3,14 @@ import React, { useEffect } from "react";
 
 import LogService from "@/service/logService";
 
-const logs = () => {
-  const [logs, setLogs] = React.useState("");
+const Logs = () => {
+  const [logs, setLogs] = React.useState([]);
 
   useEffect(() => {
     const fetchLogs = async () => {
       try {
         const response = await LogService.getLogs();
-        setLogs(response);
+        setLogs(response); // Ensure response is parsed into an array of log lines
         console.log(response);
       } catch (error) {
         console.log(error);
@@ -25,10 +25,18 @@ const logs = () => {
       <Heading title={"Activity Logs"} />
 
       <div className="w-full overflow-y-scroll h-[27rem] border-2 p-5 shadow-md">
-        <p>{logs}</p>
+        {logs.length > 0 ? (
+          logs.map((log, index) => (
+            <p key={index} className="mb-1">
+              {log}
+            </p>
+          ))
+        ) : (
+          <p>No logs available</p>
+        )}
       </div>
     </div>
   );
 };
 
-export default logs;
+export default Logs;
