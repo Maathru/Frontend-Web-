@@ -1,3 +1,5 @@
+import DirectionsPopup from "@/components/map/DirectionsPopup ";
+import MarkersPopup from "@/components/map/MarkersPopup ";
 import { errorType, Toast } from "@/components/toast";
 import Heading from "@/components/ui/heading";
 import EmployeeService from "@/service/employeeService";
@@ -84,8 +86,17 @@ const HomeVisit = () => {
       )},${encodeURIComponent(location.lng)}&hl=es;z=14&output=embed`
     : "about:blank";
 
+  const markersData = [
+    { lat: 6.8509906, lng: 79.9267308, type: "red" },
+    { lat: 6.927079, lng: 79.861244, type: "blue" },
+    { lat: 6.906667, lng: 79.870667, type: "red" },
+    { lat: 6.865, lng: 79.915, type: "blue" },
+  ];
+
   return (
     <div className="content-container">
+      <DirectionsPopup endpoint={location} />
+      <MarkersPopup markers={markersData} />
       <Heading title={"Home Visit"} />
       <div className="flex gap-20">
         <div>
