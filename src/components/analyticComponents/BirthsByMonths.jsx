@@ -14,8 +14,8 @@ const BirthsByMonthChart = () => {
         console.log(data);
 
         // Prepare data for the chart
-        const months = Object.keys(data).map(Number);  
-        const counts = Object.values(data);          
+        const months = Object.keys(data).map(Number);
+        const counts = Object.values(data);
 
         // Set up the chart options
         setChartOptions({
@@ -31,9 +31,9 @@ const BirthsByMonthChart = () => {
             align: "center",
           },
           xaxis: {
-            categories: months.map(month => {
+            categories: months.map((month) => {
               // Use month names (e.g., January, February, etc.)
-              const date = new Date(2020, month - 1);  // Using any year for month names
+              const date = new Date(2020, month - 1); // Using any year for month names
               return date.toLocaleString("default", { month: "long" });
             }),
             title: {
