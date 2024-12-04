@@ -152,13 +152,6 @@ const HomeVisits = () => {
     navigate(`/homevisit/${params.row.userId}`);
   };
 
-  const markersData = [
-    { lat: 6.8509906, lng: 79.9267308, type: "red" },
-    { lat: 6.927079, lng: 79.861244, type: "blue" },
-    { lat: 6.906667, lng: 79.870667, type: "red" },
-    { lat: 6.865, lng: 79.915, type: "blue" },
-  ];
-
   const parseLocation = (locationData) => {
     try {
       return JSON.parse(locationData || "{}");
@@ -180,8 +173,8 @@ const HomeVisits = () => {
   return (
     <div>
       <div>
-        {/* <DirectionsPopup endpoint={location} /> */}
         <MarkersPopup markers={locations} />
+        <DirectionsPopup endpoints={locations} />
         <Typography variant="h5" sx={{ mt: 4 }}>
           Home Visits Schedule - {`${date}`}
         </Typography>

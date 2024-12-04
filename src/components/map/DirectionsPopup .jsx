@@ -12,10 +12,13 @@ const mapContainerStyle = {
   height: "400px",
 };
 
-const DirectionsPopup = ({ endpoint }) => {
+const DirectionsPopup = ({ endpoints }) => {
   const [showModal, setShowModal] = useState(false);
   const [directions, setDirections] = useState(null);
-  const [currentLocation, setCurrentLocation] = useState(null);
+  const [currentLocation, setCurrentLocation] = useState({
+    lat: 6.9074944,
+    lng: 79.8621696,
+  });
 
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: process.env.GOOGLE_MAPS_API_KEY,
@@ -27,12 +30,24 @@ const DirectionsPopup = ({ endpoint }) => {
       return;
     }
 
+    const pendingVisits = endpoints.filter((visit) => visit.type == "PENDING");
+
+    const waypoints = pendingVisits.slice(0, -1).map((point) => ({
+      location: { lat: point.lat, lng: point.lng },
+      stopover: true,
+    }));
+
+    // The final destination is the last point in the array
+    const destination = endpoints[endpoints.length - 1];
+
     const directionsService = new window.google.maps.DirectionsService();
 
     directionsService.route(
       {
         origin: currentLocation,
-        destination: endpoint,
+        destination: { lat: destination.lat, lng: destination.lng },
+        waypoints: waypoints,
+        optimizeWaypoints: true, // Optimize the route for efficiency
         travelMode: window.google.maps.TravelMode.DRIVING,
       },
       (result, status) => {
@@ -51,17 +66,16 @@ const DirectionsPopup = ({ endpoint }) => {
         (position) => {
           const { latitude, longitude } = position.coords;
           setCurrentLocation({ lat: latitude, lng: longitude });
-          calculateRoute({ lat: latitude, lng: longitude });
+          calculateRoute();
           setShowModal(true);
         },
         (error) => {
           console.error("Error getting current location:", error);
-          // Fallback to a default location if unable to get current location
-          setCurrentLocation({ lat: 6.901323, lng: 79.860731 });
+          alert("Unable to fetch current location.");
         }
       );
     } else {
-      calculateRoute(currentLocation);
+      calculateRoute();
       setShowModal(true);
     }
   };
@@ -81,7 +95,7 @@ const DirectionsPopup = ({ endpoint }) => {
         <button onClick={() => setShowModal(false)}>Close</button>
         <GoogleMap
           mapContainerStyle={mapContainerStyle}
-          center={endpoint}
+          center={currentLocation || { lat: 0, lng: 0 }} // Center on current location or default
           zoom={7}
         >
           {directions && <DirectionsRenderer directions={directions} />}
