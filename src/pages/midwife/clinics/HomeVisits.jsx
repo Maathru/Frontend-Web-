@@ -7,6 +7,8 @@ import VisitsService from "@/service/visitsService";
 import { errorType, Toast } from "@/components/toast";
 import { formatTime } from "@/utils/FormatTime";
 import { useNavigate } from "react-router-dom";
+import DirectionsPopup from "@/components/map/DirectionsPopup ";
+import MarkersPopup from "@/components/map/MarkersPopup ";
 
 const columns1 = [
   { field: "id", headerName: "Visit's ID", width: 100 },
@@ -87,6 +89,7 @@ const columns2 = [
 const HomeVisits = () => {
   const [date, setDate] = useState(new Date());
   const [rows, setRows] = useState([]);
+  const [locations, setLocations] = useState([]);
   const [rows2, setRows2] = useState([]);
   const [dates, setDates] = useState([]);
   const navigate = useNavigate();
@@ -128,6 +131,7 @@ const HomeVisits = () => {
     try {
       const response = await VisitsService.getHomeVisitsByDateForMidwife(date);
       setRows(response);
+      setLocations(getLocations(response));
     } catch (error) {
       Toast(error.response.data || "Unauthorized", errorType.ERROR);
       console.log(error.response.data);
@@ -148,9 +152,36 @@ const HomeVisits = () => {
     navigate(`/homevisit/${params.row.userId}`);
   };
 
+  const markersData = [
+    { lat: 6.8509906, lng: 79.9267308, type: "red" },
+    { lat: 6.927079, lng: 79.861244, type: "blue" },
+    { lat: 6.906667, lng: 79.870667, type: "red" },
+    { lat: 6.865, lng: 79.915, type: "blue" },
+  ];
+
+  const parseLocation = (locationData) => {
+    try {
+      return JSON.parse(locationData || "{}");
+    } catch (error) {
+      Toast("Invalid location data", errorType.ERROR);
+      return {};
+    }
+  };
+
+  const getLocations = (rows) => {
+    return rows.map((row) => {
+      return {
+        ...parseLocation(row.location),
+        type: row.visitStatus,
+      };
+    });
+  };
+
   return (
     <div>
       <div>
+        {/* <DirectionsPopup endpoint={location} /> */}
+        <MarkersPopup markers={locations} />
         <Typography variant="h5" sx={{ mt: 4 }}>
           Home Visits Schedule - {`${date}`}
         </Typography>
