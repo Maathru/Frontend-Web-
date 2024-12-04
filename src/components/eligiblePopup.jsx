@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 import UserService from "@/service/userService";
 import AuthService from "@/service/authService";
 
-const EligiblePopup = ({ addButton }) => {
+const EligiblePopup = ({ addButton, title1 }) => {
   const [title, setTitle] = useState("Existing User or new couple?");
   const [errors, setErrors] = useState({});
   const [showExisting, setShowExisting] = useState(false);
@@ -224,7 +224,7 @@ const EligiblePopup = ({ addButton }) => {
                 <Button
                   onClick={() => {
                     setShowNew(true);
-                    setTitle("Register new eligible user");
+                    setTitle(title1);
                   }}
                 >
                   New

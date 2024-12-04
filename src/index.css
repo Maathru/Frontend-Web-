@@ -78,25 +78,29 @@
   }
 }
 
-
 .error {
   @apply text-error-red text-xs ml-4 pb-3;
 }
 
-.content{
+.content {
   @apply bg-white dark:bg-dark-background;
 }
 
-.content-container{
+.content-container {
   min-height: calc(100vh - 145px);
   @apply p-12 pt-8;
 }
 
-.eligible-form{
+.chat-container {
+  height: calc(100vh - 85px);
+
+}
+
+.eligible-form {
   grid-template-columns: 1fr 2fr 2fr;
 }
 
-.overlay{
+.overlay {
   background-color: #2d0b0b;
 }
 

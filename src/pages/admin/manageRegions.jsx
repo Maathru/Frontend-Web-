@@ -40,9 +40,7 @@ const manageRegions = () => {
       }
     };
 
-    return () => {
-      fetchRegions();
-    };
+    fetchRegions();
   }, [isSaved, isDeleted]);
 
   const handleDelete = async (id) => {
@@ -184,9 +182,6 @@ const manageRegions = () => {
             onCellClick={handleCellClick}
           ></StripedDataGrid>
         </div>
-      </div>
-      <div>
-        <img src={map} alt="" />
       </div>
 
       <DeleteConfirmationDialog

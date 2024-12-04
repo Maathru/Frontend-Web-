@@ -10,6 +10,15 @@ class BlogService {
     }
   }
 
+  static async getApprovedBlogs() {
+    try {
+      const response = await axiosInstance.get(`/blogs/approved`);
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  }
+
   static async getPendingBlogs() {
     try {
       const response = await axiosInstance.get(`/blogs/pending`);
@@ -18,7 +27,6 @@ class BlogService {
       throw error;
     }
   }
-
   static async addBlog(articleData) {
     try {
       const response = await axiosInstance.post(`/blogs`, {
@@ -33,6 +41,28 @@ class BlogService {
   static async getArticle(id) {
     try {
       const response = await axiosInstance.get(`/blogs/article/${id}`);
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  static async uploadImage(imageData) {
+    try {
+      const response = await axiosInstance.post(`/upload`, imageData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  static async approveArticle(id) {
+    try {
+      const response = await axiosInstance.put(`/blogs/approve/${id}`);
       return response.data;
     } catch (error) {
       throw error;

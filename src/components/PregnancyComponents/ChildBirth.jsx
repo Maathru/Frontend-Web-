@@ -5,9 +5,12 @@ import YesNoButton from "@/components/userComponents/yesNoButton";
 import { birth1 } from "@/data/pregnancyData";
 import PregnancyService from "@/service/pregnancyService";
 import { errorType, Toast } from "../toast";
+import { getQueryParam } from "@/utils/getQueryParam";
+import { useLocation } from "react-router-dom";
 
 const ChildBirth = ({ handleChange }) => {
   const [record, setRecord] = useState({});
+  const location = useLocation();
 
   const setData = (name, value) => {
     const newObject = {};
@@ -54,7 +57,10 @@ const ChildBirth = ({ handleChange }) => {
     const formData = PregnancyService.mapFormObjectToChildBirth(record);
 
     try {
-      const response = await PregnancyService.saveChildBirth(formData);
+      const response = await PregnancyService.saveChildBirth(
+        getQueryParam("user", location),
+        formData
+      );
       Toast(response, errorType.SUCCESS);
     } catch (error) {
       console.log(error.message);
@@ -88,7 +94,9 @@ const ChildBirth = ({ handleChange }) => {
 
     const fetchFamilyHistory = async () => {
       try {
-        const response = await PregnancyService.getChildBirth();
+        const response = await PregnancyService.getChildBirth(
+          getQueryParam("user", location)
+        );
 
         const existing = PregnancyService.mapChildBirthToFormObject(response);
         setRecord((prevState) => ({ ...prevState, ...existing }));
@@ -102,16 +110,14 @@ const ChildBirth = ({ handleChange }) => {
       }
     };
 
-    return () => {
-      const obj1 = initiateFields();
-      const obj2 = getFromLocalStorage();
-      fetchFamilyHistory();
-      setRecord((prevRecord) => ({
-        ...prevRecord,
-        ...obj1,
-        ...obj2,
-      }));
-    };
+    const obj1 = initiateFields();
+    const obj2 = getFromLocalStorage();
+    fetchFamilyHistory();
+    setRecord((prevRecord) => ({
+      ...prevRecord,
+      ...obj1,
+      ...obj2,
+    }));
   }, []);
 
   return (

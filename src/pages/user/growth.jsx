@@ -14,35 +14,65 @@ import { Badge } from "@/components/ui/badge";
 import { useTitle } from "@/hooks/useTitle";
 import Heading from "@/components/ui/heading";
 import { growthData } from "@/data/growthData";
+import GrowthService from "@/service/growthService";
 
 const Growth = () => {
   useTitle("Growth");
   const { t } = useTranslation("growth");
 
-  const [dob, setDob] = useState(new Date());  // User input for DOB
-  const [age, setAge] = useState("");  // Age selection (for demonstration)
-  const [currentWeek, setCurrentWeek] = useState(1);  // Default to 1st week
+  const [pregnancyCards, setPregnancyCards] = useState([]); // Pregnancy cards
+  const [selectedCardId, setSelectedCardId] = useState(""); // Selected pregnancy card ID
+  const [currentWeek, setCurrentWeek] = useState(1); // Current pregnancy week
 
   useEffect(() => {
-    const calculateWeek = (dob) => {
-      if (!dob) return;
+    const fetchPregnancyCards = async () => {
+      try {
+        const response = await GrowthService.getPreganancyCards();
+        const fetchedCards = response.data || [];
+        setPregnancyCards(fetchedCards);
+        console.log("Pregnancy cards:", fetchedCards);
 
-      const currentDate = new Date();
-      const dobDate = new Date(dob);
-      const timeDifference = currentDate - dobDate;
-      const daysInWeek = 7 * 24 * 60 * 60 * 1000; 
-      const weeksPregnant = Math.floor(timeDifference / daysInWeek);
-      console.log(weeksPregnant);
-      setCurrentWeek(weeksPregnant);
+        if (fetchedCards.length > 0) {
+          const defaultCard = fetchedCards[0];
+          setSelectedCardId(defaultCard.pregnancyCardId);
+          console.log("Default card:", defaultCard.pregnancyCardId);
+          calculateWeek(defaultCard.dateOfPregnancy);
+        }
+      } catch (error) {
+        console.error("Error fetching pregnancy cards:", error);
+      }
     };
 
-    calculateWeek(dob);
-  });
+    fetchPregnancyCards();
+  }, []); // Empty dependency array to fetch data only once
 
-  const handleChange = (event) => {
-    setAge(event.target.value);
+  // Calculate the pregnancy week based on the date of pregnancy
+  const calculateWeek = (dateOfPregnancy) => {
+    if (!dateOfPregnancy) return;
+
+    const dop = new Date(dateOfPregnancy);
+    const currentDate = new Date();
+    const timeDifference = currentDate - dop;
+    const daysInWeek = 7 * 24 * 60 * 60 * 1000;
+    const weeksPregnant = Math.floor(timeDifference / daysInWeek);
+    setCurrentWeek(weeksPregnant >= 0 ? weeksPregnant : 0); // Ensure non-negative weeks
   };
 
+  // Handle dropdown change and calculate weeks
+  const handleCardChange = (event) => {
+    const cardId = event.target.value;
+    setSelectedCardId(cardId);
+
+    // Find the selected card and calculate the week
+    const selectedCard = pregnancyCards.find(
+      (card) => card.pregnancyCardId === cardId
+    );
+    if (selectedCard) {
+      calculateWeek(selectedCard.dateOfPregnancy);
+    }
+  };
+
+  // Get the current stage based on the week
   const stage = growthData.find((stage) => stage.week === currentWeek) || {};
 
   return (
@@ -54,33 +84,36 @@ const Growth = () => {
 
       <div className="mx-12">
         <div className="rounded-sm shadow-md px-8 py-4 flex flex-col items-end">
-        <div className="flex w-full justify-between">
+          <div className="flex w-full justify-between">
             <div className="">
               <FormControl style={{ minWidth: 300 }}>
-                <InputLabel id="label">{t("dropdown")}</InputLabel>
+                <InputLabel id="label">{t("Select Pregnancy Card")}</InputLabel>
                 <Select
                   labelId="label"
                   variant="standard"
                   id="select"
-                  value={age}
-                  label="select child"
-                  onChange={handleChange}
-                  sx={{ border: 0 }}
+                  value={selectedCardId}
+                  onChange={handleCardChange}
                 >
-                  <MenuItem value={10}>Ten</MenuItem>
-                  <MenuItem value={20}>Twenty</MenuItem>
-                  <MenuItem value={30}>Thirty</MenuItem>
+                  {pregnancyCards.map((card) => (
+                    <MenuItem
+                      key={card.pregnancyCardId}
+                      value={card.pregnancyCardId}
+                    >
+                      Card {card.pregnancyCardId} -{" "}
+                      {new Date(card.dateOfPregnancy).toLocaleDateString()}
+                    </MenuItem>
+                  ))}
                 </Select>
               </FormControl>
             </div>
 
             <p className="text-right font-semibold">
-              {dob && `DOB: ${dob.toLocaleDateString()}`}
               Current Stage: {currentWeek} Weeks Pregnant
             </p>
           </div>
 
-          {stage.video && (
+          {/* {stage.video && (
             <div className="text-right">
               <video
                 src={stage.video}
@@ -89,32 +122,65 @@ const Growth = () => {
                 autoPlay="true"
               />
             </div>
+          )} */}
+          {stage.video && (
+            <iframe
+              width="560"
+              height="315"
+              src={stage.video}
+              title="YouTube video player"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            ></iframe>
           )}
         </div>
 
         <div className="flex justify-between mt-6">
-          <Button className="w-24">{t("previous")}</Button>
-          <Button className="w-24">{t("next")}</Button>
+          <Button
+            onClick={() =>
+              setCurrentWeek((pre) => {
+                if (pre > 0) return pre - 1;
+                else return pre;
+              })
+            }
+            className="w-24"
+          >
+            {t("previous")}
+          </Button>
+          <Button
+            onClick={() =>
+              setCurrentWeek((pre) => {
+                if (pre < 8) return pre + 1;
+                else return pre;
+              })
+            }
+            className="w-24"
+          >
+            {t("next")}
+          </Button>
         </div>
       </div>
 
       <div className="mx-12 mt-12">
         <p className="text-2xl font-semibold mb-3">
           Your child's current state:{" "}
-          <span className="font-normal"> {stage.week} weeks </span>
+          <span className="font-normal"> {currentWeek} weeks </span>
         </p>
-        <p className="text-lg mb-10 text-justify">
-          {stage.description}
+        <p className="text-lg mb-10 text-justify">{stage.description}</p>
+
+        <p className="text-2xl">
+          Food to eat during pregnancy—Week {stage.week}
         </p>
 
-        <p className="text-2xl">Food to eat during pregnancy—Week {stage.week}</p>
-
-        {/*food cards container starts */}
+        {/* Food cards container */}
         <div className="grid grid-cols-1 xl:grid-cols-2 gap-10 mt-10">
           {stage.foods?.map((food, index) => (
             <div key={index}>
               <Card className="bg-white flex flex-row items-center">
-                <img src={food.image} alt={food.title} className="rounded-md hidden md:block m-2 max-w-52 object-fit" />
+                <img
+                  src={food.image}
+                  alt={food.title}
+                  className="rounded-md hidden md:block m-2 h-48 max-w-72 object-fit"
+                />
                 <div className="flex flex-col">
                   <CardHeader className="pb-2 pt-0">
                     <CardTitle className="text-lg">{food.title}</CardTitle>
@@ -124,7 +190,12 @@ const Growth = () => {
                   </CardContent>
                   {food.badgeText && (
                     <CardFooter className="pb-0">
-                      <Badge variant="secondary" className="bg-light-badge-green text-light-success-green">{food.badgeText}</Badge>
+                      <Badge
+                        variant="secondary"
+                        className="bg-light-badge-green text-light-success-green"
+                      >
+                        {food.badgeText}
+                      </Badge>
                     </CardFooter>
                   )}
                 </div>
@@ -138,10 +209,11 @@ const Growth = () => {
         </p>
 
         <p className="text-lg my-10 text-justify">
-          Regular exercise during pregnancy is essential for your well-being and your baby's health...
+          Regular exercise during pregnancy is essential for your well-being and
+          your baby's health...
         </p>
 
-        {/*exercise cards container starts */}
+        {/* Exercise cards container */}
         <div className="grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 gap-8">
           {stage.activities?.map((activity, index) => (
             <div key={index}>
@@ -152,7 +224,7 @@ const Growth = () => {
                 <img
                   src={activity.image}
                   alt={activity.title}
-                  className="rounded-md hidden md:block m-2 object-fit px-4"
+                  className="rounded-md hidden md:block m-2 object-fit px-4 max-h-40"
                 />
                 <div className="flex flex-col">
                   <CardContent className="text-base pb-3 text-justify">

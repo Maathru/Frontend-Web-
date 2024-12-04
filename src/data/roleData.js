@@ -6,4 +6,5 @@ export const role = {
   ELIGIBLE: "ELIGIBLE",
   PENDING: "PENDING",
   USER: "USER",
+  GUEST: "GUEST",
 };

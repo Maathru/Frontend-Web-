@@ -24,11 +24,14 @@ import MainDetails from "@/components/EligibleComponents/MainDetails";
 import HealthDetails from "@/components/EligibleComponents/HealthDetails";
 import FamilyHealthDetails from "@/components/EligibleComponents/FamilyHealthDetails";
 import OtherDetails from "@/components/EligibleComponents/OtherDetails";
+import { useLocation } from "react-router-dom";
+import { getQueryParam } from "@/utils/getQueryParam";
 
 const Eligible = () => {
   useTitle("Recovery Checklist - Page 1");
   const [formObject, setFormObject] = useState({});
   const [value, setValue] = useState(0);
+  const location = useLocation();
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -36,9 +39,11 @@ const Eligible = () => {
     if (element) {
       try {
         // Check if user prefers reduced motion
-        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const prefersReducedMotion = window.matchMedia(
+          "(prefers-reduced-motion: reduce)"
+        ).matches;
         element.scrollIntoView({
-          behavior: prefersReducedMotion ? 'auto' : 'smooth',
+          behavior: prefersReducedMotion ? "auto" : "smooth",
         });
       } catch (e) {
         // Fallback for browsers that don't support smooth scroll
@@ -160,7 +165,9 @@ const Eligible = () => {
 
     const fetchEligibleInfo = async () => {
       try {
-        const response = await EligibleService.getEligibleInfo();
+        const response = await EligibleService.getEligibleInfo(
+          getQueryParam("user", location)
+        );
         const existing = EligibleService.mapDtoToFormObject(response);
         setFormObject({ ...formObject, ...existing });
       } catch (error) {
@@ -173,12 +180,10 @@ const Eligible = () => {
       }
     };
 
-    return () => {
-      const obj1 = initiateFields();
-      const obj2 = getFromLocalStorage();
-      fetchEligibleInfo();
-      setFormObject({ ...formObject, ...obj1, ...obj2 });
-    };
+    const obj1 = initiateFields();
+    const obj2 = getFromLocalStorage();
+    fetchEligibleInfo();
+    setFormObject({ ...formObject, ...obj1, ...obj2 });
   }, []);
 
   const { t } = useTranslation("eligible1");

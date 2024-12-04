@@ -24,11 +24,9 @@ const HealthDetails = ({
   };
 
   useEffect(() => {
-    return () => {
-      if (formObject.stage < 3) {
-        handleChange(undefined, 0);
-      }
-    };
+    if (formObject.stage < 3) {
+      // handleChange(undefined, 0);
+    }
   });
   return (
     <>

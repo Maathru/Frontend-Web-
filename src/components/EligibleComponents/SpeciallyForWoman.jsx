@@ -23,11 +23,9 @@ const SpeciallyForWoman = ({ formObject, setFormObject, handleChange }) => {
   };
 
   useEffect(() => {
-    return () => {
-      if (formObject.stage < 2) {
-        handleChange(undefined, 0);
-      }
-    };
+    if (formObject.stage < 2) {
+      handleChange(undefined, 0);
+    }
   });
 
   return (
@@ -117,7 +115,7 @@ const SpeciallyForWoman = ({ formObject, setFormObject, handleChange }) => {
             name="row-radio-buttons-group"
             className="mx-auto"
             value={formObject.periods_pattern || "Orderly"}
-            onChange={handleChange}
+            onChange={(e) => setData("pattern", "periods", e.target.value)}
           >
             <FormControlLabel
               value="Orderly"

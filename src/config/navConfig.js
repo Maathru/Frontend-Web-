@@ -1,21 +1,28 @@
 // navConfig.js
 export const navConfig = {
+  GUEST: [
+    { name: "Home", path: "/" },
+    { name: "Blogs", path: "/blogs" },
+    { name: "Discussion Forum", path: "/forum" },
+  ],
   USER: [
     { name: "Home", path: "/" },
     { name: "Blogs", path: "/blogs" },
     { name: "Discussion Forum", path: "/forum" },
+    { name: "Chat", path: "/chat" },
   ],
   ELIGIBLE: [
     { name: "Home", path: "/" },
     { name: "Blogs", path: "/blogs" },
     { name: "Discussion Forum", path: "/forum" },
     { name: "Recovery Checklist", path: "/eligible" },
+    { name: "Chat", path: "/chat" },
   ],
   PARENT: [
     { name: "Home", path: "/" },
     { name: "Child Growth", path: "/growth" },
     { name: "Pregnancy Card", path: "/pregnancy" },
-    { name: "Memories", path: "/memories" },
+    { name: "Chat", path: "/chat" },
     {
       name: "More",
       links: [
@@ -32,10 +39,11 @@ export const navConfig = {
       links: [
         { name: "Manage Eligible Couples", path: "/eligibles" },
         { name: "Manage Parents", path: "/parents" },
+        { name: "Clinics", path: "/clinics" },
       ],
     },
     { name: "Chat", path: "/chat" },
-    { name: "Analytics", path: "/analytics" },
+    { name: "Analytics", path: "/statistics" },
     {
       name: "More",
       links: [
@@ -54,6 +62,8 @@ export const navConfig = {
       links: [
         { name: "Blogs", path: "/blogs" },
         { name: "Discussion Forum", path: "/forum" },
+        { name: "Drugs", path: "/drugs" },
+        { name: "Chat", path: "/chat" },
       ],
     },
   ],
@@ -70,12 +80,14 @@ export const navConfig = {
         { name: "Manage Drugs", path: "/drugs" },
       ],
     },
-    { name: "System Analytics", path: "/analytics" },
+    { name: "Health Analytics", path: "/analytics" },
     {
       name: "More",
       links: [
+        { name: "logs", path: "/logs" },
         { name: "Blogs", path: "/blogs" },
         { name: "Discussion Forum", path: "/forum" },
+        { name: "Chat", path: "/chat" },
       ],
     },
   ],
