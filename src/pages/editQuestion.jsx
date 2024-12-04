@@ -178,7 +178,7 @@ function EditQuestion() {
             />
             <Button
               onClick={handleAddKeyword}
-              className="bg-blue-600 text-white px-4 py-2 rounded-md"
+              className="bg-primary-purple text-white px-4 py-2 rounded-md"
             >
               Add
             </Button>
@@ -186,7 +186,7 @@ function EditQuestion() {
           <div className="text-center mt-5">
             <Button
               type="submit"
-              className="bg-blue-600 text-white px-4 py-2 rounded-md"
+              className="bg-primary-purple text-white px-4 py-2 rounded-md"
             >
               Update
             </Button>

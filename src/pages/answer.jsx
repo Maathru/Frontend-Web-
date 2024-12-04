@@ -240,7 +240,7 @@ const Answer = () => {
                 <div className="flex gap-2 my-5 mx-5">
                   <Button
                     type="submit"
-                    className="bg-blue-600 text-white px-4 py-0 rounded-md"
+                    className="bg-primary-purple text-white px-4 py-0 rounded-md"
                   >
                     Save
                   </Button>
@@ -321,7 +321,7 @@ const Answer = () => {
             <Button
               onClick={handleAnswerSubmit}
               type="submit"
-              className="bg-blue-600 text-white px-4 py-2 rounded-md"
+              className="bg-primary-purple text-white px-4 py-2 rounded-md"
             >
               Submit
             </Button>
