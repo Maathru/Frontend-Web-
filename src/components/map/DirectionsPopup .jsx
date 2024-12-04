@@ -6,10 +6,12 @@ import {
   useLoadScript,
 } from "@react-google-maps/api";
 import Modal from "react-modal";
+import Popup from "reactjs-popup";
+import { Button } from "../ui/button";
 
 const mapContainerStyle = {
-  width: "400px",
-  height: "400px",
+  width: "100%",
+  height: "510px",
 };
 
 const DirectionsPopup = ({ endpoints }) => {
@@ -83,25 +85,42 @@ const DirectionsPopup = ({ endpoints }) => {
   if (!isLoaded) return <div>Loading...</div>;
 
   return (
-    <div>
-      <button onClick={handleButtonClick}>Get Directions</button>
+    <Popup
+      isOpen={showModal}
+      onRequestClose={() => setShowModal(false)}
+      ariaHideApp={false}
+      trigger={<Button onClick={() => setShowModal(true)}>Show Markers</Button>}
+      modal
+      nested
+      overlayStyle={{
+        backgroundColor: "rgba(0, 0, 0, 0.6)",
+      }}
+    >
+      <div className="bg-white w-[70rem] h-[40rem] dark:bg-dark-popup rounded-md">
+        <div className="flex justify-end pt-2 px-2">
+          <IoIosCloseCircleOutline
+            size={25}
+            className="cursor-pointer hover:text-purple-500 hover:scale-110"
+            aria-label="Close"
+            onClick={() => setShowModal(false)}
+          />
+        </div>
 
-      <Modal
-        isOpen={showModal}
-        onRequestClose={() => setShowModal(false)}
-        ariaHideApp={false}
-      >
-        <h2>Directions</h2>
-        <button onClick={() => setShowModal(false)}>Close</button>
-        <GoogleMap
-          mapContainerStyle={mapContainerStyle}
-          center={currentLocation || { lat: 0, lng: 0 }} // Center on current location or default
-          zoom={7}
-        >
-          {directions && <DirectionsRenderer directions={directions} />}
-        </GoogleMap>
-      </Modal>
-    </div>
+        <div className="flex flex-col items-center p-5">
+          <Typography variant="h5">
+            Direction To Home Visit Locations
+          </Typography>
+          <button onClick={() => setShowModal(false)}>Close</button>
+          <GoogleMap
+            mapContainerStyle={mapContainerStyle}
+            center={currentLocation || { lat: 0, lng: 0 }} // Center on current location or default
+            zoom={7}
+          >
+            {directions && <DirectionsRenderer directions={directions} />}
+          </GoogleMap>
+        </div>
+      </div>
+    </Popup>
   );
 };
 

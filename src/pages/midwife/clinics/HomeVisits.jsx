@@ -173,8 +173,10 @@ const HomeVisits = () => {
   return (
     <div>
       <div>
-        <MarkersPopup markers={locations} />
-        <DirectionsPopup endpoints={locations} />
+        <div className="flex gap-5 justify-end">
+          <MarkersPopup markers={locations} />
+          <DirectionsPopup endpoints={locations} />
+        </div>
         <Typography variant="h5" sx={{ mt: 4 }}>
           Home Visits Schedule - {`${date}`}
         </Typography>
