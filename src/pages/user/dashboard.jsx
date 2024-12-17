@@ -22,7 +22,7 @@ import ParentClinicsSection from "@/components/userComponents/ParentClincsSectio
 const userCards = [
   { title: "Visit Blog", image: blog, url: "/blogs" },
   { title: "Visit Discussion Forum", image: forum, url: "/forum" },
-  { title: "Get Vaccine Card", image: vaccine, url: "/vaccine" },
+  // { title: "Get Vaccine Card", image: vaccine, url: "/vaccine" },
 ];
 
 const parentCards = [
@@ -68,11 +68,11 @@ const Dashboard = () => {
               {t("description1")}
             </p>
             <div className="flex items-center mt-12">
-            <Link to="/learnmorepg">
-              <Button className="bg-primary-purple px-14 m-auto">
-                {t("button1")}
-              </Button>
-            </Link>
+              <Link to="/learnmorepg">
+                <Button className="bg-primary-purple px-14 m-auto">
+                  {t("button1")}
+                </Button>
+              </Link>
             </div>
           </div>
         </div>
@@ -164,9 +164,9 @@ const Dashboard = () => {
               <h2 className="text-2xl font-semibold">
                 Clinics(MOH & Home Visits)
               </h2>
-              <Link to="/clinic">
+              {/* <Link to="/clinic">
                 <Button>Visits Clinic Details</Button>
-              </Link>
+              </Link> */}
             </div>
 
             <div className="mx-auto flex justify-around">

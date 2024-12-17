@@ -146,6 +146,7 @@ const ClinicAddPopup = ({
         try {
           const response = await ClinicService.getRegions();
           setRegions(response);
+          console.log(regions);
         } catch (error) {
           Toast(error.response.data || "Unauthorized", errorType.ERROR);
           console.log(error.response.data);
@@ -158,6 +159,7 @@ const ClinicAddPopup = ({
         try {
           const response = await ClinicService.getDoctors();
           setDoctors(response);
+          console.log(response);
         } catch (error) {
           Toast(error.response.data || "Unauthorized", errorType.ERROR);
           console.log(error.response.data);

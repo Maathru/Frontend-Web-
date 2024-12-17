@@ -12,6 +12,12 @@ const PregnancyAnalysisByRegion = () => {
       xaxis: {
         categories: [],
       },
+      yaxis: {
+        title: {
+          text: "Number of Pregnancies",
+        },
+        stepSize: 1,
+      },
       title: {
         text: "Number of Pregnancies by Region",
         align: "center",

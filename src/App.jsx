@@ -57,6 +57,7 @@ import Chat from "./pages/Chat";
 import Profile from "./pages/profile";
 import LearnMorepg from "./pages/learnmorepg";
 import MedicalRecords from "./pages/doctor/medicalRecords";
+import Logs from "./pages/admin/logs";
 
 function App() {
   const { pathname } = useLocation();
@@ -138,10 +139,17 @@ function App() {
                 <>
                   <Route path="/" element={<AdminDashboard />} />
                   <Route path="/manage/blogs" element={<ManageBlogs />} />
+                  <Route
+                    path="/manage/blogs/approval/:articleId"
+                    element={<ArticleApproval />}
+                  />
                   <Route path="/users" element={<ManageUsers />} />
                   <Route path="/clinics" element={<ManageClinics />} />
                   <Route path="/regions" element={<ManageRegions />} />
-                  <Route path="/analytics" element={<SystemAnalytics />} />
+
+                  <Route path="/logs" element={<Logs />} />
+
+                  <Route path="/analytics" element={<PregnancyAnalysis />} />
                 </>
               )}
 

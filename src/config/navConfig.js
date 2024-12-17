@@ -22,14 +22,13 @@ export const navConfig = {
     { name: "Home", path: "/" },
     { name: "Child Growth", path: "/growth" },
     { name: "Pregnancy Card", path: "/pregnancy" },
-    { name: "Memories", path: "/memories" },
+    { name: "Chat", path: "/chat" },
     {
       name: "More",
       links: [
         { name: "Blogs", path: "/blogs" },
         { name: "Discussion Forum", path: "/forum" },
         { name: "Recovery Checklist", path: "/eligible" },
-        { name: "Chat", path: "/chat" },
       ],
     },
   ],
@@ -81,10 +80,11 @@ export const navConfig = {
         { name: "Manage Drugs", path: "/drugs" },
       ],
     },
-    { name: "System Analytics", path: "/analytics" },
+    { name: "Health Analytics", path: "/analytics" },
     {
       name: "More",
       links: [
+        { name: "logs", path: "/logs" },
         { name: "Blogs", path: "/blogs" },
         { name: "Discussion Forum", path: "/forum" },
         { name: "Chat", path: "/chat" },

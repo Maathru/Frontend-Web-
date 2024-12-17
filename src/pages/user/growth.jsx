@@ -31,7 +31,7 @@ const Growth = () => {
         const fetchedCards = response.data || [];
         setPregnancyCards(fetchedCards);
         console.log("Pregnancy cards:", fetchedCards);
-  
+
         if (fetchedCards.length > 0) {
           const defaultCard = fetchedCards[0];
           setSelectedCardId(defaultCard.pregnancyCardId);
@@ -42,10 +42,9 @@ const Growth = () => {
         console.error("Error fetching pregnancy cards:", error);
       }
     };
-  
+
     fetchPregnancyCards();
   }, []); // Empty dependency array to fetch data only once
-  
 
   // Calculate the pregnancy week based on the date of pregnancy
   const calculateWeek = (dateOfPregnancy) => {
@@ -97,8 +96,12 @@ const Growth = () => {
                   onChange={handleCardChange}
                 >
                   {pregnancyCards.map((card) => (
-                    <MenuItem key={card.pregnancyCardId} value={card.pregnancyCardId}>
-                      Card {card.pregnancyCardId} - {new Date(card.dateOfPregnancy).toLocaleDateString()}
+                    <MenuItem
+                      key={card.pregnancyCardId}
+                      value={card.pregnancyCardId}
+                    >
+                      Card {card.pregnancyCardId} -{" "}
+                      {new Date(card.dateOfPregnancy).toLocaleDateString()}
                     </MenuItem>
                   ))}
                 </Select>
@@ -120,20 +123,40 @@ const Growth = () => {
               />
             </div>
           )} */}
-          {stage.video && <iframe 
-            width="560" 
-            height="315" 
-            src={stage.video} 
-            title="YouTube video player" 
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-            >
-          </iframe>
-          } 
+          {stage.video && (
+            <iframe
+              width="560"
+              height="315"
+              src={stage.video}
+              title="YouTube video player"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            ></iframe>
+          )}
         </div>
 
         <div className="flex justify-between mt-6">
-          <Button className="w-24">{t("previous")}</Button>
-          <Button className="w-24">{t("next")}</Button>
+          <Button
+            onClick={() =>
+              setCurrentWeek((pre) => {
+                if (pre > 0) return pre - 1;
+                else return pre;
+              })
+            }
+            className="w-24"
+          >
+            {t("previous")}
+          </Button>
+          <Button
+            onClick={() =>
+              setCurrentWeek((pre) => {
+                if (pre < 8) return pre + 1;
+                else return pre;
+              })
+            }
+            className="w-24"
+          >
+            {t("next")}
+          </Button>
         </div>
       </div>
 
@@ -142,11 +165,11 @@ const Growth = () => {
           Your child's current state:{" "}
           <span className="font-normal"> {currentWeek} weeks </span>
         </p>
-        <p className="text-lg mb-10 text-justify">
-          {stage.description}
-        </p>
+        <p className="text-lg mb-10 text-justify">{stage.description}</p>
 
-        <p className="text-2xl">Food to eat during pregnancy—Week {stage.week}</p>
+        <p className="text-2xl">
+          Food to eat during pregnancy—Week {stage.week}
+        </p>
 
         {/* Food cards container */}
         <div className="grid grid-cols-1 xl:grid-cols-2 gap-10 mt-10">
@@ -186,7 +209,8 @@ const Growth = () => {
         </p>
 
         <p className="text-lg my-10 text-justify">
-          Regular exercise during pregnancy is essential for your well-being and your baby's health...
+          Regular exercise during pregnancy is essential for your well-being and
+          your baby's health...
         </p>
 
         {/* Exercise cards container */}

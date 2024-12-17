@@ -1,7 +1,9 @@
 import { errorType, Toast } from "@/components/toast";
 import Heading from "@/components/ui/heading";
 import EmployeeService from "@/service/employeeService";
+import { formatTime } from "@/utils/FormatTime";
 import {
+  Chip,
   Table,
   TableBody,
   TableCell,
@@ -20,6 +22,7 @@ const dateTableRows = [createData("2024/12/12", "status")];
 
 const HomeVisit = () => {
   const [parentData, setParentData] = useState({});
+  const [visits, setVisits] = useState([]);
   const [location, setLocation] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const { userId } = useParams();
@@ -50,6 +53,7 @@ const HomeVisit = () => {
         const response = await EmployeeService.getMidwifeHomeVisitsData(userId);
         if (isComponentMounted) {
           setParentData(response);
+          setVisits(response.visits);
           setLocation(parseLocation(response.location));
         }
       } catch (error) {
@@ -137,9 +141,9 @@ const HomeVisit = () => {
           <TableContainer>
             <Table sx={{ minWidth: 200 }} aria-label="home visit dates table">
               <TableBody>
-                {dateTableRows.map((row) => (
+                {visits.map((visit) => (
                   <TableRow
-                    key={row.name}
+                    key={visit.id}
                     sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                   >
                     <TableCell
@@ -150,7 +154,7 @@ const HomeVisit = () => {
                         paddingBottom: 1.2,
                       }}
                     >
-                      {row.name}
+                      {visit.date}
                     </TableCell>
                     <TableCell
                       align="right"
@@ -159,7 +163,32 @@ const HomeVisit = () => {
                         paddingBottom: 1.2,
                       }}
                     >
-                      {row.value}
+                      {formatTime(visit.time)}
+                    </TableCell>
+                    <TableCell
+                      align="right"
+                      sx={{
+                        paddingTop: 1.2,
+                        paddingBottom: 1.2,
+                      }}
+                    >
+                      {
+                        <Chip
+                          label={`${visit.visitStatus}`}
+                          size={"small"}
+                          sx={{
+                            backgroundColor:
+                              visit.visitStatus !== "PENDING"
+                                ? "#EBF9F1"
+                                : "#C5BCFF",
+                            color:
+                              visit.visitStatus !== "PENDING"
+                                ? "#1F9254"
+                                : "#1F4692",
+                            width: "60%",
+                          }}
+                        />
+                      }
                     </TableCell>
                   </TableRow>
                 ))}

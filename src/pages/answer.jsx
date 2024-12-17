@@ -132,7 +132,7 @@ const Answer = () => {
   };
 
   return (
-    <div className="">
+    <div className="content-container">
       <div className="grid grid-cols-1">
         <div className="row-span-2">
           <div className="flex flex-col justify-between h-[100%]">
@@ -237,7 +237,7 @@ const Answer = () => {
                 <div className="flex gap-2 my-5 mx-5">
                   <Button
                     type="submit"
-                    className="bg-blue-600 text-white px-4 py-0 rounded-md"
+                    className="bg-primary-purple text-white px-4 py-0 rounded-md"
                   >
                     Save
                   </Button>
@@ -305,7 +305,7 @@ const Answer = () => {
           </div>
         ))}
 
-        {userDetails ? (
+        {userDetails.authenticated ? (
           <div className="flex mt-5 gap-5">
             <TextField
               value={yourAnswer}
@@ -318,7 +318,7 @@ const Answer = () => {
             <Button
               onClick={handleAnswerSubmit}
               type="submit"
-              className="bg-blue-600 text-white px-4 py-2 rounded-md"
+              className="bg-primary-purple text-white px-4 py-2 rounded-md"
             >
               Submit
             </Button>
