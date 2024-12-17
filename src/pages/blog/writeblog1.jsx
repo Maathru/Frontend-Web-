@@ -17,10 +17,6 @@ const WriteBlog1 = () => {
     stage: 1,
     title: "",
     category: "",
-    image: "",
-    cachedURL: "",
-    imageDescription: "",
-    imageName: "",
   });
 
   const setData = (name, value) => {
@@ -151,8 +147,6 @@ const WriteBlog1 = () => {
                 type="text"
                 className="w-full md:col-span-3 md:h-12 h-10 mt-4 px-3 py-2 border-2 border-[#e0e0e0] rounded-full text-lg focus:outline-none focus:border-[#9c3cc1] dark:bg-neutral-800"
                 placeholder="Description of the image"
-                value={formData.imageDescription || ""}
-                onChange={(e) => setData("imageDescription", e.target.value)}
               />
 
               <label
@@ -160,8 +154,9 @@ const WriteBlog1 = () => {
                 className="md:col-span-2 w-full md:h-12 h-10 mt-4 px-3 py-2 border-2 border-[#e0e0e0] text-neutral-400 rounded-full text-lg focus:outline-none focus:border-[#9c3cc1] dark:bg-neutral-800 cursor-pointer flex items-center gap-2"
               >
                 <IoImageOutline />
-                {imageName}
+                Choose File
               </label>
+
               <Input
                 id="picture"
                 type="file"

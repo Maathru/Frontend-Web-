@@ -11,7 +11,6 @@ import WriteBlog1 from "./pages/blog/writeblog1";
 import WriteBlog2 from "./pages/blog/writeblog2";
 import WriteBlog3 from "./pages/blog/writeblog3";
 import WriteBlog4 from "./pages/blog/writeblog4";
-import ArticlePreview from "./pages/blog/article_preview";
 import Landing from "./pages/landing";
 import Drug from "./pages/admin/manageDrugs";
 import DoctorDashboard from "./pages/doctor/dashboard";
@@ -42,7 +41,6 @@ import ManageUsers from "./pages/admin/manageusers";
 import ManageClinics from "./pages/admin/manageClinics";
 import ManageRegions from "./pages/admin/manageRegions";
 import ManageBlogs from "./pages/admin/manageBlogs";
-import ArticleApproval from "./pages/admin/articleApproval";
 import Memories from "./pages/memories";
 // import Healthstatics from "./pages/healthstatics";
 import { ToastContainer } from "react-toastify";
@@ -239,7 +237,6 @@ function App() {
               <Route path="/blogs/write/2" element={<WriteBlog2 />} />
               <Route path="/blogs/write/3" element={<WriteBlog3 />} />
               <Route path="/blogs/write/4" element={<WriteBlog4 />} />
-              <Route path="/blogs/write/preview" element={<ArticlePreview />} />
 
               <Route
                 path="/forum/edit/:questionId"

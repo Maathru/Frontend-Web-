@@ -58,7 +58,7 @@ const Article = () => {
         <img
           src={Article.image}
           alt="Article"
-          className="w-full rounded-lg mt-2  max-h-[500px] object-cover"
+          className="w-full rounded-lg mt-2"
         />
 
         <div className="mt-4 text-base text-neutral-600 dark:text-neutral-300">
@@ -70,7 +70,7 @@ const Article = () => {
         </div>
 
         {Article.keywords && (        
-        <div className="flex flex-wrap md:gap-4 gap-2 my-6">
+        <div className="flex flex-wrap md:gap-4 gap-2 mt-6">
           {Article.keywords.map((keyword, index) => (
               <Badge key={index} variant="secondary" className={badgeStyle}>
                 {keyword}
@@ -80,7 +80,7 @@ const Article = () => {
         )}
       </div>
 
-      {/* <div className="ml-6 md:ml-14">
+      <div className="ml-6 md:ml-14">
         <p className="md:mt-12 mt-8 text-3xl font-semibold text-neutral-800 dark:text-neutral-100">
           Recent Blogs
         </p>
@@ -150,7 +150,7 @@ const Article = () => {
             </CardFooter>
           </Card>
         </div>
-      </div> */}
+      </div>
 
     </div>
   );

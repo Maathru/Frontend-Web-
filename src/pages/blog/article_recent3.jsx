@@ -1,7 +1,7 @@
 import React from "react";
 import { MdOutlineArrowBackIosNew } from "react-icons/md";
 import { Badge } from "@/components/ui/badge";
-import ArticleImage from "../../assets/blog/recent-blog-image-2.jpg";
+import ArticleImage from "../../assets/blog/recent-blog-image-2.png";
 import { Link } from "react-router-dom";
 
 const badgeStyle =
